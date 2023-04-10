@@ -227,31 +227,37 @@
                     </div>
                     <input type="file" name="upfile" id="myFileInput" style="display: none;" onchange="myLoadImg(this);">
                     <div class="row form-group">
-                        <label for="name" class="col-sm-3 col-form-label input-label">이름</label>
+                        <label for="id" class="col-sm-3 col-form-label input-label">회원 아이디</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="name"
-                            placeholder="이름을 입력하세요!" value="<%=loginSeller.getSelName() %>"
-                            name="selName" required>
+                            placeholder="아이디 입력" value=""
+                            name="memId" required>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="pwd" class="col-sm-3 col-form-label input-label">회원 비밀번호</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="id"
+                            placeholder="비밀번호 입력" value=""
+                            name="memPwd" required>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="name" class="col-sm-3 col-form-label input-label">이름</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="memPwd"
+                            placeholder="이름 입력" value=""
+                            name="userName" required>
                         </div>
                     </div>
 
                     <div class="row form-group">
-                        <label for="addressline1" class="col-sm-3 col-form-label input-label">스토어이름
+                        <label for="nickname" class="col-sm-3 col-form-label input-label">닉네임
                         </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="addressline1"
+                            <input type="text" class="form-control" id="nickname"
                             placeholder="스토어 이름을 입력해주세요."
-                            value="<%=loginSeller.getSelStoreName() %>" name="storeName">
-                        </div>
-                    </div>
-
-                    <div class="row form-group">
-                        <label for="poster" class="col-sm-3 col-form-label input-label">사업자번호
-                            <span class="text-muted">(사업자 숫자만 입력)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="사업자번호를 입력하세요(숫자)"
-                                value="<%=loginSeller.getSelBusinessNo() %>" name="selBusinessNo"
-                                required>
+                            value="" name="nickname">
                         </div>
                     </div>
 
@@ -259,106 +265,72 @@
                         <label for="email" class="col-sm-3 col-form-label input-label">Email</label>
                         <div class="col-sm-9">
                             <input type="email" class="form-control" id="email" placeholder="Email"
-                                value="<%=loginSeller.getSelEmail() %>" name="selEmail">
+                                value="" name="email">
                         </div>
                     </div>
+
                     <div class="row form-group">
                         <label for="phone" class="col-sm-3 col-form-label input-label">Phone
-                            <span class="text-muted">(휴대폰 숫자만 입력)</span></label>
+                            <span class="text-muted">휴대폰 숫자만 입력</span></label>
                         <div class="col-sm-9">
                             <input type="phone" class="form-control" id="phone"
                                 placeholder="+x(xxx)xxx-xx-xx"
-                                value="<%=loginSeller.getSelPhone() %>" name="selPhone">
-
+                                value="" name="phone">
                         </div>
                     </div>
+
                     <div class="row form-group">
-                        <label for="poster" class="col-sm-3 col-form-label input-label">Tel
-                            <span class="text-muted">(전화번호 숫자만 입력)</span></label>
+                        <label for="poster" class="col-sm-3 col-form-label input-label">가입일
+                            <span class="text-muted"></span></label>
                         <div class="col-sm-9">
                             <input type="phone" class="form-control" id="tel"
-                                placeholder="숫자만 입력하세요" value="<%=loginSeller.getSelTel() %>"
-                                name="selTel">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <label for="fax" class="col-sm-3 col-form-label input-label">Fax
-                            <span class="text-muted">(팩스 숫자만 입력)</span></label>
-                        <div class="col-sm-9">
-                            <input type="phone" class="form-control" id="phone"
-                                placeholder="숫자만 입력하세요" value="<%=loginSeller.getSelFax() %>"
-                                name="selFax">
-
+                                placeholder="가입일" value=""
+                                name="EnrollDate">
                         </div>
                     </div>
 
-                    
-                    <div class="row form-group">
-                        <label for="addressline2" class="col-sm-3 col-form-label input-label">주소
-                        </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="address2" placeholder="주소"
-                                name="selStreet" value="<%=loginSeller.getSelStreet() %>" required>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <label for="addressline2" class="col-sm-3 col-form-label input-label">상세주소
-                        </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="address3" placeholder="상세주소"
-                                name="selAddress" value="<%=loginSeller.getSelAddress()%>" required>
-                        </div>
-                    </div>
 
                     <div class="text-end">
                         <button type="button" onclick="history.back()"
                         class="btn btn-primary">뒤로가기</button>
                         <button type="submit" class="btn btn-primary">저장</button>
                     </div>
-                        <script>
-                            
-                            
-                                
-                                myChooseFile = function() {
-                                    $("#myFileInput").click();
-                                }
-                                
-                                function myLoadImg(inputFile) {
-                                    console.log("inputFile");
-                                    if (inputFile.files.length == 1) { // 파일 선택된 경우 => 파일 읽어들임
-                                
-                                        // 파일을 읽어들일 FileReader 객체 생성
-                                        const reader = new FileReader();
-                                
-                                        // 파일을 읽어들이는 메소드 호출
-                                        reader.readAsDataURL(inputFile.files[0]);
-                                        // 해당 파일을 읽어들이는 순간 해당 이 파일만이 고유한 url부
-                                
-                                        //파일 읽어들이기가 완료 됐을 때 실행할 함수를 정의해두기
-                                        reader.onload = function (e) {
-                                            // e.target.result => 읽어들인 파일의 고유한 url                                            
-                                        console.log(e.target.result);
-                                        $("#myFile1").removeAttr("src");
-                                        $("#myFile1").attr("src", e.target.result); 
-                                        }
-                                    } else { //선택된 파일이 취소된 경우 => 미리보기 본것도 사라지게
-                                        $("#myFile1").removeAttr("src");
-                                        $("#myFile1").attr("src", "resources/img/seller_img/userImg.png");
-                                    }
-                                } //loadImg end
-                                
-                               
-                            
-                            
-                            
-                            
-                            
-                            </script>
-                </form>
+<script>
 
-            </div>
-        </div>
-    </div>
+myChooseFile = function() {
+    $("#myFileInput").click();
+}
+
+function myLoadImg(inputFile) {
+    console.log("inputFile");
+    if (inputFile.files.length == 1) { // 파일 선택된 경우 => 파일 읽어들임
+
+        // 파일을 읽어들일 FileReader 객체 생성
+        const reader = new FileReader();
+
+        // 파일을 읽어들이는 메소드 호출
+        reader.readAsDataURL(inputFile.files[0]);
+        // 해당 파일을 읽어들이는 순간 해당 이 파일만이 고유한 url부
+
+        //파일 읽어들이기가 완료 됐을 때 실행할 함수를 정의해두기
+        reader.onload = function (e) {
+            // e.target.result => 읽어들인 파일의 고유한 url                                            
+        console.log(e.target.result);
+        $("#myFile1").removeAttr("src");
+        $("#myFile1").attr("src", e.target.result); 
+        }
+    } else { //선택된 파일이 취소된 경우 => 미리보기 본것도 사라지게
+        $("#myFile1").removeAttr("src");
+        $("#myFile1").attr("src", "resources/img/seller_img/userImg.png");
+    }
+} //loadImg end
+
+</script>
+</form>
+
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
