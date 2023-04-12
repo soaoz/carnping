@@ -23,6 +23,7 @@
             /* 가로 스크롤 */
             overflow: auto;
             white-space: nowrap;
+       
         }
 
         .contentImg {
@@ -43,6 +44,7 @@
         .smallImgs {
             overflow: auto;
             white-space: nowrap;
+            cursor: pointer;
         }
 
         .smallImg {
@@ -237,7 +239,10 @@
 
             <div class="content container-fluid">
                 <div class="page-header">
-                    <div class="col-xl-6 col-md-6">
+                    <div class="row">
+
+                    
+                    <div class="col-xl-6 d-flex">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">기존 차박 게시글</h5>
@@ -346,42 +351,42 @@
                                         <div class="col-md-9">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 공중화장실
+                                                    <input type="checkbox" name="checkbox">공중화장실
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 주차장
+                                                    <input type="checkbox" name="checkbox">주차장
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 병원
+                                                    <input type="checkbox" name="checkbox">병원
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 편의점
+                                                    <input type="checkbox" name="checkbox">편의점
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 화기가능
+                                                    <input type="checkbox" name="checkbox">화기가능
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 소음가능
+                                                    <input type="checkbox" name="checkbox">소음가능
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 취사가능
+                                                    <input type="checkbox" name="checkbox">취사가능
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 수평맞음
+                                                    <input type="checkbox" name="checkbox">수평맞음
                                                 </label>
                                             </div>
                                         </div>
@@ -476,50 +481,17 @@
                                         </div>
                                     </div>
 
-                                    <div id="top-modal" class="modal fade" tabindex="-1" role="dialog"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-top">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title" id="topModalLabel">게시글 삭제</h4>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="#">
-                                                        <br>
-                                                        <h5 align="center">정말로 **를(을) 요청철회를 하시겠습니까?</h5>
-                                                        <p align="center" style="color:gray">요청을 철회를 하신다면 사유를 입력해주세요.
-                                                        </p>
-                                                        <textarea name="" id="" cols="60" rows="10"></textarea>
-                                                    </form>
-                                                </div>
-                                                <hr>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light"
-                                                        data-bs-dismiss="modal">닫기</button>
-                                                    <button type="button" class="btn btn-primary">기각</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-end">
-                                        <button type="button" onclick="history.back()"
-                                            class="btn btn-primary">뒤로가기</button>
-                                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#top-modal">요청철회</button>
-                                        <button type="submit" class="btn btn-primary">등록</button>
-                                    </div>
+                                   
                                 </form>
 
                             </div>
                         </div>
                     </div>
                    
-                    <div class="col-xl-6 col-md-6">
+                    <div class="col-xl-6 d-flex">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">기존 차박 게시글</h5>
+                                <h5 class="card-title">수정 요청 차박 게시글</h5>
                             </div>
                             <div class="card-body">
                                 <form action="#" method="post" enctype="multipart/form-data">
@@ -548,6 +520,10 @@
                                                     src="assets/img/detail-2.PNG">
                                                 <img class="smallImg" style="height: 100px;width: 150px;"
                                                     src="assets/img/detail-3.PNG">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/img-02.jpg">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/img-05.jpg">
 
                                             </div>
                                         </div>
@@ -575,7 +551,7 @@
                                         <div class="col-sm-9">
                                             <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
                                                 style="height: 189px;" name="cinfoContent" placeholder="게시글 유의사항 입력"
-                                                readonly>리얼 맛집입니다.</textarea>
+                                                readonly>리얼 맛집이다다다ㅏ다ㅏ니다.</textarea>
                                         </div>
                                     </div>
 
@@ -615,7 +591,7 @@
                                         <label for="addressDetail" class="col-sm-3 col-form-label input-label">상세주소
                                         </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="상세주소 입력" value="1단지"
+                                            <input type="text" class="form-control" placeholder="상세주소 입력" value="산간지역 주차장"
                                                 name="addressDetail">
                                         </div>
                                     </div>
@@ -691,17 +667,17 @@
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 금요일
+                                                    <input type="checkbox" name="checkbox" checked> 금요일
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 토요일
+                                                    <input type="checkbox" name="checkbox" checked> 토요일
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 일요일
+                                                    <input type="checkbox" name="checkbox" checked> 일요일
                                                 </label>
                                             </div>
 
@@ -718,7 +694,7 @@
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 바다
+                                                    <input type="checkbox" name="checkbox" checked> 바다
                                                 </label>
                                             </div>
                                             <div class="checkbox">
@@ -733,12 +709,12 @@
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 주차장
+                                                    <input type="checkbox" name="checkbox" checked> 주차장
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="checkbox"> 캠핑장
+                                                    <input type="checkbox" name="checkbox" checked> 캠핑장
                                                 </label>
                                             </div>
                                         </div>
@@ -760,7 +736,7 @@
                                         <div class="modal-dialog modal-top">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="topModalLabel">게시글 삭제</h4>
+                                                    <h4 class="modal-title" id="topModalLabel">게시글 수정 철회</h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -777,7 +753,7 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-light"
                                                         data-bs-dismiss="modal">닫기</button>
-                                                    <button type="button" class="btn btn-primary">기각</button>
+                                                    <button type="button" class="btn btn-primary">철회</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -787,7 +763,7 @@
                                             class="btn btn-primary">뒤로가기</button>
                                         <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#top-modal">요청철회</button>
-                                        <button type="submit" class="btn btn-primary">등록</button>
+                                        <button type="submit" class="btn btn-primary">수정확인</button>
                                     </div>
                                 </form>
 
@@ -796,7 +772,7 @@
 
                     </div>
                 </div>
-
+</div>
             </div>
         </div>
     </div>
