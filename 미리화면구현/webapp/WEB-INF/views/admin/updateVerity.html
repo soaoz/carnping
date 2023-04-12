@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/datatables/datatables.min.css">
+
+    <style>
+        .wrap-vertical {
+
+            padding: 20px;
+            overflow: scroll;
+
+            /* 가로 스크롤 */
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+        .contentImg {
+            padding: 30px;
+            text-align: center;
+
+        }
+
+        .bigImgs {
+            margin-bottom: 10px;
+        }
+
+        .bigImg {
+            width: 310px;
+            height: 310px;
+        }
+
+        .smallImgs {
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+        .smallImg {
+            width: 100px;
+            height: 100px;
+
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+
+
+        <div class="header header-one">
+            <div class="header-left header-left-one">
+                <a href="index.html" class="logo">
+                    <img src="assets/img/Logo.png" alt="Logo">
+                </a>
+            </div>
+            <a href="javascript:void(0);" id="toggle_btn">
+                <i class="fas fa-bars"></i>
+            </a>
+            <div class="top-nav-search">
+                <form>
+                    <input type="text" class="form-control" placeholder="Search here">
+                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <a class="mobile_btn" id="mobile_btn">
+                <i class="fas fa-bars"></i>
+            </a>
+            <ul class="nav nav-tabs user-menu">
+
+
+                <li class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                        <i data-feather="bell"></i> <span class="badge rounded-pill">5</span>
+                    </a>
+                    <div class="dropdown-menu notifications">
+                        <div class="topnav-dropdown-header">
+                            <span class="notification-title">Notifications</span>
+                            <a href="javascript:void(0)" class="clear-noti"> Clear All</a>
+                        </div>
+                        <div class="noti-content">
+                            <ul class="notification-list">
+                                <li class="notification-message">
+                                    <a href="activities.html">
+                                        <div class="media d-flex">
+                                            <span class="avatar avatar-sm">
+                                                <img class="avatar-img rounded-circle" alt=""
+                                                    src="assets/img/profiles/usermain.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">Brian Johnson</span>
+                                                    paid the invoice <span class="noti-title">#DF65485</span></p>
+                                                <p class="noti-time"><span class="notification-time">4 mins ago</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="notification-message">
+                                    <a href="activities.html">
+                                        <div class="media d-flex">
+                                            <span class="avatar avatar-sm">
+                                                <img class="avatar-img rounded-circle" alt=""
+                                                    src="assets/img/profiles/avatar-03.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">Marie Canales</span>
+                                                    has accepted your estimate <span
+                                                        class="noti-title">#GTR458789</span></p>
+                                                <p class="noti-time"><span class="notification-time">6 mins ago</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="notification-message">
+                                    <a href="activities.html">
+                                        <div class="media d-flex">
+                                            <div class="avatar avatar-sm">
+                                                <span class="avatar-title rounded-circle bg-primary-light"><i
+                                                        class="far fa-user"></i></span>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">New user
+                                                        registered</span></p>
+                                                <p class="noti-time"><span class="notification-time">8 mins ago</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="notification-message">
+                                    <a href="activities.html">
+                                        <div class="media d-flex">
+                                            <span class="avatar avatar-sm">
+                                                <img class="avatar-img rounded-circle" alt=""
+                                                    src="assets/img/profiles/avatar-04.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">Barbara Moore</span>
+                                                    declined the invoice <span class="noti-title">#RDW026896</span></p>
+                                                <p class="noti-time"><span class="notification-time">12 mins ago</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="notification-message">
+                                    <a href="activities.html">
+                                        <div class="media d-flex">
+                                            <div class="avatar avatar-sm">
+                                                <span class="avatar-title rounded-circle bg-info-light"><i
+                                                        class="far fa-comment"></i></span>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">You have received a new
+                                                        message</span></p>
+                                                <p class="noti-time"><span class="notification-time">2 days ago</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="topnav-dropdown-footer">
+                            <a href="activities.html">View all Notifications</a>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                        <span class="user-img">
+                            <img src="assets/img/userImg.png" alt="">
+                            <span class="status online"></span>
+                        </span>
+                        <span>Admin</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="login.html"><i data-feather="log-out" class="me-1"></i>
+                            Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title"><span>메뉴</span></li>
+                        <li class="active">
+                            <a href="index.html"><i data-feather="home"></i> <span>대시보드</span></a>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i data-feather="users"></i> <span>회원관리</span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="member.html">회원관리</a></li>
+                                <li><a href="memReport.html">신고 및 정지관리</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i data-feather="clipboard"></i> <span>게시글관리</span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="carList.html">차박게시글</a></li>
+                                <li><a href="verity.html">차박게시글 검수</a></li>
+                                <li><a href="#">커뮤니티게시글</a></li>
+                                <li><a href="#">채팅관리</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="noticeManagement.html"><i data-feather="star"></i> <span>공지사항관리</span></a>
+                        </li>
+                        <li>
+                            <a href="officerCrown.html"><i data-feather="credit-card"></i> <span>Q&A관리</span></a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">기존 차박 게시글</h5>
+                            </div>
+                            <div class="card-body">
+                                <form action="#" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" value="" name="imgSrc">
+                                    <input type="hidden" value="" name="cinfoNo">
+
+
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">게시 사유</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName" placeholder=""
+                                                value="오늘 따라 게시하고싶네요" name="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">이미지</label>
+                                        <div class="col-sm-9 contentImg">
+                                            <div class="bigImgs">
+                                                <img class="bigImg" src="assets/img/yangyang_3.png"
+                                                    style="height: 300px;width: 450px;">
+                                            </div>
+                                            <div class="smallImgs">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/detail-1.PNG">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/detail-2.PNG">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/detail-3.PNG">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">차박 게시글 이름</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName"
+                                                placeholder="게시글 이름 입력" value="황제 서핑 서면으로 오세요" name="memId" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 내용</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
+                                                style="height: 189px;" name="cinfoContent" placeholder="게시글 내용 입력"
+                                                readonly>지금까지 이런 곳은 없었다</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 유의사항</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
+                                                style="height: 189px;" name="cinfoContent" placeholder="게시글 유의사항 입력"
+                                                readonly>리얼 맛집입니다.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">위도</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName"
+                                                placeholder="위도가 자동으로 입력됩니다." value="" name="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">경도</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName"
+                                                placeholder="경도가 자동으로 입력됩니다." value="" name="" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="email" class="col-sm-3 col-form-label input-label">우편번호</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="우편번호" value="12345"
+                                                name="" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="phone" class="col-sm-3 col-form-label input-label">주소
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="phone" class="form-control" placeholder="우편번호 이용"
+                                                value="서울시 강남구 개포동포동" name="address" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="addressDetail" class="col-sm-3 col-form-label input-label">상세주소
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="상세주소 입력" value="1단지"
+                                                name="addressDetail">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3">편의시설</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 공중화장실
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 주차장
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 병원
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 편의점
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 화기가능
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 소음가능
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 취사가능
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 수평맞음
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3">영업일</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 월요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 화요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 수요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 목요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 금요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 토요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 일요일
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3">태그</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 강
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 바다
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 숲
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 산
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 주차장
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 캠핑장
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row form-group">
+                                        <label for="poster" class="col-sm-3 col-form-label input-label">요청일
+                                            <span class="text-muted"></span></label>
+                                        <div class="col-sm-9">
+                                            <input type="phone" class="form-control" id="tel" placeholder="요청일" value=""
+                                                name="EnrollDate" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div id="top-modal" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-top">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="topModalLabel">게시글 삭제</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="#">
+                                                        <br>
+                                                        <h5 align="center">정말로 **를(을) 요청철회를 하시겠습니까?</h5>
+                                                        <p align="center" style="color:gray">요청을 철회를 하신다면 사유를 입력해주세요.
+                                                        </p>
+                                                        <textarea name="" id="" cols="60" rows="10"></textarea>
+                                                    </form>
+                                                </div>
+                                                <hr>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light"
+                                                        data-bs-dismiss="modal">닫기</button>
+                                                    <button type="button" class="btn btn-primary">기각</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="button" onclick="history.back()"
+                                            class="btn btn-primary">뒤로가기</button>
+                                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#top-modal">요청철회</button>
+                                        <button type="submit" class="btn btn-primary">등록</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">기존 차박 게시글</h5>
+                            </div>
+                            <div class="card-body">
+                                <form action="#" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" value="" name="imgSrc">
+                                    <input type="hidden" value="" name="cinfoNo">
+
+
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">게시 사유</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName" placeholder=""
+                                                value="오늘 따라 게시하고싶네요" name="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">이미지</label>
+                                        <div class="col-sm-9 contentImg">
+                                            <div class="bigImgs">
+                                                <img class="bigImg" src="assets/img/yangyang_3.png"
+                                                    style="height: 300px;width: 450px;">
+                                            </div>
+                                            <div class="smallImgs">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/detail-1.PNG">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/detail-2.PNG">
+                                                <img class="smallImg" style="height: 100px;width: 150px;"
+                                                    src="assets/img/detail-3.PNG">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">차박 게시글 이름</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName"
+                                                placeholder="게시글 이름 입력" value="황제 서핑 서면으로 오세요" name="memId" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 내용</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
+                                                style="height: 189px;" name="cinfoContent" placeholder="게시글 내용 입력"
+                                                readonly>지금까지 이런 곳은 없었다</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 유의사항</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
+                                                style="height: 189px;" name="cinfoContent" placeholder="게시글 유의사항 입력"
+                                                readonly>리얼 맛집입니다.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">위도</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName"
+                                                placeholder="위도가 자동으로 입력됩니다." value="" name="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="id" class="col-sm-3 col-form-label input-label">경도</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="cinfoName"
+                                                placeholder="경도가 자동으로 입력됩니다." value="" name="" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="email" class="col-sm-3 col-form-label input-label">우편번호</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="우편번호" value="12345"
+                                                name="" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="phone" class="col-sm-3 col-form-label input-label">주소
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="phone" class="form-control" placeholder="우편번호 이용"
+                                                value="서울시 강남구 개포동포동" name="address" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="addressDetail" class="col-sm-3 col-form-label input-label">상세주소
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="상세주소 입력" value="1단지"
+                                                name="addressDetail">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3">편의시설</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 공중화장실
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 주차장
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 병원
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 편의점
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 화기가능
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 소음가능
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 취사가능
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 수평맞음
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3">영업일</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 월요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 화요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 수요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 목요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 금요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 토요일
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 일요일
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3">태그</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 강
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 바다
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 숲
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 산
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 주차장
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="checkbox"> 캠핑장
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row form-group">
+                                        <label for="poster" class="col-sm-3 col-form-label input-label">요청일
+                                            <span class="text-muted"></span></label>
+                                        <div class="col-sm-9">
+                                            <input type="phone" class="form-control" id="tel" placeholder="요청일" value=""
+                                                name="EnrollDate" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div id="top-modal" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-top">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="topModalLabel">게시글 삭제</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="#">
+                                                        <br>
+                                                        <h5 align="center">정말로 **를(을) 요청철회를 하시겠습니까?</h5>
+                                                        <p align="center" style="color:gray">요청을 철회를 하신다면 사유를 입력해주세요.
+                                                        </p>
+                                                        <textarea name="" id="" cols="60" rows="10"></textarea>
+                                                    </form>
+                                                </div>
+                                                <hr>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light"
+                                                        data-bs-dismiss="modal">닫기</button>
+                                                    <button type="button" class="btn btn-primary">기각</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="button" onclick="history.back()"
+                                            class="btn btn-primary">뒤로가기</button>
+                                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#top-modal">요청철회</button>
+                                        <button type="submit" class="btn btn-primary">등록</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+            <script data-cfasync="false"
+                src="../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+            <script src="assets/js/jquery-3.6.0.min.js"></script>
+
+            <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+            <script src="assets/js/feather.min.js"></script>
+
+            <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+            <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+            <script src="assets/plugins/datatables/datatables.min.js"></script>
+
+            <script src="assets/js/script.js"></script>
+            <script>
+
+
+                $(function () {
+                    let $bigPic = $(".bigImg");
+                    let $small = $(".smallImg");
+
+                    for (let i = 0; i < $small.length; i++) {
+                        $small[i].addEventListener("click", changepic);
+
+                        console.log($small[i]);
+                    }
+
+                    function changepic() {
+                        let $smallPicAttribute = this.getAttribute("src");
+                        console.log($smallPicAttribute)
+                        $bigPic.attr("src", $smallPicAttribute);
+
+                    }
+                })
+            </script>
+</body>
+
+</html>
