@@ -220,35 +220,6 @@
                             <a href="add-customer.html" class="btn btn-primary me-1">
                                 <i class="fas fa-plus"></i>
                             </a>
-                            <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
-                                <i class="fas fa-filter"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div id="filter_inputs" class="card filter-card">
-                    <div class="card-body pb-0">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <label>이름</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <label>휴대폰</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -344,7 +315,8 @@
                                                         class="btn btn-sm btn-white text-success me-2"><i
                                                             class="far fa-edit me-1"></i> 수정</a>
                                                     <a href="javascript:void(0);"
-                                                        class="btn btn-sm btn-white text-danger me-2"><i
+                                                        class="btn btn-sm btn-white text-danger me-2"
+                                                        data-bs-toggle="modal" data-bs-target="#top-modal"><i
                                                             class="far fa-trash-alt me-1"></i>탈퇴</a>
                                                 </td>
                                             </tr>
