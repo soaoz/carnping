@@ -123,7 +123,7 @@
                     
                                 <div align="center">
                                     <!-- 수정하기, 삭제하기 버튼은 이글이 본인글일 경우만 보여져야됨 -->
-                                    <button type="button" class="btn btn-success">수정하기</button> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
+                                    <button type="button" class="btn btn-success" style="background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);">수정하기</button> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
                                         <a class="btn btn-danger" onclick="">삭제하기</a>
                                 </div><br><br>
                                 
@@ -134,84 +134,98 @@
                             <br><br>
                         </div>
                         
-                        <div class="listing__details__comment">
+                        <ul class="listing__details__comment ul_line">
                             <h4>댓글</h4>
-
-                            <thead>
-                                <tr>
-                                    <th colspan="2">
-                                        <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
-                                    </th>
-                                    <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
-                                </tr>
+                            
+                            <li>
+                                <div class="listing__details__comment__item">
+                                    <div class="listing__details__comment__item__pic">
+                                        <img src="img/20258.jpg" alt="">
+                                    </div>
+                                    <div class="listing__details__comment__item__text">
+                                        <div class="listing__details__comment__item__rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <span>March 22, 2019</span>
+                                        <h5>임준석</h5>
+                                        <div>
+                                            <p>DM드릴게요</p>
+                                            <img class="zoom" src="" alt="">
+                                            <ul class="ul_line">
+                                                <li><i class="fa fa-hand-o-right"></i> 좋아요</li>
+                                                <li ><button type="button" class="scroll_reply"><i class="fa fa-share-square-o"></i>(3)댓글</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <ul class="ul_line ul_reply3">
+                                        <hr>
+                                        <div class="list_detail_reply">
+                                            <li>
+                                                <div class="listing__details__comment__item__pic">
+                                                    <img src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2019/02/11/c3fb2eb9-8326-40db-a29e-56685f8af6f7.JPG" alt="">
+                                                </div>
+                                                <div class="listing__details__comment__item__text">
+                                                    <span>March 22, 2019</span>
+                                                    <h5>윈터1</h5>
+                                                    <p>은우랑 같이왔어요 바람도 적당하고 너무너무 좋았습니다 나중에 또와도 좋을것 같아요!!</p>
+                                                </div>
+                                            </li>
+                                        </div>
+                                        <hr>
+                                        <div class="list_detail_reply">
+                                            <li>
+                                                <div class="listing__details__comment__item__pic">
+                                                    <img src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2019/02/11/c3fb2eb9-8326-40db-a29e-56685f8af6f7.JPG" alt="">
+                                                </div>
+                                                <div class="listing__details__comment__item__text">
+                                                    <span>March 22, 2019</span>
+                                                    <h5>윈터2</h5>
+                                                    <p>은우랑 같이왔어요 바람도 적당하고 너무너무 좋았습니다 나중에 또와도 좋을것 같아요!!</p>
+                                                </div>
+                                            </li>
+                                        </div>
+                                        <hr>
+                                        <div class="list_detail_reply">
+                                            <li>
+                                                <div class="listing__details__comment__item__pic">
+                                                    <img src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2019/02/11/c3fb2eb9-8326-40db-a29e-56685f8af6f7.JPG" alt="">
+                                                </div>
+                                                <div class="listing__details__comment__item__text">
+                                                    <span>March 22, 2019</span>
+                                                    <h5>윈터3</h5>
+                                                    <p>은우랑 같이왔어요 바람도 적당하고 너무너무 좋았습니다 나중에 또와도 좋을것 같아요!!</p>
+                                                </div>
+                                            </li>
+                                        </div>
+                                        
+                                        <li>
+                                            <div class="listing__details__review">
+                                            <form action="">
+                                                <textarea placeholder="대댓글"></textarea>
+                                                <button type="submit" class="site-btn">대댓글 등록</button>
+                                            </form>
+                                        </div>
+                                        </li>
+                                    </ul>
                                 
-                            </thead> <br><br><br>
-                            <div class="listing__details__comment__item">
-                                <div class="listing__details__comment__item__pic">
-                                    <img src="img/listing/details/comment.png" alt="">
                                 </div>
-                                <div class="listing__details__comment__item__text">
-                                    <div class="listing__details__comment__item__rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <span>March 22, 2019</span>
-                                    <h5>Marry Jane</h5>
-                                    <p>From ships to airports, museums to burger vans, from revered Michelin star
-                                        establish to the fleeting dynamism of pop-ups.</p>
-                                    <ul>
-                                        <li><i class="fa fa-hand-o-right"></i> Like</li>
-                                        <li><i class="fa fa-share-square-o"></i> Reply</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="listing__details__comment__item">
-                                <div class="listing__details__comment__item__pic">
-                                    <img src="img/listing/details/comment.png" alt="">
-                                </div>
-                                <div class="listing__details__comment__item__text">
-                                    <div class="listing__details__comment__item__rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <span>March 22, 2019</span>
-                                    <h5>Marry Jane</h5>
-                                    <p>From ships to airports, museums to burger vans, from revered Michelin star
-                                        establish to the fleeting dynamism of pop-ups.</p>
-                                    <ul>
-                                        <li><i class="fa fa-hand-o-right"></i> Like</li>
-                                        <li><i class="fa fa-share-square-o"></i> Reply</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="listing__details__comment__item">
-                                <div class="listing__details__comment__item__pic">
-                                    <img src="img/listing/details/comment.png" alt="">
-                                </div>
-                                <div class="listing__details__comment__item__text">
-                                    <div class="listing__details__comment__item__rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <span>March 22, 2019</span>
-                                    <h5>Marry Jane</h5>
-                                    <p>From ships to airports, museums to burger vans, from revered Michelin star
-                                        establish to the fleeting dynamism of pop-ups.</p>
-                                    <ul>
-                                        <li><i class="fa fa-hand-o-right"></i> Like</li>
-                                        <li><i class="fa fa-share-square-o"></i> Reply</li>
-                                    </ul>
-                                </div>
-                            </div>
+                             
+                            </li>
+                        </ul>
+
+                        <script>
+                            
+                        </script>
+                        <div class="listing__details__review">
+                            <h4>댓글 작성</h4>
+                            <form action="#">
+                                <textarea placeholder="Review"></textarea>
+                                <button type="submit" class="site-btn">댓글등록</button>
+                            </form>
                         </div>
 
                         
