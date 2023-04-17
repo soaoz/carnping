@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-sdfsdfHGFHGFHGFHF
-수정수정
+	<jsp:forward page = "WEB-INF/views/main.jsp"/>
 </body>
 </html>
