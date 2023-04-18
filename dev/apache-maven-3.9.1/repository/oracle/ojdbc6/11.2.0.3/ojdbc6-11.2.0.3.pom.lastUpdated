@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Apr 18 14:21:16 KST 2023
+http\://www.datanucleus.org/downloads/maven2/.lastUpdated=1681795276152
+https\://repo.maven.apache.org/maven2/.lastUpdated=1681794282264
+@default-Spring\ Plugins-http\://repo.spring.io/plugins-release/.lastUpdated=1681794953217
+https\://repo.maven.apache.org/maven2/.error=
+http\://repo.spring.io/plugins-release/.error=Could not transfer artifact oracle\:ojdbc6\:pom\:11.2.0.3 from/to Spring Plugins (http\://repo.spring.io/plugins-release/)\: Access denied to http\://repo.spring.io/plugins-release/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.pom. Error code 401, 

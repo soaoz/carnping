@@ -90,4 +90,39 @@ public class AdminController {
 		return "admin/carDetail";
 	}
 	
+	/**
+	 * 공지사항관리/ 공지사항 수정으로 이동
+	 */
+	@RequestMapping("updateNotice.ad")
+	public String updateNotice() {
+		return "admin/updateNotice";
+	}
+
+	/**
+	 * 공지사항관리/ 공지사항 등록으로 이동
+	 */
+	@RequestMapping("insertNotice.ad")
+	public String insertNotice() {
+		return "admin/insertNotice";
+	}
+	
+	/**
+	 * 차박게시글 등록 검수로 이동
+	 */
+	@RequestMapping("insertVerity.ad")
+	public String insertVerity() {
+		return "admin/insertVerity";
+	}	
+	
+	/**
+	 * 차박게시글 수정 검수로 이동
+	 */
+	@RequestMapping("updateVerity.ad")
+	public String updateVerity() {
+		return "admin/updateVerity";
+	}
+	
+	
+
+	
 }

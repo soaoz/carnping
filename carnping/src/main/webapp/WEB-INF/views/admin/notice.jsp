@@ -118,7 +118,7 @@
                                             <td>121</td>
                                             <td>2020-02-11</td>
                                             <td class="text-end">
-                                                <a href="updateNotice.html"
+                                                <a href="updateNotice.ad"
                                                     class="btn btn-sm btn-white text-success me-2"><i
                                                         class="far fa-edit me-1"></i> 상세(수정)</a>
                                                 <a href="javascript:void(0);"
