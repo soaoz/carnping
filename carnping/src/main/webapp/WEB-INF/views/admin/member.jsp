@@ -81,7 +81,9 @@
                                                 <td>2020-12-13</td>
                                                 <td><span class="badge badge-pill bg-success-light">활동중</span></td>
                                                 <td class="text-end">
-                                                    <a href="memEdit.html"
+                                                    <!-- 회원 번호 -->
+                                                    <a href="memEdit.ad"
+                                                    
                                                         class="btn btn-sm btn-white text-success me-2"><i
                                                             class="far fa-edit me-1"></i> 수정</a>
                                                     <a href="javascript:void(0);"
