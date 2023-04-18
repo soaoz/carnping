@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 	@RequestMapping("myProfile.me")
 	public String myProfile() {
-		return "common/footer";
+		return "member/myProfile";
 	}
 
 }
