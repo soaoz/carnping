@@ -29,6 +29,10 @@
 
     <!-- icon(fontawesome.com) 등록 -->
     <script src="https://kit.fontawesome.com/78c41960c5.js" crossorigin="anonymous"></script>
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 
     <style>
         #addSite{
@@ -43,14 +47,20 @@
             font-style: normal;
         }
 
-        h2{
+        h2, h3{
             font-family: unset;
         }
 
         *{
             font-family: 'Jal_Onuel';
             font-weight: 200;
-            letter-spacing: 0.15em;
+            /* letter-spacing: 0.15em; */
+        }
+
+        .modal *{
+            letter-spacing: unset;
+            font-family: 'Jal_Onuel';
+            font-weight: 200;
         }
 
 
@@ -58,6 +68,11 @@
             padding-right:10px;
         }
         
+        header{
+
+        letter-spacing: 0.15em;
+        }
+
         #themeTags a{
             border-radius:50px;
         }
@@ -87,6 +102,9 @@
             background-color:white;
             transition: color .4s ease 0s,background-color .4s ease 0s
         }
+        
+        
+
 
     </style>
 </head>
