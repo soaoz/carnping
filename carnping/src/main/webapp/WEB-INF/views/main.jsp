@@ -10,7 +10,7 @@
 	<jsp:include page="common/header.jsp"/>
 	
 	    <!-- Hero Section Begin -->
-    <section class="hero set-bg" data-setbg="resources/resources/img/temp3.jpg">
+    <section class="hero set-bg" data-setbg="resources/img/temp3.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -65,27 +65,27 @@
                     </div>
                     <div class="categories__item__list">
                         <div class="categories__item">
-                            <img src="resources/resources/img/categories/cat-1.png" alt="">
+                            <img src="resources/img/categories/cat-1.png" alt="">
                             <h5>Food & Drink</h5>
                             <span>78 Listings</span>
                         </div>
                         <div class="categories__item">
-                            <img src="resources/resources/img/categories/cat-2.png" alt="">
+                            <img src="resources/img/categories/cat-2.png" alt="">
                             <h5>Restaurent</h5>
                             <span>32 Listings</span>
                         </div>
                         <div class="categories__item">
-                            <img src="resources/resources/img/categories/cat-3.png" alt="">
+                            <img src="resources/img/categories/cat-3.png" alt="">
                             <h5>Hotels</h5>
                             <span>16 Listings</span>
                         </div>
                         <div class="categories__item">
-                            <img src="resources/resources/img/categories/cat-4.png" alt="">
+                            <img src="resources/img/categories/cat-4.png" alt="">
                             <h5>Beauty & Spa</h5>
                             <span>55 Listings</span>
                         </div>
                         <div class="categories__item">
-                            <img src="resources/resources/img/categories/cat-5.png" alt="">
+                            <img src="resources/img/categories/cat-5.png" alt="">
                             <h5>Shopping</h5>
                             <span>23 Listings</span>
                         </div>
@@ -154,8 +154,8 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-1.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-1.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-1.jpg">
+                                            <img src="resources/img/listing/list_icon-1.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -183,7 +183,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-1.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-1.png" alt="">
                                                     <span>Restaurant</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -193,8 +193,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-2.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-2.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-2.jpg">
+                                            <img src="resources/img/listing/list_icon-2.png" alt="">
                                             <div class="listing__item__pic__tag top_rate">Top Rate</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -222,7 +222,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-2.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-2.png" alt="">
                                                     <span>Food & Drink</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right closed">Closed</div>
@@ -233,7 +233,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
                                         <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-3.jpg">
-                                            <resources/img src="resources/resources/img/listing/list_icon-3.png" alt="">
+                                            <resources/img src="resources/img/listing/list_icon-3.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -261,7 +261,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-1.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-1.png" alt="">
                                                     <span>Restaurant</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -271,8 +271,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-4.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-4.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-4.jpg">
+                                            <img src="resources/img/listing/list_icon-4.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -300,7 +300,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-3.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-3.png" alt="">
                                                     <span>Hotel</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right closed">Closed</div>
@@ -310,8 +310,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-5.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-5.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-5.jpg">
+                                            <img src="resources/img/listing/list_icon-5.png" alt="">
                                             <div class="listing__item__pic__tag hot_deal">Hot Deal</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -339,7 +339,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-4.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-4.png" alt="">
                                                     <span>Shopping</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -349,8 +349,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-6.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-6.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-6.jpg">
+                                            <img src="resources/img/listing/list_icon-6.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -378,7 +378,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-3.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-3.png" alt="">
                                                     <span>Hotel</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -392,8 +392,8 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-1.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-1.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-1.jpg">
+                                            <img src="resources/img/listing/list_icon-1.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -421,7 +421,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-1.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-1.png" alt="">
                                                     <span>Restaurant</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -431,8 +431,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-2.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-2.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-2.jpg">
+                                            <img src="resources/img/listing/list_icon-2.png" alt="">
                                             <div class="listing__item__pic__tag top_rate">Top Rate</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -460,7 +460,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-2.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-2.png" alt="">
                                                     <span>Food & Drink</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right closed">Closed</div>
@@ -470,8 +470,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-3.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-3.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-3.jpg">
+                                            <img src="resources/img/listing/list_icon-3.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -499,7 +499,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-1.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-1.png" alt="">
                                                     <span>Restaurant</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -509,8 +509,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-4.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-4.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-4.jpg">
+                                            <img src="resources/img/listing/list_icon-4.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -538,7 +538,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-3.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-3.png" alt="">
                                                     <span>Hotel</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right closed">Closed</div>
@@ -548,8 +548,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-5.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-5.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-5.jpg">
+                                            <img src="resources/img/listing/list_icon-5.png" alt="">
                                             <div class="listing__item__pic__tag hot_deal">Hot Deal</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -577,7 +577,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-4.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-4.png" alt="">
                                                     <span>Shopping</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -591,8 +591,8 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-3.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-3.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-3.jpg">
+                                            <img src="resources/img/listing/list_icon-3.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -620,7 +620,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-1.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-1.png" alt="">
                                                     <span>Restaurant</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -630,8 +630,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-4.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-4.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-4.jpg">
+                                            <img src="resources/img/listing/list_icon-4.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -659,7 +659,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-3.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-3.png" alt="">
                                                     <span>Hotel</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right closed">Closed</div>
@@ -669,8 +669,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-5.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-5.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-5.jpg">
+                                            <img src="resources/img/listing/list_icon-5.png" alt="">
                                             <div class="listing__item__pic__tag hot_deal">Hot Deal</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -698,7 +698,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-4.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-4.png" alt="">
                                                     <span>Shopping</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -708,8 +708,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-6.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-6.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-6.jpg">
+                                            <img src="resources/img/listing/list_icon-6.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -737,7 +737,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-3.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-3.png" alt="">
                                                     <span>Hotel</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -751,8 +751,8 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-1.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-1.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-1.jpg">
+                                            <img src="resources/img/listing/list_icon-1.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -780,7 +780,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-1.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-1.png" alt="">
                                                     <span>Restaurant</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -790,8 +790,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-2.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-2.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-2.jpg">
+                                            <img src="resources/img/listing/list_icon-2.png" alt="">
                                             <div class="listing__item__pic__tag top_rate">Top Rate</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -819,7 +819,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-2.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-2.png" alt="">
                                                     <span>Food & Drink</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right closed">Closed</div>
@@ -829,8 +829,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-3.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-3.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-3.jpg">
+                                            <img src="resources/img/listing/list_icon-3.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -858,7 +858,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-1.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-1.png" alt="">
                                                     <span>Restaurant</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -868,8 +868,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-6.jpg">
-                                            <img src="resources/resources/img/listing/list_icon-6.png" alt="">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-6.jpg">
+                                            <img src="resources/img/listing/list_icon-6.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="#"><span class="icon_zoom-in_alt"></span></a>
@@ -897,7 +897,7 @@
                                             </div>
                                             <div class="listing__item__text__info">
                                                 <div class="listing__item__text__info__left">
-                                                    <img src="resources/resources/img/listing/list_small_icon-3.png" alt="">
+                                                    <img src="resources/img/listing/list_small_icon-3.png" alt="">
                                                     <span>Hotel</span>
                                                 </div>
                                                 <div class="listing__item__text__info__right">Open Now</div>
@@ -911,7 +911,7 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg" data-setbg="resources/resources/img/listing/list-1.jpg">
+                                        <div class="listing__item__pic set-bg" data-setbg="resources/img/listing/list-1.jpg">
                                             <img src="resources/img/listing/list_icon-1.png" alt="">
                                             <div class="listing__item__pic__tag">Popular</div>
                                             <div class="listing__item__pic__btns">
@@ -1538,7 +1538,7 @@
         </div>
     </section>
     <!-- Newslatter Section End -->
-	
+	<a href="admin.ad">admin으로가기(임시)</a>
 	<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
