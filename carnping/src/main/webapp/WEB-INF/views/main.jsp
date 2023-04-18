@@ -1538,7 +1538,7 @@
         </div>
     </section>
     <!-- Newslatter Section End -->
-	
+	<a href="admin.ad">admin으로가기(임시)</a>
 	<jsp:include page="common/footer.jsp"/>
 </body>
 </html>

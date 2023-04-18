@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Apr 18 14:22:04 KST 2023
+lombok-1.18.12.jar>central=
+lombok-1.18.12-sources.jar>central=
+lombok-1.18.12.pom>central=

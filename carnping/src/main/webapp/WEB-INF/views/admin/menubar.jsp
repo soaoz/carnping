@@ -8,11 +8,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 <title>Jassa - Bootstrap Admin HTML Template</title>
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="shortcut icon" href="resources/admin/assets/img/favicon.png" type="text/css">
+<link rel="stylesheet" href="resources/admin/assets/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/fontawesome.min.css"type="text/css">
+<link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/all.min.css"type="text/css">
+<link rel="stylesheet" href="resources/admin/assets/css/style.css" type="text/css">
 </head>
 
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
@@ -22,13 +22,13 @@
 <div class="header header-one">
     <div class="header-left header-left-one">
         <a href="index.html" class="logo">
-            <img src="assets/img/Logo.png" alt="Logo">
+            <img src="resources/admin/assets/img/Logo.png" alt="Logo">
         </a>
         <a href="index.html" class="white-logo">
-            <img src="assets/img/Logo.png" alt="Logo">
+            <img src="resources/admin/assets/img/Logo.png" alt="Logo">
         </a>
         <a href="index.html" class="logo logo-small">
-            <img src="assets/img/Logo.png" alt="Logo" width="30" height="30">
+            <img src="resources/admin/assets/img/Logo.png" alt="Logo" width="30" height="30">
         </a>
     </div>
     <a href="javascript:void(0);" id="toggle_btn">
@@ -62,7 +62,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar avatar-sm">
                                         <img class="avatar-img rounded-circle" alt=""
-                                            src="assets/img/profiles/usermain.jpg">
+                                            src="resources/admin/assets/img/profiles/usermain.jpg">
                                     </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Brian Johnson</span>
@@ -78,7 +78,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar avatar-sm">
                                         <img class="avatar-img rounded-circle" alt=""
-                                            src="assets/img/profiles/avatar-03.jpg">
+                                            src="resources/admin/assets/img/profiles/avatar-03.jpg">
                                     </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Marie Canales</span>
@@ -111,7 +111,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar avatar-sm">
                                         <img class="avatar-img rounded-circle" alt=""
-                                            src="assets/img/profiles/avatar-04.jpg">
+                                            src="/resourassets/img/profiles/avatar-04.jpg">
                                     </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Barbara Moore</span>
@@ -150,7 +150,7 @@
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
-                    <img src="assets/img/userImg.png" alt="">
+                    <img src="resources/admin/assets/img/userImg.png" alt="">
                     <span class="status online"></span>
                 </span>
                 <span>Admin</span>
@@ -174,25 +174,25 @@
                     <a href="#"><i data-feather="users"></i> <span>회원관리</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="member.html">회원관리</a></li>
-                        <li><a href="memReport.html">신고 및 정지관리</a></li>
+                        <li><a href="member.ad">회원관리</a></li>
+                        <li><a href="memReport.ad">신고 및 정지관리</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
                     <a href="#"><i data-feather="clipboard"></i> <span>게시글관리</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="carList.html">차박게시글</a></li>
-                        <li><a href="verity.html">차박게시글 검수</a></li>
-                        <li><a href="community.html">커뮤니티게시글</a></li>
+                        <li><a href="carList.ad">차박게시글</a></li>
+                        <li><a href="verity.ad">차박게시글 검수</a></li>
+                        <li><a href="board.ad">커뮤니티게시글</a></li>
                         <li><a href="#">채팅관리</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="noticeManagement.html"><i data-feather="star"></i> <span>공지사항관리</span></a>
+                    <a href="notice.ad"><i data-feather="star"></i> <span>공지사항관리</span></a>
                 </li>
                 <li>
-                    <a href="officerCrown.html"><i data-feather="credit-card"></i> <span>Q&A관리</span></a>
+                    <a href="inquiryList.ad"><i data-feather="credit-card"></i> <span>Q&A관리</span></a>
                 </li>
                 
                 
@@ -201,13 +201,13 @@
     </div>
 </div>
 
-<script src="assets/js/jquery-3.6.0.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/feather.min.js"></script>
-<script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="assets/plugins/apexchart/apexcharts.min.js"></script>
-<script src="assets/plugins/apexchart/chart-data.js"></script>
-<script src="assets/js/script.js"></script>
+<script src="resources/admin/assets/js/jquery-3.6.0.min.js"></script>
+<script src="resources/admin/assets/js/bootstrap.bundle.min.js"></script>
+<script src="resources/admin/assets/js/feather.min.js"></script>
+<script src="resources/admin/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="resources/admin/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="resources/admin/assets/plugins/apexchart/chart-data.js"></script>
+<script src="resources/admin/assets/js/script.js"></script>
 </body>
 
 </html>

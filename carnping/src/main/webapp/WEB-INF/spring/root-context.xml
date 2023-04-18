@@ -4,5 +4,50 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+		<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
+	  <!-- property name 은  org.apache.commons.dbcp.BasicDataSource에 기본적으로 설정되어 있으므로 함부로 이름을 바꾸면 안됨. -->
+	  		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	  		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+	  		<property name="username" value="carnping"/>
+	  		<property name="password" value="carnping"/>
+	  	</bean>
+
+		<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+			<property name="configLocation" value="classpath:mybatis-config.xml"/>
+			<property name="dataSource" ref="dataSource"/>
+		</bean>
 		
+		<!-- 
+				SqlSessionFactory sqlSessionFactory = new SqlSessionFactory();
+				sqlSessionFactory.setConfigLocation("classpath:mybatis-config.xml");
+				sqlSessionFactory.setDataSourece(dataSource);
+				
+		 -->
+		 
+		 <!-- property는 setter 주입 ! 이라고 생각하면 됨 -->
+		
+		<bean class="org.mybatis.spring.SqlSessionTemplate">
+			<constructor-arg ref="sqlSessionFactory"/>
+		</bean>
+		
+		<!-- 
+			SqlSessionTemplate sqlSession = new SqlSessionTemplate(sqlSessionFactory);
+		 -->
+		<!-- 
+			constructor-arg 이건 매개변수 
+		 -->		
+		<!-- 
+			property : setter 주입
+			constructor-arg : 생성자주입
+		 -->
+		 
+		 <!-- 파일 업로드 관련 빈 등록 -->
+		 <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		 <!-- name 정해져 있으므로 틀리면 안됨 -->
+		 	<property name="maxUploadSize" 	value="10000000"/><!-- 100MB -->
+		 	<property name="maxInMemorySize" value="10000000"/>
+		 	
+		 </bean>
+		 
+
 </beans>
