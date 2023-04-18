@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Apr 18 12:17:38 KST 2023
+spring-security-core-5.7.3.jar>central=
+spring-security-core-5.7.3-sources.jar>central=
+spring-security-core-5.7.3.pom>central=
