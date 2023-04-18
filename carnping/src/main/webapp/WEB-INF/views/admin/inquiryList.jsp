@@ -61,7 +61,7 @@
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="carDetail.html" class="avatar avatar-md me-2"><img
+                                                    <a href="inquiryInsert.ad" class="avatar avatar-md me-2"><img
                                                             class="avatar-img rounded-circle"
                                                             src="../car/img/yangyang_3.png"
                                                             alt="User Image"></a>
@@ -77,7 +77,7 @@
                                             <td><span class="badge badge-pill bg-success-light">답변완료</span></td>
                                             
                                             <td class="text-end">
-                                                <a href="carDetail.html"
+                                                <a href="inquiryInsert.ad"
                                                     class="btn btn-sm btn-white text-success me-2"><i
                                                         class="far fa-edit me-1"></i> 상세(수정)</a>
                                                 <a href="javascript:void(0);"
@@ -115,7 +115,7 @@
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="carDetail.html" class="avatar avatar-md me-2"><img
+                                                    <a href="inquiryInsert.ad" class="avatar avatar-md me-2"><img
                                                             class="avatar-img rounded-circle"
                                                             src="../car/img/test2.png"
                                                             alt="User Image"></a>
@@ -128,7 +128,7 @@
                                             <td>2020-02-11</td>
                                             <td><span class="badge badge-pill bg-danger-light">답변미완료</span></td>
                                             <td class="text-end">
-                                                <a href="carDetail.html"
+                                                <a href="inquiryInsert.ad"
                                                     class="btn btn-sm btn-white text-success me-2"><i
                                                         class="far fa-edit me-1"></i> 상세(답변)</a>
                                                 <a href="javascript:void(0);"

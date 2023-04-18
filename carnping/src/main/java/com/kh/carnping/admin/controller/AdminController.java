@@ -121,6 +121,14 @@ public class AdminController {
 	public String updateVerity() {
 		return "admin/updateVerity";
 	}
+
+	/**
+	 * QnA 답변하기
+	 */
+	@RequestMapping("inquiryInsert.ad")
+	public String inquiryInsert() {
+		return "admin/inquiryInsert";
+	}
 	
 	
 

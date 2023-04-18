@@ -29,8 +29,8 @@
                         </ul>
                     </div>
                     <div class="col-auto">
-                        <a href="insertNotice.html" class="btn btn-primary me-1">
-                            <i class="fas fa-plus"></i>
+                        <a href="insertNotice.ad" class="btn btn-primary me-1">
+                            공지사항 추가
                         </a>
 
                     </div>
@@ -68,7 +68,7 @@
                                             </td>
                                             <td>2020-12-13</td>
                                             <td class="text-end">
-                                                <a href="updateNotice.html"
+                                                <a href="updateNotice.ad"
                                                     class="btn btn-sm btn-white text-success me-2"><i
                                                         class="far fa-edit me-1"></i> 상세(수정)</a>
                                                 <a href="javascript:void(0);"

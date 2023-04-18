@@ -1,6 +1,8 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Tue Apr 18 14:19:53 KST 2023
+#Tue Apr 18 19:45:34 KST 2023
 http\://www.datanucleus.org/downloads/maven2/.lastUpdated=1681795193700
 https\://repo.maven.apache.org/maven2/.lastUpdated=1681794283603
 http\://www.datanucleus.org/downloads/maven2/.error=
+http\://0.0.0.0/.error=Could not transfer artifact oracle\:ojdbc6\:jar\:sources\:11.2.0.3 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [Datanucleus (http\://www.datanucleus.org/downloads/maven2/, default, releases+snapshots)]
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1681814734736
 https\://repo.maven.apache.org/maven2/.error=

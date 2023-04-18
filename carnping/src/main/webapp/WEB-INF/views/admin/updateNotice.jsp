@@ -56,7 +56,7 @@
     <div class="col-xl-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">공지사항 등록</h5>
+                <h5 class="card-title">공지사항 상세 수정</h5>
             </div>
             <div class="card-body">
                 <form action="#" method="post"
