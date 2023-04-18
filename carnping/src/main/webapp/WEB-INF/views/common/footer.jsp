@@ -168,7 +168,7 @@
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                         </div>
                         <div class="footer__copyright__links">
-                            <a href="#">이용약관</a>
+                            <a href="myProfile.me">이용약관</a>
                             <a href="#">개인정보 취급방침</a>
                             <a href="#">고객센터</a>
                         </div>
