@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.carnping.admin.modal.dao.AdminDao;
+import com.kh.carnping.admin.model.dao.AdminDao;
 import com.kh.carnping.member.model.vo.Member;
 
 @Service
