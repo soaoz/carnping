@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.carnping.board.modal.service.BoardServiceImpl;
+import com.kh.carnping.board.model.service.BoardServiceImpl;
+
+
 
 @Controller
 public class BoardController {
