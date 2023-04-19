@@ -4,17 +4,18 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 	<resultMap id="memberResultSet" type="Member">
-		<result column="user_id" property="userId"/>
-		<result column="user_pwd" property="userPwd"/>
-		<result column="user_name" property="userName"/>
-		<result column="email" property="email"/>
-		<result column="gender" property="gender"/>
-		<result column="age" property="age"/>
-		<result column="phone" property="phone"/>
-		<result column="address" property="address"/>
-		<result column="enroll_date" property="enrollDate"/>
-		<result column="modify_date" property="modifyDate"/>
-		<result column="status" property="status"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="MEM_ID" property="memId"/>
+		<result column="MEM_PWD" property="memPwd"/>
+		<result column="MEM_NAME" property="memName"/>
+		<result column="NICKNAME" property="nickName"/>
+		<result column="EMAIL" property="email"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="MEM_IMG" property="memImg"/>
+		<result column="PHONE" property="phone"/>
+		<result column="MEM_API_TYPE" property="memAplType"/>
+		<result column="MEM_API_TOKEN" property="memApiToken"/>
 	</resultMap>
 
 	<select id="loginMember" resultMap="memberResultSet">
@@ -104,6 +105,6 @@
 		SELECT
 				COUNT(*)
 	      FROM  MEMBER
-	     WHERE  USER_ID = #{checkId}
+	     WHERE  MEM_ID = #{checkId}
  	</select>
 </mapper>

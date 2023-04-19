@@ -301,16 +301,35 @@
             $("#agreeBtnDiv").hide();
             $("#idNextBtnDiv").show();
 
-            }
-           ,
-            //        error:function(request,status,error){
+        }
+        ,
+        //        error:function(request,status,error){
             //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             //    }
-           error : function(){
-               console.log("ajax 통신 실패!");
-           }
+            error : function(){
+                console.log("ajax 통신 실패!");
+            }
             
         });
+    }
+    
+    // 아이디 중복확인 
+    function idCheck(){
+
+        const $idInput = $("#enroll-form input[name=userId]")
+        $.ajax({
+            url : "idCheck.me",
+            data : {checkId:$idInput.val()},
+            success : function(result){
+                console.log(result);
+
+            },
+            error : function(){
+                console.log("아이디 중복체크용 ajax 통신 실패!");
+            }
+            
+        });
+                
     }
 
     function validateId(userId) {
@@ -332,41 +351,32 @@
 
             if (isValid) {
                 $('.idCondition').css('visibility','hidden');
-                if(idCheck()){
-                    $('#idNextBtn').prop('disabled', false);
-                };
+                $('#idNextBtn').prop('disabled', false);
+                // console.log(idCheck());
             } else {
                 $('.idCondition').css('visibility','visible');
                 $('#idNextBtn').prop('disabled', true);
             }
 
+            
+            // if (isValid) {
+            //     $('.idCondition').css('visibility','hidden');
+            //     if(idCheck()){
+            //         $(".idCondition").text("사용 가능한 아이디 입니다.");
+            //         $(".idCondition").css('visibility','visible');
+            //         $('#idNextBtn').prop('disabled', false);
+            //     } else {
+            //         $(".idCondition").text("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
+            //     };
+            // } else {
+            //     $('.idCondition').css('visibility','visible');
+            //     $('#idNextBtn').prop('disabled', true);
+            // }
+
+
 
         });
 
-        // 아이디 중복확인 
-        function idCheck(){
-
-           const $idInput = $("#enroll-form input[name=userId]")
-           $.ajax({
-              url : "idCheck.me",
-              data : {checkId:$idInput.val()},
-              success : function(result){
-                  // console.log(result);
-                if(result == "NNNNY"){
-                    $("#idCondition").text("사용 가능한 아이디 입니다.").css("color", "#0ca678");
-                    return true;
-                } else {
-                    $("#idCondition").text("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
-                    return false;
-                }
-              },
-              error : function(){
-                  console.log("아이디 중복체크용 ajax 통신 실패!");
-              }
-               
-           });
-                 
-     }
 
     </script>
               
