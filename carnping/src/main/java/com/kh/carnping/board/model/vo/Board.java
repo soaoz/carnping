@@ -1,4 +1,4 @@
-package com.kh.carnping.board.modal.vo;
+package com.kh.carnping.board.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
