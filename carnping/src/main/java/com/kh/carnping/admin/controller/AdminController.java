@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.carnping.admin.model.service.AdminServiceImpl;
@@ -29,9 +30,16 @@ public class AdminController {
 	 * 회원관리로 이동
 	 */
 	@RequestMapping("member.ad")
-	public String memNotice() {
-		ArrayList<Member> list = ;
-		return "admin/member";
+	public String memNotice(Model model) {
+		ArrayList<Member> list = mService.memNotice();
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+			return "admin/member";
+		}else {
+			model.addAttribute("errorMsg", "회원이 없습니다.");
+			return "admin/member";
+		}
+		
 	}
 	
 	/**

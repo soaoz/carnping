@@ -68,6 +68,24 @@
 	</select>
 
 
+	<select  id="selectMemberList" resultMap="memberResultSet">
+	SELECT
+	         MEM_NO
+	        ,MEM_ID
+	        ,MEM_PWD
+	        ,MEM_NAME
+	        ,NICKNAME
+	        ,EMAIL
+	        ,ENROLL_DATE
+	        ,STATUS
+	        ,MEM_IMG
+	        ,PHONE
+	        ,MEM_API_TYPE
+	        ,MEM_API_TOKEN
+	 FROM MEMBER
+	WHERE MEM_ID != 'ADMIN'
+	</select>
+
 
 
 
