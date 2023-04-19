@@ -131,7 +131,7 @@
                                     <li class="active"><a href="./index.html">Home</a></li>
                                     <li><a href="./listing.html">차박지도</a></li>
                                     <li><a href="#">함께가요</a></li>
-                                    <li><a href="./blog.html">무료나눔</a></li>
+                                    <li><a href="freeBoard.bo">무료나눔</a></li>
                                 </ul>
                             </nav>
                             <div class="header__menu__right" style="display:inline-flex">
