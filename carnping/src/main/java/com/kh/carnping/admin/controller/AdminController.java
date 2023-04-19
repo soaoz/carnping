@@ -1,11 +1,20 @@
 package com.kh.carnping.admin.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.carnping.admin.model.service.AdminServiceImpl;
+import com.kh.carnping.member.model.vo.Member;
 
 @Controller
 public class AdminController {
 
+	
+	@Autowired
+	private AdminServiceImpl mService; 
 	
 	/**
 	 * 관리자 페이지 이동
@@ -21,6 +30,7 @@ public class AdminController {
 	 */
 	@RequestMapping("member.ad")
 	public String memNotice() {
+		ArrayList<Member> list = ;
 		return "admin/member";
 	}
 	
