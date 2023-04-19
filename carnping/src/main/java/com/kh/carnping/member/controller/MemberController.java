@@ -36,11 +36,23 @@ public class MemberController {
 		System.out.println(marketingAgree);
 	}
 
+	@ResponseBody
+	@RequestMapping("idConfirmed.me")
+	public void idConfirmed(String memId) {
+		System.out.println(memId);
+	}
+	
+	@ResponseBody
+	@RequestMapping("pwdConfirmed.me")
+	public void pwdConfirmed(String memPwd) {
+		System.out.println(memPwd);
+	}
 
 	@RequestMapping("myProfile.me")
 	public String myProfile() {
 		return "member/myProfile";
 	}
+	
 
 
 }

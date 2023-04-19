@@ -125,6 +125,50 @@
             margin: auto;
             margin-top: 5px;
         }
+        
+        .condition{
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            height: 40px;
+            font-size: 12px;
+            line-height: 20px;
+            padding-left: 5px;
+        }
+
+        .pwdCondition{
+            position: relative;
+            padding-right: 28px;
+            color: rgb(196, 196, 196);
+        }
+
+        .pwdCondition::after{
+            position: absolute;
+            top: 2px;
+            right: 10px;
+            width: 10px;
+            height: 6px;
+            border-bottom: 1px solid rgb(196, 196, 196);
+            border-left: 1px solid rgb(196, 196, 196);
+            border-top-color: rgb(196, 196, 196);
+            border-right-color: rgb(196, 196, 196);
+            transform: rotate(-45deg);
+            content: "";
+            box-sizing: content-box;
+        }
+
+        
+        .pwdCondition.valid {
+            color: #0ca678;
+        }
+
+        .pwdCondition.valid::after {
+            border-bottom: 1px solid #0ca678;
+            border-left: 1px solid #0ca678;
+            border-top-color: #0ca678;
+            border-right-color: #0ca678;
+        }
+
 </style>
 </head>
 <body>
@@ -152,7 +196,25 @@
                             <p class="idCondition" style="visibility: hidden; padding: 5px 0px 0px 5px; color: orangered">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</p>
 
                         </div>
-                        
+                        <div id="pwdForm" style="display:none;">
+                            <input type="password" id="pwdInput" name="password" placeholder="비밀번호 입력" autocapitalize="none" style="width: 100%;
+                            height: 50px;
+                            padding: 10px;
+                            border: 1px solid lightblue;" >
+                            <p class="condition">
+                                <span class="pwdCondition" id="pwdUpperCase">대소문자</span>
+                                <span class="pwdCondition" id="pwdNumber">숫자</span>
+                                <span class="pwdCondition" id="pwdSpecialChar">특수문자</span>
+                                <span class="pwdCondition" id="pwdLength">8-20자 이내</span>
+                            </p>
+                            <input type="password" id="confirmPwdInput" name="checkPwd" placeholder="비밀번호 확인" style="width: 100%;
+                            height: 50px;
+                            padding: 10px;
+                            border: 1px solid lightblue;">
+                            <p class="condition">
+                                <span class="pwdCondition" id="pwdConfirm">비밀번호 일치</span>
+                            </p>
+                        </div>
                         <span class="agreeSpan">
                             <input type="checkbox" id="all" name="all">
                             <label class="checkLabel" for="all"></label>
@@ -210,7 +272,10 @@
                         <button class="joinBtn" id="agreeBtn" type="button" disabled onclick="agreementCheck();">동의하고 가입하기</button>
                     </div>
                     <div class="join" id="idNextBtnDiv" align="center" style="margin-top:60px; display:none;">
-                        <button class="joinBtn" id="idNextBtn" type="button" disabled>다음</button>
+                        <button class="joinBtn" id="idNextBtn" type="button" disabled onclick="idConfirmed();">다음</button>
+                    </div>
+                    <div class="join" id="PwdNextBtnDiv" align="center" style="margin-top:60px; display:none;" >
+                        <button class="joinBtn" id="nextBtn" type="button" disabled onclick="pwdConfirmed();">다음</button>
                     </div>
                 </div>
             </form>
@@ -314,7 +379,7 @@
     }
     
     function idCheck(userId) {
-        const $idInput = $("#enroll-form input[name=userId]")
+        const $idInput = $("#enrollForm input[name=userId]")
         return $.ajax({
             url: "idCheck.me",
             data: { checkId: userId },
@@ -351,8 +416,120 @@
         }
     });
 
+
+    function idConfirmed(){
+
+        const $confirmedIdInput = $("#enrollForm input[name=userId]");
+        console.log($confirmedIdInput.val());
+
+
+        $.ajax({
+        url : "idConfirmed.me",
+        data : {
+            memId:$confirmedIdInput.val()
+            },
+        success : function(){
+            $("#title").text("로그인에 사용할 비밀번호를 입력해주세요.");
+            $("#idForm").hide();
+            $("#idNextBtnDiv").hide();
+            $("#pwdForm").show();
+            $("#PwdNextBtnDiv").show();
+
+        }
+        ,
+        //        error:function(request,status,error){
+            //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            //    }
+            error : function(){
+                console.log("ajax 통신 실패!");
+            }
+            
+        });
+    }
+
+
+    function pwdConfirmed(){
+
+        const $confirmedPwdInput = $("#enrollForm input[name=password]");
+
+        $.ajax({
+        url : "pwdConfirmed.me",
+        data : {
+            memPwd:$confirmedPwdInput.val()
+            },
+        success : function(){
+            $("#title").text("회원 정보를 입력해주세요.");
+            $("#pwdForm").hide();
+            $("#PwdNextBtnDiv").hide();
+
+        }
+        ,
+        //        error:function(request,status,error){
+            //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            //    }
+            error : function(){
+                console.log("ajax 통신 실패!");
+            }
+            
+        });
+    }
+
+    
         
         
+        $(function(){
+            $("#pwdInput, #confirmPwdInput").on("input", function() {
+                var password = $("#pwdInput").val();
+                var upperCaseRegex = /[A-Z]/;
+                var numberRegex = /[0-9]/;
+                var specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+                var confirmPassword = $("#confirmPwdInput").val();
+                var valid = true;
+
+                if (!upperCaseRegex.test(password)) {
+                    $('#pwdUpperCase').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdUpperCase').addClass('valid');
+                }
+
+                if (!numberRegex.test(password)) {
+                    $('#pwdNumber').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdNumber').addClass('valid');
+                }
+
+                if (!specialCharRegex.test(password)) {
+                    $('#pwdSpecialChar').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdSpecialChar').addClass('valid');
+                }
+
+                if (password.length < 8 || password.length > 20) {
+                    $('#pwdLength').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdLength').addClass('valid');
+                }
+
+                if (password === confirmPassword && confirmPassword.length > 1) {
+                    $('#pwdConfirm').addClass('valid');
+                } else {
+                    $('#pwdConfirm').removeClass('valid'); 
+                    valid = false;
+                }
+
+                if (valid) {
+                    $('#nextBtn').prop('disabled', false);
+                } else {
+                    $('#nextBtn').prop('disabled', true);
+                }
+                
+            });
+        });
+
         </script>
               
 

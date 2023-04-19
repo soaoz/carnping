@@ -59,7 +59,13 @@
 		<result column="LIKE_STATUS" property="likeStatus"/>
 	</resultMap>
 	
-
+	<select id="idCheck" resultType="_int"> 
+	select
+		   count(*)
+	  from
+	       member
+        where mem_id = #{checkId}
+	</select>
 
 
 
