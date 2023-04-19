@@ -149,8 +149,10 @@
                                 height: 50px;
                                 padding: 10px;
                                 border: 1px solid lightblue;" name="userId" required>
-                            <p class="idCondition" style="visibility: hidden; padding-left:5px;">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</p>
+                            <p class="idCondition" style="visibility: hidden; padding: 5px 0px 0px 5px; color: orangered">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</p>
+
                         </div>
+                        
                         <span class="agreeSpan">
                             <input type="checkbox" id="all" name="all">
                             <label class="checkLabel" for="all"></label>
@@ -204,8 +206,11 @@
                             <button class="detail" type="button" data-toggle="modal" data-target="#marketingModal" >보기</button>
                         </div>
                     </ul>
-                    <div class="join" align="center" style="margin-top:60px;" >
-                        <button class="joinBtn" id="joinBtn" type="button" disabled onclick="agreementCheck();">동의하고 가입하기</button>
+                    <div class="join" id="agreeBtnDiv" align="center" style="margin-top:60px;" >
+                        <button class="joinBtn" id="agreeBtn" type="button" disabled onclick="agreementCheck();">동의하고 가입하기</button>
+                    </div>
+                    <div class="join" id="idNextBtnDiv" align="center" style="margin-top:60px; display:none;">
+                        <button class="joinBtn" id="idNextBtn" type="button" disabled>다음</button>
                     </div>
                 </div>
             </form>
@@ -267,9 +272,9 @@
 
         function checkAgreeValid() {
             if(agreeValid1 && agreeValid2 && agreeValid3) {
-                $('#joinBtn').prop('disabled', false);
+                $('#agreeBtn').prop('disabled', false);
             } else {
-                $('#joinBtn').prop('disabled', true);
+                $('#agreeBtn').prop('disabled', true);
 
             }
         }
@@ -291,11 +296,16 @@
            success : function(){
             $("#title").text("로그인에 사용할 아이디를 입력해주세요.");
             $("#idForm").show();
+            $(".agreeSpan").hide();
+            $(".agreeDetail").hide();
+            $("#agreeBtnDiv").hide();
+            $("#idNextBtnDiv").show();
+
             }
            ,
-    //        error:function(request,status,error){
-    //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    //    }
+            //        error:function(request,status,error){
+            //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            //    }
            error : function(){
                console.log("ajax 통신 실패!");
            }
@@ -303,8 +313,64 @@
         });
     }
 
+    function validateId(userId) {
+        // 아이디 형식 검사를 위한 정규식 패턴
+        var idPattern = /^[a-z0-9_-]{5,20}$/;
+    
+            // 아이디 형식이 유효한지 검사
+            if (userId.match(idPattern)) {
+                return true; // 유효한 아이디 형식
+            } else {
+                return false; // 유효하지 않은 아이디 형식
+            }
+        }
+
+        // 아이디 입력란의 값이 변경될 때마다 유효성 검사 실행
+        $('#idInput').on('input', function () {
+            var userId = $(this).val();
+            var isValid = validateId(userId);
+
+            if (isValid) {
+                $('.idCondition').css('visibility','hidden');
+                if(idCheck()){
+                    $('#idNextBtn').prop('disabled', false);
+                };
+            } else {
+                $('.idCondition').css('visibility','visible');
+                $('#idNextBtn').prop('disabled', true);
+            }
+
+
+        });
+
+        // 아이디 중복확인 
+        function idCheck(){
+
+           const $idInput = $("#enroll-form input[name=userId]")
+           $.ajax({
+              url : "idCheck.me",
+              data : {checkId:$idInput.val()},
+              success : function(result){
+                  // console.log(result);
+                if(result == "NNNNY"){
+                    $("#idCondition").text("사용 가능한 아이디 입니다.").css("color", "#0ca678");
+                    return true;
+                } else {
+                    $("#idCondition").text("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
+                    return false;
+                }
+              },
+              error : function(){
+                  console.log("아이디 중복체크용 ajax 통신 실패!");
+              }
+               
+           });
+                 
+     }
+
     </script>
               
+
 
     <!-- The Modal -->
     <div class="modal" id="marketingModal">
