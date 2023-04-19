@@ -26,6 +26,7 @@ public class MemberController {
 	@RequestMapping("idCheck.me")
 	public String idCheck(String checkId){
 		int count = mService.idCheck(checkId);
+//		System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	

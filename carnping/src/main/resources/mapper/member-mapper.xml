@@ -53,7 +53,7 @@
 		<result column="CHAT_CREATE_DATE" property="chatCreateDate"/>
 	</resultMap>
 	
-	<resultMap id="chatResultSet" type="Chat">
+	<resultMap id="likeResultSet" type="Like">
 		<result column="MEM_NO" property="memNo"/>
 		<result column="CINFO_NO" property="cinfoNo"/>
 		<result column="LIKE_STATUS" property="likeStatus"/>

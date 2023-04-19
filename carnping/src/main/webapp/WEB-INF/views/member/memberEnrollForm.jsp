@@ -313,73 +313,49 @@
         });
     }
     
-    // 아이디 중복확인 
-    function idCheck(){
-
+    function idCheck(userId) {
         const $idInput = $("#enroll-form input[name=userId]")
-        $.ajax({
-            url : "idCheck.me",
-            data : {checkId:$idInput.val()},
-            success : function(result){
-                console.log(result);
-
-            },
-            error : function(){
-                console.log("아이디 중복체크용 ajax 통신 실패!");
-            }
-            
+        return $.ajax({
+            url: "idCheck.me",
+            data: { checkId: userId },
         });
-                
     }
 
     function validateId(userId) {
-        // 아이디 형식 검사를 위한 정규식 패턴
         var idPattern = /^[a-z0-9_-]{5,20}$/;
-    
-            // 아이디 형식이 유효한지 검사
-            if (userId.match(idPattern)) {
-                return true; // 유효한 아이디 형식
-            } else {
-                return false; // 유효하지 않은 아이디 형식
-            }
+        return idPattern.test(userId);
+    }
+
+    $('#idInput').on('input', function () {
+        var userId = $(this).val();
+        var isValid = validateId(userId);
+        if (isValid) {
+            idCheck(userId).done(function(result) {
+                if(result === "NNNNY"){
+                    $(".idCondition").text("사용 가능한 아이디 입니다.");
+
+                    $(".idCondition").css('visibility','visible').css('color','#0ca678');
+                    $('#idNextBtn').prop('disabled', false);
+                } else {
+                    $(".idCondition").text("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
+                    $('.idCondition').css('visibility','visible').css('color','orangered');
+                    $('#idNextBtn').prop('disabled', true);
+                }
+            }).fail(function() {
+                console.log("아이디 중복체크용 ajax 통신 실패!");
+            });
+        } else {
+            $(".idCondition").text("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.");
+            $('.idCondition').css('visibility','visible').css('color','orangered');;
+            $('#idNextBtn').prop('disabled', true);
         }
+    });
 
-        // 아이디 입력란의 값이 변경될 때마다 유효성 검사 실행
-        $('#idInput').on('input', function () {
-            var userId = $(this).val();
-            var isValid = validateId(userId);
-
-            if (isValid) {
-                $('.idCondition').css('visibility','hidden');
-                $('#idNextBtn').prop('disabled', false);
-                // console.log(idCheck());
-            } else {
-                $('.idCondition').css('visibility','visible');
-                $('#idNextBtn').prop('disabled', true);
-            }
-
-            
-            // if (isValid) {
-            //     $('.idCondition').css('visibility','hidden');
-            //     if(idCheck()){
-            //         $(".idCondition").text("사용 가능한 아이디 입니다.");
-            //         $(".idCondition").css('visibility','visible');
-            //         $('#idNextBtn').prop('disabled', false);
-            //     } else {
-            //         $(".idCondition").text("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
-            //     };
-            // } else {
-            //     $('.idCondition').css('visibility','visible');
-            //     $('#idNextBtn').prop('disabled', true);
-            // }
-
-
-
-        });
-
-
-    </script>
+        
+        
+        </script>
               
+
 
 
     <!-- The Modal -->
