@@ -2,10 +2,12 @@ package com.kh.carnping.member.model.service;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kh.carnping.member.model.dao.MemberDao;
 
-public class MemberServiceImpl {
+@Service
+public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao mDao;

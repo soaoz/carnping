@@ -14,6 +14,8 @@
 		<result column="STATUS" property="status"/>
 	</resultMap>
 	
+	
+	<!-- 
 	<resultMap type="Reply" id="replyResultMap">
 		<result column="REPLY_NO" property="replyNo"/>
 		<result column="REPLY_CONTENT" property="replyContent"/>
@@ -22,6 +24,7 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="STATUS" property="Status"/>
 	</resultMap>
+
 	
 	
 
@@ -137,4 +140,6 @@
 					, #{replyWriter}				
 					)
 	</insert>
+	
+		 -->
 </mapper>

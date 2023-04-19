@@ -14,8 +14,8 @@ public class MemberController {
 	@Autowired
 	private MemberServiceImpl mService;
 	
-	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
+//	@Autowired
+//	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@RequestMapping("enrollForm.me")
 	public String memberEnrollForm(){
