@@ -10,6 +10,6 @@ import com.kh.carnping.member.model.vo.Member;
 @Repository
 public class AdminDao {
 	public ArrayList<Member> memNotice(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("adminMapper.")
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList");
 	}
 }	
