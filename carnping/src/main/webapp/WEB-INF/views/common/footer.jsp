@@ -15,15 +15,7 @@
 
   <!-- Css Styles -->
 	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css"> -->
-    <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/flaticon.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/barfiller.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
+
 	<link rel="stylesheet" href="resources/css/style.css" type="text/css">
 
   <!-- icon(fontawesome.com) 등록 -->
@@ -180,16 +172,7 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="resources/js/jquery-3.3.1.min.js"></script>
-    <script src="resources/js/bootstrap.min.js"></script>
-    <script src="resources/js/jquery.nice-select.min.js"></script>
-    <script src="resources/js/jquery-ui.min.js"></script>
-    <script src="resources/js/jquery.nicescroll.min.js"></script>
-    <script src="resources/js/jquery.barfiller.js"></script>
-    <script src="resources/js/jquery.magnific-popup.min.js"></script>
-    <script src="resources/js/jquery.slicknav.js"></script>
-    <script src="resources/js/owl.carousel.min.js"></script>
-    <script src="resources/js/main.js"></script>
+
 </body>
 
 </html>
