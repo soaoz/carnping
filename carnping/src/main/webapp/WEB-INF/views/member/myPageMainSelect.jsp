@@ -97,7 +97,93 @@
 				font-weight: 700 !important;
 	
 			}
-	    
+	    @font-face {
+		    font-family: 'Dovemayo_gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		td{
+			font-family: 'Dovemayo_gothic';
+			font-size: 16px;
+			letter-spacing :0.5px;
+		}
+		.ckbox{
+			border:1px soild gray !important;
+		}
+		@font-face {
+		     font-family: 'S-CoreDream-3Light';
+		     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+		     font-weight: 900px;
+		     font-style: normal;
+		}
+        .myPage-header-area{
+            width: 100%;
+            height: 123px;
+            background-color: #b3d9b1;
+        }
+        .filter{
+            position: inherit !important;
+            width: 350px !important;
+            height: 100% !important;   
+            padding: 30px 34px 30px 70px !important;
+            /* overflow-y: auto; */
+            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1) !important;
+            /* z-index: 99; */
+            padding-top: 140px !important;
+            float: left !important;
+        }
+        .master-area{
+            width: 100%;
+            height: 100%;
+           
+        }
+        .filter__title h5 i {
+            margin-right: 5px;
+            color : #1C3053;
+        }
+        .filter__title h5{
+            font-family: 'S-CoreDream-3Light';
+            font-weight: 700 ;
+            margin-right: 5px;
+            color : #1C3053 !important;
+            font-size: 25px !important;
+        }
+		.myPage_menu {
+            border: 2px solid #b3d9b1 !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-top: none !important;
+            width: 200px !important;
+            height: 60px !important;
+            line-height: 60px !important;
+        }
+            
+		.menu{
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			font-family: 'S-CoreDream-3Light';
+			font-size : 15px !important;
+			color : #7ea67c !important;
+		}
+		.menu:hover {
+			font-size : 17px !important;
+			color : #1C3053 !important;
+			font-weight : bold !important;
+			
+		}
+		[type=checkbox] {
+		  position: static !important;
+		  opacity: 1 !important;
+		  width: auto !important;
+		  height: auto !important;
+		}
+		.title{
+			color : #1C3053;
+		}
 	
 	    </style>
     </head>

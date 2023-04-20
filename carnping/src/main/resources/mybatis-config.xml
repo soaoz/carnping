@@ -8,11 +8,6 @@
 		<setting name = "jdbcTypeForNull" value="NULL"/>
 	</settings>
 	
-
-	<!--<typeAliases>
-		<typeAlias type="com.kh.carnping.member.model.vo.Member" alias=""/>
-		<typeAlias type="com.kh.carnping.board.model.vo.Board" alias=""/>
-
 	<typeAliases>
 		<typeAlias type="com.kh.carnping.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.carnping.member.model.vo.Like" alias="Like"/>
@@ -28,9 +23,8 @@
 		<typeAlias type="com.kh.carnping.car.model.vo.Review" alias="Review"/>
 		<typeAlias type="com.kh.carnping.car.model.vo.Verify" alias="Verify"/>
 		<typeAlias type="com.kh.carnping.car.model.vo.VerifyImg" alias="VerifyImg"/>
-
 	</typeAliases>
-	 유의사항 : 미리 등록해두려면 해당 클래스가 진짜 존재하고 있는 상태여야함 -->
+	<!-- 유의사항 : 미리 등록해두려면 해당 클래스가 진짜 존재하고 있는 상태여야함 -->
 	
 	<!-- 
 		environment, dataSource에 기술했던 db연결정보관련은 root-context.xml 에 작성할 예정
@@ -38,13 +32,11 @@
 		서버 스타트와 동시에 바로 읽혀지는 root-context.xml 문서에 기술할 예정
 	 -->
 	 
-
+	 <mappers>
+	 	<mapper resource="/mapper/member-mapper.xml" />
+	 	<mapper resource="/mapper/board-mapper.xml" />
 	 	<mapper resource="/mapper/car-mapper.xml" />
 	 </mappers>
-
-
-
-
 	<!-- 유의사항 : 미리 등록해두려면 해당 mapper 파일이 진짜 존재하고 있는 상태여야함! 
 					뿐만아니라 namespace를 등록까지 지정되어 있어야함-->
 	
