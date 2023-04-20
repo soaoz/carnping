@@ -11,6 +11,7 @@ import com.kh.carnping.member.model.service.MemberServiceImpl;
 @Controller
 public class MemberController {
 	
+
 	@Autowired
 	private MemberServiceImpl mService;
 	
@@ -48,12 +49,58 @@ public class MemberController {
 		System.out.println(memPwd);
 	}
 
-	@RequestMapping("myProfile.me")
-	public String myProfile() {
-		return "member/myProfile";
+
+
+	
+	@RequestMapping("myProfileUpdate.me")
+	public String myProfileUpdate() {
+		return "member/myProfileUpdate";
+
+	}
+	@RequestMapping("myAlarmList.me")
+	public String myAlarmList() {
+		return "member/myAlarmList";
 	}
 	
-
+	@RequestMapping("myLikeList.me")
+	public String myLikeList() {
+		return "member/myLikeList";
+	}
+	
+	@RequestMapping("myPostList.me")
+	public String myPostList() {
+		return "member/myPostList";
+	}
+	
+	@RequestMapping("myReplyList.me")
+	public String myReplyList() {
+		return "member/myReplyList";
+	}
+	
+	@RequestMapping("myQuestionList.me")
+	public String questionList() {
+		return "member/myQuestionList";
+	}
+	
+	@RequestMapping("questionForm.me")
+	public String questionForm() {
+		return "member/questionForm";
+	}
+	
+	@RequestMapping("myPageMainSelect.me")
+	public String myPageMainSelect() {
+		return "member/myPageMainSelect";
+	}
+	
+	@RequestMapping("myCarbakList.me")
+	public String myCarbakList() {
+		return "member/myCarbakList";
+	}
+	@RequestMapping("unregister.me")
+	public String unregister() {
+		return "member/unregister";
+	}
+	
 
 }
 	

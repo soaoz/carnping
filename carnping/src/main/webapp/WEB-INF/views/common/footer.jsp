@@ -14,7 +14,7 @@
   
 
   <!-- Css Styles -->
-    <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
+	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css"> -->
     <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="resources/css/flaticon.css" type="text/css">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/style.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/style.css" type="text/css">
 
   <!-- icon(fontawesome.com) 등록 -->
 <script src="https://kit.fontawesome.com/78c41960c5.js" crossorigin="anonymous"></script>
@@ -144,11 +144,11 @@
                 <div class="col-lg-3 offset-lg-1 col-md-6" style="margin-left:5%;" >
                     <div class="footer__widget" id="footer__widget">
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Support</a></li>
-                            <li><a href="#">How it work</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="myLikeList.me">Home</a></li>
+                            <li><a href="myPostList.me">Support</a></li>
+                            <li><a href="myReplyList.me">How it work</a></li>
+                            <li><a href="myQuestionList.me">Contact</a></li>
+                            <li><a href="myPageMainSelect.me">Blog</a></li>
                         </ul>
                         <ul>
                             <li><a href="#">로그인</a></li>
@@ -168,9 +168,9 @@
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                         </div>
                         <div class="footer__copyright__links">
-                            <a href="myProfile.me">이용약관</a>
-                            <a href="#">개인정보 취급방침</a>
-                            <a href="#">고객센터</a>
+                            <a href="myProfileUpdate.me">이용약관</a>
+                            <a href="questionForm.me">개인정보 취급방침</a>
+                            <a href="myAlarmList.me">고객센터</a>
                         </div>
                     </div>
                 </div>
