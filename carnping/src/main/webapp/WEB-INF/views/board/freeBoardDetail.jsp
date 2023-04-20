@@ -40,18 +40,18 @@
                             <div class="listing__details__gallery__pic">
                                 <div class="listing__details__gallery__item">
                                     <img class="listing__details__gallery__item__large"
-                                        src="img/listing/details/listing-details-1.jpg" alt="" style="margin-top: 50px;">
+                                        src="resources/img/listing/details/listing-details-1.jpg" alt="" style="margin-top: 50px;">
                                     <span><i class="fa fa-camera"></i> 170 Image</span>
                                 </div>
                                 <div class="listing__details__gallery__slider owl-carousel">
+                                    <img data-imgbigurl="resources/img/listing/details/listing-details-1.jpg"
+                                        src="resources/img/listing/details/thumb-1.jpg" alt="">
                                     <img data-imgbigurl="img/listing/details/listing-details-1.jpg"
-                                        src="img/listing/details/thumb-1.jpg" alt="">
+                                        src="resources/img/listing/details/thumb-2.jpg" alt="">
                                     <img data-imgbigurl="img/listing/details/listing-details-1.jpg"
-                                        src="img/listing/details/thumb-2.jpg" alt="">
+                                        src="resources/img/listing/details/thumb-3.jpg" alt="">
                                     <img data-imgbigurl="img/listing/details/listing-details-1.jpg"
-                                        src="img/listing/details/thumb-3.jpg" alt="">
-                                    <img data-imgbigurl="img/listing/details/listing-details-1.jpg"
-                                        src="img/listing/details/thumb-4.jpg" alt="">
+                                        src="resources/img/listing/details/thumb-4.jpg" alt="">
                                 </div>
                             </div>
                         </div>
@@ -77,18 +77,7 @@
                                     <tr>
                                         <th>지역</th>
                                         <td colspan="3">
-                                            <div class="filter__select">
-                                                <select>
-                                                    <option value="">서울</option>
-                                                    <option value="">경기</option>
-                                                    <option value="">인천</option>
-                                                    <option value="">대전</option>
-                                                    <option value="">대구</option>
-                                                    <option value="">광주</option>
-                                                    <option value="">부산</option>
-                                                    <option value="">제주도</option>
-                                                </select>
-                                            </div>
+                                            서울
                                             
                                         </td>
                                     </tr>
@@ -223,7 +212,7 @@
    
 
     <!-- Footer Section Begin -->
-    <jsp:include page="../common/footer.jsp"/>
+   
     <!-- Footer Section End -->
 
     

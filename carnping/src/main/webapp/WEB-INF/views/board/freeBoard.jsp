@@ -20,9 +20,7 @@
         <div class="filter__title">
             <h5><i class="fa fa-filter"></i> 지역검색</h5>
         </div>
-        <div class="filter__search">
-            <input type="text">
-        </div>
+        <br><br>
         <div class="filter__select">
             <select>
                 <option value="">서울</option>
@@ -34,6 +32,7 @@
                 <option value="">부산</option>
                 <option value="">제주도</option>
             </select>
+            
         </div>
        
         
@@ -41,6 +40,7 @@
        
         
     </div>
+   
     <!-- Filter End -->
 
     <!-- Listing Section Begin -->
@@ -53,6 +53,7 @@
             <div class="listing__text__top__right">최신순<i class="fa fa-sort-amount-asc"></i></div> <br><br>
             <button style="float: right; background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);">
             <a href="freeBoardInsert.bo">글쓰기</button></a>
+            
 
 
         </div>
@@ -60,7 +61,7 @@
         <div class="listing__list" style="align-content: center;">
             <div class="listing__item">
                 <div class="listing__item__pic set-bg" data-setbg="resources/img/board/tent1.jpg"> <!-- 나눔상품이미지 -->
-                <div class="listing__item__pic set-bg" data-setbg="${ board. }"> <!-- 나눔상품이미지 -->
+           
                     
                     <div class="listing__item__pic__btns">
                         <a href="#"><span class="icon_heart_alt"></span></a> <!-- 찜하기 버튼 -->
@@ -150,7 +151,7 @@
            
         </div>
         
-        <jsp:include page="../common/footer.jsp"/>
+        
     </section>
     
     
