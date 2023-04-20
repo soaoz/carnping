@@ -34,6 +34,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
 
+    <!--member css  -->
+    <link rel="stylesheet" href="resources/member/css/style.css" type="text/css">
+    <link rel="stylesheet" href="resources/member/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/member/assets/css/style.css">
+
+
     <style>
         #addSite{
             border-radius: 50px;

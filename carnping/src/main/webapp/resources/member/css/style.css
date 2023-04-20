@@ -352,7 +352,7 @@ ol {
 	bottom: 0;
 	height: 2px;
 	width: 0%;
-	background: #f03250;
+	background: #0ca678; /*수정*/
 	content: "";
 	opacity: 0;
 	-webkit-transition: all, 0.3s;
@@ -408,6 +408,7 @@ ol {
 	list-style: none;
 	display: inline-block;
 	margin-right: 5px;
+	line-height: 27px; /*수정*/
 }
 
 .hero__text .hero__categories__tags li:last-child {
@@ -466,7 +467,7 @@ ol {
 
 .hero__search__form form .select__option {
 	position: relative;
-	width: 22.5%;
+	width: 17.5%; /*수정*/
 	float: left;
 	height: 54px;
 }
@@ -513,7 +514,7 @@ ol {
 }
 
 .hero__search__form form button {
-	width: 15%;
+	width: 25%; /*수정*/
 	height: 54px;
 	border: none;
 	font-size: 14px;
@@ -3164,22 +3165,23 @@ ol {
 		margin: 0;
 	}
 	.slicknav_nav a:hover {
-		border-radius: 0;
-		background: transparent;
-		color: #f03250;
-	}
+			border-radius: 0;
+			background: transparent;
+			color: #0ca678; /*수정*/
+		}
 	.slicknav_nav .slicknav_row:hover {
 		border-radius: 0;
 		background: transparent;
-		color: #f03250;
+		color: #0ca678;/*수정*/
 	}
 	.slicknav_btn {
 		margin: 0;
 		border-radius: 0;
-		background: #f03250;
+		background: #0ca678;/*수정*/
 		position: absolute;
 		right: 15px;
 		top: 40px;
+		border-radius: 50px; /*수정*/
 	}
 	.hero__search__form form input {
 		width: 100%;
@@ -3355,4 +3357,17 @@ ol {
 }
 .menu:hover{
 	color: gray;
+}
+.header__menu ul li a:after {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 2px;
+	width: 0%;
+	background: #0ca678; /*수정*/
+	content: "";
+	opacity: 0;
+	-webkit-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;
 }
