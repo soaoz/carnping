@@ -15,13 +15,15 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	
+	public int emailCheck(String checkEmail) {
+		return mDao.emailCheck(sqlSession, checkEmail);
+	}
 	public int idCheck(String checkId) {
 		return mDao.idCheck(sqlSession, checkId);
 	}
 	
 	public int nicknameCheck(String nickname) {
-		return mDao.idCheck(sqlSession, nickname);
+		return mDao.nicknameCheck(sqlSession, nickname);
 	}
 
 }
