@@ -1505,7 +1505,7 @@
                                 <li><i class="fa fa-tags"></i> Travel</li>
                                 <li>Restaurant</li>
                             </ul>
-                            <h5><a href="#">Internet Banner Advertising Most Reliable</a></h5>
+                            <h5><a href="enrollForm.me">Internet Banner Advertising Most Reliable</a></h5>
                             <ul class="blog__item__widget">
                                 <li><i class="fa fa-clock-o"></i> 19th March, 2019</li>
                                 <li><i class="fa fa-user"></i> John Smith</li>

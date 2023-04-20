@@ -22,13 +22,13 @@
 <div class="header header-one">
     <div class="header-left header-left-one">
         <a href="index.html" class="logo">
-            <img src="assets/img/Logo.png" alt="Logo">
+            <img src="resources/admin/assets/img/Logo.png" alt="Logo">
         </a>
         <a href="index.html" class="white-logo">
-            <img src="assets/img/Logo.png" alt="Logo">
+            <img src="resources/admin/assets/img/Logo.png" alt="Logo">
         </a>
         <a href="index.html" class="logo logo-small">
-            <img src="assets/img/Logo.png" alt="Logo" width="30" height="30">
+            <img src="resources/admin/assets/img/Logo.png" alt="Logo" width="30" height="30">
         </a>
     </div>
     <a href="javascript:void(0);" id="toggle_btn">
@@ -62,7 +62,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar avatar-sm">
                                         <img class="avatar-img rounded-circle" alt=""
-                                            src="assets/img/profiles/usermain.jpg">
+                                            src="resources/admin/assets/img/profiles/usermain.jpg">
                                     </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Brian Johnson</span>
@@ -78,7 +78,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar avatar-sm">
                                         <img class="avatar-img rounded-circle" alt=""
-                                            src="assets/img/profiles/avatar-03.jpg">
+                                            src="resources/admin/assets/img/profiles/avatar-03.jpg">
                                     </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Marie Canales</span>
@@ -111,7 +111,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar avatar-sm">
                                         <img class="avatar-img rounded-circle" alt=""
-                                            src="assets/img/profiles/avatar-04.jpg">
+                                            src="/resourassets/img/profiles/avatar-04.jpg">
                                     </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Barbara Moore</span>
@@ -150,7 +150,7 @@
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
-                    <img src="assets/img/userImg.png" alt="">
+                    <img src="resources/admin/assets/img/userImg.png" alt="">
                     <span class="status online"></span>
                 </span>
                 <span>Admin</span>

@@ -8,11 +8,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Jassa - Bootstrap Admin HTML Template</title>
-    <link rel="shortcut icon" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
@@ -34,8 +29,8 @@
                         </ul>
                     </div>
                     <div class="col-auto">
-                        <a href="insertNotice.html" class="btn btn-primary me-1">
-                            <i class="fas fa-plus"></i>
+                        <a href="insertNotice.ad" class="btn btn-primary me-1">
+                            공지사항 추가
                         </a>
 
                     </div>
@@ -73,7 +68,7 @@
                                             </td>
                                             <td>2020-12-13</td>
                                             <td class="text-end">
-                                                <a href="updateNotice.html"
+                                                <a href="updateNotice.ad"
                                                     class="btn btn-sm btn-white text-success me-2"><i
                                                         class="far fa-edit me-1"></i> 상세(수정)</a>
                                                 <a href="javascript:void(0);"
@@ -139,15 +134,6 @@
     </div>
 
 </div>
-
-
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/feather.min.js"></script>
-    <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="assets/plugins/apexchart/apexcharts.min.js"></script>
-    <script src="assets/plugins/apexchart/chart-data.js"></script>
-    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
