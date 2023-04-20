@@ -48,6 +48,13 @@ public class MemberController {
 	public void pwdConfirmed(String memPwd) {
 		System.out.println(memPwd);
 	}
+	
+	@ResponseBody
+	@RequestMapping("nicknameCheck.me")
+	public String nicknameCheck(String nickname){
+		int count = mService.nicknameCheck(nickname);
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
 
 
 

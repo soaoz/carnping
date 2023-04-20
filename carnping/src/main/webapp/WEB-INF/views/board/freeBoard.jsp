@@ -59,7 +59,8 @@
         
         <div class="listing__list" style="align-content: center;">
             <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg"> <!-- 나눔상품이미지 -->
+                <div class="listing__item__pic set-bg" data-setbg="resources/img/board/tent1.jpg"> <!-- 나눔상품이미지 -->
+                <div class="listing__item__pic set-bg" data-setbg="${ board. }"> <!-- 나눔상품이미지 -->
                     
                     <div class="listing__item__pic__btns">
                         <a href="#"><span class="icon_heart_alt"></span></a> <!-- 찜하기 버튼 -->
