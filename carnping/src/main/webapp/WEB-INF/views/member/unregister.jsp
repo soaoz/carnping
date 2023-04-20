@@ -193,7 +193,7 @@
     </head>
     <body>
 <jsp:include page="../common/header.jsp"/>   
-
+<jsp:include page="../common/menubar.jsp"/>
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
 </div>
@@ -205,8 +205,7 @@
 				<div class="filter__title">
             <h5><i class="fa-sharp fa-solid fa-house"></i>마이페이지</h5>
         </div>
-        <div class="myPage_menu" id="fake">
-         </div>
+        <div class="myPage_menu" id="fake"></div>
 
         <div class="myPage_menu">
             <a href="myPageMainSelect.me" class="menu"><i class="fa fa fa-user"></i> 회원정보 </a>

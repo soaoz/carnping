@@ -122,7 +122,8 @@
 </head>
 <body>
    
- <jsp:include page="../common/header.jsp"/>  
+ <jsp:include page="../common/header.jsp"/>
+ <jsp:include page="../common/menubar.jsp"/>  
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
 </div>
