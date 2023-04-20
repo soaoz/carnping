@@ -30,7 +30,15 @@
 </head>
 
 <body class="ov-hid">
+<header class="header header--normal"
+<div class="container-fluid">
+
+
     <jsp:include page="../common/header.jsp"/>
+
+
+</div>
+</header>
     <!-- Page Preloder -->
     <!-- <div id="preloder">
         <div class="loader"></div>
@@ -77,7 +85,7 @@
     <!-- Header Section End -->
 
     <!-- Filter Begin -->
-    <div class="filter nice-scroll">
+    <div class="filter nice-scroll" " style="margin-top:150px">
         <div class="filter__title">
             <h5><i class="fa fa-filter"></i>필터</h5>
         </div>
@@ -150,7 +158,7 @@
     <!-- Filter End -->
 
     <!-- Listing Section Begin -->
-    <section class="listing nice-scroll">
+    <section class="listing nice-scroll" style="margin-top:150px">
         <div class="listing__text__top">
             <div class="listing__text__top__left">
                 <h5>차박정보 리스트</h5>
@@ -237,8 +245,8 @@
     <!-- Listing Section End -->
 
     <!-- Map Begin -->
-    <div class="listing__map">
-        <iframe
+    <div class="listing__map"  >
+        <iframe style="margin-top:150px"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
     </div>
     <!-- Map End -->
