@@ -19,5 +19,9 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(String checkId) {
 		return mDao.idCheck(sqlSession, checkId);
 	}
+	
+	public int nicknameCheck(String nickname) {
+		return mDao.idCheck(sqlSession, nickname);
+	}
 
 }
