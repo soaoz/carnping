@@ -9,18 +9,19 @@
 </head>
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
 
-
+<jsp:include page="../common/header.jsp"/>
 
 
 
 <div class="content container-fluid">
 <div class="row">
 <div class="col-xl-8 offset-xl-2">
-
+<br><br><br><br><br><br><br>
 <div class="page-header">
 <div class="row">
 <div class="col-sm-12">
 <h3 class="page-title">무료나눔</h3>
+<br><br>
 </div>
 </div>
 </div>
@@ -106,21 +107,7 @@
 
 </div>
 
+<jsp:include page="../common/footer.jsp"/>
 
-<script src="assets/js/jquery-3.6.0.min.js"></script>
-
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-
-<script src="assets/js/feather.min.js"></script>
-
-<script src="assets/js/ckeditor.js"></script>
-
-<script src="assets/js/select2.min.js"></script>
-
-<script src="assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
-
-<script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-<script src="assets/js/script.js"></script>
 </body>
 </html>

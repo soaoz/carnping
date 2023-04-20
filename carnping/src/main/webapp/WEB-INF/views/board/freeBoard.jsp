@@ -51,7 +51,8 @@
                 
             </div>
             <div class="listing__text__top__right">최신순<i class="fa fa-sort-amount-asc"></i></div> <br><br>
-            <button style="float: right; background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);">글쓰기</button>
+            <button style="float: right; background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);">
+            <a href="freeBoardInsert.bo">글쓰기</button></a>
 
 
         </div>
@@ -66,7 +67,7 @@
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5>텐트 무료 나눔</h5>
+                        <h5><a href="freeBoardDetail.bo">텐트 무료 나눔</h5></a>
                         <div class="listing__item__text__rating">
                            
                             <h6>user01</h6>
@@ -145,25 +146,15 @@
                     
                 </div>
             </div>
-            
+           
         </div>
+        
+        <jsp:include page="../common/footer.jsp"/>
     </section>
-    <!-- Listing Section End -->
-
-    <!-- Map Begin -->
     
-    <!-- Map End -->
+    
+    
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.nicescroll.min.js"></script>
-    <script src="js/jquery.barfiller.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+    
 </body>
 </html>
