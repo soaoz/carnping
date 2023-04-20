@@ -64,7 +64,15 @@
 		   count(*)
 	  from
 	       member
-        where mem_id = #{checkId}
+     where mem_id = #{checkId}
+	</select>
+	
+	<select id="nicknameCheck" resultType="_int"> 
+	select
+		   count(*)
+	  from
+	       member
+     where mem_id = #{nickname}
 	</select>
 
 

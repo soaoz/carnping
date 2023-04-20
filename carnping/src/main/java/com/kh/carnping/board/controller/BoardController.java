@@ -16,7 +16,7 @@ public class BoardController {
 	private BoardServiceImpl bService;
 	
 	@RequestMapping("freeBoard.bo")
-	public String freeBoard() {
+	public String freeBoardselectList() {
 		return "board/freeBoard";
 	}
 	
