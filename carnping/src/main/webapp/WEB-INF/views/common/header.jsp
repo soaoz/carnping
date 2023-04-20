@@ -29,6 +29,14 @@
 
     <!-- icon(fontawesome.com) 등록 -->
     <script src="https://kit.fontawesome.com/78c41960c5.js" crossorigin="anonymous"></script>
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!--member css  -->
+    <link rel="stylesheet" href="resources/member/css/style.css" type="text/css">
+    <link rel="stylesheet" href="resources/member/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/member/assets/css/style.css">
 
     <style>
         #addSite{
@@ -43,14 +51,20 @@
             font-style: normal;
         }
 
-        h2{
+        h2, h3{
             font-family: unset;
         }
 
         *{
             font-family: 'Jal_Onuel';
             font-weight: 200;
-            letter-spacing: 0.15em;
+            /* letter-spacing: 0.15em; */
+        }
+
+        .modal *{
+            letter-spacing: unset;
+            font-family: 'Jal_Onuel';
+            font-weight: 200;
         }
 
 
@@ -58,6 +72,11 @@
             padding-right:10px;
         }
         
+        header{
+
+        letter-spacing: 0.15em;
+        }
+
         #themeTags a{
             border-radius:50px;
         }
@@ -87,6 +106,9 @@
             background-color:white;
             transition: color .4s ease 0s,background-color .4s ease 0s
         }
+        
+        
+
 
     </style>
 </head>
@@ -111,9 +133,9 @@
                             <nav class="header__menu mobile-menu">
                                 <ul>
                                     <li class="active"><a href="./index.html">Home</a></li>
-                                    <li><a href="./listing.html">차박지도</a></li>
+                                    <li><a href="carList.ca">차박지도</a></li>
                                     <li><a href="#">함께가요</a></li>
-                                    <li><a href="./blog.html">무료나눔</a></li>
+                                    <li><a href="freeBoard.bo">무료나눔</a></li>
                                 </ul>
                             </nav>
                             <div class="header__menu__right" style="display:inline-flex">
