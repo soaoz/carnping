@@ -1,13 +1,18 @@
 package com.kh.carnping.member.controller;
 
+import java.util.Random;
+
 import javax.mail.internet.MimeMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.carnping.member.model.service.MemberServiceImpl;
@@ -37,42 +42,8 @@ public class MemberController {
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
-//	@RequestMapping("sendMail")
-//    public void sendMailTest() throws Exception{
-//        
-//        String subject = "test 메일";
-//        String content = "메일 테스트 내용" + "<img src=\"https://t1.daumcdn.net/cfile/tistory/214DCD42594CC40625\">";
-//        String from = "보내는이 아이디@도메인주소";
-//        String to = "받는이 아이디@도메인주소";
-//        
-//        try {
-//            MimeMessage mail = mailSender.createMimeMessage();
-//            MimeMessageHelper mailHelper = new MimeMessageHelper(mail,true,"UTF-8");
-//            // true는 멀티파트 메세지를 사용하겠다는 의미
-//            
-//            /*
-//             * 단순한 텍스트 메세지만 사용시엔 아래의 코드도 사용 가능 
-//             * MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8");
-//             */
-//            
-//            mailHelper.setFrom("Carnping <chadollbagi@gmail.com>");
-//            // 빈에 아이디 설정한 것은 단순히 smtp 인증을 받기 위해 사용 따라서 보내는이(setFrom())반드시 필요
-//            // 보내는이와 메일주소를 수신하는이가 볼때 모두 표기 되게 원하신다면 아래의 코드를 사용하시면 됩니다.
-//            //mailHelper.setFrom("보내는이 이름 <보내는이 아이디@도메인주소>");
-//            mailHelper.setTo(to);
-//            mailHelper.setSubject(subject);
-//            mailHelper.setText(content, true);
-//            // true는 html을 사용하겠다는 의미
-//            
-//            
-//            mailSender.send(mail);
-//            
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//        
-//    }
-//	
+	
+
 	@ResponseBody
 	@RequestMapping("idCheck.me")
 	public String idCheck(String checkId){
@@ -158,6 +129,180 @@ public class MemberController {
 		return "member/unregister";
 	}
 	
+	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
+	@ResponseBody
+	public void mailCheckGET(String email) {
+		/* 넘어온 데이터 확인 */
+		Logger logger = LoggerFactory.getLogger(this.getClass());
+		logger.info("이메일 데이터 전송 확인");
+		logger.info("인증번호 : " + email);
+		
+		/* 인증번호(난수) 생성 */
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		logger.info("인증번호 " + checkNum);
+		
+		/* 이메일 보내기 */
+		
+		String setFrom = "Carnping 카앤핑 <chadollbagi@gmail.com>";
+		String toMail = email;
+		String title = "카앤핑 회원가입 본인 인증 코드입니다.";
+
+
+		String content = "<!DOCTYPE html>"+
+							"<html>"+
+							""+
+							"<head>"+
+							"    <meta charset=\"UTF-8\">"+
+							""+
+							""+
+							""+
+							"    <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\">"+
+							""+
+							""+
+							"    "+
+							""+
+							"    <style>"+
+							""+
+							""+
+							"        @font-face {"+
+							"            font-family: 'Jal_Onuel';"+
+							"            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');"+
+							"            font-weight: normal;"+
+							"            font-style: normal;"+
+							"        }"+
+							""+
+							"        @font-face {"+
+							"            font-family: 'EF_jejudoldam';"+
+							"            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');"+
+							"            font-weight: normal;"+
+							"            font-style: normal;"+
+							"        }"+
+							""+
+
+							"        *{"+
+							"            font-family: 'Jal_Onuel';"+
+							"            font-weight: 200;"+
+							"        }"+
+							""+
+							""+
+							"        #wrapper {"+
+							"            background-color:#74E7BF;"+
+							"            height: 100%;"+
+							"            width: 100%;"+
+							"            letter-spacing: 0.08em;"+
+							"        }"+
+							""+
+							"        #wrapper>*{"+
+							"            letter-spacing: unset;"+
+							"        }"+
+							""+
+							"        #joinWrapper{"+
+							"            background-color:  rgba(255, 240, 156, 0.7);"+
+							"            border-radius: 50px;"+
+							"            max-width: 600px;"+
+							"            height: 100%;"+
+							"            margin: auto;"+
+							"            padding-top: 50px;"+
+							"        }"+
+							"        "+
+							""+
+							"        "+
+							""+
+							"        .agreement{"+
+							"            position: relative;"+
+							"            -webkit-flex: 1 0 100%;"+
+							"            -ms-flex: 1 0 100%;"+
+							"            flex: 1 0 100%;"+
+							"            padding-top: 30px;"+
+							"        }"+
+							""+
+							"        .title{"+
+							"            margin-top:10px;"+
+							"            margin-bottom: 20px;"+
+							"            font-size: 18px;"+
+							"            font-weight: 500;"+
+							"            line-height: 28px;"+
+							"            letter-spacing: unset;"+
+							"            white-space: pre-wrap;"+
+							"            text-align: center;"+
+							"        }"+
+							""+
+							"        .agreeAll{"+
+							"            padding: 5px 0px;"+
+							"            margin: 0px 35px 50px 35px;"+
+							"            border-bottom: 1px solid #0ca678;"+
+							"            letter-spacing: unset;"+
+							"        }"+
+							"        "+
+							"        "+
+							"    </style>"+
+							""+
+							"</head>"+
+							""+
+							"<body>"+
+							""+
+							"    "+
+							"    "+
+							""+
+							"    <div id=\"wrapper\" style=\"padding: 50px 0px; position:absolute;\" >"+
+							"        <div id=\"joinWrapper\" >"+
+							"            <img src=\"img/logo_login_1.png\" width=\"125px\" style=\"display:block; margin:auto; padding-top: 25px;\" alt=\"\">"+
+							"            <h2 "+
+							"            style=\"margin: 25px 0px 20px 0px; "+
+							"            text-align: center; "+
+							"            letter-spacing: unset; "+
+							"            font-size:28px;"+
+							"            color:#0ca678;"+
+							"            font-family: EF_jejudoldam;\">"+
+							"                WELCOME</h2>"+
+							"            "+
+							"            <div class=\"agreement\">"+
+							"                <h3 class=\"title\">차박의 모든 것, 카앤핑에 가입하신 것을 환영합니다!</h3>"+
+							"                <h3 class=\"title\">아래의 인증 번호를 입력하여 이메일 본인 인증을 완료해주세요!</h3>"+
+							"                <div class=\"agreeAll\"></div>"+
+							"                <h4 style=\"text-align: center; padding:20px 0px 30px 0px\">인증번호</h4>"+
+							"                <div align=\"center\">"+
+							"                    <h4 style=\""+
+							"                    color: orangered;"+
+							"					 font-size:24px;"+
+							"                    letter-spacing: 1.5em;"+
+							"                    font-weight: 600;"+
+							"                    margin: auto;"+
+							"                    background-color: white;"+
+							"                    text-align: center;"+
+							"                    border-radius: 50px;"+
+							"                    width: 60%;"+
+							"                    padding: 25px 0px 20px 35px;\">"+checkNum+"</h4>"+
+							"                </div>"+
+							"            </div>"+
+							"        </div>"+
+							""+
+							"    </div>"+
+							""+
+							"</body>"+
+							""+
+							"</html>";
+
+
+				
+		 
+        try {
+            
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+					
+		
+	}
 
 }
 	

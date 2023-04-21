@@ -459,8 +459,16 @@
         }
     });
 
+   
+
     $('.emailBtn').on('click', function(){
+
         timer_start();
+        var email = $("#emailInput").val();//입력이메일
+        $.ajax({
+            type:"GET",
+            url:"mailCheck?email=" + email
+        });
         
     });
 
