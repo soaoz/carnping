@@ -35,10 +35,11 @@
     
 
     <!--member css  -->
+    <!--  
     <link rel="stylesheet" href="resources/member/css/style.css" type="text/css">
     <link rel="stylesheet" href="resources/member/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/member/assets/css/style.css">
-
+	-->
 
     <style>
         #addSite{
