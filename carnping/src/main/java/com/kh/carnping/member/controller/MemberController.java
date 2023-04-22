@@ -1,5 +1,6 @@
 package com.kh.carnping.member.controller;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -58,11 +59,20 @@ public class MemberController {
 
 
 
+	//소영
+	@RequestMapping("logoutPage.me")
+	public String logoutPage() {
+		return "member/logoutPage";
+	}
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
 	
 	@RequestMapping("myProfileUpdate.me")
 	public String myProfileUpdate() {
 		return "member/myProfileUpdate";
-
 	}
 	@RequestMapping("myAlarmList.me")
 	public String myAlarmList() {

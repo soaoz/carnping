@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.carnping.member.model.dao.MemberDao;
+import com.kh.carnping.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -22,6 +23,16 @@ public class MemberServiceImpl implements MemberService {
 	
 	public int nicknameCheck(String nickname) {
 		return mDao.idCheck(sqlSession, nickname);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		return 0;
+	}
+
+	@Override
+	public int deleteMember(String userId) {
+		return 0;
 	}
 
 }

@@ -166,7 +166,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -183,7 +183,7 @@
                     <div class="space"></div> 
                     <div class="col-sm-10 col-sm-offset-1 profiel-container">
 
-                        <form action="" method="">
+                        <form action="update.me" method="post">
                             <div class="profiel-header">
                                 <h3>
                                     <br>
@@ -209,24 +209,24 @@
 
                                     <div class="form-group">
                                         <label>이름</label>
-                                        <input name="name" type="text" class="form-control" placeholder="">
+                                        <input name="name" type="text" class="form-control" value="${loginUser.memName}" readonly>
                                     </div>
                                     
                                     <div class="form-group checkdiv">
                                         <label>닉네임</label>
-                                        <input name="nickname" type="text" class="form-control" placeholder="" id="nickName">
+                                        <input name="nickname" type="text" class="form-control" placeholder="" id="nickName" value="${loginUser.nickName}">
                                         <input type='button' id="idCheck" class='btn btn-finish btn-primary check' name='' value='중복확인' />
 
                                     </div>
                                 
                                     <div class="form-group checkdiv">
                                         <label>이메일</label>
-                                        <input name="email" type="email" class="form-control" placeholder="andrew@email.com">
+                                        <input name="email" type="email" class="form-control" placeholder="andrew@email.com" value="${loginUser.email}">
                                         <input type='button' id="emailCheck" class='btn btn-finish btn-primary check' name='' value='중복확인' />
                                     </div> 
                                     <div class="form-group checkdiv">
                                         <label>연락처</label>
-                                        <input name="Password" type="password" class="form-control">
+                                        <input name="phone" type="text" class="form-control" value="${loginUser.phone}">
                                         <input type='button' id="phoneCheck" class='btn btn-finish btn-primary check' name='' value='인증하기' />
                                     </div>
                                     <div class="form-group">

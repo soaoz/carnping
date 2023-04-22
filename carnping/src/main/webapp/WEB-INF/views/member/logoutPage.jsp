@@ -245,34 +245,17 @@
                         <div class="profiel-header">
                             <h3>
                                 <br>
-                                <b class="title">회원탈퇴</b> <br><br>
-                                <small><b> 정말로 카앤핑을 탈퇴하시겠어요? 
-                                <br> 회원 탈퇴 후에도 게시물은 유지됩니다.<br>
-                                비밀번호를 입력하시면 회원탈퇴가 완료됩니다.
+                                <b class="title">로그아웃</b> <br><br>
+                                <small><b> 로그아웃 하시겠습니까? 
+                                <br> <br>
+                                <a href="logout.me" class = "btn btn-sm btn-primary">로그아웃</a>
+                                <a href="" class = "btn btn-sm btn-primary">메인페이지</a>
                                 </b></small>
                                 
                             </h3>
                             <hr>
                         </div>
 
-                        <div class="clear">
-
-                            <div class="col-sm-10 col-sm-offset-1">
-                                <br>
-                                <div class="form-group">
-                                    <br>
-                                    <label>비밀번호 확인<small></small></label>
-                                    <input name="Password" type="password" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-10 col-sm-offset-1">
-                            	<br><br>
-                                <input type='button' class='btn btn-finish btn-primary pull-right' name='update' value='탈퇴하기'  onclick="';"/>
-                                <br><br>
-                            
-                            </div>
-                            
-                        </div>
 
                 
                         
