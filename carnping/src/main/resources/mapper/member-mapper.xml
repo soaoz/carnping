@@ -59,6 +59,14 @@
 		<result column="LIKE_STATUS" property="likeStatus"/>
 	</resultMap>
 	
+	<select id="emailCheck" resultType="_int"> 
+	select
+		   count(*)
+	  from
+	       member
+     where email = #{email}
+	</select>
+	
 	<select id="idCheck" resultType="_int"> 
 	select
 		   count(*)

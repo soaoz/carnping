@@ -5,6 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Carnping | 회원가입</title>
+<script>
+    
+    // 공백 사용 못 하게
+    function noSpaceForm(obj) {
+        var str_space = /[\s]/g; // 공백 체크
+        if (str_space.test(obj.value) || obj.value.trim() === "") { // 공백 체크 및 입력값이 빈 문자열인지 확인
+            alert("해당 항목에는 공백을 사용할 수 없습니다.\n\n공백 제거됩니다.");
+            obj.focus();
+            obj.value = obj.value.replace(/\s+/g, ''); // 공백 제거
+            return false;
+        }
+    }
+
+
+</script>
 <style>
 
         h2, h3{
@@ -15,6 +30,7 @@
         *{
             font-family: 'Jal_Onuel';
             font-weight: 200;
+            letter-spacing: 0.1em!important;
         }
 		.progressBar{
             position: absolute;
@@ -87,6 +103,10 @@
             font-weight: 600;
             font-size: 17px;
         }
+        input, a, p, span{
+            letter-spacing: unset;
+        }
+
 
         .detail{
             margin-left: 7px;
@@ -104,6 +124,39 @@
             padding: 10px 100px;
             background-color: #0ca678;
             color:white;
+        }
+
+        .emailBtn{
+            border-radius: 50px;
+            padding: 10px 20px;
+            background-color: #0ca678;
+
+            color:white;
+        }
+
+        #emailBtn{
+            font-size: 14px;
+        }
+
+        button{
+            border-color: #0ca678;
+        }
+        button:disabled{
+            
+            color:#74E7BF;
+        }
+
+        #resendCode{
+            color:gray;
+            
+        }
+        #resendCode:hover{
+            color: #0ca678;
+            
+        }
+
+        input::placeholder{
+            color:lightgrey;
         }
         
         #wrapper{
@@ -170,6 +223,8 @@
         }
 
 </style>
+
+
 </head>
 <body>
 <!-- Header -->
@@ -268,6 +323,24 @@
                             <button class="detail" type="button" data-toggle="modal" data-target="#marketingModal" >보기</button>
                         </div>
                     </ul>
+                    <div align="center" id="emailDiv">
+                        <input type="email" id="emailInput" placeholder="이메일 입력" name="email" readonly required
+                        onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"  
+                        style="width: 60%;
+                        border-radius:50px;
+                        height: 50px;
+                        padding: 10px 10px 10px 20px;
+                        border: 1px solid lightblue;" >
+                        <button class="emailBtn" id="emailBtn" type="button" data-toggle="modal" 
+                            data-target="#emailModal"  disabled>이메일 인증
+                        </button>
+                        <p class="emailCondition" 
+                        style="visibility: hidden;
+                                padding-left: 65px;
+                                text-align: left;
+                                color: orangered;
+                                padding-top: 5px;"></p>
+                    </div>
                     <div class="join" id="agreeBtnDiv" align="center" style="margin-top:60px;" >
                         <button class="joinBtn" id="agreeBtn" type="button" disabled onclick="agreementCheck();">동의하고 가입하기</button>
                     </div>
@@ -337,26 +410,154 @@
 
         function checkAgreeValid() {
             if(agreeValid1 && agreeValid2 && agreeValid3) {
-                $('#agreeBtn').prop('disabled', false);
+                $('#emailInput').prop('readonly', false);
             } else {
-                $('#agreeBtn').prop('disabled', true);
-
+                $('#emailInput').prop('readonly', true);
             }
         }
 
+        $('.emailBtn').on('click', function(){
+            $('#modalEmail').text($('#emailInput').val());
+        })
+
     });
+
+    function emailCheck(email) {
+        const $idInput = $("#enrollForm input[name=email]")
+        return $.ajax({
+            url: "emailCheck.me",
+            data: { checkEmail: email },
+        });
+    }
+
+    function validateEmail(email) {
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+        return emailPattern.test(email);
+    }
+
+    $('#emailInput').on('input', function () {
+        var email = $(this).val();
+        var isValid = validateEmail(email);
+        if (isValid) {
+            emailCheck(email).done(function(result) {
+                if(result === "NNNNY"){
+                    $(".emailCondition").text("사용 가능한 이메일 입니다. 본인 인증을 진행해주세요.");
+                    $(".emailCondition").css('visibility','visible').css('color','#0ca678');
+                    $('.emailBtn').prop('disabled', false);
+                } else {
+                    $(".emailCondition").text("이미 존재하거나 탈퇴한 회원의 이메일입니다.");
+                    $('.emailCondition').css('visibility','visible').css('color','orangered');
+                    $('.emailBtn').prop('disabled', true);
+                }
+            }).fail(function() {
+                console.log("이메일 중복체크용 ajax 통신 실패!");
+            });
+        } else {
+            $(".emailCondition").text("올바른 이메일 형식을 입력해주세요.");
+            $('.emailCondition').css('visibility','visible').css('color','orangered');;
+            $('.emailBtn').prop('disabled', true);
+        }
+    });
+
+   
+
+    $('.emailBtn').on('click', function(){
+
+        timer_start();
+        var email = $("#emailInput").val();//입력이메일
+        $.ajax({
+            type:"GET",
+            url:"mailCheck?email=" + email
+        });
+        
+    });
+
+    // 코드 유효성 (유효하면 true, 아니면 false)
+    let code_valid = false 
+    // 발송 후 지난 초
+    let current_time = 0;
+    // 유효시간 
+    let minutes,seconds;
+    let timer_thread;
+
+    function timer_start(){
+
+                    
+        // 인증코드 유효성 true
+        code_valid = true;
+        // 현재 발송 시간 초기화
+        current_time = 0
+        // 20초
+        let count = 90;
+        let timer = $('.timer');
+        timer.text("02:30");
+        // 1초마다 실행
+        timer_thread = setInterval(function () {
+            
+            minutes = parseInt(count / 60, 10);
+            seconds = parseInt(count % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+
+            timer.text(minutes + ":" + seconds);
+
+            // alert(minutes + ":" + seconds);
+            
+            // 타이머 끝
+            if (--count < 0) {
+                timer_stop();
+                timer.text("시간초과");
+                // code msg 보임
+                code_msg.style.display = "block";
+                // code msg "인증코드가 만료되었습니다."
+                code_msg.textContent = "인증코드가 만료되었습니다.";
+                // 코드 색상 비정상
+                code_msg.style.color = msg_err_color;
+            }
+
+            current_time++
+
+        }, 1000);
+
+    } 
+
+    // 타이머 종료
+    function timer_stop(){
+        // 타이머 종료
+        clearInterval(timer_thread)
+        // 유효시간 만료
+        code_valid = false
+    }
+
+    // 인증코드가 유효하면 true, 만료되었다면 false 반환
+    function iscodeValid(){
+
+        return code_valid;
+
+    }
+
+    // 인증코드 발송 후 10초가 지났는가? 지났으면 true, 안지났으면 false
+    function isRerequest(){
+
+        return  current_time>=10?true:false;
+
+    }
+
 
 
 
     function agreementCheck(){
 
         const $marketingInput = $("#enrollForm input[name=marketing]");
-
+        const $emailInput = $("#enrollForm input[name=email]");
 
         $.ajax({
            url : "agree.me",
            data : {
-            marketingAgree:$marketingInput.val()
+            marketingAgree:$marketingInput.val(),
+            email:$emailInput.val()
             },
            success : function(){
             $("#title").text("로그인에 사용할 아이디를 입력해주세요.");
@@ -573,6 +774,57 @@
             </div>
         </div>
   </div>
+
+  <div class="modal" id="emailModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title" style="font-size:20px; padding: 5px 10px;"> 인증 코드 </h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div>
+                    <span id="modalEmail" style="padding-left: 5px;letter-spacing:unset; font-size:15px;"></span>
+                    <span style="color:gray; font-size:15px;">으로 인증코드를 발송하였습니다. </span>
+                    <p style="font-size:15px; padding-left: 5px;">메일함을 확인해주세요.</p>
+                </div>
+                <div align="center" style="margin-bottom: 10px">
+                    <input type="text" id="emailVerify" placeholder="인증 코드 입력" 
+                    style="width: 60%;
+                    height: 50px;
+                    padding: 10px;
+                    margin-right: 15px;
+                    border: 1px solid lightblue;" name="userId" 
+                    onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" required>
+                    <span class="timer"
+                    style="    position: absolute;
+                    top: 96px;
+                    right: 215px;
+                    font-size: 14px;
+                    color: orangered;">12:30</span>
+                    <button class="emailBtn" type="button" onclick="">인증 코드 확인</button>
+                </div>
+                <span class="resendInfo" style="color:grey; padding-left: 20px; font-size:14px;">인증코드를 받지 못하셨나요?</span>
+                <a id="resendCode" href="" 
+                style="
+                font-size:14px;
+                position: absolute;
+                right: 40px;">[인증코드 재발송]</a>
+            </div>
+
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+    
+        </div>
+    </div>
+</div>
 	
 <!-- Footer -->
 	<jsp:include page="../common/footer.jsp"/>
