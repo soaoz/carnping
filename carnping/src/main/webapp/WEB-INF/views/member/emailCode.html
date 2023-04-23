@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+
+
+    <link rel="stylesheet" th:href="@{/style.css}" href="/resources/css/style.css">
+
+
+    
+
+    <style>
+
+
+        @font-face {
+            font-family: 'Jal_Onuel';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'EF_jejudoldam';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        h2, h3, h4{
+            font-family: unset;
+        }
+
+        *{
+            font-family: 'Jal_Onuel';
+            font-weight: 200;
+        }
+
+        body{
+            margin:unset;
+        }
+        #wrapper {
+            background-color:#74E7BF;
+            width: 100%;
+            letter-spacing: 0.08em;
+        }
+
+        #wrapper>*{
+            letter-spacing: unset;
+        }
+
+        #joinWrapper{
+            background-color:  rgba(255, 240, 156, 0.7);
+            border-radius: 50px;
+            max-width: 600px;
+            height: 700px;
+            margin: auto;
+            padding-top: 100px;
+        }
+        
+
+        
+
+        .agreement{
+            position: relative;
+            -webkit-flex: 1 0 100%;
+            -ms-flex: 1 0 100%;
+            flex: 1 0 100%;
+            padding-top: 30px;
+        }
+
+        .title{
+            margin-top:10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 28px;
+            letter-spacing: unset;
+            white-space: pre-wrap;
+            text-align: center;
+        }
+
+        .agreeAll{
+            padding: 5px 0px;
+            margin: 0px 35px 50px 35px;
+            border-bottom: 1px solid #0ca678;
+            letter-spacing: unset;
+        }
+        
+        
+    </style>
+
+</head>
+
+<body>
+
+    
+    
+
+    <div id="wrapper" style="padding: 100px 0px; position:absolute;" >
+        <div id="joinWrapper" >
+            <img th:src="@{logo_login_1.png}" width="125px" style="display:block; margin:auto; padding-top: 25px;" alt="">
+            <h2 
+            style="margin: 25px 0px 20px 0px; 
+            text-align: center; 
+            letter-spacing: unset; 
+            font-size:28px;
+            color:#0ca678;
+            font-family: EF_jejudoldam;">
+                WELCOME</h2>
+            
+            <div class="agreement">
+                <h3 class="title">차박의 모든 것, 카앤핑에 가입하신 것을 환영합니다!</h3>
+                <h3 class="title">아래의 인증 번호를 입력하여 이메일 본인 인증을 완료해주세요!</h3>
+                <div class="agreeAll"></div>
+                <h4 style="text-align: center; padding:20px 0px 30px 0px">인증번호</h4>
+                <div align="center">
+                    <h4 style="
+                    color: orangered;
+                    letter-spacing: 1.5em;
+                    font-weight: 600;
+                    margin: auto;
+                    background-color: white;
+                    text-align: center;
+                    border-radius: 50px;
+                    width: 60%;
+                    padding: 25px 0px 20px 35px;" th:text="${verificationCode}">code</h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

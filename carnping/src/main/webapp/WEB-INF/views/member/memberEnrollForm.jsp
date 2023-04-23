@@ -356,7 +356,105 @@
 
     </div>
 
-    <script>
+    
+              
+
+
+
+    <!-- The Modal -->
+    <div class="modal" id="marketingModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="font-size:20px; padding: 5px 10px;"> 마케팅 정보 수신 및 활용 동의</h4>
+                    <button type="button"  class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>
+                        카앤핑에서 제공하는 이벤트 및 혜택 등 다양한 정보를 문자메시지, 이메일, 앱 푸시 알림 등으로 받아보실 수 있습니다. 마케팅 정보 수신 및 활용 동의 여부와 관계없이 회원가입 및 서비스를 이용하실 수 있습니다. 또한 서비스의 중요 안내사항 및 주문/배송에 대한 정보는 마케팅 정보 수신 동의 여부와 관계없이 발송됩니다.
+
+                        1. 수집·이용목적
+                        마케팅 및 분석
+                        프로모션
+                        2. 수집·이용항목
+                        회원 정보(이름, 휴대폰 번호, 이메일, 성별, 생년월일, 회원등급, 가입일시)
+                        쇼핑 및 서비스 이용 정보(장바구니의 상품, 구매일시, 배송지역)
+                        수집∙이용항목은 마케팅 및 분석, 프로모션의 목적에 따라 달라질 수 있으며 수집 시점에 안내 후 동의여부를 별도 확인함
+                        3. 보유 및 이용기간
+                        정보 삭제 또는 이용 정지 요청 및 회원탈퇴 시 즉시 삭제
+                        4. 마케팅 활용 정보 수집 방법
+                        희망자에 한해 직접 입력
+                    </p>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+        
+            </div>
+        </div>
+  </div>
+
+  <div class="modal" id="emailModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title" style="font-size:20px; padding: 5px 10px;"> 인증 코드 </h4>
+            <button type="button" id="modalClose" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div>
+                    <span id="modalEmail" style="padding-left: 5px;letter-spacing:unset; font-size:15px;"></span>
+                    <span style="color:gray; font-size:15px;">으로 인증코드를 발송하였습니다. </span>
+                    <p style="font-size:15px; padding-left: 5px;">메일함을 확인해주세요.</p>
+                </div>
+                <div align="center" style="margin-bottom: 10px">
+                    <input type="text" id="emailVerify" placeholder="인증 코드 입력" 
+                    style="width: 60%;
+                    height: 50px;
+                    padding: 10px;
+                    margin-right: 15px;
+                    border: 1px solid lightblue;" name="userId" 
+                    onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" required>
+                    <span class="timer"
+                    style="    position: absolute;
+                    top: 96px;
+                    right: 215px;
+                    font-size: 14px;
+                    color: orangered;">12:30</span>
+                    <button class="emailBtn" type="button" onclick="verifyCode();">인증 코드 확인</button>
+                </div>
+                
+                <span class="resendInfo" style="color:grey; padding-left: 5px; font-size:13px;">인증코드를 받지 못하셨나요?</span>
+                <a id="resendCode" href="#" onclick="resend(); return false;" 
+                style="
+                margin-top:3px;
+                font-size:13px;
+                position: absolute;
+                cursor: pointer;
+                right: 45px;">[인증코드 재발송]</a>
+            </div>
+
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" onclick="verifiedEmail();" id="verifySubmit"style="background-color: #0ca678; border-color: #0ca678;" class="btn btn-danger" data-dismiss="modal" disabled>확인</button>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+<script>
 
 
     $(function(){
@@ -427,6 +525,7 @@
         return $.ajax({
             url: "emailCheck.me",
             data: { checkEmail: email },
+            
         });
     }
 
@@ -460,17 +559,33 @@
     });
 
    
-
-    $('.emailBtn').on('click', function(){
+    var realCode = "";
+    $('#emailBtn').on('click', function(){
 
         timer_start();
         var email = $("#emailInput").val();//입력이메일
         $.ajax({
             type:"GET",
-            url:"mailCheck?email=" + email
+            url:"mailCheck?email=" + email,
+            success:function(result){
+                if(result == "error"){
+                    alert("이메일 주소가 올바르지 않습니다.");
+
+                } else{
+                    realCode = result;
+                }
+            }
         });
         
     });
+
+    $('#modalClose').on('click', function () {
+        timer_stop();
+        $(".resendInfo").text("인증코드를 받지 못하셨나요?");
+        $(".resendInfo").css("color","grey");
+
+     
+    })  
 
     // 코드 유효성 (유효하면 true, 아니면 false)
     let code_valid = false 
@@ -488,7 +603,7 @@
         // 현재 발송 시간 초기화
         current_time = 0
         // 20초
-        let count = 90;
+        let count = 150;
         let timer = $('.timer');
         timer.text("02:30");
         // 1초마다 실행
@@ -531,6 +646,10 @@
         code_valid = false
     }
 
+
+
+
+
     // 인증코드가 유효하면 true, 만료되었다면 false 반환
     function iscodeValid(){
 
@@ -545,7 +664,78 @@
 
     }
 
+    function verifyCode(){
 
+        // 타이머 시간 초과 확인
+        if(iscodeValid()){
+            let codeInput = $("#emailVerify").val();
+            // 인증코드 일치성 검사 
+            // 통과시
+            if(realCode == codeInput){
+                // code msg "이메일 인증 성공!"
+                $(".resendInfo").text("본인 인증 되었습니다!");
+                $(".resendInfo").css("color","#0ca678");
+                $("#verifySubmit").prop('disabled',false);
+
+            }
+            else{
+                // 미통과
+                
+                $(".resendInfo").text("인증 코드가 일치하지 않습니다.");
+                $(".resendInfo").css("color","orangered");
+            }
+        };
+        };
+
+    // 인증코드 재발송 버튼 클릭할 때
+    function resend(){
+         // 인증코드 발송 후 10초가 지났는지 확인
+         if(isRerequest()){
+                    // 인증코드 재발송
+                    var email = $("#emailInput").val();//입력이메일
+                    $.ajax({
+                        type:"GET",
+                        url:"mailCheck?email=" + email
+                    });
+
+                    // code msg 인증코드 발송 성공
+                    $(".resendInfo").text("인증코드 재발송 성공");
+                    $(".resendInfo").css("color","#0ca678");
+   
+
+                    // 타이머 리셋
+                    timer_stop()
+                    timer_start()
+                }
+                else{
+                    // code msg 인증코드 발송 거부
+                    $(".resendInfo").text( "인증코드 발송 후 10초 뒤부터 재발송 가능합니다.");
+                    $(".resendInfo").css("color","orangered");
+                }
+    }
+
+
+
+    // 인증코드 입력창 포커스 잃을 때
+    $("#emailVerify").on("blur", function(){
+
+
+        //  인증코드가 만료되었는지 확인
+        if(!iscodeValid()){
+            // code 입력창 테두리 빨간색으로 변경
+            $(".resendInfo").text( "인증코드가 만료되었습니다. 인증코드를 재발송하세요.");
+            $(".resendInfo").css("color","orangered");
+
+        }
+
+
+
+    });
+
+    function verifiedEmail(){
+        $("#emailInput").attr("readonly",true);
+        $("#agreeBtn").prop("disabled", false);
+    }
 
 
     function agreementCheck(){
@@ -565,6 +755,7 @@
             $(".agreeSpan").hide();
             $(".agreeDetail").hide();
             $("#agreeBtnDiv").hide();
+            $("#emailDiv").hide();
             $("#idNextBtnDiv").show();
 
         }
@@ -732,99 +923,6 @@
         });
 
         </script>
-              
-
-
-
-    <!-- The Modal -->
-    <div class="modal" id="marketingModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-        
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title" style="font-size:20px; padding: 5px 10px;"> 마케팅 정보 수신 및 활용 동의</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-        
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <p>
-                        카앤핑에서 제공하는 이벤트 및 혜택 등 다양한 정보를 문자메시지, 이메일, 앱 푸시 알림 등으로 받아보실 수 있습니다. 마케팅 정보 수신 및 활용 동의 여부와 관계없이 회원가입 및 서비스를 이용하실 수 있습니다. 또한 서비스의 중요 안내사항 및 주문/배송에 대한 정보는 마케팅 정보 수신 동의 여부와 관계없이 발송됩니다.
-
-                        1. 수집·이용목적
-                        마케팅 및 분석
-                        프로모션
-                        2. 수집·이용항목
-                        회원 정보(이름, 휴대폰 번호, 이메일, 성별, 생년월일, 회원등급, 가입일시)
-                        쇼핑 및 서비스 이용 정보(장바구니의 상품, 구매일시, 배송지역)
-                        수집∙이용항목은 마케팅 및 분석, 프로모션의 목적에 따라 달라질 수 있으며 수집 시점에 안내 후 동의여부를 별도 확인함
-                        3. 보유 및 이용기간
-                        정보 삭제 또는 이용 정지 요청 및 회원탈퇴 시 즉시 삭제
-                        4. 마케팅 활용 정보 수집 방법
-                        희망자에 한해 직접 입력
-                    </p>
-                </div>
-        
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-        
-            </div>
-        </div>
-  </div>
-
-  <div class="modal" id="emailModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-    
-            <!-- Modal Header -->
-            <div class="modal-header">
-            <h4 class="modal-title" style="font-size:20px; padding: 5px 10px;"> 인증 코드 </h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-    
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div>
-                    <span id="modalEmail" style="padding-left: 5px;letter-spacing:unset; font-size:15px;"></span>
-                    <span style="color:gray; font-size:15px;">으로 인증코드를 발송하였습니다. </span>
-                    <p style="font-size:15px; padding-left: 5px;">메일함을 확인해주세요.</p>
-                </div>
-                <div align="center" style="margin-bottom: 10px">
-                    <input type="text" id="emailVerify" placeholder="인증 코드 입력" 
-                    style="width: 60%;
-                    height: 50px;
-                    padding: 10px;
-                    margin-right: 15px;
-                    border: 1px solid lightblue;" name="userId" 
-                    onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" required>
-                    <span class="timer"
-                    style="    position: absolute;
-                    top: 96px;
-                    right: 215px;
-                    font-size: 14px;
-                    color: orangered;">12:30</span>
-                    <button class="emailBtn" type="button" onclick="">인증 코드 확인</button>
-                </div>
-                <span class="resendInfo" style="color:grey; padding-left: 20px; font-size:14px;">인증코드를 받지 못하셨나요?</span>
-                <a id="resendCode" href="" 
-                style="
-                font-size:14px;
-                position: absolute;
-                right: 40px;">[인증코드 재발송]</a>
-            </div>
-
-    
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-    
-        </div>
-    </div>
-</div>
 	
 <!-- Footer -->
 	<jsp:include page="../common/footer.jsp"/>

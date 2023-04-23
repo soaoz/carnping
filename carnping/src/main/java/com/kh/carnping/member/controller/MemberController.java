@@ -3,10 +3,12 @@ package com.kh.carnping.member.controller;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,8 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import com.kh.carnping.member.model.service.MemberServiceImpl;
+
 
 @Controller
 public class MemberController {
@@ -23,6 +32,36 @@ public class MemberController {
 
 	@Autowired
 	private MemberServiceImpl mService;
+	
+	@Autowired
+	private SpringTemplateEngine templateEngine;
+
+	
+//    @Bean
+//    public SpringTemplateEngine templateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(templateResolver());
+//        templateEngine.setEnableSpringELCompiler(true);
+//        return templateEngine;
+//    }
+//    
+//    private ITemplateResolver templateResolver() {
+//    	ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+//    	templateResolver.setPrefix("/views/member/");
+//    	templateResolver.setSuffix(".html");
+//    	templateResolver.setTemplateMode(TemplateMode.HTML);
+//    	templateResolver.setCharacterEncoding("UTF-8");
+//    	return templateResolver;
+//    }
+    
+//    private ITemplateResolver templateResolver() {
+//        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+//        templateResolver.setPrefix("/WEB-INF/views/member/");
+//        templateResolver.setSuffix(".html");
+//        templateResolver.setTemplateMode(TemplateMode.HTML);
+//        templateResolver.setCharacterEncoding("UTF-8");
+//        return templateResolver;
+//    }
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -131,7 +170,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
 	@ResponseBody
-	public void mailCheckGET(String email) {
+	public String mailCheckGET(String email) {
 		/* 넘어온 데이터 확인 */
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 		logger.info("이메일 데이터 전송 확인");
@@ -141,149 +180,18 @@ public class MemberController {
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
 		logger.info("인증번호 " + checkNum);
-		
+		String num= "";
 		/* 이메일 보내기 */
 		
 		String setFrom = "Carnping 카앤핑 <chadollbagi@gmail.com>";
 		String toMail = email;
 		String title = "카앤핑 회원가입 본인 인증 코드입니다.";
-
-
-		String content = "<!DOCTYPE html>"+
-							"<html>"+
-							""+
-							"<head>"+
-							"    <meta charset=\"UTF-8\">"+
-							""+
-							""+
-							""+
-							"    <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\">"+
-							""+
-							""+
-							"    "+
-							""+
-							"    <style>"+
-							""+
-							""+
-							"        @font-face {"+
-							"            font-family: 'Jal_Onuel';"+
-							"            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');"+
-							"            font-weight: normal;"+
-							"            font-style: normal;"+
-							"        }"+
-							""+
-							"        @font-face {"+
-							"            font-family: 'EF_jejudoldam';"+
-							"            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');"+
-							"            font-weight: normal;"+
-							"            font-style: normal;"+
-							"        }"+
-							""+
-
-							"        *{"+
-							"            font-family: 'Jal_Onuel';"+
-							"            font-weight: 200;"+
-							"        }"+
-							""+
-							""+
-							"        #wrapper {"+
-							"            background-color:#74E7BF;"+
-							"            height: 100%;"+
-							"            width: 100%;"+
-							"            letter-spacing: 0.08em;"+
-							"        }"+
-							""+
-							"        #wrapper>*{"+
-							"            letter-spacing: unset;"+
-							"        }"+
-							""+
-							"        #joinWrapper{"+
-							"            background-color:  rgba(255, 240, 156, 0.7);"+
-							"            border-radius: 50px;"+
-							"            max-width: 600px;"+
-							"            height: 100%;"+
-							"            margin: auto;"+
-							"            padding-top: 50px;"+
-							"        }"+
-							"        "+
-							""+
-							"        "+
-							""+
-							"        .agreement{"+
-							"            position: relative;"+
-							"            -webkit-flex: 1 0 100%;"+
-							"            -ms-flex: 1 0 100%;"+
-							"            flex: 1 0 100%;"+
-							"            padding-top: 30px;"+
-							"        }"+
-							""+
-							"        .title{"+
-							"            margin-top:10px;"+
-							"            margin-bottom: 20px;"+
-							"            font-size: 18px;"+
-							"            font-weight: 500;"+
-							"            line-height: 28px;"+
-							"            letter-spacing: unset;"+
-							"            white-space: pre-wrap;"+
-							"            text-align: center;"+
-							"        }"+
-							""+
-							"        .agreeAll{"+
-							"            padding: 5px 0px;"+
-							"            margin: 0px 35px 50px 35px;"+
-							"            border-bottom: 1px solid #0ca678;"+
-							"            letter-spacing: unset;"+
-							"        }"+
-							"        "+
-							"        "+
-							"    </style>"+
-							""+
-							"</head>"+
-							""+
-							"<body>"+
-							""+
-							"    "+
-							"    "+
-							""+
-							"    <div id=\"wrapper\" style=\"padding: 50px 0px; position:absolute;\" >"+
-							"        <div id=\"joinWrapper\" >"+
-							"            <img src=\"img/logo_login_1.png\" width=\"125px\" style=\"display:block; margin:auto; padding-top: 25px;\" alt=\"\">"+
-							"            <h2 "+
-							"            style=\"margin: 25px 0px 20px 0px; "+
-							"            text-align: center; "+
-							"            letter-spacing: unset; "+
-							"            font-size:28px;"+
-							"            color:#0ca678;"+
-							"            font-family: EF_jejudoldam;\">"+
-							"                WELCOME</h2>"+
-							"            "+
-							"            <div class=\"agreement\">"+
-							"                <h3 class=\"title\">차박의 모든 것, 카앤핑에 가입하신 것을 환영합니다!</h3>"+
-							"                <h3 class=\"title\">아래의 인증 번호를 입력하여 이메일 본인 인증을 완료해주세요!</h3>"+
-							"                <div class=\"agreeAll\"></div>"+
-							"                <h4 style=\"text-align: center; padding:20px 0px 30px 0px\">인증번호</h4>"+
-							"                <div align=\"center\">"+
-							"                    <h4 style=\""+
-							"                    color: orangered;"+
-							"					 font-size:24px;"+
-							"                    letter-spacing: 1.5em;"+
-							"                    font-weight: 600;"+
-							"                    margin: auto;"+
-							"                    background-color: white;"+
-							"                    text-align: center;"+
-							"                    border-radius: 50px;"+
-							"                    width: 60%;"+
-							"                    padding: 25px 0px 20px 35px;\">"+checkNum+"</h4>"+
-							"                </div>"+
-							"            </div>"+
-							"        </div>"+
-							""+
-							"    </div>"+
-							""+
-							"</body>"+
-							""+
-							"</html>";
-
+		
+		Context context = new Context();
+		context.setVariable("verificationCode", checkNum);
+		System.out.println(context);
+		String content = templateEngine.process("emailCode", context);
+		
 
 				
 		 
@@ -296,11 +204,13 @@ public class MemberController {
             helper.setSubject(title);
             helper.setText(content,true);
             mailSender.send(message);
-            
+            num=Integer.toString(checkNum);
         }catch(Exception e) {
             e.printStackTrace();
+            num="error";
         }
-					
+		
+        return num;
 		
 	}
 
