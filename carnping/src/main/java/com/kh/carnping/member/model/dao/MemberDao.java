@@ -3,6 +3,8 @@ package com.kh.carnping.member.model.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.carnping.member.model.vo.Member;
+
 @Repository
 public class MemberDao {
 	
@@ -15,5 +17,9 @@ public class MemberDao {
 	
 	public int nicknameCheck(SqlSessionTemplate sqlSession, String nickname) {
 		return sqlSession.selectOne("memberMapper.nicknameCheck", nickname);
+	}
+	
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 }

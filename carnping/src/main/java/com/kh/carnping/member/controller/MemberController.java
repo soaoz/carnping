@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +26,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import com.kh.carnping.member.model.service.MemberServiceImpl;
+import com.kh.carnping.member.model.vo.Member;
 
 
 @Controller
@@ -33,41 +36,21 @@ public class MemberController {
 	@Autowired
 	private MemberServiceImpl mService;
 	
-	@Autowired
+	@Autowired // 이메일 템플릿 
 	private SpringTemplateEngine templateEngine;
 
-	
-//    @Bean
-//    public SpringTemplateEngine templateEngine() {
-//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//        templateEngine.setTemplateResolver(templateResolver());
-//        templateEngine.setEnableSpringELCompiler(true);
-//        return templateEngine;
-//    }
-//    
-//    private ITemplateResolver templateResolver() {
-//    	ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-//    	templateResolver.setPrefix("/views/member/");
-//    	templateResolver.setSuffix(".html");
-//    	templateResolver.setTemplateMode(TemplateMode.HTML);
-//    	templateResolver.setCharacterEncoding("UTF-8");
-//    	return templateResolver;
-//    }
-    
-//    private ITemplateResolver templateResolver() {
-//        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-//        templateResolver.setPrefix("/WEB-INF/views/member/");
-//        templateResolver.setSuffix(".html");
-//        templateResolver.setTemplateMode(TemplateMode.HTML);
-//        templateResolver.setCharacterEncoding("UTF-8");
-//        return templateResolver;
-//    }
-	
-	@Autowired
+
+	@Autowired // 이메일 전송
 	private JavaMailSender mailSender;
 	
-//	@Autowired
-//	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	
+	@RequestMapping("loginForm.me")
+	public String memberLoginForm(){
+		return "member/loginForm";
+	}
 	
 	@RequestMapping("enrollForm.me")
 	public String memberEnrollForm(){
@@ -93,7 +76,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@RequestMapping("agree.me")
-	public void agreeEnroll(boolean marketingAgree){
+	public void agreeEnroll(String marketingAgree){
 		System.out.println(marketingAgree);
 	}
 
@@ -116,7 +99,20 @@ public class MemberController {
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 
-
+	@RequestMapping("insert.me")
+	public String insertMember(Member m, Model model, HttpSession session) {
+		// 암호화 작업 (암호문 만들어내는 과정)
+		String encPwd = bcryptPasswordEncoder.encode(m.getMemPwd());
+		m.setMemPwd(encPwd);
+		int result = mService.insertMember(m);
+		
+		if (result > 0) { // 성공 => 메인페이지 url 재요청! 알람창
+			return "member/welcomePage"; 
+		} else { // 실패 => 에러 문구 담아서 에러페이지 포워딩
+			model.addAttribute("errorMsg", "회원가입 실패!");
+			return "common/errorPage";
+		}
+	}
 
 	
 	@RequestMapping("myProfileUpdate.me")

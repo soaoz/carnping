@@ -22,6 +22,7 @@ public class Member {
 	private String status;		// 회원상태 활동 Y,탈퇴 N,관리자 A,정지 S,영구정지 B
 	private String memImg;		// 회원이미지
 	private String phone;		// 휴대폰
-	private String memAplType;	// 소셜종류
+	private String memApiType;	// 소셜종류
 	private String memApiToken;	// 토큰 URL
+	private String marketing;   // 마케팅이용약관동의
 }

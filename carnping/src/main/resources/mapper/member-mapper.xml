@@ -82,6 +82,41 @@
 	       member
      where mem_id = #{nickname}
 	</select>
+	
+	<insert id="insertMember" >
+		insert
+		  into member
+		     (
+		       MEM_NO
+		     , MEM_ID
+		     , MEM_PWD
+		     , MEM_NAME
+		     , NICKNAME
+		     , EMAIL
+		     , ENROLL_DATE
+		     , STATUS
+		     , MEM_IMG
+		     , PHONE
+		     , MEM_API_TYPE
+		     , MEM_API_TOKEN
+		     )
+	    values
+	         (
+	           'MEM' || TO_CHAR(SEQ_MEM_NO.NEXTVAL)
+	         , #{memId}
+	         , #{memPwd}
+	         , #{memName}
+	         , #{nickName}
+	         , #{email}
+	         , #{enrollDate}
+	         , DEFAULT
+	         , DEFAULT
+	         , #{memImg}
+	         , #{phone}
+	         , #{memApiType}
+	         , #{memApiToken}
+	         )
+	</insert>
 
 
 	<select  id="selectMemberList" resultMap="memberResultSet">

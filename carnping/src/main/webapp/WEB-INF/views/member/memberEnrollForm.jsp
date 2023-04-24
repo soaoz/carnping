@@ -243,16 +243,23 @@
                     <h3 class="title" id="title">Carnping 서비스 이용약관에 동의해주세요.</h3>
                     
                     <div class="agreeAll">
+                        <span class="agreeSpan">
+                            <input type="checkbox" id="all" name="all">
+                            <label class="checkLabel" for="all"></label>
+                            <label class="checkLabelDesc" style="padding-left: 5px;" for="all" title="all">
+                                모두 동의 (선택 정보 포함)
+                            </label>
+                        </span>
                         <div id="idForm" style="display:none;">
                             <input type="text" id="idInput" placeholder="아이디 입력" style="width: 100%;
                                 height: 50px;
                                 padding: 10px;
-                                border: 1px solid lightblue;" name="userId" required>
+                                border: 1px solid lightblue;" name="memId" required>
                             <p class="idCondition" style="visibility: hidden; padding: 5px 0px 0px 5px; color: orangered">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</p>
 
                         </div>
                         <div id="pwdForm" style="display:none;">
-                            <input type="password" id="pwdInput" name="password" placeholder="비밀번호 입력" autocapitalize="none" style="width: 100%;
+                            <input type="password" id="pwdInput" name="memPwd" placeholder="비밀번호 입력" autocapitalize="none" style="width: 100%;
                             height: 50px;
                             padding: 10px;
                             border: 1px solid lightblue;" >
@@ -270,13 +277,77 @@
                                 <span class="pwdCondition" id="pwdConfirm">비밀번호 일치</span>
                             </p>
                         </div>
-                        <span class="agreeSpan">
-                            <input type="checkbox" id="all" name="all">
-                            <label class="checkLabel" for="all"></label>
-                            <label class="checkLabelDesc" style="padding-left: 5px;" for="all" title="all">
-                                모두 동의 (선택 정보 포함)
-                            </label>
-                        </span>
+                        <table id="memInfo" style="margin: auto; width:80%; text-align: center; display:none;">
+                            <tr>
+                                <td colspan="2" 
+                                style="text-align: center; padding-bottom: 30px;">
+                                    
+                                        
+                                    <div class="circle" style="margin:auto;" >
+                                        <img class="profile-pic" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
+                                        <div class="p-image" style="right:160px;">
+                                            <i class="fa fa-camera upload-button"></i>
+                                                <input  name="memImg" class="file-upload" type="file" accept="image/*"/>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이름<span style="color:orangered"> *</span></td>
+                                <td>
+                                    <input type="text" id="memName" name="memName" autocapitalize="none" 
+                                    style="width: 80%;
+                                        height: 40px;
+                                        padding: 10px;
+                                        margin: 5px;
+                                        border: 1px solid lightblue;
+                                        text-align: center;"  onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" required />
+                                </td>
+                            </tr>
+                            <tr height="1px" >
+                                <td></td>
+                                <td>
+                                    <p class="nameCondition" style="visibility: hidden; margin:unset; color: orangered">이름을 정확히 입력해주세요.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>닉네임</td>
+                                <td>                     
+                                    <input type="text" id="nickname" name="nickName"  style="width: 80%;
+                                    height: 40px;
+                                    padding: 10px;
+                                    margin: 5px;
+                                    border: 1px solid lightblue;
+                                    text-align: center;" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+                                </td>
+                            </tr>
+                            <tr height="1px" >
+                                <td></td>
+                                <td>
+                                    <p class="nicknameCondition" style="visibility: hidden; margin:unset; color: orangered">이미 존재하는 닉네임입니다.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>휴대폰 번호</td>
+                                <td>
+                                    <input type="tel" id="phone" name="phone" autocapitalize="none" placeholder="예) 010-0000-0000"
+                                    style="width: 80%;
+                                    height: 40px;
+                                    padding: 10px;
+                                    margin: 5px;
+                                    border: 1px solid lightblue;
+                                    text-align: center;"  onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+                                </td>
+                            </tr>
+                            <tr height="1px" >
+                                <td></td>
+                                <td>
+                                    <p class="phoneCondition" style="visibility: hidden; margin:unset; color: orangered">정확히 입력해주세요. </p>
+                                </td>
+                            </tr>
+                    </table>
                     </div>
                     <ul class="agreeDetail" style="margin: 0px 40px 30px 40px;">
                         <div class="agreement">
@@ -335,6 +406,7 @@
                             data-target="#emailModal"  disabled>이메일 인증
                         </button>
                         <p class="emailCondition" 
+                        id="emailCondition"
                         style="visibility: hidden;
                                 padding-left: 65px;
                                 text-align: left;
@@ -349,6 +421,9 @@
                     </div>
                     <div class="join" id="PwdNextBtnDiv" align="center" style="margin-top:60px; display:none;" >
                         <button class="joinBtn" id="nextBtn" type="button" disabled onclick="pwdConfirmed();">다음</button>
+                    </div>
+                    <div class="join" id="enrollBtnDiv" align="center" style="margin-top:60px; display:none;" >
+                        <button class="joinBtn" id="infoNextBtn" type="submit" disabled >다음</button>
                     </div>
                 </div>
             </form>
@@ -518,6 +593,13 @@
             $('#modalEmail').text($('#emailInput').val());
         })
 
+        //마케팅체크박스 값넘기기
+        if($("#marketing").is(":checked")){
+            $("#marketing").val('Y');
+        } else {
+            $("#marketing").val('N');
+        }
+
     });
 
     function emailCheck(email) {
@@ -624,12 +706,7 @@
             if (--count < 0) {
                 timer_stop();
                 timer.text("시간초과");
-                // code msg 보임
-                code_msg.style.display = "block";
-                // code msg "인증코드가 만료되었습니다."
-                code_msg.textContent = "인증코드가 만료되었습니다.";
-                // 코드 색상 비정상
-                code_msg.style.color = msg_err_color;
+
             }
 
             current_time++
@@ -734,7 +811,9 @@
 
     function verifiedEmail(){
         $("#emailInput").attr("readonly",true);
+        $("#emailCondition").text("본인 인증되었습니다.");
         $("#agreeBtn").prop("disabled", false);
+        $("#emailBtn").prop("disabled", true);
     }
 
 
@@ -853,6 +932,7 @@
             $("#title").text("회원 정보를 입력해주세요.");
             $("#pwdForm").hide();
             $("#PwdNextBtnDiv").hide();
+            $("#memInfo").show();
 
         }
         ,
@@ -922,7 +1002,156 @@
             });
         });
 
+        $(function(){
+            var readURL = function(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $(".file-upload").on('change', function(){
+                readURL(this);
+            });
+
+            $(".upload-button").on('click', function() {
+                $(".file-upload").click();
+            });
+
+            // 이름 유효성 검사
+            function nameCheck(){
+
+
+                    var memName = $("#memName").val();
+                    $(".nameCondition").css("visibility", "hidden");
+                    var nameRegEx = /^[가-힣]{2,15}$/;
+                    
+                    
+                    if(nameRegEx.test(memName)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                    
+
+            }
+            
+            $('#nickname, #phone, #infoNextBtn').on('focus', function () {
+                var memName = $("#memName").val();
+                var nameRegEx = /^[가-힣]{2,15}$/;
+                if(memName==""){
+                    $(".nameCondition").text("이름을 입력해주세요.");
+                    $(".nameCondition").css("visibility", "visible");
+                    $("#memName").focus();
+                }
+                else if(!nameRegEx.test($("#memName").val())){
+                    $(".nameCondition").text("이름을 정확히 입력해주세요.");
+                    $(".nameCondition").css("visibility", "visible");
+                    $("#memName").focus();
+                } else{
+                    $(".nameCondition").css("visibility", "hidden");
+                }
+            });
+            
+            
+            // 닉네임 중복 확인 
+
+            function nicknameCheck(){
+
+                const $nicknameInput = $("#enrollForm input[name=nickname]");
+
+                return $.ajax({
+                    url : "nicknameCheck.me",
+                    data : {
+                        nickname:$nicknameInput.val()
+                        },
+                    success : function(result){
+                        if(result === "NNNNY"){
+                            $(".nicknameCondition").text("사용 가능한 닉네임입니다.");
+                            return true;
+                        } else{
+                            $(".nicknameCondition").text("이미 존재하는 닉네임입니다.");
+                            return false;
+
+                        }}
+                    ,
+                        error : function(){
+                            console.log("ajax 통신 실패!");
+                        }
+                        
+                });
+            }
+            
+            // 휴대폰 번호 유효성 검사
+            function phoneCheck(){
+                var phone = $("#phone").val();
+                
+
+                    if ( /^010-[0-9]{4}-[0-9]{4}$/.test( phone ) ) {
+                        $(".phoneCondition").css("visibility", "hidden");
+                        return true;
+                    } else if(phone==""){
+                        $(".phoneCondition").css("visibility", "hidden");
+                        return true;
+                    } else {
+                        $(".phoneCondition").css("visibility", "visible");
+                        return false;
+                    }
+
+            }
+
+            // 버튼 활성화
+            function activateButton(){
+                var name = nameCheck();
+                var nickname = $("#nickname").val() == "" ? true : nicknameCheck();
+                var phone = $("#phone").val() == "" ? true : phoneCheck();
+
+                if (name && nickname && phone) {
+                    $("#infoNextBtn").prop("disabled", false);
+                } else {
+                    $("#infoNextBtn").prop("disabled", true);
+                }
+            }
+
+            // 이벤트 등록
+            $("#memName").on('input', function() {
+                activateButton();
+            });
+
+            $('#nickname').on('input', function() {
+                activateButton();
+            });
+
+            $('#phone').on('input', function() {
+                activateButton();
+            });
+
+            $('#infoNextBtn').on('focus', function() {
+                var memName = $("#memName").val();
+                var nameRegEx = /^[가-힣]{2,15}$/;
+
+                if(memName==""){
+                    $(".nameCondition").text("이름을 입력해주세요.");
+                    $(".nameCondition").css("visibility", "visible");
+                    $("#memName").focus();
+                } else if(!nameRegEx.test($("#memName").val())){
+                    $(".nameCondition").text("이름을 정확히 입력해주세요.");
+                    $(".nameCondition").css("visibility", "visible");
+                    $("#memName").focus();
+                } else{
+                    $(".nameCondition").css("visibility", "hidden");
+                }
+                });
+            });
+
         </script>
+
+        
 	
 <!-- Footer -->
 	<jsp:include page="../common/footer.jsp"/>
