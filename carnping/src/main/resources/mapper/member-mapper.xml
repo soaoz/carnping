@@ -36,6 +36,7 @@
 		<result column="QUE_STATUS" property="queStatus"/>
 		<result column="QUE_ANSWER" property="queAnswer"/>
 		<result column="MEM_NO" property="memNo"/>
+		<result column="MEM_ID" property="memId"/>
 	</resultMap>
 	
 	<resultMap id="reportResultSet" type="Report">
@@ -80,7 +81,7 @@
 		   count(*)
 	  from
 	       member
-     where mem_id = #{nickname}
+     where nickname = #{nickname}
 	</select>
 
 
@@ -108,8 +109,58 @@
 
 
 
-
-
+	<!-- 소영시작 -->
+	<select id="userCheck" resultMap="memberResultSet">
+		SELECT
+	         MEM_NO
+	        ,MEM_ID
+	        ,MEM_PWD
+	        ,MEM_NAME
+	        ,NICKNAME
+	        ,EMAIL
+	        ,ENROLL_DATE
+	        ,STATUS
+	        ,MEM_IMG
+	        ,PHONE
+	        ,MEM_API_TYPE
+	        ,MEM_API_TOKEN
+	 FROM MEMBER
+	WHERE MEM_ID = #{memID}
+	</select>
+	
+	<select id="temploginMember" resultMap="memberResultSet">
+	select * from member where mem_id = #{memId} and mem_pwd=#{memPwd}
+	</select>
+	
+	<update id="nickNameUpdate">
+		update
+			   member
+		   set nickname = #{nickName}
+		 where mem_id = #{memId}
+	</update>
+	
+	<update id="passwordUpdate">
+		update
+			    member
+		    set mem_pwd = #{memPwd}
+		  where mem_id = #{memId}
+	</update>
+	
+	<select id="questionSelectList" resultMap="questionResultSet">
+		SELECT  
+				QUE_NO
+			  , QUE_CATEGORY
+			  ,	QUE_TITLE
+			  ,	QUE_CONTENT
+			  ,	QUE_DATE
+			  ,	QUE_STATUS
+			  ,	QUE_ANSWER
+			  ,	MEM_ID
+		   FROM QUESTION
+		   JOIN MEMBER 
+		  USING (MEM_NO)
+		  WHERE MEM_ID = #{memId}
+	</select>
 
 
 

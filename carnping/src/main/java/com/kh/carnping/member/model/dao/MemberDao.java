@@ -1,7 +1,12 @@
 package com.kh.carnping.member.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Question;
 
 @Repository
 public class MemberDao {
@@ -15,5 +20,28 @@ public class MemberDao {
 	
 	public int nicknameCheck(SqlSessionTemplate sqlSession, String nickname) {
 		return sqlSession.selectOne("memberMapper.nicknameCheck", nickname);
+	}
+	
+	
+	//소영시작
+	public Member userCheck(SqlSessionTemplate sqlSession,String memID) {
+		return sqlSession.selectOne("memberMapper.userCheck", memID);
+	}
+	
+	public Member temploginMember(SqlSessionTemplate sqlSession,Member m) {
+		return sqlSession.selectOne("memberMapper.temploginMember", m);
+	}
+	
+	public int nickNameUpdate(SqlSessionTemplate sqlSession,Member m) {
+		int result =  sqlSession.update("memberMapper.nickNameUpdate", m);
+		return result;
+	}
+	
+	public int passwordUpdate(SqlSessionTemplate sqlSession,Member m) {
+		return sqlSession.update("memberMapper.passwordUpdate", m);
+	}
+	
+	public ArrayList<Question> questionSelectList(SqlSessionTemplate sqlSession,String memId) {
+		return (ArrayList)sqlSession.selectList("memberMapper.questionSelectList", memId);
 	}
 }

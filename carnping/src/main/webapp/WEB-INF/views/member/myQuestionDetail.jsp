@@ -30,23 +30,17 @@
     <link rel="stylesheet" href="assets/css/style.css"> -->
 
 <style>
-@font-face {
+		@font-face {
 		    font-family: 'Dovemayo_gothic';
 		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
 		    font-weight: normal;
 		    font-style: normal;
 		}
-		
-		td{
-			font-family: 'Dovemayo_gothic';
-			font-size: 16px;
-			letter-spacing :0.5px;
-            padding-top: 10px !important;
-            vertical-align: middle !important;
-            
-		}
-		.ckbox{
-			border:1px soild gray !important;
+		@font-face {
+		    font-family: 'SUIT-Regular';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+		    font-weight: normal;
+		    font-style: normal;
 		}
 		@font-face {
 		     font-family: 'S-CoreDream-3Light';
@@ -54,6 +48,15 @@
 		     font-weight: 900px;
 		     font-style: normal;
 		}
+		td{
+			font-family: 'Dovemayo_gothic';
+			font-size: 16px;
+			letter-spacing :0.5px;
+		}
+		.ckbox{
+			border:1px soild gray !important;
+		}
+
         .myPage-header-area{
             width: 100%;
             height: 123px;
@@ -120,6 +123,81 @@
 		.title{
 			color : #1C3053;
 		}
+
+		
+		*{
+		    margin: 0; 
+		    padding: 0;     
+		    font-family: 'SUIT-Regular';
+		}
+		
+		.wrap{
+		    width: 1400px; 
+		    height: 1000px; 
+		    margin: auto; 
+		    padding: 20px;
+		
+		}
+		
+		.wrap>div{width: 100%;}
+		.title{height: 10%;}
+		.content{min-height: 60%;}
+		.btn_div{height: 5%;}
+
+		
+		/* 
+		.content{
+		    padding-top: 30px;
+		
+		} */
+		.content *{
+		    color: gray ;
+		    font-size: 13px;
+		}
+		
+		table{
+		    width: 100%;
+		    height: 40%;
+		    border-bottom: 1px solid lightgray;
+		
+		}
+		table th{
+		    text-align: center;
+		    font-weight: lighter;
+		}
+		
+		#t_title{
+		    height: 70px;
+		    background-color:  rgb(248, 248, 248);
+		    border-top: 1px solid lightgray;
+		    border-bottom: 1px solid lightgrey;
+		}
+		
+		#t_title>td{
+		    color: rgb(79, 79, 79);
+		}
+		#t_info{
+		    height: 50px;
+		    border-bottom: 1px solid lightgrey;
+		}
+		
+		#t_content>td{
+		    padding-top: 30px;
+		    padding-left: 30px;
+		
+		}
+		#t_content p{
+		    font-size: 14px;
+		    color: rgb(100, 100, 100);
+		    height: 200px;
+		}
+		#t_file{
+			height: 50px;
+		 	border-bottom: 1px solid lightgrey;
+		 }
+		.btn-light{
+			border: 2px solid #7ea67c !important;
+		}
 		
 </style>
 </head>
@@ -183,58 +261,80 @@
                         <br><br>
                     </div>
 
+<!-- 이사이 -->
 
-                    <table border="0px" class="table table-hover"  style="width: 100%; margin:auto;" align="center" id="postTable">
-                        <thead>
-                            <tr id="tr1">
-                                <th width="100">분류</th>
-                                <th  width="500">제목</th>
-                                <th width="100">작성일</th>
-                                <th width="100">답변상태</th>
-                                
-                            </tr>
-                        </thead>
-                        
-                        <tbody>
-                        	<c:if test="${empty list }">
-                                <tr>
-                                    <td colspan="5" align="center">존재하는 글이 없습니다</td>
-                                </tr>
-                            </c:if>
+<div class="content">
+    <table id="detail-area" border="0"  align="center">
+    <!-- (tr>th+td+th+td)*3 -->
+        <tr id="t_title">
+            <th>제목</th>
+            <td colspan="3" width="430">진짜 제목</td>
+            
+        </tr>
+        <tr id="t_info">
+            <th>작성자</th>
+            <td>작성자 아이디 user01</td>
+            <th>작성일</th>
+            <td>2023-04-25</td>
+        </tr>
+        <tr id="t_file">
+             <th>첨부파일</th>
+             <td colspan="3">
+             <c:choose>
+              	<c:when test="${ empty b.originName}">
+                  첨부파일이 없습니다.
+               </c:when>
+               <c:otherwise>
+                  <!-- 첨부파일이 있는 경우-->
+                  <a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
+                  <!-- **실제 db로 부터 조회해온 파일 원본명 => 원본명으로 다운이됨  -->
+               </c:otherwise>
+              </c:choose>
+             </td>
+         </tr>
+        <tr id="t_content">
+            
+            <td colspan="4">
+                <p>내용 블라블라라바라러러걀갸거러러랴러럭머알</p>
+            </td>
+            
+        </tr>
+    </table>
+</div>
 
-                            <c:forEach var="q" items="${ list }">
-
-                                <tr style="line-height: 14px;">
-                                    <td>${ q.queCategory }</td>
-                                    <td>${ q.queTitle }</td>
-                                    <td style="font-size: 13px; padding:10px;">${ q.queDate }</td>
-                                    <td>
-										<c:if test="${q.queStatus eq 'T'}">대기중</c:if>
-      									<c:if test="${q.queStatus eq 'Y'}">답변완료</c:if>
-									</td>
-                                </tr>
-                   			 </c:forEach>				
-                        </tbody>
-                    </table>
-
-                    <div align="left" >
-                        <br>
-                        <a href="questionForm.me" class = "btn btn-sm btn-primary">문의 하기</a>
-                        <a href="myQuestionDetail.me" class = "btn btn-sm btn-primary">디테일</a>
-                        <br><br>
-                    </div>  
-                    <div id="pagingArea" align="center">
-                        <ul class="pagination">
-                            
-                                <li class="page-item"><a class="page-link" href=""> &lt;&lt; </a></li>
-                                <li class="page-item"><a class="page-link" href="">1</a></li>
-                                <li class="page-item"><a class="page-link" href="">2</a></li>
-                                <li class="page-item"><a class="page-link" href="">3</a></li>
-                                <li class="page-item"><a class="page-link" href="">4</a></li>
-                                <li class="page-item"><a class="page-link" href="">5</a></li>
-                                <li class="page-item"><a class="page-link" href="">&gt;&gt;</a></li>
-                        </ul>
-                    </div>
+<div class="btn_div" align="right">
+    <br>
+    <a href="" class="btn btn-sm btn-light">목록가기</a>
+    <!-- 히스토리백 /list.no-->
+    <!-- 현재 로그인한 사용자가 해당 글을 쓴 본인일 경우  -->
+    <c:if test="${ not empty loginUser.memId }">
+        <a href="" class="btn btn-sm btn-warning">수정하기</a>
+        <a href="" class="btn btn-sm btn-danger">삭제하기</a>
+        
+        <form id="postForm" action="" method="post" >
+	           <!-- 숨겨야하니까 포스트 넘기고싶은건 글번호 -->
+	           		<input type="hidden" name="bno" value="${ b.boardNo }">
+	           		<!-- 구현해야할 기능 2개, 폼한개로 동적으로 타게하기  :자바스크립트로 -->
+	           		<input type="hidden" name="filePath" value="${ b. changeName }">
+	           </form>
+	           
+	           <script>
+	           function postFormSubmit(num){
+	        	   if(num == 1){//수정하기 클릭시
+	        		   $("#postForm").attr("action", "updateForm.bo").submit();
+	        		   //action을 updateForm.bo로 ...submit까지 해줘야 날라갈수잇음
+	        	   }else{ //삭제하기 클릭했다
+	        		   $("#postForm").attr("action","delete.bo").submit();
+	        		   
+	        	   }
+	        	   
+	           }
+	           </script>
+        
+        
+	 </c:if>
+</div>
+<!-- 이사이 -->
                 </div>
             </div>
         </div>

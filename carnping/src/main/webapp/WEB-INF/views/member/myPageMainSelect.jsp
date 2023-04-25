@@ -237,7 +237,7 @@
                 <div class="col-sm-10 col-sm-offset-1 profiel-container">
 
 
-                    <form action="" method="">
+                    <form action="userPwdCheck.me" method="post">
 
                         <div class="profiel-header">
                             <h3>
@@ -258,12 +258,12 @@
                                 <div class="form-group">
                                     <br>
                                     <label>비밀번호 확인<small></small></label>
-                                    <input name="Password" type="password" class="form-control">
+                                    <input type="password" class="form-control" name="userPwd">
                                 </div>
                             </div>
                             <div class="col-sm-10 col-sm-offset-1">
                             	<br><br>
-                                <input type='button' class='btn btn-finish btn-primary pull-right' name='update' value='확인'  onclick="location.href='myProfileUpdate.me';"/>
+                                <input type='submit' class='btn btn-finish btn-primary pull-right' name='update' value='확인'  onclick="location.href='myProfileUpdate.me';"/>
                                 <br><br>
                             
                             </div>

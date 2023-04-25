@@ -1,6 +1,8 @@
 package com.kh.carnping.member.controller;
 
 import javax.servlet.http.HttpSession;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -12,11 +14,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.carnping.member.model.service.MemberServiceImpl;
+import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Question;
 
 @Controller
 public class MemberController {
@@ -49,7 +54,7 @@ public class MemberController {
 	@RequestMapping("idCheck.me")
 	public String idCheck(String checkId){
 		int count = mService.idCheck(checkId);
-//		System.out.println(count);
+		//System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
@@ -80,21 +85,96 @@ public class MemberController {
 
 
 
-	//소영
+	//소영시작 ===================================
+	
+	//마이프로필 진입 전 유저비번확인
+	@RequestMapping("userPwdCheck.me")
+	public String userCheck(HttpSession session, String userPwd) {
+		
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		//System.out.println("유저아디:"+memId+"입력한비번:"+userPwd);
+		Member loginUser = mService.userCheck(memId);
+		if(loginUser.getMemPwd().equals(userPwd)) {
+			//System.out.println("비번같음"); => myProfileUpdate 로 
+			return "member/myProfileUpdate";
+		}else {
+			//System.out.println("비번다름");
+			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
+			return "member/myPageMainSelect";
+		}
+	}
+	
+	//임시로그인
+	@RequestMapping("templogin.me")
+	public String templogin(Member m, Model model, HttpSession session) {
+		Member temploginUser = mService.temploginMember(m);
+		if(temploginUser == null) {
+			model.addAttribute("errorMsg","로그인 실패!");
+			return "common/errorPage" ;
+		}else {
+			session.setAttribute("loginUser", temploginUser);
+			return "redirect:/";
+		}
+	}
+	
+	//마이페이 닉네임업데이트
+	@ResponseBody
+	@RequestMapping("nickNameUpdate.me")
+	public int nickNameUpdate(HttpSession session, Member m, String nickName) {
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		m.setNickName(nickName);
+		m.setMemId(memId);
+		int result = mService.nickNameUpdate(m);
+		return result;
+	}
+	
+	//비밀번호 업데이트
+	@ResponseBody
+	@RequestMapping("passwordUpdate.me")
+	public int passwordUpdate(HttpSession session,Member m, String password) {
+		System.out.println(password);
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		m.setMemPwd(password);
+		m.setMemId(memId);
+		int result = mService.passwordUpdate(m);
+		return result;
+	}
+	
+	
+	//문의하기리스트 
+	@RequestMapping("myQuestionList.me")
+	public String questionSelectList (HttpSession session,Question q, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		System.out.println("컨트롤러 아이디 : " +memId);
+		ArrayList<Question> list = mService.questionSelectList(memId);
+		System.out.println(list);
+		model.addAttribute("list", list);
+		return "member/myQuestionList";
+	}
+	
 	@RequestMapping("logoutPage.me")
 	public String logoutPage() {
 		return "member/logoutPage";
 	}
+	
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
 	
+	@RequestMapping("templogin")
+	public String templogin() {
+		return "member/temporarylogin";
+	}
+	
+	
 	@RequestMapping("myProfileUpdate.me")
 	public String myProfileUpdate() {
 		return "member/myProfileUpdate";
 	}
+	
 	@RequestMapping("myAlarmList.me")
 	public String myAlarmList() {
 		return "member/myAlarmList";
@@ -115,9 +195,10 @@ public class MemberController {
 		return "member/myReplyList";
 	}
 	
-	@RequestMapping("myQuestionList.me")
-	public String questionList() {
-		return "member/myQuestionList";
+	
+	@RequestMapping("myQuestionDetail.me")
+	public String myQuestionDetail() {
+		return "member/myQuestionDetail";
 	}
 	
 	@RequestMapping("questionForm.me")
@@ -127,8 +208,13 @@ public class MemberController {
 	
 	@RequestMapping("myPageMainSelect.me")
 	public String myPageMainSelect() {
+		
 		return "member/myPageMainSelect";
 	}
+	
+
+	
+	
 	
 	@RequestMapping("myCarbakList.me")
 	public String myCarbakList() {
@@ -138,6 +224,8 @@ public class MemberController {
 	public String unregister() {
 		return "member/unregister";
 	}
+	
+	//소영끝  =======================
 	
 	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
 	@ResponseBody
