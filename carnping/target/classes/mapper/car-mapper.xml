@@ -110,7 +110,19 @@
 		        ,CINFO_IMG1
 		 FROM CINFO
 		 JOIN CINFO_IMG USING(CINFO_NO)
+		 
 		 WHERE CINFO_STATUS ='Y'
+		 <if test="facility != null">
+		 AND CINFO_FACILITIES LIKE 
+		 	<foreach item='fac' collection="Array" index="index" open="(" separator="," close=")"/>
+		 		'%'||#{fac}||'%'
+		 	</foreach>
+		 </if>
+		 <if test="!location.equals('location')">
+		 		AND CINFO_ADDRESS LIKE '#{location}||'%'
+		 </if>
+
+	
 	</select> 
 
 </mapper>

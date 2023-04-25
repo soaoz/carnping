@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.carnping.car.model.dao.CarDao;
 import com.kh.carnping.car.model.vo.Cinfo;
+import com.kh.carnping.car.model.vo.Filter;
 
 @Service
 public class CarServiceImpl implements CarService{
@@ -19,8 +20,8 @@ public class CarServiceImpl implements CarService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Cinfo> carList() {
-		return cDao.carList(sqlSession);
+	public ArrayList<Cinfo> carList(Filter filter) {
+		return cDao.carList(sqlSession, filter);
 	}
 	
 	

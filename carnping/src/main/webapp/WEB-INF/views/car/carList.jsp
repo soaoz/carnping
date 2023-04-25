@@ -153,114 +153,77 @@
 
 
 </header>
-<!-- Page Preloder -->
-<!-- <div id="preloder">
-<div class="loader"></div>
-</div> -->
 
-<!-- Header Section Begin -->
-<!-- <header class="header header--normal">
-<div class="container-fluid">
-<div class="row">
-    <div class="col-lg-3 col-md-3">
-        <div class="header__logo">
-            <a href="./index.html"><img src="img/footer-logo.png" alt=""></a>
-        </div>
-    </div>
-    <div class="col-lg-9 col-md-9">
-        <div class="header__nav">
-            <nav class="header__menu mobile-menu">
-                <ul>
-                    <li><a href="./index.html">Home</a></li>
-                    <li class="active"><a href="./listing.html">Listing</a></li>
-                    <li><a href="#">Categories</a></li>
-                    <li><a href="#">Pages</a>
-                        <ul class="dropdown">
-                            <li><a href="./about.html">About</a></li>
-                            <li><a href="./listing-details.html">Listing Details</a></li>
-                            <li><a href="./blog-details.html">Blog Details</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="./blog.html">Blog</a></li>
-                    <li><a href="#">Shop</a></li>
-                </ul>
-            </nav>
-            <div class="header__menu__right">
-                <a href="#" class="primary-btn"><i class="fa fa-plus"></i>Add Listing</a>
-                <a href="#" class="login-btn"><i class="fa fa-user"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="mobile-menu-wrap"></div>
-</div>
-</header> -->
-<!-- Header Section End -->
 
 <!-- Filter Begin -->
 <div class="filter nice-scroll">
+<form id='searchForm' action='filter.ca' method="get" align="center"> 
     <div class="filter__title">
         <h5><i class="fa fa-filter"></i>필터</h5>
     </div>
-    <div class="filter__search">
-        <input type="text">
+    <br><br>
+    <div class="filter__location">
+        <input type="text" placeholder="제목을 입력하는 공간!" name="title">
+        <i class="fa fa-map-marker"></i>
     </div>
-    <div class="filter__select">
-        <select>
-            <option value="">지역</option>
-            <option value="">서울</option>
-            <option value="">대전</option>
-            <option value="">대구</option>
-            <option value="">부산</option>
-            <option value="">찍고~</option>
+    <div class="filter__select" >
+        <select name="filter">
+            <option value="default">순서</option>
+            <option value="rating">평점순</option>
+            <option value="view">조회수순</option>
+            <option value="name">이름순</option>
         </select>
     </div>
-    <div class="filter__location">
-        <input type="text" placeholder="여기는 지역명 키워드검색">
-        <i class="fa fa-map-marker"></i>
+    <div class="filter__select" >
+        <select name="location">
+            <option value="location">지역</option>
+            <option value="seoul">서울</option>
+            <option value="daejeon">대전</option>
+            <option value="daegu">대구</option>
+            <option value="busan">부산</option>
+        </select>
     </div>
 
     <div class="filter__tags">
         <h6>주변에 이런게 있어요!</h6>
         <label for="coupon">
             화장실
-            <input type="checkbox" id="coupon">
+            <input type="checkbox" id="coupon" name="facility"value="restroom">
             <span class="checkmark"></span>
         </label>
         <label for="sa">
             편의점
-            <input type="checkbox" id="sa">
+            <input type="checkbox" id="sa" name="facility" value="store">
             <span class="checkmark"></span>
         </label>
         <label for="camping">
             카페
-            <input type="checkbox" id="camping">
+            <input type="checkbox" id="camping" name="facility" value="cafe">
             <span class="checkmark"></span>
         </label>
         <label for="hot-spots">
             마트
-            <input type="checkbox" id="hot-spots">
+            <input type="checkbox" id="hot-spots" name="facility" value="mart">
             <span class="checkmark"></span>
         </label>
         <label for="internet">
             음식점
-            <input type="checkbox" id="internet">
+            <input type="checkbox" id="internet" name="facility" value="food">
             <span class="checkmark"></span>
         </label>
         <label for="tr">
             주차장
-            <input type="checkbox" id="tr">
+            <input type="checkbox" id="tr" name="facility" value="parking">
             <span class="checkmark"></span>
         </label>
         <label for="hd">
             캠핑장
-            <input type="checkbox" id="hd">
-            <span class="checkmark"></span>
+            <input type="checkbox" id="hd" name="facility" value="camping">
+            <span class="checkmark" ></span>
         </label>
         <label for="hd">
             병원
-            <input type="checkbox" id="hd">
+            <input type="checkbox" id="hd" name="facility" value="hospital">
             <span class="checkmark"></span>
         </label>
     </div>
@@ -268,6 +231,7 @@
         <button type="submit">필터 적용</button>
         <button type="reset" class="filter__reset">초기화</button>
     </div>
+    </form>
 </div>
 <!-- Filter End -->
 
@@ -277,7 +241,7 @@
     <div class="listing__text__top">
         <div class="listing__text__top__left">
             <h5>차박정보 리스트</h5>
-            <span>18 Results Found</span>
+            <span>Results Found</span>
         </div>
         <div class="listing__text__top__right">Nearby <i class="fa fa-sort-amount-asc"></i></div>
     </div>
@@ -285,10 +249,8 @@
         <c:choose>
             <c:when test="${ not empty list }">
                 <c:forEach var="list" items="${ list }">
-                    <div class="listing__item">
-                        <div class="listing__item__pic set-bg" data-setbg="${ list.cinfoImg1 }">
-
-
+                  <div class="listing__item">
+                  <div class="listing__item__pic set-bg" data-setbg="${ list.cinfoImg1 }"> 
                             <img src="resources/img/carList/icon/ocean.png" alt="">
 
                             <!--  
@@ -298,10 +260,7 @@
             <a href="#"><span class="icon_heart_alt"></span></a>
         </div>
         -->
-                        </div>
-
-
-
+                       </div>
                         <div class="listing__item__text">
                             <div class="listing__item__text__inside">
                                 <h5>${ list.cinfoName }</h5>
@@ -334,11 +293,8 @@
             </c:when>
             <c:otherwise>
                 <h4>${ emp }</h4>
-
             </c:otherwise>
         </c:choose>
-
-
     </div>
 </section>
 <!-- Listing Section End -->
@@ -354,91 +310,82 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
 <!-- Map End -->
 <!-- Js Plugins -->
 <script type="text/javascript"
-    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab"></script>
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
 <script>
-    $(function () {
-        var positions = [];
+    $(function(){
+
+        var formData = $('form').serialize();
+        var $positions = [];
+        var map;
+		// 차박정보를 불러와 위도 경도 값을 ajax로 받아오는 ajax 
         $.ajax({
             url: 'carMap.ca',
             async: false,
+            data: formData,
             success: function (result) {
-                result.forEach(function (rs) {
-                    positions = [{
-                        content: '<div>카카오</div>',
+                result.forEach(function (rs, i) {
+                    $positions.push([{
+                        content: "<div style='cursor: pointer'onclick='detail(\""+rs.cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs.cinfoImg1+"\');> <img src='resources/img/carList/icon/ocean.png' alt=''></div>"
+                                +"<div class='listing__item__text'><div class='listing__item__text__inside'><h5>"+rs.cinfoName+"</h5><div class='listing__item__text__rating'></div>"
+                                +"<ul><li><span class='icon_pin_alt'></span>"+rs.cinfoAddress+"</li>"
+                                +"<li><span class='icon_phone'></span>"+rs.phone+"</li></ul></div></div></div></div>",
                         latlng: new kakao.maps.LatLng(rs.cinfoLttd, rs.cinfoHrdns)
-                    }]
-                    console.log(rs.cinfoLttd);
-                    console.log(rs.cinfoHrdns);
-                    console.log(positions);
+                    }])
                 })
-                console.log('1212' + positions);
+                map = new kakao.maps.Map(document.getElementById('map'), { 
+                // 지도의 중심좌표
+                center : new kakao.maps.LatLng(36.2683, 127.6358), 
+                // 지도의 확대 레벨
+                level : 10 
+                });
             }
         })
+        // 지도를 표시할 div
+        
 
-
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-            mapOption = {
-                center: new kakao.maps.LatLng(37.96552, 128.76046), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-        let carList = [];
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다 
-
-        // 마커 이미지의 이미지 주소입니다
-        var imageSrc = "resources/img/marker.png";
-
-        // 마커를 표시할 위치와 title 객체 배열입니다 
-        for (var i = 0; i < positions.length; i++) {
-
-            // // 마커 이미지의 이미지 크기 입니다
-            // var imageSize = new kakao.maps.Size(24, 35);
-
-            // // 마커 이미지를 생성합니다    
-            // var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-            for (var i = 0; i < positions.length; i++) {
-                // 마커를 생성합니다
-                var marker = new kakao.maps.Marker({
-                    map: map, // 마커를 표시할 지도
-                    position: positions[i].latlng // 마커의 위치
-                });
-
-                // 마커에 표시할 인포윈도우를 생성합니다 
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: positions[i].content // 인포윈도우에 표시할 내용
-                });
-
-                // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-                // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-                // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-                kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-                kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-            }
-
-            // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-            function makeOverListener(map, marker, infowindow) {
-                return function () {
-                    infowindow.open(map, marker);
-                };
-            }
-
-            // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-            function makeOutListener(infowindow) {
-                return function () {
-                    infowindow.close();
-                };
-            }
-        }
+    // 마커 클러스터러를 생성합니다
+    var clusterer = new kakao.maps.MarkerClusterer({
+        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 10, // 클러스터 할 최소 지도 레벨
+        disableClickZoom: true // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
     });
+  
+    var markers = $($positions).map(function(i, position) {
+            return new kakao.maps.Marker({
+                position : position[0].latlng
+            });
+           
+        });
+
+    // 클러스터러에 마커들을 추가합니다
+    clusterer.addMarkers(markers);
+    
+    // 여러개의 마커들마다 click 값을 부여합니다.
+    for(let i = 0 ; i < markers.length; i++ ){
+        kakao.maps.event.addListener(markers[i], 'click', function() {
+            // 마커 위에 인포윈도우를 표시합니다
+            new kakao.maps.InfoWindow({
+                    content : $positions[i][0].content,
+                    removable :true}).open(map, markers[i]) 
+        });
+    }
+    
+    // 마커 클러스터러에 클릭이벤트를 등록합니다
+    // 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
+    // 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
+    kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
+
+   // 현재 지도 레벨에서 1레벨 확대한 레벨
+    var level = map.getLevel()-1;
+    
+    // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
+    map.setLevel(level, {anchor: cluster.getCenter()});
+    });
+});
+
 </script>
-<!--<script src="resources/js/jquery-3.3.1.min.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
-<script src="resources/js/jquery.nice-select.min.js"></script>
-<script src="resources/js/jquery-ui.min.js"></script>
-<script src="resources/js/jquery.nicescroll.min.js"></script>
-<script src="resources/js/jquery.barfiller.js"></script>
-<script src="resources/js/jquery.magnific-popup.min.js"></script>
-<script src="resources/js/jquery.slicknav.js"></script>
-<script src="resources/js/owl.carousel.min.js"></script>-->
+
 <script src="resources/js/main.js"></script>
 
 </body>
