@@ -3,13 +3,11 @@ package com.kh.carnping.member.controller;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,11 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
 
@@ -112,6 +105,21 @@ public class MemberController {
 			model.addAttribute("errorMsg", "회원가입 실패!");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping("login.me")
+	public String loginMember(Member m, HttpSession session) {
+		Member loginUser = mService.loginMember(m);
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {
+			session.setAttribute("loginUser", loginUser);
+			
+		} else {
+			session.setAttribute("alertMsg", "아이디나 비밀번호를 확인하세요");
+			
+		}
+		
+		return "redirect:/"; 
+		
 	}
 
 	

@@ -6,28 +6,33 @@
 <meta charset="UTF-8">
 <title>Carnping | 로그인</title>
 <!--===============================================================================================-->	
-<link rel="icon" type="image/png" href="login/images/icons/favicon.ico"/>
+<link rel="icon" type="image/png" href="resources/resources/login/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="resources/login/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="resources/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="login/fonts/iconic/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" type="text/css" href="resources/login/fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="login/vendor/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="resources/login/vendor/animate/animate.css">
 <!--===============================================================================================-->	
-<link rel="stylesheet" type="text/css" href="login/vendor/css-hamburgers/hamburgers.min.css">
+<link rel="stylesheet" type="text/css" href="resources/login/vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="login/vendor/animsition/css/animsition.min.css">
+<link rel="stylesheet" type="text/css" href="resources/login/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="login/vendor/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="resources/login/vendor/select2/select2.min.css">
 <!--===============================================================================================-->	
-<link rel="stylesheet" type="text/css" href="login/vendor/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="resources/login/vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="login/css/util.css">
-<link rel="stylesheet" type="text/css" href="login/css/main.css">
+<link rel="stylesheet" type="text/css" href="resources/login/css/util.css">
+<link rel="stylesheet" type="text/css" href="resources/login/css/main.css">
 <!--===============================================================================================-->
 <style>
+        #wrapper {
+        background-color:#74E7BF;
+            width: 100%;
+            letter-spacing: 0.08em;
+        }
 
 		.input100:focus+.focus-input100+.symbol-input100 {
 		    color: #d33f8d;
@@ -145,29 +150,31 @@
 	<!-- Header -->
 	<jsp:include page="../common/header.jsp"/>
 	
+	<div id="wraaper" style="padding-bottom:122.5px; position:relative; height: 100%;" >
 	<div class="logo-bg" style="position:absolute">
         <div align="center" style="position: relative; top:30%;">
-            <img src="img/logo_login_1.png" width="400px" alt="" style="position:relative; " >
+            <img src="resources/img/logo_login_1.png" width="400px" alt="" style="position:relative; " >
         </div>
     </div>
-    <div class="login-bg">
+    <div class="login-bg"style="position:absolute; right:0px;">
         <div align="center" style="position: relative; top:10%;">
         	
             <div class="limiter">
                 <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-                    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="position: absolute;
+    top: 50px;">
                         <form class="login100-form validate-form">
                             <span class="login100-form-title p-b-49" style="color:#1C3053; letter-spacing: normal;" >
                                 로그인
                             </span>
         
                             <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
-                                <input class="input100" type="text" name="userId" placeholder="아이디를 입력하세요." required style="padding-top: 20px;">
+                                <input class="input100" type="text" name="memId" placeholder="아이디를 입력하세요." required style="padding-top: 20px;">
                                 <span class="focus-input100" data-symbol="&#xf206;"></span>
                             </div>
         
                             <div class="wrap-input100 validate-input" data-validate="Password is required">
-                                <input class="input100" type="password" name="userPwd" placeholder="비밀번호를 입력하세요" required  style="padding-top: 20px;">
+                                <input class="input100" type="password" name="memPwd" placeholder="비밀번호를 입력하세요" required  style="padding-top: 20px;">
                                 <span class="focus-input100" data-symbol="&#xf190;"></span>
                             </div>
                             <br>
@@ -189,10 +196,10 @@
                             </div>
                             
                             <br>
-                            <div class="container-login100-form-btn">
+                            <div class="container-login100-form-btn" style="height:50px;">
                                 <div class="wrap-login100-form-btn">
                                     <div class="login100-form-bgbtn"></div>
-                                    <button class="login100-form-btn">
+                                    <button class="login.me" style="line-height: 50px;">
                                         로그인
                                     </button>
                                 </div>
@@ -223,7 +230,7 @@
                                     아직 카앤핑 회원이 아니신가요?
                                 </span>
         
-                                <a href="#" class="txt2">
+                                <a href="enrollForm.me" class="txt2">
                                     회원가입
                                 </a>
                             </div>
@@ -233,6 +240,7 @@
             </div>
                 </div>
     </div>
+    <!-- 
     <div class="login-content" style="position:absolute">
      
     </div>
@@ -242,23 +250,25 @@
 
     
     <div id="dropDownSelect1"></div>
+     -->
+    </div>
 	
     <!--===============================================================================================-->
-       <script src="login/vendor/jquery/jquery-3.2.1.min.js"></script>
+       <script src="resources/login/vendor/jquery/jquery-3.2.1.min.js"></script>
    <!--===============================================================================================-->
-       <script src="login/vendor/animsition/js/animsition.min.js"></script>
+       <script src="resources/login/vendor/animsition/js/animsition.min.js"></script>
    <!--===============================================================================================-->
-       <script src="login/vendor/bootstrap/js/popper.js"></script>
-       <script src="login/vendor/bootstrap/js/bootstrap.min.js"></script>
+       <script src="resources/login/vendor/bootstrap/js/popper.js"></script>
+       <script src="resources/login/vendor/bootstrap/js/bootstrap.min.js"></script>
    <!--===============================================================================================-->
-       <script src="login/vendor/select2/select2.min.js"></script>
+       <script src="resources/login/vendor/select2/select2.min.js"></script>
    <!--===============================================================================================-->
-       <script src="login/vendor/daterangepicker/moment.min.js"></script>
-       <script src="login/vendor/daterangepicker/daterangepicker.js"></script>
+       <script src="resources/login/vendor/daterangepicker/moment.min.js"></script>
+       <script src="resources/login/vendor/daterangepicker/daterangepicker.js"></script>
    <!--===============================================================================================-->
-       <script src="login/vendor/countdowntime/countdowntime.js"></script>
+       <script src="resources/login/vendor/countdowntime/countdowntime.js"></script>
    <!--===============================================================================================-->
-       <script src="login/js/main.js"></script>
+       <script src="resources/login/js/main.js"></script>
 	<!-- Footer -->
 	<jsp:include page="../common/footer.jsp"/>
 	

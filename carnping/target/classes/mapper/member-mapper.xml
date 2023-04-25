@@ -80,7 +80,7 @@
 		   count(*)
 	  from
 	       member
-     where mem_id = #{nickname}
+     where nickname = #{nickName}
 	</select>
 	
 	<insert id="insertMember" >
@@ -99,6 +99,7 @@
 		     , PHONE
 		     , MEM_API_TYPE
 		     , MEM_API_TOKEN
+		     , MARKETING
 		     )
 	    values
 	         (
@@ -108,13 +109,13 @@
 	         , #{memName}
 	         , #{nickName}
 	         , #{email}
-	         , #{enrollDate}
 	         , DEFAULT
 	         , DEFAULT
 	         , #{memImg}
 	         , #{phone}
 	         , #{memApiType}
 	         , #{memApiToken}
+	         , #{marketing}
 	         )
 	</insert>
 
@@ -133,8 +134,29 @@
 	        ,PHONE
 	        ,MEM_API_TYPE
 	        ,MEM_API_TOKEN
+	        ,MARKETING
 	 FROM MEMBER
 	WHERE MEM_ID != 'ADMIN'
+	</select>
+	
+	<select id="loginMember" resultMap="memberResultSet">
+	    SELECT
+	          MEM_NO
+	        , MEM_ID
+	        , MEM_PWD
+	        , MEM_NAME
+	        , NICKNAME
+	        , EMAIL
+	        , ENROLL_DATE
+	        , STATUS
+	        , MEM_IMG
+	        , PHONE
+	        , MEM_API_TYPE
+	        , MEM_API_TOKEN
+	        , MARKETING
+		 FROM MEMBER
+		WHERE MEM_ID = #{memId}
+		  AND STATUS = 'Y'
 	</select>
 
 

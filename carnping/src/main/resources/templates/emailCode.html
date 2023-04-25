@@ -91,6 +91,8 @@
             letter-spacing: unset;
         } */
         
+        
+        
     </style>
 
 </head>
@@ -149,7 +151,7 @@
                         letter-spacing: unset;"></div>
                     <p  style="text-align: center; padding:20px 0px 30px 0px; font-size:24px; font-family: Noto Sans KR;color:black;font-weight: 600;">인증번호</h4>
                     <div align="center">
-                        <h4 style="
+                        <h4 id="code" style="
                         color: orangered;
                         letter-spacing: 1.5em;
                         font-weight: 600;
@@ -160,14 +162,22 @@
                         width: 60%;
                         font-size:24px;
                         font-family: Noto Sans KR;
-                        padding: 25px 0px 20px 35px;" th:text="${verificationCode}">code</h4>
+                        padding: 25px 0px 20px 35px;" th:text="${verificationCode}"></h4>
                     </div>
+                    <div align="center">
+
+                </div>
                 </div>
             </div>
 
         </div>
     </div>
 
+
+
+
 </body>
+
+
 
 </html>

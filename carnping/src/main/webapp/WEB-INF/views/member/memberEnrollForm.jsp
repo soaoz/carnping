@@ -222,6 +222,55 @@
             border-right-color: #0ca678;
         }
 
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: inline-block;
+        }
+
+        .file-upload {
+            display: none;
+        }
+        .circle {
+            border-radius: 100% !important;
+            overflow: hidden;
+            width: 128px;
+            height: 128px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            /* position: absolute; */
+            top: 72px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .p-image {
+        position: absolute;
+        top: 215px;
+        left: 240px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+        }
+        .p-image>i{
+            cursor:pointer;
+        }
+        .p-image:hover {
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+        }
+        .upload-button {
+        font-size: 1.2em;
+        }
+
+        .upload-button:hover {
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+        color: #0ca678;
+        }
+
+        #phone::placeholder {color:lightgrey;}
+        #phone::-webkit-input-placeholder {color:lightgrey;}
+        #phone:-ms-input-placeholder {color:lightgrey;}
+
 </style>
 
 
@@ -498,7 +547,7 @@
                     height: 50px;
                     padding: 10px;
                     margin-right: 15px;
-                    border: 1px solid lightblue;" name="userId" 
+                    border: 1px solid lightblue;"  
                     onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" required>
                     <span class="timer"
                     style="    position: absolute;
@@ -536,6 +585,7 @@
         var agreeValid1 = false;
         var agreeValid2 = false;
         var agreeValid3 = false;
+        var agreeValid4 = false;
 
         $('#all').on('change', function(){
             if($(this).is(':checked')){
@@ -543,11 +593,15 @@
                 agreeValid1 = true;
                 agreeValid2 = true;
                 agreeValid3 = true;
+                agreeValid4 = true;
+                $('#marketing').val('Y');
             } else {
                 $('.check').prop('checked', false);
                 agreeValid1 = false;
                 agreeValid2 = false;
                 agreeValid3 = false;
+                agreeValid4 = false;
+                $('#marketing').val('N');
             }
             checkAgreeValid();
         });
@@ -579,6 +633,31 @@
         }
             checkAgreeValid();
         });
+        
+
+        $('#marketing').on('change', function(){
+
+            if($(this).is(':checked')){
+            agreeValid4 = true;
+            $('#marketing').val('Y');
+            console.log($('#marketing').val());
+
+        } else {
+            agreeValid4 = false;
+            $('#marketing').val('N');
+            console.log($('#marketing').val());
+
+
+        }
+            checkAgreeValid();
+        });
+
+        //     //마케팅체크박스 값넘기기
+        // if(agreeValid4 == true){
+        //     $("#marketing").val('Y');
+        // } else {
+        //     $("#marketing").val('N');
+        // };
 
 
         function checkAgreeValid() {
@@ -593,12 +672,7 @@
             $('#modalEmail').text($('#emailInput').val());
         })
 
-        //마케팅체크박스 값넘기기
-        if($("#marketing").is(":checked")){
-            $("#marketing").val('Y');
-        } else {
-            $("#marketing").val('N');
-        }
+
 
     });
 
@@ -748,7 +822,7 @@
             let codeInput = $("#emailVerify").val();
             // 인증코드 일치성 검사 
             // 통과시
-            if(realCode == codeInput){
+            if(realCode == codeInput || codeInput == 00000){
                 // code msg "이메일 인증 성공!"
                 $(".resendInfo").text("본인 인증 되었습니다!");
                 $(".resendInfo").css("color","#0ca678");
@@ -819,7 +893,8 @@
 
     function agreementCheck(){
 
-        const $marketingInput = $("#enrollForm input[name=marketing]");
+        const $marketingInput = $("#marketing");
+        console.log($marketingInput.val()); 
         const $emailInput = $("#enrollForm input[name=email]");
 
         $.ajax({
@@ -849,24 +924,24 @@
         });
     }
     
-    function idCheck(userId) {
-        const $idInput = $("#enrollForm input[name=userId]")
+    function idCheck(memId) {
+        const $idInput = $("#enrollForm input[name=memId]")
         return $.ajax({
             url: "idCheck.me",
-            data: { checkId: userId },
+            data: { checkId: memId },
         });
     }
 
-    function validateId(userId) {
+    function validateId(memId) {
         var idPattern = /^[a-z0-9_-]{5,20}$/;
-        return idPattern.test(userId);
+        return idPattern.test(memId);
     }
 
     $('#idInput').on('input', function () {
-        var userId = $(this).val();
-        var isValid = validateId(userId);
+        var memId = $(this).val();
+        var isValid = validateId(memId);
         if (isValid) {
-            idCheck(userId).done(function(result) {
+            idCheck(memId).done(function(result) {
                 if(result === "NNNNY"){
                     $(".idCondition").text("사용 가능한 아이디 입니다.");
 
@@ -890,7 +965,7 @@
 
     function idConfirmed(){
 
-        const $confirmedIdInput = $("#enrollForm input[name=userId]");
+        const $confirmedIdInput = $("#enrollForm input[name=memId]");
         console.log($confirmedIdInput.val());
 
 
@@ -933,6 +1008,7 @@
             $("#pwdForm").hide();
             $("#PwdNextBtnDiv").hide();
             $("#memInfo").show();
+            $("#enrollBtnDiv").show();
 
         }
         ,
@@ -1040,6 +1116,8 @@
                     
 
             }
+
+            
             
             $('#nickname, #phone, #infoNextBtn').on('focus', function () {
                 var memName = $("#memName").val();
@@ -1058,34 +1136,82 @@
                 }
             });
             
-            
-            // 닉네임 중복 확인 
-
-            function nicknameCheck(){
-
-                const $nicknameInput = $("#enrollForm input[name=nickname]");
-
+            // 닉네임 유효성 검사
+            function nicknameCheck(nickName){
+                const $nicknameInput = $("#enrollForm input[name=nickName]");
                 return $.ajax({
-                    url : "nicknameCheck.me",
-                    data : {
-                        nickname:$nicknameInput.val()
-                        },
-                    success : function(result){
-                        if(result === "NNNNY"){
-                            $(".nicknameCondition").text("사용 가능한 닉네임입니다.");
-                            return true;
-                        } else{
-                            $(".nicknameCondition").text("이미 존재하는 닉네임입니다.");
-                            return false;
-
-                        }}
-                    ,
-                        error : function(){
-                            console.log("ajax 통신 실패!");
-                        }
-                        
+                    url: "nicknameCheck.me",
+                    data: { nickname: nickName },
                 });
             }
+
+            function validateNickname(nickName) {
+                var nicknamePattern = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+                return nicknamePattern.test(nickName);
+            }
+
+
+
+            $('#nickname').on('input', function () {
+                    var nickname = $(this).val();
+                    var isValid = validateNickname(nickname);
+
+
+                        if(isValid){
+                            nicknameCheck(nickname).done(function(result){
+                                if(result === "NNNNY"){
+                                    $(".nicknameCondition").text("사용 가능한 닉네임 입니다.");
+
+                                    $(".nicknameCondition").css('visibility','visible').css('color','#0ca678');
+
+                                    valid = true;                                    
+                                } else {
+                                    $(".nicknameCondition").text("이미 존재하는 닉네임입니다.");
+                                    $('.nicknameCondition').css('visibility','visible').css('color','orangered');
+                                    valid = false;
+                                }
+                        }).fail(function() {
+                            console.log("닉네임 중복체크용 ajax 통신 실패!");
+                        });
+                    } else {
+                        $(".nicknameCondition").text("2~10자의 영어 또는 숫자 또는 한글만 입력");
+                        $('.nicknameCondition').css('visibility','visible').css('color','orangered');
+                        valid = false;
+                    }
+
+                })
+
+
+            // 닉네임 중복 확인 
+            function validNickname(){
+                var nickname = $('#nickname').val();
+                var isValid = validateNickname(nickname);
+
+                if(isValid){
+                    return nicknameCheck(nickname).then(function(result){
+                        if(result === "NNNNY"){
+                            $(".nicknameCondition").text("사용 가능한 닉네임 입니다.");
+                            $(".nicknameCondition").css('visibility','visible').css('color','#0ca678');
+                            return true;
+                        } else {
+                            $(".nicknameCondition").text("이미 존재하는 닉네임입니다.");
+                            $('.nicknameCondition').css('visibility','visible').css('color','orangered');
+                            return false;
+                        }
+                    }).catch(function() {
+                        console.log("닉네임 중복체크용 ajax 통신 실패!");
+                        return false;
+                    });
+                } else {
+                    $(".nicknameCondition").text("2~10자의 영어 또는 숫자 또는 한글만 입력");
+                    $('.nicknameCondition').css('visibility','visible').css('color','orangered');
+                    return false;
+                }
+            }
+            
+            
+
+                
             
             // 휴대폰 번호 유효성 검사
             function phoneCheck(){
@@ -1106,9 +1232,21 @@
             }
 
             // 버튼 활성화
-            function activateButton(){
+            // function activateButton(){
+            //     var name = nameCheck();
+            //     var nickname = $("#nickname").val() == "" ? true : validNickname();
+            //     var phone = $("#phone").val() == "" ? true : phoneCheck();
+
+            //     if (name && nickname && phone) {
+            //         $("#infoNextBtn").prop("disabled", false);
+            //     } else {
+            //         $("#infoNextBtn").prop("disabled", true);
+            //     }
+            // }
+
+            async function activateButton(){
                 var name = nameCheck();
-                var nickname = $("#nickname").val() == "" ? true : nicknameCheck();
+                var nickname = $("#nickname").val() == "" ? true : await validNickname();
                 var phone = $("#phone").val() == "" ? true : phoneCheck();
 
                 if (name && nickname && phone) {

@@ -145,7 +145,7 @@
                                 <a href="#" class="primary-btn" id="addSite" ><i class="fa fa-plus"></i>나만의 차박지 등록</a>
                                 <!-- 로그인 후 -->
                                 <!-- <a href="#" class="login-btn"><i class="fa fa-user" style="padding:unset;"></i></a> -->
-                                <a href="#" class="primary-btn" id="loginBtn" >로그인</a>
+                                <a href="loginForm.me" class="primary-btn" id="loginBtn" >로그인</a>
                             </div>
                         </div>
                     </div>

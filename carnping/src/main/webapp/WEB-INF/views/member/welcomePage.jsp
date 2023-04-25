@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Carnping | 환영합니다</title>
 <style>
             #wrapper {
             background-color:#74E7BF;
@@ -69,9 +69,9 @@
 	<!-- Header -->
 	<jsp:include page="../common/header.jsp"/>
 	
-	<div id="wrapper" style="padding: 100px 0px; position:absolute;" >
+	<div id="wrapper" style="padding-top: 122.5px; padding-bottom:122.5px; position:relative;" >
         <div id="joinWrapper" >
-            <img src="img/logo_login_1.png" width="125px" style="display:block; margin:auto; padding-top: 25px;" alt="">
+            <img src="resources/img/logo_login_1.png" width="125px" style="display:block; margin:auto; padding-top: 25px;" alt="">
             <h2 
             style="margin: 25px 0px 20px 0px; 
             text-align: center; 

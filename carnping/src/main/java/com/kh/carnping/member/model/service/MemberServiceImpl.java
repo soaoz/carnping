@@ -16,16 +16,26 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	@Override
+	public Member loginMember(Member m) {
+		return mDao.loginMember(sqlSession, m);
+	}
+	
+	@Override
 	public int emailCheck(String checkEmail) {
 		return mDao.emailCheck(sqlSession, checkEmail);
 	}
+	
+	@Override
 	public int idCheck(String checkId) {
 		return mDao.idCheck(sqlSession, checkId);
 	}
 	
+	@Override
 	public int nicknameCheck(String nickname) {
 		return mDao.nicknameCheck(sqlSession, nickname);
 	}
+	
 	@Override
 	public int insertMember(Member m) {
 		return mDao.insertMember(sqlSession, m);
