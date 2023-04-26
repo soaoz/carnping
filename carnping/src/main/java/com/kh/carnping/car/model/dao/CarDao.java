@@ -11,8 +11,15 @@ import com.kh.carnping.car.model.vo.Filter;
 @Repository
 public class CarDao {
 	
-	public ArrayList<Cinfo> carList(SqlSessionTemplate sqlSession, Filter filter){
-		ArrayList<Cinfo> list = (ArrayList)sqlSession.selectList("carMapper.carList", filter);
+	public ArrayList<Cinfo> carList(SqlSessionTemplate sqlSession){
+		ArrayList<Cinfo> list = (ArrayList)sqlSession.selectList("carMapper.carList");
+		System.out.println(list);
+		return list;
+	}
+	
+	public ArrayList<Cinfo> carList1(SqlSessionTemplate sqlSession, Filter filter){
+		System.out.println(filter.getLocation());
+		ArrayList<Cinfo> list = (ArrayList)sqlSession.selectList("carMapper.carList1", filter);
 		System.out.println(list);
 		return list;
 	}

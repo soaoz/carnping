@@ -8,7 +8,8 @@ import com.kh.carnping.car.model.vo.Filter;
 public interface CarService {
 	
 	// 차박 정보 리스트
-	ArrayList<Cinfo> carList(Filter filter);
+	ArrayList<Cinfo> carList();
+	ArrayList<Cinfo> carList1(Filter filter);
 	
 	
 }

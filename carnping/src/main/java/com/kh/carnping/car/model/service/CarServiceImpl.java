@@ -20,9 +20,14 @@ public class CarServiceImpl implements CarService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Cinfo> carList(Filter filter) {
-		return cDao.carList(sqlSession, filter);
+	public ArrayList<Cinfo> carList() {
+		return cDao.carList(sqlSession);
 	}
+	
+	public ArrayList<Cinfo> carList1(Filter filter) {
+		return cDao.carList1(sqlSession, filter);
+	}
+	
 	
 	
 	

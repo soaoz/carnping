@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="utf-8">
 
 <head>
 <meta charset="UTF-8">
@@ -163,24 +163,25 @@
     </div>
     <br><br>
     <div class="filter__location">
-        <input type="text" placeholder="제목을 입력하는 공간!" name="title">
+        <input type="text" placeholder="제목을 입력하는 공간!" name="title" value="title">
         <i class="fa fa-map-marker"></i>
     </div>
     <div class="filter__select" >
-        <select name="filter">
+        <select name="sequence">
             <option value="default">순서</option>
             <option value="rating">평점순</option>
             <option value="view">조회수순</option>
             <option value="name">이름순</option>
         </select>
     </div>
+    
     <div class="filter__select" >
         <select name="location">
-            <option value="location">지역</option>
-            <option value="seoul">서울</option>
-            <option value="daejeon">대전</option>
-            <option value="daegu">대구</option>
-            <option value="busan">부산</option>
+            <option value="all">지역</option>
+            <option value="서울">서울</option>
+            <option value="인천">인천</option>
+            <option value="경기">경기도</option>
+            <option value="강원">강원도</option>
         </select>
     </div>
 
@@ -221,9 +222,9 @@
             <input type="checkbox" id="hd" name="facility" value="camping">
             <span class="checkmark" ></span>
         </label>
-        <label for="hd">
+        <label for="ht">
             병원
-            <input type="checkbox" id="hd" name="facility" value="hospital">
+            <input type="checkbox" id="ht" name="facility" value="hospital">
             <span class="checkmark"></span>
         </label>
     </div>
@@ -243,7 +244,7 @@
             <h5>차박정보 리스트</h5>
             <span>Results Found</span>
         </div>
-        <div class="listing__text__top__right">Nearby <i class="fa fa-sort-amount-asc"></i></div>
+       
     </div>
     <div class="listing__list">
         <c:choose>
@@ -312,16 +313,84 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
 <script type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
 <script>
+	let filter = [];
+	$( "form" ).on( "submit", function( event ) {
+		  event.preventDefault();
+		  filter = $( this ).serializeArray();
+		  
+	});
     $(function(){
 
-        var formData = $('form').serialize();
+        var formData = $('#searchForm').serializeArray();
         var $positions = [];
         var map;
+       /*  var qwer = $('input[name=facility]:checked').serializeArray();
+        console.log(qwer); */
 		// 차박정보를 불러와 위도 경도 값을 ajax로 받아오는 ajax 
-        $.ajax({
+		$("input[name=title]").val(filter.title);
+		console.log(filter[0])
+		let array = new Array();
+		/* console.log(formData);
+		let a = formData.split('&');
+		console.log(a); */
+		<c:forEach items="${list}" var="item">
+			array.push([{cinfoNo:"${item.cinfoNo}"
+					, cinfoName :"${item.cinfoName}"
+					, cinfoContent :"${item.cinfoContent}"
+					, cinfoNotice :"${item.cinfoNotice}"
+					, cinfoLttd :"${item.cinfoLttd}"
+					, cinfoHrdns :"${item.cinfoHrdns}"
+					, cinfoStatus :"${item.cinfoStatus}"
+					, cinfoAddress :"${item.cinfoAddress}"
+					, cinfoFacilities :"${item.cinfoFacilities}"
+					, cinfoDays :"${item.cinfoDays}"
+					, cinfoTag :"${item.cinfoTag}"
+					, cinfoRating :"${item.cinfoRating}"
+					, cinfoViews :"${item.cinfoViews}"
+					, cinfoModified :"${item.cinfoModified}"
+					, cinfoRgstrDate :"${item.cinfoRgstrDate}"
+					, memNo :"${item.memNo}"
+					, cinfoImg1 :"${item.cinfoImg1}"
+					, cinfoImg2 :"${item.cinfoImg2}"
+					, cinfoImg3 :"${item.cinfoImg3}"
+					, cinfoImg4 :"${item.cinfoImg4}"
+					, cinfoImg5 :"${item.cinfoImg5}"
+					, cinfoImg6 :"${item.cinfoImg6}"
+					, cinfoImg7 :"${item.cinfoImg7}"
+					, cinfoImg8 :"${item.cinfoImg8}"
+					, cinfoImg9 :"${item.cinfoImg9}"
+					, cinfoImg10 :"${item.cinfoImg10}"
+					, phone :"${item.phone}"}])
+		</c:forEach>
+
+		
+		array.forEach(function (rs) {
+			
+            $positions.push([{
+                content: "<div style='cursor: pointer'onclick='detail(\""+rs[0].cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs[0].cinfoImg1+"\');> <img src='resources/img/carList/icon/ocean.png' alt=''></div>"
+                        +"<div class='listing__item__text'><div class='listing__item__text__inside'><h5>"+rs[0].cinfoName+"</h5><div class='listing__item__text__rating'></div>"
+                        +"<ul><li><span class='icon_pin_alt'></span>"+rs[0].cinfoAddress+"</li>"
+                        +"<li><span class='icon_phone'></span>"+rs[0].phone+"</li></ul></div></div></div></div>",
+                latlng: new kakao.maps.LatLng(rs[0].cinfoLttd, rs[0].cinfoHrdns)
+            }])
+        })
+        map = new kakao.maps.Map(document.getElementById('map'), { 
+               // 지도의 중심좌표
+               center : new kakao.maps.LatLng(36.2683, 127.6358), 
+               // 지도의 확대 레벨
+               level : 10 
+		});
+		
+		/* $list.forEach(function(li,i){
+			console.log(li);
+		}) */
+		
+       /*  $.ajax({
             url: 'carMap.ca',
             async: false,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
             data: formData,
+
             success: function (result) {
                 result.forEach(function (rs, i) {
                     $positions.push([{
@@ -339,8 +408,7 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
                 level : 10 
                 });
             }
-        })
-        // 지도를 표시할 div
+        }) */
         
 
     // 마커 클러스터러를 생성합니다

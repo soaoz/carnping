@@ -12,8 +12,8 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Filter {
+	private String sequence;
 	private String title;
 	private String location;
-	private String filter;
 	private String[] facility;
 }
