@@ -51,4 +51,14 @@ public class MemberDao {
 	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
+	
+	public Question selectQuestion(SqlSessionTemplate sqlSession,String queNo) {
+		return sqlSession.selectOne("memberMapper.selectQuestion", queNo);
+	}
+	public int insertQuestion(SqlSessionTemplate sqlSession,Question q) {
+		return sqlSession.insert("memberMapper.insertQuestion", q);
+	}
+	public int updateQuestion(SqlSessionTemplate sqlSession,Question q) {
+		return sqlSession.update("memberMapper.updateQuestion", q);
+	}
 }

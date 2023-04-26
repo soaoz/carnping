@@ -205,7 +205,7 @@
                             <c:forEach var="q" items="${ list }">
 
                                 <tr style="line-height: 14px;">
-                                    <td>${ q.queCategory }</td>
+                                    <td class="queNo">${ q.queNo }</td>
                                     <td>${ q.queTitle }</td>
                                     <td style="font-size: 13px; padding:10px;">${ q.queDate }</td>
                                     <td>
@@ -216,14 +216,25 @@
                    			 </c:forEach>				
                         </tbody>
                     </table>
+        	<script>
+        	$(function(){
 
+				$("table>tbody>tr").click(function(){
+				  var queNo = $(this).children(".queNo").text();
+				  location.href='myQuestionDetail.me?queNo=' + queNo;
+				  
+				})
+				    			
+    		})
+        	
+        	</script>
                     <div align="left" >
                         <br>
                         <a href="questionForm.me" class = "btn btn-sm btn-primary">문의 하기</a>
                         <a href="myQuestionDetail.me" class = "btn btn-sm btn-primary">디테일</a>
                         <br><br>
                     </div>  
-                    <div id="pagingArea" align="center">
+<!--                     <div id="pagingArea" align="center">
                         <ul class="pagination">
                             
                                 <li class="page-item"><a class="page-link" href=""> &lt;&lt; </a></li>
@@ -234,7 +245,7 @@
                                 <li class="page-item"><a class="page-link" href="">5</a></li>
                                 <li class="page-item"><a class="page-link" href="">&gt;&gt;</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

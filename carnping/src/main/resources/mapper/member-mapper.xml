@@ -219,9 +219,52 @@
 		  WHERE MEM_ID = #{memId}
 	</select>
 
+	<select id="selectQuestion" resultMap="questionResultSet">
+		SELECT  
+				QUE_NO
+			  , QUE_CATEGORY
+			  ,	QUE_TITLE
+			  ,	QUE_CONTENT
+			  ,	QUE_DATE
+			  ,	QUE_STATUS
+			  ,	QUE_ANSWER
+			  ,	MEM_ID
+		   FROM QUESTION
+		   JOIN MEMBER 
+		  USING (MEM_NO)
+		  WHERE QUE_NO = #{queNo}
+	</select>
 
 
-
+	<insert id="insertQuestion">
+		INSERT 
+    	  INTO QUESTION 
+          ( QUE_NO
+          , QUE_CATEGORY
+          , QUE_TITLE
+          , QUE_CONTENT
+          , MEM_NO
+          )
+      	  VALUES 
+          (
+            'QUE'||SEQ_QUE_NO.NEXTVAL
+          , #{queCategory}
+          , #{queTitle}
+          , #{queContent}
+          ,(SELECT MEM_NO 
+               FROM MEMBER 
+              WHERE MEM_ID = #{memId}))
+	</insert>
+	
+	<update id="updateQuestion">
+        update
+               QUESTION
+           SET QUE_CATEGORY = #{queCategory}
+	   		 , QUE_TITLE = #{queTitle}
+			 , QUE_CONTENT = #{queContent}
+			 , QUE_DATE = SYSDATE
+         WHERE QUE_NO = #{queNo}
+	</update>
 
 
 

@@ -2,6 +2,9 @@ package com.kh.carnping.member.controller;
 
 import javax.servlet.http.HttpSession;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
@@ -149,6 +153,7 @@ public class MemberController {
 	@RequestMapping("templogin.me")
 	public String templogin(Member m, Model model, HttpSession session) {
 		Member temploginUser = mService.temploginMember(m);
+		
 		if(temploginUser == null) {
 			model.addAttribute("errorMsg","로그인 실패!");
 			return "common/errorPage" ;
@@ -158,7 +163,7 @@ public class MemberController {
 		}
 	}
 	
-	//마이페이 닉네임업데이트
+	//마이페이지 닉네임업데이트
 	@ResponseBody
 	@RequestMapping("nickNameUpdate.me")
 	public int nickNameUpdate(HttpSession session, Member m, String nickName) {
@@ -182,17 +187,89 @@ public class MemberController {
 	}
 	
 	
-	//문의하기리스트 
+	//문의하기리스트 조회
 	@RequestMapping("myQuestionList.me")
 	public String questionSelectList (HttpSession session,Question q, Model model) {
 		
 		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
-		System.out.println("컨트롤러 아이디 : " +memId);
+		//System.out.println("컨트롤러 아이디 : " +memId);
 		ArrayList<Question> list = mService.questionSelectList(memId);
-		System.out.println(list);
+		//System.out.println(list);
 		model.addAttribute("list", list);
 		return "member/myQuestionList";
 	}
+	
+	
+	
+	//문의하기 상세페이지 조회
+	@RequestMapping("myQuestionDetail.me")
+	public String selectQuestion(String queNo, Model model) {
+		
+		Question q = mService.selectQuestion(queNo);
+		//System.out.println(q);
+		model.addAttribute("q", q);
+		return "member/myQuestionDetail";
+	}
+	
+
+	//문의하기 입력폼으로 이동 
+	@RequestMapping("questionForm.me")
+	public String questionForm() {
+		return "member/questionForm";
+	}
+	 
+	//문의하기 insert
+	@RequestMapping("questionInsert.me")
+	public String insertBoard(Question q,MultipartFile upfile, HttpSession session, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		q.setMemId(memId);
+		
+		int result = mService.insertQuestion(q);
+		
+		if(result >0 ) {
+			session.setAttribute("alertMsg", "문의사항이 등록되었습니다.");
+			return "redirect:myQuestionList.me";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	//문의하기 수정폼으로 이동
+	@RequestMapping("questionUpdateForm.me")
+	public String questionUpdateForm(String queNo, Model model) {
+		
+		Question q = mService.selectQuestion(queNo);
+		System.out.println(q);
+		model.addAttribute("q", q);
+		
+		return "member/questionUpdateForm";
+	}
+	
+	//문의하기 update
+
+	@RequestMapping("updateQuestion.me")
+	public String updateQuestion(HttpSession session,Question q,String queNo, Model model) {
+		System.out.println("업데이트컨트롤탄다");
+		System.out.println(q);
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		q.setMemId(memId);
+		q.setQueNo(queNo);
+		
+		
+		int result = mService.updateQuestion(q);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "redirect:myQuestionDetail.me?queNo="+queNo;
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생했습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
 	
 	@RequestMapping("logoutPage.me")
 	public String logoutPage() {
@@ -237,16 +314,8 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping("myQuestionDetail.me")
-	public String myQuestionDetail() {
-		return "member/myQuestionDetail";
-	}
-	
-	@RequestMapping("questionForm.me")
-	public String questionForm() {
-		return "member/questionForm";
-	}
-	
+
+
 	@RequestMapping("myPageMainSelect.me")
 	public String myPageMainSelect() {
 		
@@ -265,6 +334,8 @@ public class MemberController {
 	public String unregister() {
 		return "member/unregister";
 	}
+	
+
 	
 	//소영끝  =======================
 	

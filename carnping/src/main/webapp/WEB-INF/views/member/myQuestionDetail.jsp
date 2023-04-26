@@ -128,7 +128,7 @@
 		*{
 		    margin: 0; 
 		    padding: 0;     
-		    font-family: 'SUIT-Regular';
+		    
 		}
 		
 		.wrap{
@@ -159,6 +159,7 @@
 		    width: 100%;
 		    height: 40%;
 		    border-bottom: 1px solid lightgray;
+		    
 		
 		}
 		table th{
@@ -181,12 +182,12 @@
 		    border-bottom: 1px solid lightgrey;
 		}
 		
-		#t_content>td{
-		    padding-top: 30px;
+		.t_content>td{
+		    padding-top: 20px;
 		    padding-left: 30px;
 		
 		}
-		#t_content p{
+		.t_content p{
 		    font-size: 14px;
 		    color: rgb(100, 100, 100);
 		    height: 200px;
@@ -197,6 +198,11 @@
 		 }
 		.btn-light{
 			border: 2px solid #7ea67c !important;
+		}
+		h4{
+			font-size : 20px !important;
+			color : black !important; 
+			padding-bottom : 10px !important;
 		}
 		
 </style>
@@ -260,86 +266,100 @@
                         <hr>
                         <br><br>
                     </div>
+					
+					<!-- 이사이 -->
+					
+					<div class="content">
+					    <table id="detail-area" border="0"  align="center">
+					    <!-- (tr>th+td+th+td)*3 -->
+					        <tr id="t_title">
+					            <th>제목</th>
+					            <td colspan="3" width="430">${ q.queTitle }</td>
+					            
+					        </tr>
+					        <tr id="t_info">
+					            <th>작성자</th>
+					            <td width="400">${ q.memId }</td>
+					            <th>작성일</th>
+					            <td>${ q.queDate }</td>
+					        </tr>
+					        <tr id="t_file">
+					             <th>첨부파일</th>
+					             <td colspan="3">
+					             <c:choose>
+					              	<c:when test="${ empty b.originName}">
+					                  첨부파일이 없습니다.
+					               </c:when>
+					               <c:otherwise>
+					                  <!-- 첨부파일이 있는 경우-->
+					                  <a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
+					                  <!-- **실제 db로 부터 조회해온 파일 원본명 => 원본명으로 다운이됨  -->
+					               </c:otherwise>
+					              </c:choose>
+					             </td>
+					         </tr>
+					        <tr class="t_content">
+					            
+					            <td colspan="4">
+					                <p>${ q.queContent }</p>
+					            </td>
+					        </tr>
+					        
+					        <c:if test="${ not empty q.queAnswer}">
+						        <tr class="t_content">
+						            
+						            <td colspan="4">
+						            	<h4>답변 내용</h4>
+						                <p>${ q.queAnswer }</p>
+						            </td>
+						        </tr>
+					        </c:if>
+					        
+					    </table>
+					</div>
+					
+					<div class="btn_div" align="right">
+					    <br>
+					    <a href="myQuestionList.me" class="btn btn-sm btn-light">목록가기</a>
+					    <!-- 히스토리백 /list.no-->
+					    <!-- 현재 로그인한 사용자가 해당 글을 쓴 본인일 경우  -->
+					    <c:if test="${ not empty loginUser.memId }">
+					        <a class="btn btn-sm btn-warning" onclick="postFormSubmit(1);">수정하기</a>
+					        <a class="btn btn-sm btn-danger">삭제하기</a>
+					        
+					        <form id="postForm" action="" method="post" >
+						           <!-- 숨겨야하니까 포스트 넘기고싶은건 글번호 -->
+						           		<input type="hidden" name="queNo" value="${ q.queNo }">
+						           		<!-- 구현해야할 기능 2개, 폼한개로 동적으로 타게하기  :자바스크립트로 -->
+						           		<input type="hidden" name="filePath" value="${ b. changeName }">
+					         </form>
+						           
+						           <script>
+						           
+						           function postFormSubmit(num){
+						        	   console.log("탄다");
+						        	   if(num == 1){//수정하기 클릭시
+						        		   console.log("if탄다");
+						        		   $("#postForm").attr("action", "questionUpdateForm.me").submit();
+						        		   //action을 updateForm.bo로 ...submit까지 해줘야 날라갈수잇음
+						        	   }else{ //삭제하기 클릭했다
+						        		   $("#postForm").attr("action","delete.bo").submit();
+						        		   
+						        	   }
+						        	   
+						           }
+						           </script>
+					        
+					        
+						 </c:if>
+					</div>
 
-<!-- 이사이 -->
-
-<div class="content">
-    <table id="detail-area" border="0"  align="center">
-    <!-- (tr>th+td+th+td)*3 -->
-        <tr id="t_title">
-            <th>제목</th>
-            <td colspan="3" width="430">진짜 제목</td>
-            
-        </tr>
-        <tr id="t_info">
-            <th>작성자</th>
-            <td>작성자 아이디 user01</td>
-            <th>작성일</th>
-            <td>2023-04-25</td>
-        </tr>
-        <tr id="t_file">
-             <th>첨부파일</th>
-             <td colspan="3">
-             <c:choose>
-              	<c:when test="${ empty b.originName}">
-                  첨부파일이 없습니다.
-               </c:when>
-               <c:otherwise>
-                  <!-- 첨부파일이 있는 경우-->
-                  <a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
-                  <!-- **실제 db로 부터 조회해온 파일 원본명 => 원본명으로 다운이됨  -->
-               </c:otherwise>
-              </c:choose>
-             </td>
-         </tr>
-        <tr id="t_content">
-            
-            <td colspan="4">
-                <p>내용 블라블라라바라러러걀갸거러러랴러럭머알</p>
-            </td>
-            
-        </tr>
-    </table>
-</div>
-
-<div class="btn_div" align="right">
-    <br>
-    <a href="" class="btn btn-sm btn-light">목록가기</a>
-    <!-- 히스토리백 /list.no-->
-    <!-- 현재 로그인한 사용자가 해당 글을 쓴 본인일 경우  -->
-    <c:if test="${ not empty loginUser.memId }">
-        <a href="" class="btn btn-sm btn-warning">수정하기</a>
-        <a href="" class="btn btn-sm btn-danger">삭제하기</a>
-        
-        <form id="postForm" action="" method="post" >
-	           <!-- 숨겨야하니까 포스트 넘기고싶은건 글번호 -->
-	           		<input type="hidden" name="bno" value="${ b.boardNo }">
-	           		<!-- 구현해야할 기능 2개, 폼한개로 동적으로 타게하기  :자바스크립트로 -->
-	           		<input type="hidden" name="filePath" value="${ b. changeName }">
-	           </form>
-	           
-	           <script>
-	           function postFormSubmit(num){
-	        	   if(num == 1){//수정하기 클릭시
-	        		   $("#postForm").attr("action", "updateForm.bo").submit();
-	        		   //action을 updateForm.bo로 ...submit까지 해줘야 날라갈수잇음
-	        	   }else{ //삭제하기 클릭했다
-	        		   $("#postForm").attr("action","delete.bo").submit();
-	        		   
-	        	   }
-	        	   
-	           }
-	           </script>
-        
-        
-	 </c:if>
-</div>
-<!-- 이사이 -->
                 </div>
             </div>
         </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
   </div>  
-<jsp:include page="../common/footer.jsp"/>
+
 </body>
 </html>
