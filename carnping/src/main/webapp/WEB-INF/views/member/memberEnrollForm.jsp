@@ -9,14 +9,17 @@
     
     // 공백 사용 못 하게
     function noSpaceForm(obj) {
-        var str_space = /[\s]/g; // 공백 체크
-        if (str_space.test(obj.value) || obj.value.trim() === "") { // 공백 체크 및 입력값이 빈 문자열인지 확인
+        var str_space = /^\s|\s$/g;; // 공백 체크
+        if (str_space.test(obj.value) ) { // 공백 체크 및 입력값이 빈 문자열인지 확인
             alert("해당 항목에는 공백을 사용할 수 없습니다.\n\n공백 제거됩니다.");
             obj.focus();
             obj.value = obj.value.replace(/\s+/g, ''); // 공백 제거
             return false;
         }
-    }
+    };
+
+
+    
 
 
 </script>
@@ -502,7 +505,7 @@
 
 
     <!-- The Modal -->
-    <div class="modal" id="marketingModal">
+    <div class="modal" id="marketingModal" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
         
@@ -540,7 +543,7 @@
         </div>
   </div>
 
-  <div class="modal" id="emailModal">
+  <div class="modal" id="emailModal" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
     
@@ -601,13 +604,15 @@
     var progressBar = $('.progressBar');
     var progressBarContainer = $('#progressBarContainer');
     var progressBarWidth = 0;
-    var progressBarStep = 500;
+    var progressBarStep = 103;
 
     function updateProgressBar() {
-        var currentWidth = parseFloat(progressBar.width());
+        var currentWidth = parseInt(progressBar.width());
         var newWidth = currentWidth + progressBarStep;
-        progressBar.width(newWidth + '%');
-    };
+        // rogressBar.width(newWidth + '%');
+    
+//   progressBarWidth += 25;
+  progressBar.animate({ width: newWidth  });};
 
 
 
@@ -924,7 +929,6 @@
     function agreementCheck(){
 
         const $marketingInput = $("#marketing");
-        console.log($marketingInput.val()); 
         const $emailInput = $("#enrollForm input[name=email]");
 
         $.ajax({
@@ -933,8 +937,8 @@
             marketingAgree:$marketingInput.val(),
             email:$emailInput.val()
             },
-            beforeSend: function() {
-                updateProgressBar();
+            beforeSend: function() 
+            {      updateProgressBar();
             },
             success : function(){
             
@@ -955,8 +959,7 @@
                 console.log("ajax 통신 실패!");
             },
             complete: function() {
-                if (progressBarWidth >= 100) {
-                // hide progress bar when it's full
+                if ($('.progressBar').width > 515) {
                 progressBarContainer.hide();
                 }
             }
@@ -1014,6 +1017,9 @@
         data : {
             memId:$confirmedIdInput.val()
             },
+        beforeSend: function() 
+        {      updateProgressBar();
+        },
         success : function(){
             $("#title").text("로그인에 사용할 비밀번호를 입력해주세요.");
             $("#idForm").hide();
@@ -1028,6 +1034,12 @@
             //    }
             error : function(){
                 console.log("ajax 통신 실패!");
+            },
+            complete: function() {
+                if ($('.progressBar').width > 515) {
+                // hide progress bar when it's full
+                progressBarContainer.hide();
+                }
             }
             
         });
@@ -1043,6 +1055,9 @@
         data : {
             memPwd:$confirmedPwdInput.val()
             },
+        beforeSend: function() 
+        {      updateProgressBar();
+        },
         success : function(){
             $("#title").text("회원 정보를 입력해주세요.");
             $("#pwdForm").hide();
@@ -1057,6 +1072,12 @@
             //    }
             error : function(){
                 console.log("ajax 통신 실패!");
+            },
+            complete: function() {
+                if ($('.progressBar').width > 515) {
+                // hide progress bar when it's full
+                progressBarContainer.hide();
+                }
             }
             
         });
@@ -1120,9 +1141,6 @@
 
         $(function(){
         	function readURL(input){
-        		console.log("readURL 함수 탔음!!");
-        		console.log(input);
-        		console.log(input.files[0]);
         		if (input.files && input.files[0]) {
                     var reader = new FileReader();
 
@@ -1136,10 +1154,7 @@
         	}
            
             $(".file-upload").on('change', function(){
-            	console.log("파일이 업로드 됐다.");
-            	console.log(this);
                 readURL(this);
-                console.log(readURL(this));
             });
 
             $(".upload-button").on('click', function() {
