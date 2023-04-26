@@ -83,6 +83,42 @@
 	       member
      where nickname = #{nickname}
 	</select>
+	
+	<insert id="insertMember" >
+		insert
+		  into member
+		     (
+		       MEM_NO
+		     , MEM_ID
+		     , MEM_PWD
+		     , MEM_NAME
+		     , NICKNAME
+		     , EMAIL
+		     , ENROLL_DATE
+		     , STATUS
+		     , MEM_IMG
+		     , PHONE
+		     , MEM_API_TYPE
+		     , MEM_API_TOKEN
+		     , MARKETING
+		     )
+	    values
+	         (
+	           'MEM' || TO_CHAR(SEQ_MEM_NO.NEXTVAL)
+	         , #{memId}
+	         , #{memPwd}
+	         , #{memName}
+	         , #{nickName}
+	         , #{email}
+	         , DEFAULT
+	         , DEFAULT
+	         , #{memImg}
+	         , #{phone}
+	         , #{memApiType}
+	         , #{memApiToken}
+	         , #{marketing}
+	         )
+	</insert>
 
 
 	<select  id="selectMemberList" resultMap="memberResultSet">
@@ -99,8 +135,29 @@
 	        ,PHONE
 	        ,MEM_API_TYPE
 	        ,MEM_API_TOKEN
+	        ,MARKETING
 	 FROM MEMBER
 	WHERE MEM_ID != 'ADMIN'
+	</select>
+	
+	<select id="loginMember" resultMap="memberResultSet">
+	    SELECT
+	          MEM_NO
+	        , MEM_ID
+	        , MEM_PWD
+	        , MEM_NAME
+	        , NICKNAME
+	        , EMAIL
+	        , ENROLL_DATE
+	        , STATUS
+	        , MEM_IMG
+	        , PHONE
+	        , MEM_API_TYPE
+	        , MEM_API_TOKEN
+	        , MARKETING
+		 FROM MEMBER
+		WHERE MEM_ID = #{memId}
+		  AND STATUS = 'Y'
 	</select>
 
 

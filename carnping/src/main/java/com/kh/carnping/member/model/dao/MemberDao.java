@@ -11,6 +11,10 @@ import com.kh.carnping.member.model.vo.Question;
 @Repository
 public class MemberDao {
 	
+	public Member loginMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.loginMember", m);
+	}
+	
 	public int emailCheck(SqlSessionTemplate sqlSession, String checkEmail) {
 		return sqlSession.selectOne("memberMapper.emailCheck", checkEmail);
 	}
@@ -43,5 +47,8 @@ public class MemberDao {
 	
 	public ArrayList<Question> questionSelectList(SqlSessionTemplate sqlSession,String memId) {
 		return (ArrayList)sqlSession.selectList("memberMapper.questionSelectList", memId);
+	}
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 }
