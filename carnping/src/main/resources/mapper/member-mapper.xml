@@ -13,10 +13,13 @@
 		<result column="EMAIL" property="email"/>
 		<result column="ENROLL_DATE" property="enrollDate"/>
 		<result column="STATUS" property="status"/>
-		<result column="MEM_IMG" property="memImg"/>
+		<result column="MEM_IMG_ORIGIN" property="memImgOrigin"/>
+		<result column="MEM_IMG_CHANGE" property="memImgChange"/>
 		<result column="PHONE" property="phone"/>
 		<result column="MEM_API_TYPE" property="memAplType"/>
 		<result column="MEM_API_TOKEN" property="memApiToken"/>
+		<result column="MARKETING" property="marketing"/>
+		
 	</resultMap>
 
 	<resultMap id="memberReportResultSet" type="MemberReport">
@@ -95,7 +98,8 @@
 		     , EMAIL
 		     , ENROLL_DATE
 		     , STATUS
-		     , MEM_IMG
+		     , MEM_IMG_ORIGIN
+		     , MEM_IMG_CHANGE
 		     , PHONE
 		     , MEM_API_TYPE
 		     , MEM_API_TOKEN
@@ -111,7 +115,8 @@
 	         , #{email}
 	         , DEFAULT
 	         , DEFAULT
-	         , #{memImg}
+	         , #{memImgOrigin}
+	         , #{memImgChange}
 	         , #{phone}
 	         , #{memApiType}
 	         , #{memApiToken}

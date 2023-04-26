@@ -32,12 +32,20 @@
             font-weight: 200;
             letter-spacing: 0.1em!important;
         }
+
+        #progressBarContainer {
+            position: relative;
+            width: 90%;
+            height: 4px;
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+
 		.progressBar{
             position: absolute;
-            top: 0;
-            left: 20px;
+            left:5%;
             width: 20%;
-            height: 4px;
+            height: 100%;
             background: #0ca678;
             -webkit-transition: width 0.2s;
             transition: width 0.2s;
@@ -284,11 +292,13 @@
             <img src="img/logo_login_1.png" width="125px" style="display:block; margin:auto; padding-top: 25px;" alt="">
             <h2 style="margin: 25px 0px 60px 0px; text-align: center; letter-spacing: unset; font-size:28px;">간편 가입</h2>
             
-            <form action="insert.me" name="agreement" id="enrollForm">
+            <form action="insert.me" name="agreement" id="enrollForm" method="post" enctype="multipart/form-data">
                 
                 <div class="agreement">
                     
-                    <i step="1" class="progressBar"></i>
+                    <div align="center" id="progressBarContainer">
+                        <i step="1" class="progressBar"></i>
+                    </div>
                     <h3 class="title" id="title">Carnping 서비스 이용약관에 동의해주세요.</h3>
                     
                     <div class="agreeAll">
@@ -331,13 +341,19 @@
                                 <td colspan="2" 
                                 style="text-align: center; padding-bottom: 30px;">
                                     
-                                        
+                                    
                                     <div class="circle" style="margin:auto;" >
+                                        <label for="memImg" style="display:unset;">
                                         <img class="profile-pic" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
-                                        <div class="p-image" style="right:160px;">
-                                            <i class="fa fa-camera upload-button"></i>
-                                                <input  name="memImg" class="file-upload" type="file" accept="image/*"/>
-                                        </div>
+                                        <!-- <div class="p-image" style="right:160px;"> -->
+                                            <i class="fa fa-camera upload-button" style="position: absolute;
+                                            top: 200px;
+                                            right: 250px;
+                                            cursor: pointer;
+                                        "></i>
+                                        </label>
+                                            <input type="file" id="memImg" name="memImg" class="file-upload"  accept="image/*"/>
+                                        <!-- </div> -->
                                     </div>
                                     
                                     
@@ -579,6 +595,20 @@
 </div>
 
 <script>
+
+
+
+    var progressBar = $('.progressBar');
+    var progressBarContainer = $('#progressBarContainer');
+    var progressBarWidth = 0;
+    var progressBarStep = 500;
+
+    function updateProgressBar() {
+        var currentWidth = parseFloat(progressBar.width());
+        var newWidth = currentWidth + progressBarStep;
+        progressBar.width(newWidth + '%');
+    };
+
 
 
     $(function(){
@@ -903,22 +933,32 @@
             marketingAgree:$marketingInput.val(),
             email:$emailInput.val()
             },
-           success : function(){
-            $("#title").text("로그인에 사용할 아이디를 입력해주세요.");
-            $("#idForm").show();
-            $(".agreeSpan").hide();
-            $(".agreeDetail").hide();
-            $("#agreeBtnDiv").hide();
-            $("#emailDiv").hide();
-            $("#idNextBtnDiv").show();
+            beforeSend: function() {
+                updateProgressBar();
+            },
+            success : function(){
+            
+                $("#title").text("로그인에 사용할 아이디를 입력해주세요.");
+                $("#idForm").show();
+                $(".agreeSpan").hide();
+                $(".agreeDetail").hide();
+                $("#agreeBtnDiv").hide();
+                $("#emailDiv").hide();
+                $("#idNextBtnDiv").show();
 
-        }
+            }
         ,
         //        error:function(request,status,error){
             //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             //    }
             error : function(){
                 console.log("ajax 통신 실패!");
+            },
+            complete: function() {
+                if (progressBarWidth >= 100) {
+                // hide progress bar when it's full
+                progressBarContainer.hide();
+                }
             }
             
         });
@@ -1079,8 +1119,11 @@
         });
 
         $(function(){
-            var readURL = function(input) {
-                if (input.files && input.files[0]) {
+        	function readURL(input){
+        		console.log("readURL 함수 탔음!!");
+        		console.log(input);
+        		console.log(input.files[0]);
+        		if (input.files && input.files[0]) {
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
@@ -1088,11 +1131,15 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
+                    
                 }
-            }
-
+        	}
+           
             $(".file-upload").on('change', function(){
+            	console.log("파일이 업로드 됐다.");
+            	console.log(this);
                 readURL(this);
+                console.log(readURL(this));
             });
 
             $(".upload-button").on('click', function() {
