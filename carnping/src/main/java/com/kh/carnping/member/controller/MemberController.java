@@ -178,13 +178,20 @@ public class MemberController {
 	
 	//마이프로필 진입 전 유저비번확인
 	@RequestMapping("userPwdCheck.me")
-	public String userCheck(HttpSession session, String userPwd) {
+	public String userCheck(HttpSession session, String userPwd, Model model, Member m) {
 		
 		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		
+		
 		//System.out.println("유저아디:"+memId+"입력한비번:"+userPwd);
-		Member loginUser = mService.userCheck(memId);
-		if(loginUser.getMemPwd().equals(userPwd)) {
+		 m = mService.selectMember(memId);
+		 
+		if(m.getMemPwd().equals(userPwd)) {
 			//System.out.println("비번같음"); => myProfileUpdate 로 
+			
+			//데이터를 조회해서 m으로 넘기기
+			model.addAttribute("m", m);
+			System.out.println("진입 전 조회결과 : "+ m);
 			return "member/myProfileUpdate";
 		}else {
 			//System.out.println("비번다름");
@@ -192,6 +199,9 @@ public class MemberController {
 			return "member/myPageMainSelect";
 		}
 	}
+	
+	//마이프로필 조회 
+	
 	
 	//임시로그인
 	@RequestMapping("templogin.me")
@@ -218,7 +228,7 @@ public class MemberController {
 		return result;
 	}
 	
-	//비밀번호 업데이트
+	//비밀번호만 업데이트
 	@ResponseBody
 	@RequestMapping("passwordUpdate.me")
 	public int passwordUpdate(HttpSession session,Member m, String password) {
@@ -229,6 +239,71 @@ public class MemberController {
 		int result = mService.passwordUpdate(m);
 		return result;
 	}
+	
+	//업데이트된 회원정보 화면
+	@RequestMapping("mypage.me")
+	public String mypage(HttpSession session, Model model, Member m) {
+		
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		
+		
+		//System.out.println("유저아디:"+memId+"입력한비번:"+userPwd);
+		 m = mService.selectMember(memId);
+
+			//데이터를 조회해서 m으로 넘기기
+		model.addAttribute("m", m);
+		System.out.println("진입 전 조회결과 : "+ m);
+		return "member/myProfileUpdate";
+
+	}
+	
+	//회원정보 전체 업데이트
+	@RequestMapping("updateProfile.me")
+	public String updateProfile(HttpSession session,  MultipartFile reupfile, Member m, Model model) {
+		System.out.println("업데이트컨트롤탄다");
+	
+		//System.out.println(reupfile); 파일 담겨있음 
+		System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
+		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		String memPwd = ((Member)session.getAttribute("loginUser")).getMemPwd();
+		m.setMemId(memId);
+		m.setMemPwd(memPwd);
+		
+		// 새로 넘어온 첨부파일이 있을 경우
+		if(!reupfile.getOriginalFilename().equals("")) {
+			//진짜 원본명 리턴
+			
+			//기존에 첨부파일 있었을경우 , 또올림 => 기존의 첨부파일 지우고 
+			if(m.getMemImgOrigin() != null) { //널이아니면 제거
+				new File(session.getServletContext().getRealPath(m.getMemImgChange())).delete();
+				//기존의 실제 물리적인 파일 삭제 
+			}
+			
+			//새로 넘어온 파일 서버 업로드 
+			String changeName = saveMemImg(reupfile, session);
+			m.setMemImgOrigin(reupfile.getOriginalFilename());//넘겨받은 첨부파일의 원본명
+			m.setMemImgChange("resources/uploadFiles/memImg/" + changeName);
+
+			
+			
+		}
+		
+		int result = mService.updateProfile(m);
+		System.out.println(m);
+		System.out.println(result +"리절트값");
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "redirect:mypage.me";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생했습니다.");
+			return "common/errorPage";
+		}
+		
+		
+		
+	}
+	
 	
 	
 	//문의하기리스트 조회
@@ -275,7 +350,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "문의사항이 등록되었습니다.");
 			return "redirect:myQuestionList.me";
 		}else {
-			model.addAttribute("errorMsg", "요청에 문제가 발생했습니다.");
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
 			return "common/errorPage";
 		}
 	}
@@ -292,10 +367,9 @@ public class MemberController {
 	}
 	
 	//문의하기 update
-
 	@RequestMapping("updateQuestion.me")
 	public String updateQuestion(HttpSession session,Question q,String queNo, Model model) {
-		System.out.println("업데이트컨트롤탄다");
+		//System.out.println("업데이트컨트롤탄다");
 		System.out.println(q);
 		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
 		q.setMemId(memId);
@@ -308,7 +382,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
 			return "redirect:myQuestionDetail.me?queNo="+queNo;
 		}else {
-			model.addAttribute("errorMsg", "요청에 문제가 발생했습니다.");
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
 			return "common/errorPage";
 		}
 		

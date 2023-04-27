@@ -53,8 +53,8 @@ public class MemberServiceImpl implements MemberService {
 		return 0;
 	}
 	
-	public Member userCheck(String memId) {
-		return mDao.userCheck(sqlSession, memId);
+	public Member selectMember(String memId) {
+		return mDao.selectMember(sqlSession, memId);
 	}
 	
 	public Member temploginMember(Member m) {
@@ -67,6 +67,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	public int passwordUpdate(Member m) {
 		return mDao.passwordUpdate(sqlSession, m);
+	}
+	public int updateProfile(Member m) {
+		return mDao.updateProfile(sqlSession, m);
 	}
 	public ArrayList<Question> questionSelectList(String memId){
 		return mDao.questionSelectList(sqlSession, memId);

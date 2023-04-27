@@ -28,8 +28,8 @@ public class MemberDao {
 	
 	
 	//소영시작
-	public Member userCheck(SqlSessionTemplate sqlSession,String memID) {
-		return sqlSession.selectOne("memberMapper.userCheck", memID);
+	public Member selectMember(SqlSessionTemplate sqlSession,String memID) {
+		return sqlSession.selectOne("memberMapper.selectMember", memID);
 	}
 	
 	public Member temploginMember(SqlSessionTemplate sqlSession,Member m) {
@@ -43,6 +43,10 @@ public class MemberDao {
 	
 	public int passwordUpdate(SqlSessionTemplate sqlSession,Member m) {
 		return sqlSession.update("memberMapper.passwordUpdate", m);
+	}
+	
+	public int updateProfile(SqlSessionTemplate sqlSession,Member m) {
+		return sqlSession.update("memberMapper.updateProfile", m);
 	}
 	
 	public ArrayList<Question> questionSelectList(SqlSessionTemplate sqlSession,String memId) {

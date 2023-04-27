@@ -172,20 +172,22 @@
 
 
 	<!-- 소영시작 -->
-	<select id="userCheck" resultMap="memberResultSet">
+	<select id="selectMember" resultMap="memberResultSet">
 		SELECT
-	         MEM_NO
-	        ,MEM_ID
-	        ,MEM_PWD
-	        ,MEM_NAME
-	        ,NICKNAME
-	        ,EMAIL
-	        ,ENROLL_DATE
-	        ,STATUS
-	        ,MEM_IMG
-	        ,PHONE
-	        ,MEM_API_TYPE
-	        ,MEM_API_TOKEN
+				MEM_NO
+			  , MEM_ID
+			  , MEM_PWD
+			  , MEM_NAME
+			  , NICKNAME
+			  , EMAIL
+			  , ENROLL_DATE
+			  , STATUS
+			  , MEM_IMG
+			  , PHONE
+			  , MEM_API_TYPE
+			  , MEM_API_TOKEN
+			  , MARKETING
+			  , MEM_IMG_CHANGE
 	 FROM MEMBER
 	WHERE MEM_ID = #{memID}
 	</select>
@@ -206,6 +208,19 @@
 			    member
 		    set mem_pwd = #{memPwd}
 		  where mem_id = #{memId}
+	</update>
+	
+	<update id="updateProfile">
+	    UPDATE
+				MEMBER
+	  	 SET 
+               MEM_PWD = #{memPwd}
+             , NICKNAME = #{nickName}
+             , EMAIL = #{email}
+             , MEM_IMG = #{memImgOrigin}
+             , MEM_IMG_CHANGE = #{memImgChange}
+             , PHONE = #{phone}
+  	   WHERE MEM_ID = #{memId}
 	</update>
 	
 	<select id="questionSelectList" resultMap="questionResultSet">
@@ -270,6 +285,7 @@
 			 , QUE_DATE = SYSDATE
          WHERE QUE_NO = #{queNo}
 	</update>
+	
 
 
 

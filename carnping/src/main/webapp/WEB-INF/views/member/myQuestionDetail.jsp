@@ -335,7 +335,6 @@
 					         </form>
 						           
 						           <script>
-						           
 						           function postFormSubmit(num){
 						        	   console.log("탄다");
 						        	   if(num == 1){//수정하기 클릭시
@@ -344,9 +343,7 @@
 						        		   //action을 updateForm.bo로 ...submit까지 해줘야 날라갈수잇음
 						        	   }else{ //삭제하기 클릭했다
 						        		   $("#postForm").attr("action","delete.bo").submit();
-						        		   
 						        	   }
-						        	   
 						           }
 						           </script>
 					        
