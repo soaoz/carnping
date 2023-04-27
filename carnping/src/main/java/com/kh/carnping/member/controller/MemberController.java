@@ -161,9 +161,9 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public String loginMember(Member m, HttpSession session) {
-		Member loginUser = mService.loginMember(m);
-		if(loginUser != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {
-			session.setAttribute("loginUser", loginUser);
+		Member loginMember = mService.loginMember(m);
+		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd())) {
+			session.setAttribute("loginMember", loginMember);
 			
 		} else {
 			session.setAttribute("alertMsg", "아이디나 비밀번호를 확인하세요");
@@ -394,8 +394,9 @@ public class MemberController {
 		return "member/logoutPage";
 	}
 	
+
 	@RequestMapping("logout.me")
-	public String logoutMember(HttpSession session) {
+	public String logoutMember(HttpSession session){
 		session.invalidate();
 		return "redirect:/";
 	}

@@ -33,7 +33,17 @@
     
     <!--jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
+      <!--드롭다운-->
+    <!-- Our CSS stylesheet file -->
+    <link rel="stylesheet" href="resources/assets/css/styles.css" />
+
+    <!-- Font Awesome Stylesheet -->
+    <link rel="stylesheet" href="resources/assets/font-awesome/css/font-awesome.css" />
+
+    <!-- Including Open Sans Condensed from Google Fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic" />
+
 
 	<!-- 알람창 JavaScript -->
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -113,9 +123,53 @@
             background-color:white;
             transition: color .4s ease 0s,background-color .4s ease 0s
         }
-        
-        
 
+        .nickname{
+            color:white;
+        }
+
+        .nickname:hover{
+            color:#0ca678;
+        }
+
+        .notification {
+            text-decoration:none;
+            position: relative;
+            display: inline-block;
+        }
+
+        .notification .badge {
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            padding: 5px 6px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+            font-size: 9px;
+        }
+
+        .noti-text {
+            width: 140px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            height:50px;
+            white-space: normal;
+            overflow: hidden;
+        }
+
+        .notiDiv span{color:white;}
+
+
+        #myPost{
+            width: 90px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }      
+        
 
     </style>
 </head>
@@ -139,7 +193,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
-                        <div class="header__logo">
+                        <div class="header__logo" style="padding:20px 0px; text-align: center;">
                             <a href="./index.html"><img src="resources/img/logo_1.png" width="250px" alt=""></a>
                         </div>
                     </div>
@@ -154,17 +208,96 @@
                                 </ul>
                             </nav>
                             <div class="header__menu__right" style="display:inline-flex">
-                                <a href="#" class="primary-btn" id="addSite" ><i class="fa fa-plus"></i>나만의 차박지 등록</a>
-                                <!-- 로그인 후 -->
-                                <!-- <a href="#" class="login-btn"><i class="fa fa-user" style="padding:unset;"></i></a> -->
+                                <a href="#" class="primary-btn" id="addSite" style="line-height: 27px; margin-right:35px;"><i class="fa fa-plus"></i>나만의 차박지 등록</a>
+                             	<c:choose>
+            				<c:when test="${ empty loginMember }">
                                 <a href="loginForm.me" class="primary-btn" id="loginBtn" >로그인</a>
+                            </c:when>
+                            <c:otherwise>
+                                <!-- 로그인 후 -->
+                                <div class="loggedin" style="width: 225px; display:flex; margin-right: 40px;">
+                                    
+                                    
+                                    <nav id="colorNav">
+                                        <ul>
+                                            <li>
+                                                <div style="padding-top: 10px; padding-left: 10px; padding-right: 20px;">
+                                                    <a href="#" class="notification">
+                                                        <span><i class="fa-solid fa-bell" style="color: #ffffff; font-size: 25px;"></i></span>
+                                                        <span class="badge">2</span>
+                                                    </a>
+                                                    <ul style="left: 28%;">
+                                                        <li>
+                                                            <div style="height:70px;">
+                                                                <div style="display:flex;justify-content: space-around;height: 50px;">
+                                                                 <div style="border-radius: 50px; ">
+                                                                        <i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px;
+                                                                        font-size: 35px;
+                                                                           line-height: 1.7em;"></i>
+                                                                    </div>
+                                                                    <div class="noti-text notiDiv">
+                                                                        <div style="display:flex;">
+                                                                            <a style="padding-left:unset; padding-right: unset;padding-top: 15px;">[</a><a href="http://tutorialzine.com/2012/10/css3-dropdown-menu/" style="padding-left:unset; padding-right: unset;padding-top: 15px;" id="myPost">차박장소 공유합니다아아아</a><a style="padding-left:unset; padding-right: unset;padding-top: 15px;">]</a>
+                                                                            <span style="padding-top: 15px;">글에</span>
+                                                                        </div>
+                                                                        <a style="padding: unset;">댓글<span id="replyCount">[3]</span>이 달렸습니다.</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="float: right;
+                                                                padding-right: 17px;
+                                                                color: gray;
+                                                                font-size: 5px;">
+                                                                    33분 전
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li >
+                                                            <div style="height:70px" class="notiDiv">
+                                                                <a style="padding:15px 15px 0px;" href="http://tutorialzine.com/2012/10/css3-dropdown-menu/">내가 등록한 차박정보가 승인되었습니다.</a>
+                                                                <div style="float: right;
+                                                                padding-right: 17px;
+                                                                color: gray;
+                                                                font-size: 5px;">
+                                                                    33분 전
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li></li>
+                                                    </ul>
+                                                        
+                                                    
+                                                </div>
+                                            </li>
+                                            <li style="margin-left: 15px;">
+                                                <a href="#" class="nickname" style="padding: 3px 0px;">
+                                                    <i class="fa-solid fa-circle-user" style="padding: unset; font-size: 35px;"></i>
+                                                    <span style="vertical-align: 10px; padding-left: 3px;">
+                                                    <c:choose>
+                                                    <c:when test="${ not empty loginMember.nickName }">${ loginMember.nickName }</c:when>
+                                                    <c:otherwise>${ loginMember.memId }</c:otherwise>
+                                                    </c:choose></span>
+                                                </a>
+                                                <ul style="    width: 100px;
+                                                text-align: center;left: 100%;">
+                                                    <li><a style="    padding: 15px;" href="myPageMainSelect.me" style="font-size: unset;">마이페이지</a></li>
+                                                    <li><a style="    padding: 15px;" href="logout.me" style="font-size: unset;">로그아웃</a></li>
+
+                                                </ul>
+                                            </li>
+
+                                            
+                                        </ul>
+                                    </nav>
+                                </div>
+                                </c:otherwise>
+                                </c:choose>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div><!--headerNav-->
+                    </div> <!--col-lg-9 col-md-9-->
+                </div><!--row-->
                 <div id="mobile-menu-wrap"></div>
-            </div>
-        </div>
+            </div> <!--containerfluid-->
+        </div> <!--headerbar-->
     </header>
     <!-- Header Section End -->
 

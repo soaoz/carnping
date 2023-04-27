@@ -163,7 +163,7 @@
                 <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
                     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="position: absolute;
     top: 50px;">
-                        <form class="login100-form validate-form">
+                        <form class="login100-form validate-form" action="login.me" method="POST">
                             <span class="login100-form-title p-b-49" style="color:#1C3053; letter-spacing: normal;" >
                                 로그인
                             </span>
@@ -199,7 +199,7 @@
                             <div class="container-login100-form-btn" style="height:50px;">
                                 <div class="wrap-login100-form-btn">
                                     <div class="login100-form-bgbtn"></div>
-                                    <button class="login.me" style="line-height: 50px;">
+                                    <button type="submit" style="line-height: 50px;">
                                         로그인
                                     </button>
                                 </div>

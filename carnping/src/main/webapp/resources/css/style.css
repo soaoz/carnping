@@ -283,7 +283,7 @@ ol {
 .header__menu ul li {
 	list-style: none;
 	display: inline-block;
-	margin-right: 55px;
+	margin-right: 40px; /*수정*/
 	position: relative;
 }
 
