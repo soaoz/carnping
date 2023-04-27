@@ -184,7 +184,7 @@
 			  , EMAIL
 			  , ENROLL_DATE
 			  , STATUS
-			  , MEM_IMG
+			  , MEM_IMG_ORIGIN
 			  , PHONE
 			  , MEM_API_TYPE
 			  , MEM_API_TOKEN
@@ -219,7 +219,7 @@
                MEM_PWD = #{memPwd}
              , NICKNAME = #{nickName}
              , EMAIL = #{email}
-             , MEM_IMG = #{memImgOrigin}
+             , MEM_IMG_ORIGIN = #{memImgOrigin}
              , MEM_IMG_CHANGE = #{memImgChange}
              , PHONE = #{phone}
   	   WHERE MEM_ID = #{memId}

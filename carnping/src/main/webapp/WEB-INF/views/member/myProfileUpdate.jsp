@@ -207,61 +207,13 @@
                                 <div class="col-sm-3 col-sm-offset-1">
                                     <div class="picture-container">
                                         <div class="picture" >
-                                            <img src="resources/img/mypage.png" class="picture-src" id="wizardPicturePreview" title="" style="max-width: 100%;"/>
-                                            <input type="file" id="wizard-picture" name="reupfile" onchange="loadImg();">
+                                            <img src="${m.memImgChange}" class="picture-src" id="wizardPicturePreview" title="" style="max-width: 100%;"/>
+                                            <input type="file" id="wizard-picture" name="reupfile">
                                         </div>
                                         <label>프로필 사진</label>
                                     </div>
                                 </div>
-                <script>
 
-
-
-                function loadImg(inputFile,num){
-                    //inputFile에는 현재 변화가 생긴 input type = "file" 인 요소 객체가 들어있음 (내가선택한 그..파일이 들어온거)
-                    //num : 몇번째 input 요소 인지가 들어있음 , 확인 후 해당 그 영역에 미리보기 하기 위해 전달받는 숫자
-
-                    //선택된 파일이 있다면 inputFile.files[0] 에 선택된 파일이 담겨있음.. 자바스크립트에서 제공하는 배열임
-                    //                 => inputFile.files.length = 또한 1이 됨, 없으면 0(랭스가1이면 잇고 0이면없다는의미)
-                    
-                    if(inputFile.files.length == 1){ // 파일 선택된 경우 => 파일 읽어들여서 미리보기
-
-                        //미리보기하는방법
-                        //파일을 읽어들일 FileReader라는 객체를 생성해야됨(자스에서 제공하는 객체)
-                        // 파일을 읽어들일 FileReader 객체 생성
-                        const reader = new FileReader();//자바스크립트공식문서에서..
-
-                 //2. 파일을 읽어들이는 메소드를 호출해야함
-                 // reader.readAsDataURL(읽어들일 파일이 있어야함); => 이걸 어케 얻냐 . inputFile.files[0]에 선택된 파일이 들어있음 
-                        reader.readAsDataURL(inputFile.files[0]);
-                        // 해당 파일을 읽어들이는 순간 해당 이 파일만의 고유한 url 부여
-                        //그 url을 가지고 이미지 div에 넣으면 된다... src에  => url 딴거임
-
-
-                          //파일 읽어들이기가 완료 됐을 때 실행할 함수를 정의해두기 ...세팅만하면됨
-                        // 파일 읽어들이기가 완료 됐을 때 실행할 함수를 정의해두기
-                        reader.onload = function(e){                            //함수에는 매개변수가 ..안보인지만 잇다...갱장히 필요하다
-                            //e.target.result => 읽어들인 파일의 고유한 url이 들어있다 (e라는 매개변수안에 url이 잇다..)
-                            switch(num){//앞에서 넘겨받은 num  1이면 1디브 2면 2디브...할수잇게
-                                case 1: $("#titleImg").attr("src", e.target.result); break;                   //attr: 속성변경 , 이걸로 변경하겟다
-                                //내가 넘겨받은 num이 2면, 상세이미지 2번 을 선택 :$("#contentImg1")해서.그거의 속성을 변경하겠다. 이걸로
-                                case 2: $("#contentImg1").attr("src", e.target.result); break;
-                                case 3: $("#contentImg2").attr("src", e.target.result); break;
-                                case 4: $("#contentImg3").attr("src", e.target.result); break;
-                            }
-                        }
-                    }else{ // 선택된 파일이 취소된 경우 => 미리보기 된 것도 사라지게
-                        switch(num){
-                                case 1: $("#titleImg").attr("src", null); break;
-                                 //attr: 속성변경 , 이걸로 변경하겟다
-                                //내가 넘겨받은 num이 2면, 상세이미지 2번 을 선택 :$("#contentImg1")해서.그거의 속성을 변경하겠다. 이걸로
-                                case 2: $("#contentImg1").attr("src", null); break;
-                                case 3: $("#contentImg2").attr("src", null); break;
-                                case 4: $("#contentImg3").attr("src", null); break;
-                            }
-                    }
-                }
-            </script>
                                 
 
                                 <div class="col-sm-5 padding-top-25">
