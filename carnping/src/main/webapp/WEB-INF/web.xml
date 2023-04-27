@@ -42,11 +42,10 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
-
-<!-- 필터맵핑시킬거 url : */ 모든 -->
+	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/*</url-pattern> <!-- 모든 것에 대해서 인코딩 필터를 한번씩 거쳐가게 하겠다. -->
 	</filter-mapping>
 
 </web-app>
