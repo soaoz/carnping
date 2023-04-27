@@ -135,7 +135,8 @@
 	        ,EMAIL
 	        ,ENROLL_DATE
 	        ,STATUS
-	        ,MEM_IMG
+	        , MEM_IMG_ORIGIN
+	        , MEM_IMG_CHANGE
 	        ,PHONE
 	        ,MEM_API_TYPE
 	        ,MEM_API_TOKEN
@@ -154,7 +155,8 @@
 	        , EMAIL
 	        , ENROLL_DATE
 	        , STATUS
-	        , MEM_IMG
+	        , MEM_IMG_ORIGIN
+	        , MEM_IMG_CHANGE
 	        , PHONE
 	        , MEM_API_TYPE
 	        , MEM_API_TOKEN
