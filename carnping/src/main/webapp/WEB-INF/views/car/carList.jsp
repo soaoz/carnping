@@ -168,20 +168,20 @@
     </div>
     <div class="filter__select" >
         <select name="sequence">
-            <option value="default">순서</option>
-            <option value="rating">평점순</option>
-            <option value="view">조회수순</option>
-            <option value="name">이름순</option>
+            <option id="default" value="default">순서</option>
+            <option id="rating" value="rating">평점순</option>
+            <option id="view" value="view">조회수순</option>
+            <option id="name" value="name">이름순</option>
         </select>
     </div>
     
     <div class="filter__select" >
         <select name="location">
-            <option value="all">지역</option>
-            <option value="서울">서울</option>
-            <option value="인천">인천</option>
-            <option value="경기">경기도</option>
-            <option value="강원">강원도</option>
+            <option id="all" value="all">지역</option>
+            <option id="서울" value="서울">서울</option>
+            <option id="인천" value="인천">인천</option>
+            <option id="경기" value="경기">경기도</option>
+            <option id="강원" value="강원">강원도</option>
         </select>
     </div>
 
@@ -250,8 +250,9 @@
         <c:choose>
             <c:when test="${ not empty list }">
                 <c:forEach var="list" items="${ list }">
-                  <div class="listing__item">
-                  <div class="listing__item__pic set-bg" data-setbg="${ list.cinfoImg1 }"> 
+                  <div class="listing__item" >
+	                <input type="hidden" value="${ list.cinfoNo }">
+                  <div class="listing__item__pic set-bg" data-setbg="${ list.cinfoImg1 }" style="cursor:pointer"> 
                             <img src="resources/img/carList/icon/ocean.png" alt="">
 
                             <!--  
@@ -262,12 +263,12 @@
         </div>
         -->
                        </div>
-                        <div class="listing__item__text">
+                        <div class="listing__item__text" style="cursor:pointer"  onclick="(detail('${ list.cinfoNo }');)">
                             <div class="listing__item__text__inside">
                                 <h5>${ list.cinfoName }</h5>
                                 <div class="listing__item__text__rating">
                                     <div class="listing__item__rating__star">
-                                        <c:forEach var="rating" begin="1" end="${ list.cinfoRating }"
+                                        <c:forEach var="rating" begin="1" end="${ list.cinfoRating }" 
                                             step="1">
                                             <span class="icon_star"></span>
                                         </c:forEach>
@@ -281,12 +282,12 @@
                                     <li><span class="icon_phone"></span>${ list.phone }</li>
                                 </ul>
                             </div>
-                            <div class="listing__item__text__info">
+                            <div class="listing__item__text__rating">
                                 <div class="listing__item__text__info__left">
                                     <img src="img/listing/ocean.png" alt="">
-                                    <span>오픈시간</span>
+                                    <span>OpenDay</span>
                                 </div>
-                                <div class="listing__item__text__info__right">12:00 ~ 18:00</div>
+                                <div class="listing__item__text__info__right">${ list.cinfoDays }</div>
                             </div>
                         </div>
                     </div>
@@ -313,28 +314,25 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
 <script type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
 <script>
-	let filter = [];
-	$( "form" ).on( "submit", function( event ) {
-		  event.preventDefault();
-		  filter = $( this ).serializeArray();
-		  
-	});
-    $(function(){
 
-        var formData = $('#searchForm').serializeArray();
+
+	
+	$(function(){
+		$('.listing__item').on('click', function(){
+			location.href='detail.ca?cinfoNo=' +$(this).children("input[type=hidden]").val(); 
+		})
         var $positions = [];
         var map;
-       /*  var qwer = $('input[name=facility]:checked').serializeArray();
-        console.log(qwer); */
-		// 차박정보를 불러와 위도 경도 값을 ajax로 받아오는 ajax 
-		$("input[name=title]").val(filter.title);
-		console.log(filter[0])
+
+/* 		// 차박정보를 불러와 위도 경도 값을 ajax로 받아오는 ajax 
+		$("input[name=title]").val(filter.title); */
+		
 		let array = new Array();
 		/* console.log(formData);
 		let a = formData.split('&');
 		console.log(a); */
 		<c:forEach items="${list}" var="item">
-			array.push([{cinfoNo:"${item.cinfoNo}"
+			array.push([{cinfoNo : "${item.cinfoNo}"
 					, cinfoName :"${item.cinfoName}"
 					, cinfoContent :"${item.cinfoContent}"
 					, cinfoNotice :"${item.cinfoNotice}"
@@ -362,7 +360,8 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
 					, cinfoImg10 :"${item.cinfoImg10}"
 					, phone :"${item.phone}"}])
 		</c:forEach>
-
+		
+		
 		
 		array.forEach(function (rs) {
 			
@@ -410,7 +409,14 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
             }
         }) */
         
-
+        <c:if test="${filter != null}">
+			$("input[name=title]").val("${filter.title}");
+			$("select[name=sequence]").val("${filter.sequence}").attr("selected",true);
+			$("select[name=sequence]").val("${filter.sequence}").prop("selected","selected");
+		console.log("${filter.sequence}");
+			//$("#${filter.location}").attr("selected");
+		console.log($("select[name=sequence]").val("${filter.sequence}"))
+	</c:if>
     // 마커 클러스터러를 생성합니다
     var clusterer = new kakao.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체

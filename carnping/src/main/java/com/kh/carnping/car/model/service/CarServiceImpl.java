@@ -27,6 +27,11 @@ public class CarServiceImpl implements CarService{
 	public ArrayList<Cinfo> carList1(Filter filter) {
 		return cDao.carList1(sqlSession, filter);
 	}
+
+	@Override
+	public Cinfo selectDetail(String cinfoNo) {
+		return cDao.selectDetail(sqlSession, cinfoNo);
+	}
 	
 	
 	

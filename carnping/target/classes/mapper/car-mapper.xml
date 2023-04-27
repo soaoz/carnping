@@ -30,6 +30,7 @@
 		<result column="CINFO_IMG9" property="cinfoImg9"/>	
 		<result column="CINFO_IMG10" property="cinfoImg10"/>
 		<result column="PHONE" property="phone"/>
+		<result column="MEM_NAME" property="memName"/>
 	</resultMap>
 	
 	<resultMap type="CinfoImg" id="cinfoImgResultMap">
@@ -160,5 +161,39 @@
 		</choose>
 		
 	</select> 
+
+	<select id="selectDetail" resultType="Cinfo">]
+		SELECT  CINFO_NO
+				,CINFO_NAME
+				,CINFO_CONTENT
+				,CINFO_NOTICE
+				,CINFO_LTTD
+				,CINFO_HRDNS
+				,CINFO_STATUS
+				,CINFO_ADDRESS
+				,CINFO_FACILITIES
+				,CINFO_DAYS
+				,CINFO_TAG
+				,CINFO_RATING
+				,CINFO_VIEWS
+				,CINFO_MODIFIED
+				,CINFO_RGSTR_DATE
+		        ,(SELECT PHONE FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) PHONE
+		        ,(SELECT MEM_NAME FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) MEM_NAME
+				,CINFO_IMG1
+				,CINFO_IMG2
+				,CINFO_IMG3
+				,CINFO_IMG4
+				,CINFO_IMG5
+				,CINFO_IMG6
+				,CINFO_IMG7
+				,CINFO_IMG8
+				,CINFO_IMG9
+				,CINFO_IMG10
+		 FROM CINFO
+		 JOIN CINFO_IMG USING(CINFO_NO)
+		 WHERE CINFO_STATUS ='Y'
+		   AND CINFO_NO = #{cinfoNo}
+	</select>
 
 </mapper>

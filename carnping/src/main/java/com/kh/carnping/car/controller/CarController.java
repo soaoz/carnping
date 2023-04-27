@@ -39,14 +39,21 @@ public class CarController {
 	public String carList1(Filter filter, Model model) {
 		ArrayList<Cinfo> list = cService.carList1(filter);
 		if(!list.isEmpty()) {
-			
+			model.addAttribute("filter", filter);
 			model.addAttribute("list", list);
 			return "car/carList";
 		} else {
 			model.addAttribute("list", list);
+			model.addAttribute("filter", filter);
 			model.addAttribute("emp", "현재 리스트가 비어있습니다.");
 			return "car/carList";
 		} 
+	}
+	
+	@RequestMapping("detail.ca")
+	public String selectDetail(String cinfoNo, Model model) {
+		Cinfo cinfo = cService.selectDetail(cinfoNo);
+		return "car/carDetail";
 	}
 	
 //	@ResponseBody
