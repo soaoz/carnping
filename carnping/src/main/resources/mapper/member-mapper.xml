@@ -288,6 +288,12 @@
          WHERE QUE_NO = #{queNo}
 	</update>
 	
+	<update id="deleteMember">
+        UPDATE
+               MEMBER
+           SET STATUS = 'N'
+         WHERE MEM_ID = #{memId}
+	</update>
 
 
 

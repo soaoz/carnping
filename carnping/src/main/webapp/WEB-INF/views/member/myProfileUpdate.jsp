@@ -207,8 +207,9 @@
                                 <div class="col-sm-3 col-sm-offset-1">
                                     <div class="picture-container">
                                         <div class="picture" >
-                                            <img src="${m.memImgChange}" class="picture-src" id="wizardPicturePreview" title="" style="max-width: 100%;"/>
+                                            <img src="${m.memImgChange}" class="picture-src" id="wizardPicturePreview" title="" style="max-width: 100%;" />
                                             <input type="file" id="wizard-picture" name="reupfile">
+                                            <input type="hidden" value="${m.memImgChange}" name="memImgChange">
                                         </div>
                                         <label>프로필 사진</label>
                                     </div>
@@ -220,7 +221,7 @@
 
                                     <div class="form-group">
                                         <label>이름</label>
-                                        <input name="name" type="text" class="form-control" value="${loginUser.memName}" readonly>
+                                        <input name="name" type="text" class="form-control" value="${m.memName}" readonly>
                                     </div>
                                     
                                     <div class="form-group checkdiv">
@@ -403,7 +404,7 @@
                 console.log($password + password2); 
                 
                 if($password === password2 && regExp.test($password) && regExp1.test($password) && regExp2.test($password) && regExp3.test($password)){
-                    console.log("if탄다!!!!!" +password2);
+                   // console.log("if탄다!!!!!" +password2);
                     $.ajax({
                     
                         url: "passwordUpdate.me",

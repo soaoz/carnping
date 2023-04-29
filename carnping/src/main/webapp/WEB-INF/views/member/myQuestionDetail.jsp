@@ -323,7 +323,7 @@
 					    <a href="myQuestionList.me" class="btn btn-sm btn-light">목록가기</a>
 					    <!-- 히스토리백 /list.no-->
 					    <!-- 현재 로그인한 사용자가 해당 글을 쓴 본인일 경우  -->
-					    <c:if test="${ not empty loginUser.memId }">
+					    <c:if test="${ not empty loginMember.memId }">
 					        <a class="btn btn-sm btn-warning" onclick="postFormSubmit(1);">수정하기</a>
 					        <a class="btn btn-sm btn-danger">삭제하기</a>
 					        

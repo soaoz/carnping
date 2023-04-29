@@ -233,7 +233,7 @@
                                     <div class="form-group">
                                     <label>파일 추가하기</label>
                                     <div class="change-photo-btn">
-                                        <input type="file" class="upload" />
+                                        <input type="file" class="upload" name="reupfile" />
                                     </div>
                                     </div>
                                 </div>

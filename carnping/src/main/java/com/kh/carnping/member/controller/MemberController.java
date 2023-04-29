@@ -178,36 +178,25 @@ public class MemberController {
 	
 	//마이프로필 진입 전 유저비번확인
 	@RequestMapping("userPwdCheck.me")
-	public String userCheck(HttpSession session, String userPwd, Model model, Member m) {
+	public String userCheck(HttpSession session, String userPwd, Model model) {
 		
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		Member loginUser  = mService.selectMember(memId); 
 		
-		
-		//System.out.println("유저아디:"+memId+"입력한비번:"+userPwd);
-		 m = mService.selectMember(memId);
-		 
-		if(m.getMemPwd().equals(userPwd)) {
-			//System.out.println("비번같음"); => myProfileUpdate 로 
-			
-			//데이터를 조회해서 m으로 넘기기
-			model.addAttribute("m", m);
-			System.out.println("진입 전 조회결과 : "+ m);
+		if(loginUser != null && bcryptPasswordEncoder.matches(userPwd, loginUser.getMemPwd())) {
+			model.addAttribute("m", loginUser);
 			return "member/myProfileUpdate";
 		}else {
-			//System.out.println("비번다름");
 			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
 			return "member/myPageMainSelect";
 		}
+		//return null;
 	}
-	
-	//마이프로필 조회 
-	
 	
 	//임시로그인
 	@RequestMapping("templogin.me")
 	public String templogin(Member m, Model model, HttpSession session) {
 		Member temploginUser = mService.temploginMember(m);
-		
 		if(temploginUser == null) {
 			model.addAttribute("errorMsg","로그인 실패!");
 			return "common/errorPage" ;
@@ -221,7 +210,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("nickNameUpdate.me")
 	public int nickNameUpdate(HttpSession session, Member m, String nickName) {
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
 		m.setNickName(nickName);
 		m.setMemId(memId);
 		int result = mService.nickNameUpdate(m);
@@ -232,9 +221,10 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("passwordUpdate.me")
 	public int passwordUpdate(HttpSession session,Member m, String password) {
-		System.out.println(password);
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
-		m.setMemPwd(password);
+		//System.out.println(password);
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String encPwd = bcryptPasswordEncoder.encode(password);
+		m.setMemPwd(encPwd);
 		m.setMemId(memId);
 		int result = mService.passwordUpdate(m);
 		return result;
@@ -244,53 +234,38 @@ public class MemberController {
 	@RequestMapping("mypage.me")
 	public String mypage(HttpSession session, Model model, Member m) {
 		
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
-		
-		
-		//System.out.println("유저아디:"+memId+"입력한비번:"+userPwd);
-		 m = mService.selectMember(memId);
-
-			//데이터를 조회해서 m으로 넘기기
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m = mService.selectMember(memId);
 		model.addAttribute("m", m);
-		System.out.println("진입 전 조회결과 : "+ m);
 		return "member/myProfileUpdate";
-
 	}
 	
 	//회원정보 전체 업데이트
 	@RequestMapping("updateProfile.me")
 	public String updateProfile(HttpSession session,  MultipartFile reupfile, Member m, Model model) {
-		System.out.println("업데이트컨트롤탄다");
 	
-		//System.out.println(reupfile); 파일 담겨있음 
-		System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
-		String memPwd = ((Member)session.getAttribute("loginUser")).getMemPwd();
+		//System.out.println(reupfile); 원래 이미지파일명 담겨있음 
+		//System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String memPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
 		m.setMemId(memId);
 		m.setMemPwd(memPwd);
 		
 		// 새로 넘어온 첨부파일이 있을 경우
 		if(!reupfile.getOriginalFilename().equals("")) {
-			//진짜 원본명 리턴
+						//진짜 원본명 리턴
 			
 			//기존에 첨부파일 있었을경우 , 또올림 => 기존의 첨부파일 지우고 
 			if(m.getMemImgOrigin() != null) { //널이아니면 제거
 				new File(session.getServletContext().getRealPath(m.getMemImgChange())).delete();
 				//기존의 실제 물리적인 파일 삭제 
 			}
-			
 			//새로 넘어온 파일 서버 업로드 
 			String changeName = saveMemImg(reupfile, session);
 			m.setMemImgOrigin(reupfile.getOriginalFilename());//넘겨받은 첨부파일의 원본명
 			m.setMemImgChange("resources/uploadFiles/memImg/" + changeName);
-
-			
-			
 		}
-		
 		int result = mService.updateProfile(m);
-		System.out.println(m);
-		System.out.println(result +"리절트값");
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
@@ -299,37 +274,26 @@ public class MemberController {
 			model.addAttribute("errorMsg", "요청에 문제가 발생했습니다.");
 			return "common/errorPage";
 		}
-		
-		
-		
 	}
-	
-	
 	
 	//문의하기리스트 조회
 	@RequestMapping("myQuestionList.me")
 	public String questionSelectList (HttpSession session,Question q, Model model) {
 		
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
-		//System.out.println("컨트롤러 아이디 : " +memId);
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
 		ArrayList<Question> list = mService.questionSelectList(memId);
-		//System.out.println(list);
 		model.addAttribute("list", list);
 		return "member/myQuestionList";
 	}
 	
-	
-	
 	//문의하기 상세페이지 조회
 	@RequestMapping("myQuestionDetail.me")
 	public String selectQuestion(String queNo, Model model) {
-		
 		Question q = mService.selectQuestion(queNo);
 		//System.out.println(q);
 		model.addAttribute("q", q);
 		return "member/myQuestionDetail";
 	}
-	
 
 	//문의하기 입력폼으로 이동 
 	@RequestMapping("questionForm.me")
@@ -341,9 +305,8 @@ public class MemberController {
 	@RequestMapping("questionInsert.me")
 	public String insertBoard(Question q,MultipartFile upfile, HttpSession session, Model model) {
 		
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
 		q.setMemId(memId);
-		
 		int result = mService.insertQuestion(q);
 		
 		if(result >0 ) {
@@ -369,13 +332,10 @@ public class MemberController {
 	//문의하기 update
 	@RequestMapping("updateQuestion.me")
 	public String updateQuestion(HttpSession session,Question q,String queNo, Model model) {
-		//System.out.println("업데이트컨트롤탄다");
-		System.out.println(q);
-		String memId = ((Member)session.getAttribute("loginUser")).getMemId();
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
 		q.setMemId(memId);
 		q.setQueNo(queNo);
-		
-		
 		int result = mService.updateQuestion(q);
 		
 		if(result>0) {
@@ -387,7 +347,6 @@ public class MemberController {
 		}
 		
 	}
-	
 	
 	@RequestMapping("logoutPage.me")
 	public String logoutPage() {
@@ -401,11 +360,16 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	//메인페이지로
+	@RequestMapping("goHome")
+	public String goHome(){
+		return "redirect:/";
+	}
+	
 	@RequestMapping("templogin")
 	public String templogin() {
 		return "member/temporarylogin";
 	}
-	
 	
 	@RequestMapping("myProfileUpdate.me")
 	public String myProfileUpdate() {
@@ -431,9 +395,6 @@ public class MemberController {
 	public String myReplyList() {
 		return "member/myReplyList";
 	}
-	
-	
-
 
 	@RequestMapping("myPageMainSelect.me")
 	public String myPageMainSelect() {
@@ -441,20 +402,62 @@ public class MemberController {
 		return "member/myPageMainSelect";
 	}
 	
-
-	
-	
-	
 	@RequestMapping("myCarbakList.me")
 	public String myCarbakList() {
 		return "member/myCarbakList";
 	}
+	
+	//회원탈퇴 jsp로 
 	@RequestMapping("unregister.me")
 	public String unregister() {
 		return "member/unregister";
 	}
+	//회원탈퇴 완료 jsp로 
+	@RequestMapping("unregisterFinish.me")
+	public String unregisterFinish() {
+		return "member/unregisterFinish";
+	}
 	
-
+	
+	//회원탈퇴전 확인받기 
+	@RequestMapping("deleteCheck.me")
+	public String deleteCheck(HttpSession session, Member m, String userPwd) {
+		
+		System.out.println("딜리트체크컨트롤러탐");
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		Member loginUser  = mService.selectMember(memId); //로그인한 유저의 진짜 정보
+		if(loginUser != null && bcryptPasswordEncoder.matches(userPwd, loginUser.getMemPwd())) {
+//			System.out.println("비번같음 탐");
+//			System.out.println("비번같음");
+//			// alert 띄어주기=> myProfileUpdate 로 
+			session.setAttribute("confirmMsg", "정말로 카앤핑을 탈퇴하시겠습니까");
+//			//데이터를 조회해서 m으로 넘기기
+//			//model.addAttribute("m", m);
+//			System.out.println("진입 전 조회결과 : "+ m);
+			//
+			return "member/unregister";
+		}else {
+			System.out.println("비번다름");
+			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
+			return "member/unregister";
+		}
+	}
+	
+	//회원 탈퇴
+	@RequestMapping("delete.me")
+	public String deleteMember(HttpSession session, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		int result = mService.deleteMember(memId);
+		
+		if(result>0) {
+			session.invalidate();
+			return "member/unregisterFinish";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
 	
 	//소영끝  =======================
 	

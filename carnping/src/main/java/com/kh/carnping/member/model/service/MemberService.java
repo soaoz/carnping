@@ -21,7 +21,7 @@ public interface MemberService {
 	int updateMember(Member m);
 	
 	//회원탈퇴 서비스 (update)
-	int deleteMember(String userId);
+	int deleteMember(String memId);
 	
 	// 회원가입 서비스 (insert)
 	int insertMember(Member m);

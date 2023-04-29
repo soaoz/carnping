@@ -37,8 +37,7 @@ public class MemberDao {
 	}
 	
 	public int nickNameUpdate(SqlSessionTemplate sqlSession,Member m) {
-		int result =  sqlSession.update("memberMapper.nickNameUpdate", m);
-		return result;
+		return  sqlSession.update("memberMapper.nickNameUpdate", m);
 	}
 	
 	public int passwordUpdate(SqlSessionTemplate sqlSession,Member m) {
@@ -64,5 +63,9 @@ public class MemberDao {
 	}
 	public int updateQuestion(SqlSessionTemplate sqlSession,Question q) {
 		return sqlSession.update("memberMapper.updateQuestion", q);
+	}
+	
+	public int deleteMember(SqlSessionTemplate sqlSession ,String memId) {
+		return sqlSession.update("memberMapper.deleteMember", memId);
 	}
 }
