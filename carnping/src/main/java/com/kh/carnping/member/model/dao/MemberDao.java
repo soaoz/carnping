@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
 
@@ -72,5 +73,9 @@ public class MemberDao {
 	
 	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession,String memId){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", memId);
+	}
+	
+	public ArrayList<Comment> selectCommentList(SqlSessionTemplate sqlSession,String memId){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectCommentList", memId);
 	}
 }

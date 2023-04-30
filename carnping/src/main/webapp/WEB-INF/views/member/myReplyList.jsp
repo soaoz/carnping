@@ -178,7 +178,7 @@
                                         <input type="checkbox" name="11" id="11">
                                     </td>
                                     <td>4352</td>
-                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</span></div></td>
+                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span > 원문 제목 : 강원도 차박지 추천해주세요(3)</span></div></td>
                                     <td width="100">김아무개</td>
                                     <td>234</td>
                                     <td>23.04.01 20:30</td>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.member.model.dao.MemberDao;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -97,6 +98,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	public ArrayList<Board> selectBoardList(String memId){
 		return mDao.selectBoardList(sqlSession, memId);
+	}
+	
+	public ArrayList<Comment> selectCommentList(String memId){
+		return mDao.selectCommentList(sqlSession, memId);
 	}
 
 }

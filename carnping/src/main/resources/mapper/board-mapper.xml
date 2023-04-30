@@ -31,6 +31,7 @@
 		<result column="MEM_NO" property="memNo"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COMM_CONTENT" property="commContent"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
 	</resultMap>
 	
 	
@@ -50,6 +51,20 @@
 		  AND F.STATUS = 'Y'
 		ORDER
 		   BY CREATE_DATE DESC
+	</select>
+	
+	<select id="selectCommentList" resultMap="commentResultMap">
+		SELECT
+			  RE_NO
+			, REF_NO
+			, R.MEM_NO
+			, to_char(R.create_date, 'YY.MM.DD HH:mm:ss') as "CREATE_DATE"
+			, COMM_CONTENT
+			, BOARD_TITLE
+	     FROM REVIEW_COMMENT R
+		 JOIN FBOARD ON (REF_NO=BOARD_NO)
+		WHERE R.MEM_NO = (SELECT M.MEM_NO FROM MEMBER M WHERE MEM_ID = #{memId})
+		ORDER BY RE_NO DESC
 	</select>
 	
 	

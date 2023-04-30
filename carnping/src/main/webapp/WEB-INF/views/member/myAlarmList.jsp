@@ -219,6 +219,7 @@
                             type: "POST",
                             data: { memId: $("#memId").val() }, //로그인유저아이디
                             success: function(list) {
+                            	
          			            var html = "";
          			            var value = "";
          			            
@@ -251,9 +252,8 @@
         			                    html += "<td>"+list[i].count+"</td>";
         			                    html += "<td>"+list[i].createDate+"</td>";
         			                    html += "</tr>";
-        			                    
-        			                    $("#result tbody").html(html);
         			                }
+        			            	 $("#result tbody").html(html);
         			            } 
  
                             },
@@ -264,23 +264,23 @@
                     	});
                     }
                     
-                 	//내가 쓴 댓글 목록
+                 	
+                  //내가 쓴 댓글 목록
                     function myReplyList(){
                     	$.ajax({
                     		url: "myReplyList.me",
                             type: "POST",
                             data: { memId: $("#memId").val() }, //로그인유저아이디
                             success: function(list) {
+                            	
          			            var html = "";
          			            var value = "";
          			            
-         			            value+= "<tr id='tr1'>";
+          			            value+= "<tr id='tr1'>";
          			            value+= "<th width='50'>선택</th>";
          			            value+= "<th width='40'>번호</th>";
-         			            value+= "<th width='150'>카테고리</th>";
          			            value+= "<th width='500' style='text-align: center;'>제목</th>";
-         			            value+= "<th width='70'>조회수</th>";
-         			            value+= "<th width='150'>작성일</th>";
+         			            value+= "<th width='150' style='text-align: center;'>작성일</th>";
          			            value+= "</tr>";
          			           $("#result thead").html(value);
          			           
@@ -290,24 +290,13 @@
         			            	for(let i in list){
         			                    html += "<tr>";
         			                    html += "<td><input type='checkbox' class=''></td>";
-        			                    html += "<td>"+list[i].boardNo+"</td>";
-        			                    /* html += "<td>"+list[i].boardNo+"</td>"; */
-        			                        if (list[i].boardNo.startsWith('BRD')) {
-										        html += "<td>[자유게시판]</td>";
-										    } else if (list[i].boardNo.startsWith('PRT')) {
-										        html += "<td>[소모임]</td>";
-										    }  else {
-										    	 html += "<td>[무료나눔]</td>";
-										    }
-        			                    html += "<td>"+list[i].boardTitle+"</td>";
-        			                    html += "<td>"+list[i].count+"</td>";
+        			                    html += "<td>"+list[i].reNo+"</td>";
+        			                    html += "<td>"+list[i].commContent+"<div><span class='myReplyBoardTitle' style='font-size: 13px;'> 원문 제목 : "+list[i].boardTitle+"</span></div></td>"; 
         			                    html += "<td>"+list[i].createDate+"</td>";
         			                    html += "</tr>";
-        			                    
-        			                    $("#result tbody").html(html);
         			                }
-        			            } 
- 
+        			            	 $("#result tbody").html(html);
+        			            }  
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.log("Error: " + textStatus + " " + errorThrown);
@@ -315,7 +304,6 @@
                     		
                     	});
                     }
-
                     
                     </script>
                     

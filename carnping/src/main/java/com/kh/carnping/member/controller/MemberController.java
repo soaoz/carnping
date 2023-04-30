@@ -33,6 +33,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.google.gson.Gson;
 import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -401,16 +402,24 @@ public class MemberController {
 		
 		//System.out.println("포스트리스트컨트롤러탐 유저아이디 : " + memId);
 		ArrayList<Board> list = mService.selectBoardList(memId);
-		System.out.println(list);
+		//sSystem.out.println(list);
 		
 		return new Gson().toJson(list);
 	}
-
-	
-	@RequestMapping("myReplyList.me")
-	public String myReplyList() {
-		return "member/myReplyList";
+	//내 댓글 리스트
+	@ResponseBody
+	@RequestMapping(value = "myReplyList.me", produces = "application/json; charset=utf-8")
+	public String myReplyList(String memId) {
+		//System.out.println("댓글리스트 컨트롤러탄다 ");
+		ArrayList<Comment> list = mService.selectCommentList(memId);
+		//System.out.println(list);
+		return new Gson().toJson(list);
 	}
+	
+//	@RequestMapping("myReplyList.me")
+//	public String myReplyList() {
+//		return "member/myReplyList";
+//	}
 
 	@RequestMapping("myPageMainSelect.me")
 	public String myPageMainSelect() {
