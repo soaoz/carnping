@@ -122,13 +122,14 @@
 </style>
 </head>
 <body>
-
+<input type = "hidden" name="memId" id="memId" value="${ loginMember.memId }">
 <jsp:include page="../common/header.jsp"/>
 <jsp:include page="../common/menubar.jsp"/>   
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
 </div>
 <div class="master-area">
+
     <!-- Filter Begin -->
     <div class="filter nice-scroll">
 
@@ -180,13 +181,14 @@
                         <br><br>
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                              <a class="nav-link active" aria-current="page" href="myAlarmList.me">활동 알림</a>
+                              <a class="nav-link active" data-toggle="tab" aria-current="page" href="myAlarmList.me">활동 알림</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="myPostList.me">내가 쓴 글</a>
+                             <!--  <a class="nav-link" href="myPostList.me">내가 쓴 글</a> -->
+                              <a class="nav-link" data-toggle="tab" onClick="myPostList();">내가 쓴 글</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="myReplyList.me">내가 쓴 댓글</a>
+                              <a class="nav-link" data-toggle="tab" onClick="myReplyList();">내가 쓴 댓글</a>
                             </li>
                           </ul>
                     </div>
@@ -198,91 +200,129 @@
                             <td class="td1">&nbsp;&nbsp;전체선택</td>
                         </tr>
                     </table>
-                    <table border="0px" class="table table-hover table1"  style="width: 100%; margin:auto;" align="center">
+                    <table border="0px" id = "result" class="table table-hover table1"  style="width: 100%; margin:auto;" align="center">
                         <thead>
-                            <tr id="tr1">
-                                <th width="80">선택</th>
-                                <th width="80" style="text-align: center;">구분</th>
-                                <th width="500" style="text-align: center;">제목</th>
-                                <th width="70">작성자</th>
-                                <th width="70" >조회수</th>
-                                <th width="150" style="text-align: center;">작성일</th>
-                            </tr>
+
                         </thead>
                         
                         <tbody>
-                                <tr>
-                                    <td colspan="5" align="center">존재하는 글이 없습니다</td>
-                                </tr>
-                                
-
-                                <tr >
-                                    <td width="40">
-                                        <input type="checkbox" name="" class="ckbox">
-                                    </td>
-                                    <td>[댓글]</td>
-                                    <td> [강원도 차박지 추천...] 에 댓글이 달렸습니다.</td>
-                                    <td width="100">나</td>
-                                    <td>234</td>
-                                    <td style="text-align: center;">23.04.01 20:30</td>
-
-                                </tr>
-                                <tr >
-                                    <td width="40">
-                                        <input type="checkbox"name="" class="ckbox">
-                                    </td>
-                                    <td>[후기]</td>
-                                    <td>[중랑구 캠핑 숲] 게시글에 후기가 달렸습니다.</td>
-                                    <td width="100">원문 작성자</td>
-                                    <td>234</td>
-                                    <td style="text-align: center;">23.04.01 20:30</td>
-                                </tr>
-                                <tr >
-                                    <td width="40">
-                                        <input type="checkbox" name="" class="ckbox">
-                                    </td>
-                                    <td>[대댓글]</td>
-                                    <td>[강원도 차박지 추천...] 에 대댓글이 달렸습니다.</td>
-                                    <td width="100">김아무개</td>
-                                    <td>234</td>
-                                    <td style="text-align: center;">23.04.01 20:30</td>
-
-                                </tr>
-                                <tr >
-                                    <td width="40">
-                                        <input type="checkbox" name="" class="ckbox">
-                                    </td>
-                                    <td>[댓글]</td>
-                                    <td> [강원도 차박지 추천...] 에 댓글이 달렸습니다.</td>
-                                    <td width="100">나</td>
-                                    <td>234</td>
-                                    <td style="text-align: center;">23.04.01 20:30</td>
-
-                                </tr>
-                                <tr >
-                                    <td width="40">
-                                        <input type="checkbox" name="" class="ckbox">
-                                    </td>
-                                    <td>[후기]</td>
-                                    <td>[중랑구 캠핑 숲] 게시글에 후기가 달렸습니다.</td>
-                                    <td width="100">원문 작성자</td>
-                                    <td>234</td>
-                                    <td style="text-align: center;">23.04.01 20:30</td>
-                                </tr>
-                                <tr >
-                                    <td width="40">
-                                        <input type="checkbox" name="" class="ckbox">
-                                    </td>
-                                    <td>[대댓글]</td>
-                                    <td>[강원도 차박지 추천...] 에 대댓글이 달렸습니다.</td>
-                                    <td width="100">김아무개</td>
-                                    <td>234</td>
-                                    <td style="text-align: center;">23.04.01 20:30</td>
-
-                                </tr>
 
                         </tbody>
                     </table>
+                    
+                    <script type="text/javascript">
+                    
+                    //내가 쓴 게시글 목록
+                    function myPostList(){
+                    	$.ajax({
+                    		url: "myPostList.me",
+                            type: "POST",
+                            data: { memId: $("#memId").val() }, //로그인유저아이디
+                            success: function(list) {
+         			            var html = "";
+         			            var value = "";
+         			            
+         			            value+= "<tr id='tr1'>";
+         			            value+= "<th width='50'>선택</th>";
+         			            value+= "<th width='40'>번호</th>";
+         			            value+= "<th width='150'>카테고리</th>";
+         			            value+= "<th width='500' style='text-align: center;'>제목</th>";
+         			            value+= "<th width='70'>조회수</th>";
+         			            value+= "<th width='150'>작성일</th>";
+         			            value+= "</tr>";
+         			           $("#result thead").html(value);
+         			           
+        			            if (list.length == 0) {
+        			                html += "<tr><td colspan='5' align='center'>존재하는 글이 없습니다</td></tr>";
+        			            } else {
+        			            	for(let i in list){
+        			                    html += "<tr>";
+        			                    html += "<td><input type='checkbox' class=''></td>";
+        			                    html += "<td>"+list[i].boardNo+"</td>";
+        			                    /* html += "<td>"+list[i].boardNo+"</td>"; */
+        			                        if (list[i].boardNo.startsWith('BRD')) {
+										        html += "<td>[자유게시판]</td>";
+										    } else if (list[i].boardNo.startsWith('PRT')) {
+										        html += "<td>[소모임]</td>";
+										    }  else {
+										    	 html += "<td>[무료나눔]</td>";
+										    }
+        			                    html += "<td>"+list[i].boardTitle+"</td>";
+        			                    html += "<td>"+list[i].count+"</td>";
+        			                    html += "<td>"+list[i].createDate+"</td>";
+        			                    html += "</tr>";
+        			                    
+        			                    $("#result tbody").html(html);
+        			                }
+        			            } 
+ 
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.log("Error: " + textStatus + " " + errorThrown);
+                            }
+                    		
+                    	});
+                    }
+                    
+                 	//내가 쓴 댓글 목록
+                    function myReplyList(){
+                    	$.ajax({
+                    		url: "myReplyList.me",
+                            type: "POST",
+                            data: { memId: $("#memId").val() }, //로그인유저아이디
+                            success: function(list) {
+         			            var html = "";
+         			            var value = "";
+         			            
+         			            value+= "<tr id='tr1'>";
+         			            value+= "<th width='50'>선택</th>";
+         			            value+= "<th width='40'>번호</th>";
+         			            value+= "<th width='150'>카테고리</th>";
+         			            value+= "<th width='500' style='text-align: center;'>제목</th>";
+         			            value+= "<th width='70'>조회수</th>";
+         			            value+= "<th width='150'>작성일</th>";
+         			            value+= "</tr>";
+         			           $("#result thead").html(value);
+         			           
+        			            if (list.length == 0) {
+        			                html += "<tr><td colspan='5' align='center'>존재하는 글이 없습니다</td></tr>";
+        			            } else {
+        			            	for(let i in list){
+        			                    html += "<tr>";
+        			                    html += "<td><input type='checkbox' class=''></td>";
+        			                    html += "<td>"+list[i].boardNo+"</td>";
+        			                    /* html += "<td>"+list[i].boardNo+"</td>"; */
+        			                        if (list[i].boardNo.startsWith('BRD')) {
+										        html += "<td>[자유게시판]</td>";
+										    } else if (list[i].boardNo.startsWith('PRT')) {
+										        html += "<td>[소모임]</td>";
+										    }  else {
+										    	 html += "<td>[무료나눔]</td>";
+										    }
+        			                    html += "<td>"+list[i].boardTitle+"</td>";
+        			                    html += "<td>"+list[i].count+"</td>";
+        			                    html += "<td>"+list[i].createDate+"</td>";
+        			                    html += "</tr>";
+        			                    
+        			                    $("#result tbody").html(html);
+        			                }
+        			            } 
+ 
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.log("Error: " + textStatus + " " + errorThrown);
+                            }
+                    		
+                    	});
+                    }
+
+                    
+                    </script>
+                    
+
+
+	
+
 
                     <div align="left" >
                         <br>

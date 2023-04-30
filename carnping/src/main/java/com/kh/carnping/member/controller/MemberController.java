@@ -30,6 +30,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import com.google.gson.Gson;
+import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -386,10 +389,23 @@ public class MemberController {
 		return "member/myLikeList";
 	}
 	
-	@RequestMapping("myPostList.me")
-	public String myPostList() {
-		return "member/myPostList";
+//	@RequestMapping("myPostList.me")
+//	public String myPostList() {
+//		return "member/myPostList";
+//	}
+	
+	//내 게시글 리스트
+	@ResponseBody
+	@RequestMapping(value = "myPostList.me", produces = "application/json; charset=utf-8")
+	public String myPostList(String memId) {
+		
+		//System.out.println("포스트리스트컨트롤러탐 유저아이디 : " + memId);
+		ArrayList<Board> list = mService.selectBoardList(memId);
+		System.out.println(list);
+		
+		return new Gson().toJson(list);
 	}
+
 	
 	@RequestMapping("myReplyList.me")
 	public String myReplyList() {

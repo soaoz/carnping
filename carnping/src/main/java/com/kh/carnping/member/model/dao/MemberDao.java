@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
 
@@ -67,5 +68,9 @@ public class MemberDao {
 	
 	public int deleteMember(SqlSessionTemplate sqlSession ,String memId) {
 		return sqlSession.update("memberMapper.deleteMember", memId);
+	}
+	
+	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession,String memId){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", memId);
 	}
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
 
 	<resultMap type="Board" id="boardResultMap">
@@ -11,6 +13,7 @@
 		<result column="BOARD_CONTENT" property="boardContent"/>
 		<result column="COUNT" property="count"/>
 		<result column="STATUS" property="status"/>
+		<result column="MEM_ID" property="memId"/>
 	</resultMap>
 
 	<resultMap type="BoardImg" id="boardImgResultMap">
@@ -29,5 +32,29 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COMM_CONTENT" property="commContent"/>
 	</resultMap>
+	
+	
+	<select id="selectBoardList" resultMap="boardResultMap">
+		SELECT
+			  BOARD_NO
+			, BOARD_TITLE
+			, MEM_ID
+			, to_char(create_date, 'YY.MM.DD HH:mm:ss') as "CREATE_DATE"
+			, LOCATION
+			, BOARD_CONTENT
+			, COUNT
+			, F.STATUS
+		 FROM FBOARD F
+		 JOIN MEMBER M USING(MEM_NO)
+		WHERE MEM_ID = #{memId}
+		  AND F.STATUS = 'Y'
+		ORDER
+		   BY CREATE_DATE DESC
+	</select>
+	
+	
+	
+	
+	
 	
 </mapper>

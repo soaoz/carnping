@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.member.model.dao.MemberDao;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -68,9 +69,11 @@ public class MemberServiceImpl implements MemberService {
 	public int passwordUpdate(Member m) {
 		return mDao.passwordUpdate(sqlSession, m);
 	}
+	
 	public int updateProfile(Member m) {
 		return mDao.updateProfile(sqlSession, m);
 	}
+	
 	public ArrayList<Question> questionSelectList(String memId){
 		return mDao.questionSelectList(sqlSession, memId);
 	}
@@ -78,9 +81,11 @@ public class MemberServiceImpl implements MemberService {
 	public Question selectQuestion(String queNo) {
 		return mDao.selectQuestion(sqlSession, queNo);
 	}
+	
 	public int insertQuestion(Question q) {
 		return mDao.insertQuestion(sqlSession, q);
 	}
+	
 	public int updateQuestion(Question q) {
 		return mDao.updateQuestion(sqlSession,q);
 	}
@@ -88,6 +93,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int deleteMember(String memId) {
 		return mDao.deleteMember(sqlSession , memId);
+	}
+	
+	public ArrayList<Board> selectBoardList(String memId){
+		return mDao.selectBoardList(sqlSession, memId);
 	}
 
 }
