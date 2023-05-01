@@ -26,4 +26,12 @@ public class MemberDao {
 	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
+	
+	public int findIdByEmailCheck(SqlSessionTemplate sqlSession,  Member m) {
+		return sqlSession.selectOne("memberMapper.findIdByEmailCheck", m);
+	}
+	
+	public Member findIdByEmail(SqlSessionTemplate sqlSession,  Member m) {
+		return sqlSession.selectOne("memberMapper.findIdByEmail", m);
+	}
 }

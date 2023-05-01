@@ -18,4 +18,11 @@ public interface MemberService {
 	
 	// 회원가입 서비스 (insert)
 	int insertMember(Member m);
+	
+	// 아이디찾기 - 이메일+이름으로 가입유무 체크 (select)
+	int findIdByEmailCheck(Member m);
+	
+	// 아이디찾기 - 이메일+이름으로 아이디 반환  (select)
+	Member findIdByEmail(Member m);
+	
 }

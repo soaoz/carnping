@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import com.google.gson.Gson;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
 
@@ -63,13 +65,10 @@ public class MemberController {
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
-	
-
 	@ResponseBody
 	@RequestMapping("idCheck.me")
 	public String idCheck(String checkId){
 		int count = mService.idCheck(checkId);
-//		System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
@@ -171,6 +170,33 @@ public class MemberController {
 	public String logoutMember(HttpSession session){
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@ResponseBody
+	@RequestMapping("findIdCheck.me")
+	public String findIdByEmailCheck(Member m, String memName, String email){
+		m.setMemName(memName);
+		m.setEmail(email);
+		int count = mService.findIdByEmailCheck(m);
+		System.out.println(count);
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
+	
+	@ResponseBody
+	@RequestMapping("findIdByEmail.me")
+	public Member findIdByEmail(Member m, String memName, String email, HttpSession session){
+		m.setMemName(memName);
+		m.setEmail(email);
+		System.out.println(m);
+		Member findMember =  mService.findIdByEmail(m);
+		System.out.println(findMember);
+		if(findMember != null) {
+			session.setAttribute("findMember", findMember);
+		} else {
+			session.setAttribute("alertMsg", "아이디나 비밀번호를 확인하세요");
+		}
+//		return new Gson().toJson(findMember);
+		return findMember;
 	}
 	
 	

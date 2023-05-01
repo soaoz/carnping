@@ -70,6 +70,28 @@
      where email = #{email}
 	</select>
 	
+	<select id="findIdByEmailCheck" resultType="_int">
+	select
+		   count(*)
+	  from
+	       member
+     where mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<select id="findIdByEmail" resultMap="memberResultSet">
+	select
+	       concat(substr(mem_id, 1, 4), lpad('*', length(mem_id) - 4, '*')) "mem_id",
+           to_CHAR(enroll_date,'YYYY-MM-DD') "enroll_date",
+		   mem_img_change
+
+
+	  from
+	       member
+     where mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
 	<select id="idCheck" resultType="_int"> 
 	select
 		   count(*)
@@ -165,6 +187,7 @@
 		WHERE MEM_ID = #{memId}
 		  AND STATUS = 'Y'
 	</select>
+	
 
 
 
