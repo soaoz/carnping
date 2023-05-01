@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
+import com.kh.carnping.car.model.vo.Review;
 
 public interface CarService {
 	
@@ -14,6 +15,11 @@ public interface CarService {
 	ArrayList<Cinfo> carList1(Filter filter);
 	
 	// 차박 상세 정보
-	Cinfo selectDetail(String cinfo);
+	Cinfo selectDetail(String cinfoNo);
 	
+	// 리뷰정보
+	ArrayList<Review> selectReview(String cinfoNo);
+	
+	// 리뷰 카운터 정보
+	Review selectReviewCount(String cinfoNo);
 }

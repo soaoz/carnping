@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
+import com.kh.carnping.car.model.vo.Review;
 
 @Repository
 public class CarDao {
@@ -23,4 +24,14 @@ public class CarDao {
 	public Cinfo selectDetail(SqlSessionTemplate sqlSession, String cinfoNo) {
 		return sqlSession.selectOne("carMapper.selectDetail", cinfoNo);
 	}
+
+	public ArrayList<Review> selectReview(SqlSessionTemplate sqlSession, String cinfoNo) {
+		return (ArrayList)sqlSession.selectList("carMapper.selectReview", cinfoNo);
+	}
+
+	public Review selectReviewCount(SqlSessionTemplate sqlSession, String cinfoNo) {
+		return sqlSession.selectOne("carMapper.selectReviewCount", cinfoNo);
+	}
+	
+	
 }

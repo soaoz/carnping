@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.carnping.car.model.dao.CarDao;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
+import com.kh.carnping.car.model.vo.Review;
 
 @Service
 public class CarServiceImpl implements CarService{
@@ -31,6 +32,16 @@ public class CarServiceImpl implements CarService{
 	@Override
 	public Cinfo selectDetail(String cinfoNo) {
 		return cDao.selectDetail(sqlSession, cinfoNo);
+	}
+	
+	@Override
+	public ArrayList<Review> selectReview(String cinfoNo) {
+		return cDao.selectReview(sqlSession, cinfoNo);
+	}
+
+	@Override
+	public Review selectReviewCount(String cinfoNo) {
+		return cDao.selectReviewCount(sqlSession, cinfoNo);
 	}
 	
 	

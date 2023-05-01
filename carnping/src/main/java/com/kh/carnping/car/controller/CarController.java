@@ -1,19 +1,16 @@
 package com.kh.carnping.car.controller;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.kh.carnping.car.model.service.CarServiceImpl;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
+import com.kh.carnping.car.model.vo.Review;
 
 
 @Controller
@@ -50,9 +47,19 @@ public class CarController {
 		} 
 	}
 	
+	// 차박 상세정보로 이동
 	@RequestMapping("detail.ca")
 	public String selectDetail(String cinfoNo, Model model) {
 		Cinfo cinfo = cService.selectDetail(cinfoNo);
+		ArrayList<Review> review = cService.selectReview(cinfoNo);
+		Review reCount = cService.selectReviewCount(cinfoNo);
+		
+		String[] week = {"Mon","Tues","Wednes","Thurs","Fri","Satur","Sun"}; 
+		
+		model.addAttribute("week", week);
+		model.addAttribute("cinfo", cinfo);
+		model.addAttribute("reCount", reCount);
+		model.addAttribute("review", review);
 		return "car/carDetail";
 	}
 	
