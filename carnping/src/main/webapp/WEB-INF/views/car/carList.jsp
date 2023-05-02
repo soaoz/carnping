@@ -284,8 +284,7 @@
                             </div>
                             <div class="listing__item__text__rating">
                                 <div class="listing__item__text__info__left">
-                                    <img src="img/listing/ocean.png" alt="">
-                                    <span>OpenDay</span>
+                                    <span>오픈요일</span>
                                 </div>
                                 <div class="listing__item__text__info__right">${ list.cinfoDays }</div>
                             </div>

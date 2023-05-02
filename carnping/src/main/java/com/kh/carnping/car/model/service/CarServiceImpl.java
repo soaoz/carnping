@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.dao.CarDao;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
@@ -42,6 +43,11 @@ public class CarServiceImpl implements CarService{
 	@Override
 	public Review selectReviewCount(String cinfoNo) {
 		return cDao.selectReviewCount(sqlSession, cinfoNo);
+	}
+
+	@Override
+	public ArrayList<Comment> selectReviewComment(String reNo) {
+		return cDao.selectReviewComment(sqlSession, reNo);
 	}
 	
 	

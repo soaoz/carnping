@@ -27,7 +27,18 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    
+    <style>
+    .list_detail_reply{
+	padding-left: 75px;
+	}
+	.ul_line{
+		list-style-type:none;  
+	}
+	.ul_reply3{
+		display: none;
+	}
+
+    </style>
    
 </head>
 
@@ -225,12 +236,18 @@
                         <div class="listing__details__rating__overall">
                             <h2>${ reCount.reviewType }</h2>
                             <div class="listing__details__rating__star">
-                                  <c:forEach var="rating" begin="1" end="${ reCount.reviewAllView }" 
+                                  <c:forEach var="rating" begin="0" end="${ reCount.reviewAllView }" 
                                       step="1">
                                       <span class="icon_star"></span>
                                   </c:forEach>
                                   <c:if test="${ ((reCount.reviewAllView)*10) % 10 >= 5  }">
-                                      <span class="icon_star-half_alt"></span>
+										<span class="icon_star-half_alt"></span>
+								  </c:if>
+								  <c:if test="${ reCount.reviewAllView <= 4 }">
+									  <c:forEach var="rating" begin="2" end="${ 5 - reCount.reviewAllView }"
+	                                      step="1">
+	                                      <span class="icon_star_alt"></span>
+	                                  </c:forEach>
                                   </c:if>
                             </div>
                             <span>(${ reCount.count }개 리뷰)</span>
@@ -248,19 +265,19 @@
                                 <div id="bar2" class="barfiller">
                                     <span class="fill" data-percentage="${ reCount.reviewView * 20 }"></span>
                                 </div>
-                                <span class="right">편의성</span>
+                                <span class="right">편의</span>
                             </div>
                             <div class="listing__details__rating__bar__item">
                                 <span>${ reCount.reviewConv }</span>
                                 <div id="bar3" class="barfiller">
                                     <span class="fill" data-percentage="${ reCount.reviewConv * 20 }"></span>
                                 </div>
-                                <span class="right">접근성</span>
+                                <span class="right">접근</span>
                             </div>
                             <div class="listing__details__rating__bar__item">
                                 <span>${ reCount.reviewAccess }</span>
                                 <div id="bar4" class="barfiller">
-                                    <span class="fill" data-percentage="${ reCount.reviewAccess }"></span>
+                                    <span class="fill" data-percentage="${ reCount.reviewAccess * 20}"></span>
                                 </div>
                                 <span class="right">지형</span>
                             </div>
@@ -268,8 +285,9 @@
                     </div>
                     <ul class="listing__details__comment ul_line">
                         <h4>리뷰</h4>
-                        <c:forEach var="re" items="${ review }">
-                        
+                        <div></div>
+                        <%-- <c:forEach var="re" items="${ review }">
+                        <hr>
                         <li>
                             <div class="listing__details__comment__item">
                                 <div class="listing__details__comment__item__pic">
@@ -285,10 +303,17 @@
                                     </div>
                                     <span>${ re.createDate }</span>
                                     <h5>${ re.memNo }</h5>
+                                    <div class="row">
+                                    <div class="col-md-9">
                                     <p>${ re.reviewContent }</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                    	<img src="https://postfiles.pstatic.net/MjAxODA1MzFfNTUg/MDAxNTI3NzE4ODQyNTQx.MuY4zkhAAP6FvTcjK30FvFu45Q5inuSPLtDM4IHgByAg.0oWFI5ewAqk_XNYmUo_xNDn0JS0ifsiX9SEEWqaBuCAg.JPEG.wellduo33/IMG_8548.jpg?type=w580">
+                                    </div>
+                                    </div>
                                     <ul class="ul_line">
                                         <li>${ re.reviewLike }<i class="fa fa-hand-o-right"></i> 좋아요</li>
-                                        <li><i class="fa fa-share-square-o"></i>댓글</li>
+                                        <li><button type="button" class="scroll_reply"><i class="fa fa-share-square-o"></i>댓글</button></li>
                                         <br>                        
                                     </ul>
                                 </div>
@@ -318,31 +343,36 @@
 	                            </li>
 							</ul>
                         </li>
-                        </c:forEach>
+                        </c:forEach> --%>
                     </ul>
-
-                    <script>
-                        
-                    </script>
                     <br>
                     <div class="listing__details__review">
                         <h4>리뷰 작성</h4>
                         <form action="#">
+                         	<small style="color: gray">*평점을 입력해주세요!*
+                         	<br> 1. 뷰: 전망이 좋은가요?
+                         	<br> 2. 편의성 : 주변에 편의시설들이 어떠한가요?
+                         	<br> 3. 접근성 : 접근하기 편한가요?
+                         	<br> 4. 지형 : 지형은 평평하며 차박하기에 편한 지형인가요?
+                         	</small>
+                         <div class="row">
+                         	<div class="col-md-3"><input type="number" class="form-control" placeholder="뷰" required/></div>
+                         	<div class="col-md-3"><input type="number" class="form-control" placeholder="편의성" required/></div>
+                         	<div class="col-md-3"><input type="number" class="form-control" placeholder="접근성" required/></div>
+                         	<div class="col-md-3"><input type="number" class="form-control" placeholder="지형" required/></div>
                             <textarea placeholder="Review"></textarea>
                             <button type="submit" class="site-btn">리뷰등록</button>
+						</div>
                         </form>
                     </div>
                 </div>
             </div>
+            <!-- 리뷰 끝 -->
             <div class="col-lg-4">
                 <div class="listing__sidebar">
                     <div class="listing__sidebar__contact">
                         <div class="listing__sidebar__contact__map">
                             <div id="map" style="width: 100%; height: 100%;position: absolute; "></div>
-                            <!-- <iframe id="map"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24168.833995532765!2d-74.79633710628465!3d40.78172222265886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c384de7a5300b9%3A0x8afc61979217d49d!2sLong%20Valley%2C%20NJ%2007853%2C%20USA!5e0!3m2!1sen!2sbd!4v1586852528126!5m2!1sen!2sbd"
-                                height="200" style="border:0;" allowfullscreen="" aria-hidden="false"
-                                tabindex="0"></iframe> -->
                             <img src="img/listing/details/map-icon.png" alt="">
                         </div>
                         <div class="listing__sidebar__contact__text">
@@ -362,14 +392,14 @@
                     <div class="listing__sidebar__working__hours">
                         <h4>오픈일자</h4>
                         <ul>
-                        	<c:forEach var="i"  begin="0" end="6">>
+                        	<c:forEach var="i" begin="0" end="6">
                         		<c:choose>
-	                        		<c:when test="${ week[i].contains(cinfo.cinfoDays) }">
-			                            <li>${week[i]}day <span class="opening">Opening</span></li>
+	                        		<c:when test="${ cinfo.cinfoDays.contains(week[i]) }">
+			                            <li>${week[i]}요일 <span class="opening">Opening</span></li>
 	                        		</c:when>
-								<c:otherwise>
-		                            <li>${week[i]}day <span class="closed">Closed</span></li>
-								</c:otherwise>
+									<c:otherwise>
+		                           		<li>${week[i]}요일 <span class="closed">Closed</span></li>
+									</c:otherwise>
                         		</c:choose>
                         	</c:forEach>
                         </ul>
@@ -396,67 +426,116 @@
 <script src="js/jquery.slicknav.js"></script>
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/main.js"></script>
- <!-- 지도 api -->
+<script>
+$(function(){
+	 selectReview();
+	
+    $(".scroll_reply").on("click", function(){
+        const $reply = $(".ul_reply3"); //jQuery 방식으로 선택된 요소를 변수에 담음.
+        if($reply.css("display") == "none"){
+            $reply.slideDown(); 
+        }else{ // 보이는 상태
+            $reply.slideUp(); 
+        }
+    });
+})
 
-<!-- * 카카오맵 - 지도퍼가기 -->
-<!-- 1. 지도 노드 -->
+let values = "";
+function selectReview(){
+	$.ajax({
+		url : 'selectReview.ca',
+		data : { cinfoNo : '${cinfo.cinfoNo}'},
+		success:function(review){
+			console.log(review);
+			for(let i in review){
+				values += "<li><div class='listing__details__comment__item'>"
+                		+  		"<div class='listing__details__comment__item__pic'>"
+                    	+  			"<img src='https://postfiles.pstatic.net/MjAxODA1MzFfNTUg/MDAxNTI3NzE4ODQyNTQx.MuY4zkhAAP6FvTcjK30FvFu45Q5inuSPLtDM4IHgByAg.0oWFI5ewAqk_XNYmUo_xNDn0JS0ifsiX9SEEWqaBuCAg.JPEG.wellduo33/IMG_8548.jpg?type=w580' >"
+                		+		"</div>"
+                		+		"<div class='listing__details__comment__item__text'>"
+                		+			"<div class='listing__details__comment__item__rating'>";
+                		
+                		
+               	for(let j= 1; j < review[i].reviewScr; j++){
+            	   values += "<span class='icon_star'></span>"
+               	}
+               	if((review[i].reviewScr * 10)%10 >= 5){
+               		values += "<span class='icon_star-half_alt'></span>" ;
+               			for(let j=4; j > review[i].reviewScr; j--){
+                       	 	values += "<span class='icon_star_alt'></span>"
+                       	}
+               	}else{
+               		for(let j=5; j > review[i].reviewScr; j--){
+                   	 	values += "<span class='icon_star_alt'></span>"
+                   	}
+               	}
+               	
+                values +=			 "</div>"
+                    	+ 			 "<span>" + review[i].createDate +"</span>"
+                    	+ 			 "<h5>" + review[i].memNo +"</h5>"
+                    	+ 			 "<div class='row'>"
+                    	+ 			 	"<div class='col-md-9'>"
+                    	+			 		"<p>" + review[i].reviewContent + "</p>"
+                   	 	+			 	"</div>"
+                    	+ 				"<div class='col-md-3'>"
+                    	+					"<img src=\'"+ review[i].reviewImg +"\'>"
+                    	+ 				"</div>"
+                    	+			 "</div>"
+                    	+			 "<ul class='ul_line'>"
+                    	+				"<li>" +review[i].reviewLike +"<i class='fa fa-hand-o-right'></i> 좋아요</li>"
+                       	+				"<li><button type='button' class='scroll_reply'><i class='fa fa-share-square-o'></i>댓글</button></li>"
+                        +			"<br></ul></div></div>";
+                        selectReviewComment(review[i].reviewNo);
+                        
+                        values+="</li>";
+                        
+				}
+				$('.listing__details__comment div').html(values);
+		}
+	})
+}
 
+<ul class="ul_line ul_reply3">
+<hr>
+<div class="list_detail_reply">
+    <li>
+        <div class="listing__details__comment__item__pic">
+            <img src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2019/02/11/c3fb2eb9-8326-40db-a29e-56685f8af6f7.JPG" alt="">
+        </div>
+        <div class="listing__details__comment__item__text">
+            <span>March 22, 2019</span>
+            <h5>윈터1</h5>
+            <p>은우랑 같이왔어요 바람도 적당하고 너무너무 좋았습니다 나중에 또와도 좋을것 같아요!!</p>
+        </div>
+    </li>
+</div>
+<hr>          
+<li>
+    <div class="listing__details__review">
+    <form action="">
+        <textarea placeholder="대댓글"></textarea>
+        <button type="submit" class="site-btn">대댓글 등록</button>
+    </form>
+	</div>
+</li>
+</ul>
 
-<!--
-	2. 설치 스크립트
-	* 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
--->
-<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+function selectReviewComment(reviewNo){
+	$.ajax({
+		url : "selectReviewComment.ca",
+		data : {reNo : reviewNo},
+		success: function(result){
+			if(result == null){
+				values += "<div><ul class='ul_line ul_reply3'><li>"
+						+ "<div class='listing__details__comment__item__text'>"
+			}
+			
+		}
+	})
+}
 
-<!-- 3. 실행 스크립트 -->
-<script charset="UTF-8">
-new daum.roughmap.Lander({
-	"timestamp" : "1680485346120",
-	"key" : "2eawx",
-	"mapWidth" : "640",
-	"mapHeight" : "360"
-}).render();
 </script>
-     <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=7a3a6cf6ed29297d31daae406ea451aa"></script>
-    <script>
-        
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-        mapOption = { 
-            center: new kakao.maps.LatLng(${cinfo.cinfoLttd}, ${cinfo.cinfoHrdns}), // 지도의 중심좌표
-            level: 5 // 지도의 확대 레벨
-        };
 
-    // 지도를 생성합니다    
-    var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();
-
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(addressDetail, function(result, status) {
-
-    // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-    } 
-});  
-    </script>
 </body>
 
 </html>

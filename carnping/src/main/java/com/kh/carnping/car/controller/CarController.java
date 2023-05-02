@@ -1,12 +1,18 @@
 package com.kh.carnping.car.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
 import java.util.ArrayList;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.service.CarServiceImpl;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
@@ -51,26 +57,33 @@ public class CarController {
 	@RequestMapping("detail.ca")
 	public String selectDetail(String cinfoNo, Model model) {
 		Cinfo cinfo = cService.selectDetail(cinfoNo);
-		ArrayList<Review> review = cService.selectReview(cinfoNo);
 		Review reCount = cService.selectReviewCount(cinfoNo);
-		
-		String[] week = {"Mon","Tues","Wednes","Thurs","Fri","Satur","Sun"}; 
+		String[] week = {"월","화","수","목","금","토","일"}; 
 		
 		model.addAttribute("week", week);
 		model.addAttribute("cinfo", cinfo);
 		model.addAttribute("reCount", reCount);
-		model.addAttribute("review", review);
 		return "car/carDetail";
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value = "carMap.ca" , produces = "application/json; charset=utf-8")
-//	public String carMap() {
-//		ArrayList<Cinfo> list = cService.carList();
-//
-//		return new Gson().toJson(list); // JSON 형태로 만들어서 문자열로 리턴해줌 맴버객체ㄹ의 필드명으로 키값이 잡힘!
-//	}
-//	
+	
+	@ResponseBody
+	@RequestMapping(value = "selectReview.ca" , produces = "application/json; charset=utf-8")
+	public String selectReview(String cinfoNo) {
+		JSONObject jObj = new JSONObject();
+		ArrayList<Review> review = cService.selectReview(cinfoNo);
+		return new Gson().toJson(review);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "selectReviewComment.ca" , produces = "application/json; charset=utf-8")
+	public String selectComment(String reNo) {
+		JSONObject jObj = new JSONObject();
+		ArrayList<Comment> comment = cService.selectReviewComment(reNo);
+		return new Gson().toJson(comment);
+	}
+	
+	
 //	@ResponseBody
 //	@RequestMapping(value = "filterMap.ca" , produces = "application/json; charset=utf-8")
 //	public String filterMap(Filter filter) {

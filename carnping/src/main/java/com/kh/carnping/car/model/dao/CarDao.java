@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
@@ -32,6 +33,11 @@ public class CarDao {
 	public Review selectReviewCount(SqlSessionTemplate sqlSession, String cinfoNo) {
 		return sqlSession.selectOne("carMapper.selectReviewCount", cinfoNo);
 	}
+
+	public ArrayList<Comment> selectReviewComment(SqlSessionTemplate sqlSession, String reNo) {
+		return (ArrayList)sqlSession.selectList("carMapper.selectReviewComment", reNo);
+	}
+	
 	
 	
 }

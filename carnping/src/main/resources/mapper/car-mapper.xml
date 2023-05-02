@@ -33,6 +33,14 @@
 		<result column="MEM_NAME" property="memName"/>
 	</resultMap>
 	
+	<resultMap type="Comment" id="commentResultMap">
+		<result column="RE_NO" property="reNo"/>
+		<result column="REF_NO" property="refNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="MEM_IMG" property="memImg"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="COMM_CONTENT" property="commContent"/>
+	</resultMap>
 	
 	<resultMap type="Review" id="reviewResultMap">
 		<result column="REVIEW_NO" property="reviewNo"/>	
@@ -48,8 +56,7 @@
 		<result column="CREATE_DATE" property="createDate"/>	
 		<result column="REVIEW_STATUS" property="reviewStatus"/>
 		<result column="REVIEW_ALL_VIEW" property="reviewAllView"/>
-			
-			
+		<result column="REVIEW_SCR" property="reviewScr"/>
 	</resultMap>
 	
 	<resultMap type="Verify" id="verifyResultMap">
@@ -190,6 +197,7 @@
 	<select id="selectReview" resultMap="reviewResultMap">
 		SELECT    REVIEW_NO
 				, CINFO_NO
+				, TRUNC((REVIEW_VIEW + REVIEW_CONV + REVIEW_ACCESS + REVIEW_TYPE)/5,1) REVIEW_SCR
 				, REVIEW_VIEW
 				, REVIEW_CONV
 				, REVIEW_ACCESS
@@ -198,7 +206,7 @@
 				, REVIEW_IMG
 				, REVIEW_LIKE
 				, REVIEW_STATUS
-				, (SELECT MEM_NAME FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW.MEM_NO)MEM_NO
+				, (SELECT MEM_NAME FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW.MEM_NO) MEM_NO
 				, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') CREATE_DATE
 		  FROM  REVIEW
 		 WHERE  CINFO_NO = #{cinfoNo}
@@ -217,6 +225,17 @@
 		 WHERE  CINFO_NO = 'CAR1'
 		 GROUP 
 		 	BY  CINFO_NO
+	</select>
 
+	<select id="selectReviewComment" resultMap="commentResultMap">
+		SELECT 
+				  RE_NO
+				, REF_NO
+				, (SELECT MEM_NAME FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW_COMMENT.MEM_NO) MEM_NO
+				, CREATE_DATE
+				, COMM_CONTENT
+		  FROM REVIEW_COMMENT
+		 WHERE REF_NO = 'RVW1'
+		   AND STATUS = 'Y'
 	</select>
 </mapper>

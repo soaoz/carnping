@@ -24,7 +24,8 @@ public class Review {
 	private String reviewStatus; 
 	private String memNo; 		// 리뷰 작성자
 	private String createDate; 	// 작성일
-	private double count;
+	private int count;
 	private double reviewAllView;
+	private double reviewScr; 	// 리뷰총점
 	
 }
