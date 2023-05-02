@@ -1,14 +1,23 @@
 package com.kh.carnping.member.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +35,12 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
+
 
 
 @Controller
@@ -131,8 +144,6 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public String insertMember(Member m, MultipartFile memImg, Model model, HttpSession session) {
-		System.out.println(m);
-		System.out.println(memImg);
 		// 암호화 작업 (암호문 만들어내는 과정)
 		if(memImg != null && !memImg.getOriginalFilename().equals("")) {
 			String changeName = saveMemImg(memImg, session);
@@ -174,9 +185,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@RequestMapping("findIdCheck.me")
-	public String findIdByEmailCheck(Member m, String memName, String email){
-		m.setMemName(memName);
-		m.setEmail(email);
+	public String findIdByEmailCheck(Member m){
 		int count = mService.findIdByEmailCheck(m);
 		System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
@@ -184,10 +193,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@RequestMapping("findIdByEmail.me")
-	public Member findIdByEmail(Member m, String memName, String email, HttpSession session){
-		m.setMemName(memName);
-		m.setEmail(email);
-		System.out.println(m);
+	public Member findIdByEmail(Member m, HttpSession session){
 		Member findMember =  mService.findIdByEmail(m);
 		System.out.println(findMember);
 		if(findMember != null) {
@@ -195,9 +201,35 @@ public class MemberController {
 		} else {
 			session.setAttribute("alertMsg", "아이디나 비밀번호를 확인하세요");
 		}
-//		return new Gson().toJson(findMember);
 		return findMember;
 	}
+	
+	@ResponseBody
+	@RequestMapping("findPwdCheck.me")
+	public String findPwdCheck(Member m, HttpSession session){
+		int count = mService.findPwdCheck(m);
+		System.out.println(m);
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
+	
+	@ResponseBody
+	@RequestMapping("updatePwd.me")
+	public String updatePwd(Member m, String newPwd, HttpSession session){
+		String encPwd = bcryptPasswordEncoder.encode(newPwd);
+		m.setMemPwd(encPwd);
+		System.out.println(m);
+		int count = mService.updatePwd(m);
+		System.out.println(count);
+		if (count > 0) { // 성공 => 메인페이지 url 재요청! 알람창
+			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다!"); // url 재요청 방식은 세션영역에 담아야하기 때문에 매개변수에 세션 추가
+			return "redirect:/"; 
+		} else { // 실패 => 에러 문구 담아서 에러페이지 포워딩
+			session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다");
+			return "redirect:/"; 
+		}
+	}
+	
+	
 	
 	
 	@RequestMapping("myProfileUpdate.me")
@@ -248,6 +280,10 @@ public class MemberController {
 	public String unregister() {
 		return "member/unregister";
 	}
+	
+	
+
+	
 	
 	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
 	@ResponseBody

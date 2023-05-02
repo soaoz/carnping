@@ -51,6 +51,15 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return mDao.findIdByEmail(sqlSession, m);
 	}
+
+	@Override
+	public int findPwdCheck(Member m) {
+		return mDao.findPwdCheck(sqlSession, m);
+	}
+
+	public int updatePwd(Member m) {
+		return mDao.updatePwd(sqlSession, m);
+	}
 	
 	
 

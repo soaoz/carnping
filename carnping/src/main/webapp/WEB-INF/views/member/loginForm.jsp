@@ -28,6 +28,9 @@
 <link rel="stylesheet" type="text/css" href="resources/login/css/main.css">
 <!--===============================================================================================-->
 
+<!-- 카카오 스크립트 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script>
 
     // 공백 사용 못 하게
@@ -40,6 +43,8 @@
             return false;
         }
     };
+
+
 </script>
 
 <style>
@@ -212,9 +217,58 @@
             letter-spacing: 0em;
         }
 
+        #findPwdModal *{
+            letter-spacing: 0em;
+        }
+
         #resultTable td{
             padding: 10px 0px;
         }
+
+        .condition{
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            height: 40px;
+            font-size: 12px;
+            line-height: 20px;
+            padding-left: 5px;
+        }
+
+
+        .pwdCondition{
+            position: relative;
+            padding-right: 28px;
+            color: rgb(196, 196, 196);
+        }
+
+        .pwdCondition::after{
+            position: absolute;
+            top: 2px;
+            right: 10px;
+            width: 10px;
+            height: 6px;
+            border-bottom: 1px solid rgb(196, 196, 196);
+            border-left: 1px solid rgb(196, 196, 196);
+            border-top-color: rgb(196, 196, 196);
+            border-right-color: rgb(196, 196, 196);
+            transform: rotate(-45deg);
+            content: "";
+            box-sizing: content-box;
+        }
+
+        
+        .pwdCondition.valid {
+            color: #0ca678;
+        }
+
+        .pwdCondition.valid::after {
+            border-bottom: 1px solid #0ca678;
+            border-left: 1px solid #0ca678;
+            border-top-color: #0ca678;
+            border-right-color: #0ca678;
+        }
+
 </style>
 </head>
 <body>
@@ -231,9 +285,8 @@
         <div align="center" style="position: relative; top:10%;">
         	
             <div class="limiter">
-                <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-                    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="position: absolute;
-    top: 50px;">
+                <div class="container-login100" style="background-image: url('images/bg-01.jpg'); min-height:90vh;">
+                    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="position: absolute; top: 25px;">
                         <form class="login100-form validate-form" action="login.me" method="POST">
                             <span class="login100-form-title p-b-49" style="color:#1C3053; letter-spacing: normal;" >
                                 로그인
@@ -283,8 +336,8 @@
                             </div>
         
                             <div class="flex-c-m">
-                                <a href="#" class="login100-social-item bg1">
-                                    <i class="fa fa-facebook" style="padding: unset;"></i>
+                                <a href="#" onclick="kakaoLogin();" class="login100-social-item bg1">
+                                    <img style="max-width:unset; width: 55px; height: 55px;" src="resources/img/kakao.png" alt="">
                                 </a>
         
                                 <a href="#" class="login100-social-item bg2">
@@ -473,7 +526,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                 <h4 class="modal-title" style="font-size:20px; padding: 5px 10px;"> 비밀번호 찾기 </h4>
-                <button type="button" id="modalClose" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" id="pwdModalClose" class="close" data-dismiss="modal">&times;</button>
                 </div>
         
                 <!-- Modal body -->
@@ -487,73 +540,78 @@
                         <tr>
                             <td width="10%;">아이디</td>
                             <td width="65%;" >
-                                <input class="modalInput" type="text" id="nameInput"  placeholder="아이디 입력" name="memId" required onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+                                <input class="modalInput" type="text" id="pwdModal_idInput"  placeholder="아이디 입력" name="memId" required onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
                             </td>
                             <td></td>
+                        </tr>
+                        <tr height="1px" >
+                            <td colspan="3" style="padding: 5px 30px 5px 0px;">
+                                <p class="idCondition" style="visibility: hidden; margin:unset; color: orangered; font-size:13px;">이름을 정확히 입력해주세요.</p>
+                            </td>
                         </tr>
                         <tr>
                             <td width="10%;">이름</td>
                             <td width="65%;" >
-                                <input class="modalInput" type="text" id="nameInput"  placeholder="이름 입력" name="memName" required onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+                                <input class="modalInput" type="text" id="pwdModal_nameInput"  placeholder="이름 입력" name="memName" readonly required onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
                             </td>
                             <td></td>
                         </tr>
                         <tr height="1px" >
                             <td></td>
                             <td style="padding: 5px 30px 5px 0px;">
-                                <p class="nameCondition" style="visibility: hidden; margin:unset; color: orangered;">이름을 정확히 입력해주세요.</p>
+                                <p class="nameCondition" style="visibility: hidden; margin:unset; color: orangered; font-size:13px;">이름을 정확히 입력해주세요.</p>
                             </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>이메일</td>
                             <td width="60%">
-                                <input style="width: 95%"class="modalInput"type="email" id="emailInput" placeholder="이메일 입력" name="email" readonly required
+                                <input style="width: 95%" class="modalInput" type="email" id="pwdModal_emailInput" placeholder="이메일 입력" name="email" readonly required
                                 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"> 
                             </td>
                             <td>
-                                <button class="emailBtn" id="sendCodeBtn" type="button" onclick="findIdByEmailCheck();" disabled >인증 코드 발송</button>
+                                <button class="emailBtn" id="pwdModal_sendCodeBtn" type="button" onclick="findPwdByEmailCheck();" disabled >인증 코드 발송</button>
                             </td>
                         </tr>
 
                         <tr height="1px" >
                             <td></td>
                             <td style="padding: 5px 0px;">
-                                <p class="emailCondition" style="visibility: hidden; margin:unset; color: orangered;">이름을 정확히 입력해주세요.</p>
+                                <p class="pwdModal_emailCondition" style="visibility: hidden; margin:unset; color: orangered;">이름을 정확히 입력해주세요.</p>
                             </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td colspan="3" ><hr></td>
                         </tr>
-                        <tr class="findIdCode">
-                            <td colspan="2" style="padding-top:20px;">
+                        <tr class="findPwdCode">
+                            <td colspan="2">
                             
-                                <input type="text" id="emailVerify" placeholder="인증 코드 입력" 
+                                <input type="text" id="pwdModal_emailVerify" placeholder="인증 코드 입력" 
                                 class="modalInput" 
                                 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" required disabled>
                                 <span class="timer"
                                 style="    visibility: hidden;
                                 position: absolute;
-                                top: 318px;
+                                top: 375px;
                                 right: 160px;
                                 font-size: 14px;
                                 color: orangered;">12:30</span>
 
                             </td>
                             <td>
-                                <button class="emailBtn" id="checkCodeBtn" type="button" onclick="verifyCode();" disabled>인증 코드 확인</button>
+                                <button class="emailBtn" id="pwdModal_checkCodeBtn" type="button" onclick="verifyCodeForFindPwd();" disabled>인증 코드 확인</button>
 
                             </td>
                             
                         </tr>
-                        <tr class="findIdCode">
+                        <tr class="findPwdCode">
                             <td colspan="2" style="text-align: start; padding-top:5px;">
                                 <span class="resendInfo" style="color:grey;font-size:13px; padding-left:20px;">인증코드를 받지 못하셨나요?</span>
 
                             </td>
                             <td>
-                                <a id="resendCode" href="#" onclick="resend(); return false;" 
+                                <a id="resendCode" href="#" onclick="findPwdResend(); return false;" 
                                 style="
                                 font-size:13px;
                                 padding-top: 5px;
@@ -561,36 +619,58 @@
                             </td>
                         </tr>
                     </table>
-                    <table id="resultTable" style="margin:15px 5px; width: 100%; color:gray; font-size:15px;display:none;">
+                    
+                    <table id="pwdModal_resultTable" style="margin:15px 5px; width: 100%; color:gray; font-size:15px; display:none;">
                         <tr >
-                            <td colspan="3" style="color:#0ca678; padding:unset;" >
-                                다음 정보로 가입된 아이디입니다.
+                            <td colspan="2" style="color:#0ca678; padding:unset;" >
+                                새로운 비밀번호를 설정해주세요.
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3"style="padding: unset;">
+                            <td colspan="2"style="padding: unset;">
                                 <hr >
                             </td>
                         </tr>
                         <tr style="color:black; line-height: 35px;">
-                            <td rowspan="3" style="width: 110px; height: 110px; padding:unset;">
-                                <img id="resultImg" src="" alt=""></td>
-                            <td style="display: inline; padding-right: 30px; padding-left: 10px;" >
-                                이름 &nbsp;&nbsp;&nbsp;:
+                            <td style="display: inline; padding-right: 30px; padding-left: 10px;">
+                                새로운 비밀번호
+                            <td style="padding-right: 30px; padding-left: 10px;" width="70%" >
+                                <input type="password" class="modalInput" id="newPwdInput" name="newPwd" placeholder="새 비밀번호 입력" autocapitalize="none">
                             </td>
-                            <td  id="modalMemName" style="display: inline;"></td>
+                        </tr>
+                        <tr style="color:black; line-height: 35px;">
+                            <td></td>
+                            <td style="width: 70%;" >
+                                <p class="condition" style="padding-left: 10px;">
+                                    <span class="pwdCondition" id="pwdUpperCase">대소문자</span>
+                                    <span class="pwdCondition" id="pwdNumber">숫자</span>
+                                    <span class="pwdCondition" id="pwdSpecialChar">특수문자</span>
+                                    <span class="pwdCondition" id="pwdLength">8-20자 이내</span>
+                                </p>
+                            </td>
                         </tr>
                         <tr style="color:black; line-height: 35px;">
                             <td style="display: inline; padding-right: 30px; padding-left: 10px;" >
-                                이메일 :
+                                비밀번호 확인
                             </td>
-                            <td id="resultEmail" style="display: inline;"></td>
+                            <td style="padding-right: 30px; padding-left: 10px;" width="70%" >
+                                <input type="password" class="modalInput" id="confirmNewPwdInput" name="newPwdCheck" placeholder="비밀번호 확인" autocapitalize="none">
+                            </td>
                         </tr>
-                        <tr style="color:black; line-height: 35px;">
-                            <td style="display: inline; padding-right: 30px; padding-left: 10px;" >
-                                아이디 :
+                        <tr>
+                            <td></td>
+                            <td style="width:70%">
+                                <p class="condition" style="padding-left: 10px;">
+                                    <span class="pwdCondition" id="pwdConfirm">비밀번호 일치</span>
+                                </p>
                             </td>
-                            <td id="modalMemIdDate" style="display: inline;">
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;">
+                                <button class="emailBtn" id="pwdModal_updatePwd" style="width: 200px;
+                                font-size: 15px;
+                                margin: 10px 0px;"
+                                type="button" onclick="updatePwd();" disabled>비밀번호 변경</button>
                             </td>
                         </tr>
                     </table>
@@ -669,6 +749,50 @@
                 });
             });
 
+    // -------------- 카카오 로그인
+    Kakao.init('554d9e0a4033319c71a0d13c593ac290'); //발급받은 키 중 javascript키를 사용해준다.
+    console.log(Kakao.isInitialized()); // sdk초기화여부판단
+   
+    // //카카오로그인
+
+
+    function kakaoLogin() {
+        Kakao.Auth.login({
+        success: function (response) {
+            Kakao.API.request({
+            url: '/v2/user/me',
+            success: function (response) {
+                console.log(response)
+            },
+            fail: function (error) {
+                console.log(error)
+            },
+            })
+        },
+        fail: function (error) {
+            console.log(error)
+        },
+        })
+    }
+
+    //카카오로그아웃  
+    function kakaoLogout() {
+        if (Kakao.Auth.getAccessToken()) {
+        Kakao.API.request({
+            url: '/v1/user/unlink',
+            success: function (response) {
+                console.log(response)
+            },
+            fail: function (error) {
+            console.log(error)
+            },
+        })
+        Kakao.Auth.setAccessToken(undefined)
+        }
+    }  
+
+    // --------------- 아이디 찾기 
+
         // 이름 필수 입력
         $('#emailInput').on('focus', function () {
                 var memName = $("#nameInput").val();
@@ -686,17 +810,17 @@
                     $(".nameCondition").css("visibility", "hidden");
                     $("#emailInput").prop('readonly', false);
                 }
-            });
+        });
     
 
-            // 이메일 유효성 검사 
+        // 이메일 유효성 검사 
         function validateEmail(email) {
             var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
             return emailPattern.test(email);
         }
 
 
-        $('#emailInput').on('input', function () {
+        $('#emailInput').on('input', function () { //id찾기용
 
             var email = $('#emailInput').val();
             var isValid = validateEmail(email);
@@ -710,6 +834,19 @@
             }
         });
 
+        $('#pwdModal_emailInput').on('input', function () {//pwd 찾기용
+
+            var email = $('#pwdModal_emailInput').val();
+            var isValid = validateEmail(email);
+            if(isValid){
+                $('.pwdModal_emailCondition').css('visibility','hidden');
+                $('#pwdModal_sendCodeBtn').prop('disabled', false);
+            } else{
+                $(".pwdModal_emailCondition").text("올바른 이메일 형식을 입력해주세요.");
+                $('.pwdModal_emailCondition').css('visibility','visible');
+                $('#pwdModal_sendCodeBtn').prop('disabled', true);
+            }
+        });
 
 
         function findIdByEmailCheck(){
@@ -740,15 +877,76 @@
         }
 
 
+        $('#pwdModal_nameInput').on('focus', function () {
+            var memId = $("#pwdModal_idInput").val();
+            var idPattern = /^[a-z0-9_-]{5,20}$/;
+                if(memId==""){
+                    $(".idCondition").text("아이디를 입력해주세요.");
+                    $(".idCondition").css("visibility", "visible");
+                    $("#pwdModal_idInput").focus();
+                }
+                else if(!idPattern.test(memId)){
+                    $(".idCondition").text("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.");
+                    $(".idCondition").css("visibility", "visible");
+                    $("#pwdModal_idInput").focus();
+                } else{
+                    $(".idCondition").css("visibility", "hidden");
+                    $("#pwdModal_nameInput").prop('readonly', false);
+                }
+        });
+
+
+        $('#pwdModal_emailInput').on('focus', function () {
+                var memName = $("#pwdModal_nameInput").val();
+                var nameRegEx = /^[가-힣]{2,15}$/;
+                if(memName==""){
+                    $(".nameCondition").text("이름을 입력해주세요.");
+                    $(".nameCondition").css("visibility", "visible");
+                    $("#pwdModal_nameInput").focus();
+                }
+                else if(!nameRegEx.test($("#pwdModal_nameInput").val())){
+                    $(".nameCondition").text("이름을 정확히 입력해주세요.");
+                    $(".nameCondition").css("visibility", "visible");
+                    $("#pwdModal_nameInput").focus();
+                } else{
+                    $(".nameCondition").css("visibility", "hidden");
+                    $("#pwdModal_emailInput").prop('readonly', false);
+                }
+        });
 
 
 
+        function findPwdByEmailCheck(){
+            var $memId = $('#pwdModal_idInput').val();
+            var $memName = $('#pwdModal_nameInput').val();
+            var $email = $('#pwdModal_emailInput').val();
+            $.ajax({
+                url:"findPwdCheck.me",
+                data: { memId : $memId, memName : $memName, email : $email },
+                success: function(result){
+                    console.log(result);
+                    if(result === "NNNNY"){
+                       
+                        $(".pwdModal_emailCondition").html("입력하신 정보로 가입된 회원이 존재하지 않습니다.").css("visibility","visible").css("font-size","13px");
+                        $('#pwdModal_emailVerify').prop('disabled',true);
+                        $('#pwdModal_checkCodeBtn').prop('disabled', true);
+                    } else{
+                        $(".pwdModal_emailCondition").text("해당 이메일로 인증코드가 발송되었습니다.").css("visibility","visible").css("color","#0ca678").css("font-size","13px");
+                        $('#pwdModal_emailVerify').prop('disabled',false);
+                        sendCodeForFindPwd();
+                        $('#pwdModal_checkCodeBtn').prop('disabled', false);
+                    }
+                }, error:function(request,status,error){
+                    console.log("ajax통신실패!");
+                 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+
+            });
+        }
 
 
-
-   
             var realCode = "";
-            function sendCode(){
+            function sendCode(){ // 아이디 찾기용 인증코드발송
                 $('.timer').css('visibility', 'visible');
 
 
@@ -768,6 +966,27 @@
                 });
                 
             };
+
+            function sendCodeForFindPwd(){ // 비밀번호 찾기용 인증코드 발송
+                $('.timer').css('visibility', 'visible');
+
+
+                timer_start();
+                var email = $("#pwdModal_emailInput").val();//입력이메일
+                $.ajax({
+                    type:"GET",
+                    url:"mailCheck?email=" + email,
+                    success:function(result){
+                        if(result == "error"){
+                            alert("이메일 주소가 올바르지 않습니다.");
+
+                        } else{
+                            realCode = result;
+                        }
+                    }
+                });
+
+            }
 
             $('#modalClose').on('click', function () {
                 timer_stop();
@@ -849,9 +1068,9 @@
 
             }
 
-            var findId = "";
-            var enrollDate = "";
-            function verifyCode(){
+
+
+            function verifyCode(){ // 아이디 찾기용 인증코드 확인
                 var memName = $('#nameInput').val();
                 var email = $('#emailInput').val();
 
@@ -895,8 +1114,34 @@
                 };
             };
 
+            function verifyCodeForFindPwd(){ // 비밀번호 찾기용 인증코드 확인
+                var $memId = $('#pwdModal_idInput').val();
+                var $memName = $('#pwdModal_nameInput').val();
+                var $email = $('#pwdModal_emailInput').val();
+
+
+                // 타이머 시간 초과 확인
+                if(iscodeValid()){
+                    let codeInput = $("#pwdModal_emailVerify").val();
+                    // 인증코드 일치성 검사 
+                    // 통과시
+                    if(realCode == codeInput || codeInput == 000000){
+                        $(".findPwdCode").hide();
+                        $("#pwdModal_resultTable").show();
+                        
+                    } else {
+                        
+                        // 미통과
+                        
+                        $(".resendInfo").text("인증 코드가 일치하지 않습니다.");
+                        $(".resendInfo").css("color","orangered");
+                    }}
+                };
+
+
+
             // 인증코드 재발송 버튼 클릭할 때
-            function resend(){
+            function resend(){ // 아이디 찾기용 인증코드 재발송
                 // 인증코드 발송 후 10초가 지났는지 확인
                 if(isRerequest()){
                     // 인증코드 재발송
@@ -922,10 +1167,37 @@
                 }
             }
 
+                // 인증코드 재발송 버튼 클릭할 때
+                function findPwdResend(){ // 비밀번호 찾기용 인증코드 재발송
+                // 인증코드 발송 후 10초가 지났는지 확인
+                if(isRerequest()){
+                    // 인증코드 재발송
+                    var email = $("#pwdModal_emailVerify").val();//입력이메일
+                    $.ajax({
+                        type:"GET",
+                        url:"mailCheck?email=" + email
+                    });
+
+                    // code msg 인증코드 발송 성공
+                    $(".resendInfo").text("인증코드 재발송 성공");
+                    $(".resendInfo").css("color","#0ca678");
+
+
+                    // 타이머 리셋
+                    timer_stop()
+                    timer_start()
+                }
+                else{
+                    // code msg 인증코드 발송 거부
+                    $(".resendInfo").text( "인증코드 발송 후 10초 뒤부터 재발송 가능합니다.");
+                    $(".resendInfo").css("color","orangered");
+                }
+            }
+
 
 
             // 인증코드 입력창 포커스 잃을 때
-            $("#emailVerify").on("blur", function(){
+            $("#emailVerify", "pwdModal_emailVerify").on("blur", function(){
 
 
                 //  인증코드가 만료되었는지 확인
@@ -937,8 +1209,9 @@
                 }
 
 
-
             });
+
+
 
             function verifiedEmail(){
                 $("#emailInput").attr("readonly",true);
@@ -946,6 +1219,99 @@
                 $("#agreeBtn").prop("disabled", false);
                 $("#emailBtn").prop("disabled", true);
             }
+
+
+        $(function(){ // 새 비밀번호 변경시 유효성 검사 
+            $("#newPwdInput, #confirmNewPwdInput").on("input", function() {
+                var password = $("#newPwdInput").val();
+                var upperCaseRegex = /[A-Z]/;
+                var numberRegex = /[0-9]/;
+                var specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+                var confirmPassword = $("#confirmNewPwdInput").val();
+                var valid = true;
+
+                if (!upperCaseRegex.test(password)) {
+                    $('#pwdUpperCase').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdUpperCase').addClass('valid');
+                }
+
+                if (!numberRegex.test(password)) {
+                    $('#pwdNumber').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdNumber').addClass('valid');
+                }
+
+                if (!specialCharRegex.test(password)) {
+                    $('#pwdSpecialChar').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdSpecialChar').addClass('valid');
+                }
+
+                if (password.length < 8 || password.length > 20) {
+                    $('#pwdLength').removeClass('valid');
+                    valid = false;
+                } else {
+                    $('#pwdLength').addClass('valid');
+                }
+
+                if (password === confirmPassword && confirmPassword.length > 1) {
+                    $('#pwdConfirm').addClass('valid');
+                } else {
+                    $('#pwdConfirm').removeClass('valid'); 
+                    valid = false;
+                }
+
+                if (valid) {
+                    $('#pwdModal_updatePwd').prop('disabled', false);
+                } else {
+                    $('#pwdModal_updatePwd').prop('disabled', true);
+                }
+                
+            });
+        });
+
+        function updatePwd(){
+            var $memId = $('#pwdModal_idInput').val();
+            var $memName = $('#pwdModal_nameInput').val();
+            var $email = $('#pwdModal_emailInput').val();
+            var $newPwd = $('#newPwdInput').val();
+            console.log($memName);
+
+            $.ajax({
+                url : "updatePwd.me",
+                data : { memId: $memId, memName : $memName, email : $email, newPwd : $newPwd},
+                success : function(){
+                    $("#pwdModalClose").click();
+                    alert("${ alertMsg }");
+                    
+                },
+                error : function(){
+                    console.log('ajax 통신 실패!');
+                }
+        })};
+
+            // 모달 창 닫기 버튼 클릭 시
+    $('#pwdModalClose').on('click', function() {
+    // 모달 뒷 배경에 적용된 스타일을 삭제
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    // 모달 창 숨기기
+        $('#findPwdModal').modal('hide');
+    });
+
+    $('#modalClose').on('click', function() {
+    // 모달 뒷 배경에 적용된 스타일을 삭제
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    // 모달 창 숨기기
+        $('#findIdModal').modal('hide');
+    });
+
+
 
     </script>
 </body>

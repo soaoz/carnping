@@ -85,12 +85,32 @@
            to_CHAR(enroll_date,'YYYY-MM-DD') "enroll_date",
 		   mem_img_change
 
-
 	  from
 	       member
      where mem_name = #{memName}
        and email = #{email}
 	</select>
+	
+	<select id="findPwdCheck"  resultType="_int">
+	select
+		   count(*)
+	  from
+	       member
+     where mem_id = #{memId}
+       and mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<update id="updatePwd">
+	update
+		   member
+	   set 
+	       mem_pwd = #{memPwd}
+	 where mem_id = #{memId}
+       and mem_name = #{memName}
+       and email = #{email}
+	
+	</update>
 	
 	<select id="idCheck" resultType="_int"> 
 	select
