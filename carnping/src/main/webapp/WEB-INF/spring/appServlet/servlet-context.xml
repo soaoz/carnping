@@ -24,6 +24,13 @@
 	<context:component-scan base-package="com.kh.carnping" />
 	
 	<!-- KakaoLoginBO Class에 대한 Bean 설정 추가 -->
-	<beans:bean id="kakaoLoginBO" class="com.kh.carnping.member.model.vo.KaKaoLoginBO"/>
+	<beans:bean id="kakaoLoginBO" class="com.kh.carnping.member.model.vo.KakaoLoginBO"/>
+	
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<beans:bean id="naverLoginBO" class="com.kh.carnping.member.model.vo.NaverLoginBO" />
+	
+	
+	<!-- GoogleLoginBO Class에 대한 Bean설정 추가 -->
+	<beans:bean id="googleLoginBO" class="com.kh.carnping.member.model.vo.GoogleLoginBO" />
 	
 </beans:beans>

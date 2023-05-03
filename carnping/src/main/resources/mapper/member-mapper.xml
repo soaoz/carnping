@@ -16,7 +16,7 @@
 		<result column="MEM_IMG_ORIGIN" property="memImgOrigin"/>
 		<result column="MEM_IMG_CHANGE" property="memImgChange"/>
 		<result column="PHONE" property="phone"/>
-		<result column="MEM_API_TYPE" property="memAplType"/>
+		<result column="MEM_API_TYPE" property="memApiType"/>
 		<result column="MEM_API_TOKEN" property="memApiToken"/>
 		<result column="MARKETING" property="marketing"/>
 		
@@ -204,9 +204,11 @@
 	        , MEM_API_TOKEN
 	        , MARKETING
 		 FROM MEMBER
-		WHERE MEM_ID = #{memId}
+		WHERE MEM_ID = #{memId} OR EMAIL = #{email}
 		  AND STATUS = 'Y'
 	</select>
+	
+
 	
 
 

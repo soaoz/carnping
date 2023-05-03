@@ -336,16 +336,17 @@
                             </div>
         
                             <div class="flex-c-m">
-                                <a href="#" onclick="kakaoLogin();" class="login100-social-item bg1">
+                                <a href="${urlKakao}" class="login100-social-item bg1">
                                     <img style="max-width:unset; width: 55px; height: 55px;" src="resources/img/kakao.png" alt="">
                                 </a>
         
-                                <a href="#" class="login100-social-item bg2">
-                                    <i class="fa fa-twitter" style="padding: unset;"></i>
+                                <a href="${urlNaver}" class="login100-social-item bg2">
+                                    <img style="max-width:unset; width: 55px; height: 55px;" src="resources/img/naver.png" alt="">
                                 </a>
         
-                                <a href="#" class="login100-social-item bg3">
-                                    <i class="fa fa-google" style="padding: unset;"></i>
+                                <a href="${urlGoogle}" class="login100-social-item bg3">
+                                    <i class="fa fa-google" style="padding: unset; position: relative;
+                                    left: 2px;"></i>
                                 </a>
                             </div>
         

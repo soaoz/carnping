@@ -260,8 +260,8 @@
                                                 <a href="#" class="nickname" style="padding: 3px 0px; display:flex;" >
                                                     <c:choose>
                                                         <c:when test="${ not empty loginMember.memImgOrigin }">
-                                                            <div style="width: 35px; height: 35px; border-radius:50%;">
-                                                                <img src="${loginMember.memImgChange}" alt="">
+                                                            <div style="width: 35px; height: 35px; border-radius:50%; overflow:hidden;">
+                                                                <img src="${loginMember.memImgChange}" alt="" style="object-fit: cover;">
                                                             </div>
                                                         </c:when>
                                                         <c:otherwise>

@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed May 03 15:13:05 KST 2023
+opencensus-api-0.28.0.jar>central=
+opencensus-api-0.28.0.pom>central=
+opencensus-api-0.28.0-sources.jar>central=

@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed May 03 15:12:39 KST 2023
+google-api-client-1.32.1.jar>central=
+google-api-client-1.32.1.pom>central=
+google-api-client-1.32.1-sources.jar>central=
