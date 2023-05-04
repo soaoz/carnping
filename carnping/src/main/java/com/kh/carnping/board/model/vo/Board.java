@@ -20,5 +20,4 @@ public class Board {
 	private String boardContent;// 내용
 	private int count;			// 조회수
 	private String status;		// 상태
-	private String memId; 		//작성자아이디 추가 
 }
