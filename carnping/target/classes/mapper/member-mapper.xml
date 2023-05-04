@@ -225,6 +225,15 @@
   	   WHERE MEM_ID = #{memId}
 	</update>
 	
+	<select id="selectQuestionListCount" resultType="_int">
+  	  select
+  	  		 count(*)
+  	  	from QUESTION
+  	   where QUE_STATUS = 'T' OR QUE_STATUS = 'Y'
+	</select>
+	
+	
+	
 	<select id="questionSelectList" resultMap="questionResultSet">
 		SELECT  
 				QUE_NO
@@ -239,6 +248,7 @@
 		   JOIN MEMBER 
 		  USING (MEM_NO)
 		  WHERE MEM_ID = #{memId}
+		    AND QUE_STATUS = 'T' OR QUE_STATUS = 'Y'
 	</select>
 
 	<select id="selectQuestion" resultMap="questionResultSet">
@@ -286,6 +296,13 @@
 			 , QUE_CONTENT = #{queContent}
 			 , QUE_DATE = SYSDATE
          WHERE QUE_NO = #{queNo}
+	</update>
+	
+	<update id="deleteQuestion">
+		UPDATE
+				QUESTION 
+		   SET QUE_STATUS = 'N'     
+		 WHERE QUE_NO = #{queNo} 
 	</update>
 	
 	<update id="deleteMember">
