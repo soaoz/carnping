@@ -222,7 +222,7 @@
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
-		    <version>2.8.5</version>
+		    <version>2.8.6</version>
 		</dependency>
 		
 		<!-- email 인증 관련 https://mvnrepository.com/artifact/javax.mail/mail -->
@@ -260,6 +260,46 @@
 		    <!-- <scope>test</scope> -->
 		</dependency>
 		
+		<!-- 이메일 인증 관련 https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
+		<dependency>
+		    <groupId>org.thymeleaf</groupId>
+		    <artifactId>thymeleaf-spring5</artifactId>
+		    <version>3.0.15.RELEASE</version>
+		</dependency>
+		
+		<!-- 이메일 인증 관련 https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
+		<dependency>
+		    <groupId>nz.net.ultraq.thymeleaf</groupId>
+		    <artifactId>thymeleaf-layout-dialect</artifactId>
+		    <version>2.5.3</version>
+		</dependency>
+				
+		<!-- OAuth 관련 라이브러리 -->
+			<!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis -->
+			<dependency>
+			    <groupId>com.github.scribejava</groupId>
+			    <artifactId>scribejava-apis</artifactId>
+			    <version>8.3.1</version>
+			    <scope>runtime</scope>
+			</dependency>
+			<dependency>
+			 	<groupId>com.github.scribejava</groupId>
+			 	<artifactId>scribejava-core</artifactId>
+			 	<version>2.8.1</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-httpclient-apache -->
+			<dependency>
+			    <groupId>com.github.scribejava</groupId>
+			    <artifactId>scribejava-httpclient-apache</artifactId>
+			    <version>8.3.1</version>
+			    <scope>test</scope>
+			</dependency>
+			<dependency>
+			  <groupId>com.google.api-client</groupId>
+			  <artifactId>google-api-client</artifactId>
+			  <version>1.32.1</version>
+			</dependency>
+
 		
 	</dependencies>
     <build>
