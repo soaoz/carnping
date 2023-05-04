@@ -1,15 +1,20 @@
 package com.kh.carnping.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -34,6 +39,8 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import com.google.gson.Gson;
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.Comment;
+import com.kh.carnping.common.model.vo.PageInfo;
+import com.kh.carnping.common.template.Pagination;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -282,13 +289,29 @@ public class MemberController {
 	
 	//문의하기리스트 조회
 	@RequestMapping("myQuestionList.me")
-	public String questionSelectList (HttpSession session,Question q, Model model) {
+	public String questionSelectList (@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session,Question q, Model model) {
 		
+		int listCount = mService.selectQuestionListCount();
+	
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+	
 		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
-		ArrayList<Question> list = mService.questionSelectList(memId);
+		
+		ArrayList<Question> list = mService.questionSelectList(pi, memId);
+		
+		System.out.println("문의하기 리스트 : " + list);
+		
+		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
+		
 		return "member/myQuestionList";
 	}
+	
+	
+	
+
+	
+	
 	
 	//문의하기 상세페이지 조회
 	@RequestMapping("myQuestionDetail.me")
@@ -349,15 +372,35 @@ public class MemberController {
 			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
 			return "common/errorPage";
 		}
-		
 	}
 	
+	//문의하기 delete
+	@RequestMapping("deleteQuestion.me")
+	public String deleteQuestion(HttpSession session,Question q,String queNo, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		q.setMemId(memId);
+		q.setQueNo(queNo);
+		int result = mService.deleteQuestion(queNo);
+		
+		//System.out.println("리절트값 : " + result);
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+			return "redirect:myQuestionList.me";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	
+	//마이페이지에서 로그아웃하러가는 페이지
 	@RequestMapping("logoutPage.me")
 	public String logoutPage() {
 		return "member/logoutPage";
 	}
 	
-
+	//로그아웃
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session){
 		session.invalidate();
@@ -390,37 +433,208 @@ public class MemberController {
 		return "member/myLikeList";
 	}
 	
-//	@RequestMapping("myPostList.me")
-//	public String myPostList() {
-//		return "member/myPostList";
-//	}
-	
-	//내 게시글 리스트
+	/*//내 게시글 리스트 조회
 	@ResponseBody
 	@RequestMapping(value = "myPostList.me", produces = "application/json; charset=utf-8")
 	public String myPostList(String memId) {
 		
 		//System.out.println("포스트리스트컨트롤러탐 유저아이디 : " + memId);
-		ArrayList<Board> list = mService.selectBoardList(memId);
+		ArrayList<Board> list = mService.selectMyBoardList(memId);
 		//sSystem.out.println(list);
 		
 		return new Gson().toJson(list);
+	}*/
+	
+	
+	
+	/*
+	 * //문의하기리스트 조회
+	@RequestMapping("myQuestionList.me")
+	public String questionSelectList (@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session,Question q, Model model) {
+		
+		int listCount = mService.selectQuestionListCount();
+	
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+	
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		ArrayList<Question> list = mService.questionSelectList(pi, memId);
+		
+		System.out.println("문의하기 리스트 : " + list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "member/myQuestionList";
 	}
-	//내 댓글 리스트
+	 * */
+	////문의하기리스트 조회 페이징까지 ----------------------------------------------------------------------
+	@ResponseBody
+	@RequestMapping(value = "myPostList.me", produces = "application/json; charset=utf-8")
+	public Map<String, Object> myPostList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		System.out.println("커런트페이지 : " + currentPage);
+		int listCount = mService.selectMyBoardListCount(memId);
+		System.out.println("나의 게시판 글 수 : "+listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
+		
+		
+		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
+		int page = pi.getCurrentPage(); 	// 현재페이지
+		int pageLimit = pi.getPageLimit();		// 페이징바의 페이지 최대개수  (1~10)(11~20) ->  10개 
+		int boardLimit = pi.getBoardLimit(); //보여질 보드게시글갯수
+		
+		int maxPage = pi.getMaxPage(); // 가장 마지막페이지 (총페이지) 전체게시글의 가장 끝
+		int startPage = pi.getStartPage(); //페이징바의 시작수  4번선택시 1, 12번시 11
+		int endPage = pi.getEndPage(); // 페이징바의 끝수 4번선택시10, 12선택시 20
+		
+		
+		System.out.println(listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
+
+		
+		
+		//System.out.println("포스트리스트컨트롤러탐 유저아이디 : " + memId);
+		System.out.println(list);
+		//sSystem.out.println(list);
+		result.put("list", list);
+		result.put("listcount", listcount);
+		result.put("page", page);
+		result.put("pageLimit", pageLimit);
+		result.put("boardLimit", boardLimit);
+		result.put("maxPage", maxPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		
+		ArrayList<Board> resultList = (ArrayList<Board>) result.get("list");
+		System.out.println(resultList);
+		/* return new Gson().toJson(list); */
+		
+		for (Map.Entry<String, Object> entry : result.entrySet()) {
+		    String key = entry.getKey();
+		    Object value = entry.getValue();
+		    System.out.println("해쉬맵ㅇㅇㅇㅇㅇㅇㅇㅇ" + key + " : " + value);
+		}
+		return result;
+	}
+	//페이징 수정중-----------------------------------------------------------------------
+	
+	//-----------------------------------------------------------------------------------
+	
+	
+	
+	
+	
+
+	
+	
+	
+	//내 댓글 리스트 조회
 	@ResponseBody
 	@RequestMapping(value = "myReplyList.me", produces = "application/json; charset=utf-8")
-	public String myReplyList(String memId) {
+	public Map<String, Object> myReplyList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		int listCount = mService.selectMyCommentListCount(memId);  // 내 댓글 총갯수
+		
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		//ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
+		ArrayList<Comment> list = mService.selectMyCommentList(pi, memId);
+		
+		
+		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
+		int page = pi.getCurrentPage(); 	// 현재페이지
+		int pageLimit = pi.getPageLimit();		// 페이징바의 페이지 최대개수  (1~10)(11~20) ->  10개 
+		int boardLimit = pi.getBoardLimit(); //보여질 보드게시글갯수
+		
+		int maxPage = pi.getMaxPage(); // 가장 마지막페이지 (총페이지) 전체게시글의 가장 끝
+		int startPage = pi.getStartPage(); //페이징바의 시작수  4번선택시 1, 12번시 11
+		int endPage = pi.getEndPage(); // 페이징바의 끝수 4번선택시10, 12선택시 20
+		
+		
+		System.out.println("대댇ㄱ그글"+listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
+		System.out.println("리스트값: " + list);
+		//sSystem.out.println(list);
+		result.put("list", list);
+		result.put("listcount", listcount);
+		result.put("page", page);
+		result.put("pageLimit", pageLimit);
+		result.put("boardLimit", boardLimit);
+		result.put("maxPage", maxPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		
+		
+		
 		//System.out.println("댓글리스트 컨트롤러탄다 ");
-		ArrayList<Comment> list = mService.selectCommentList(memId);
 		//System.out.println(list);
-		return new Gson().toJson(list);
+		//return new Gson().toJson(list);
+		return result;
 	}
 	
-//	@RequestMapping("myReplyList.me")
-//	public String myReplyList() {
-//		return "member/myReplyList";
-//	}
+	
+	
+	
+	//-----------------------------------------------------------------------------------
+	
+	
+	
+	
+	/*
+	 * //내 댓글 리스트 조회
+	 * 
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value = "myReplyList.me", produces =
+	 * "application/json; charset=utf-8") public String myReplyList(String memId) {
+	 * //System.out.println("댓글리스트 컨트롤러탄다 "); ArrayList<Comment> list =
+	 * mService.selectMyCommentList(memId); //System.out.println(list); return new
+	 * Gson().toJson(list); }
+	 */
+	
+	
+	
 
+	//선택한 게시물들 삭제하기 
+	@ResponseBody
+	@RequestMapping(value="deleteMyPost.me" , produces = "application/json; charset=utf-8")
+	public String deleteMyPost(@RequestParam("boardNoArr[]") String[] boardNoArr, HttpSession session) {
+		
+		//System.out.println(Arrays.toString(boardNoArr));
+		
+		int result = 0 ;
+		
+	    for(String boardNo : boardNoArr) {
+	    	 result = mService.deleteBoard(boardNo);
+	    }
+	    //System.out.println("리절트값 : " + result);
+	    return new Gson().toJson(result);
+	}
+	
+	
+	//선택한 댓글들 삭제하기 
+	@ResponseBody
+	@RequestMapping(value="deleteMyReply.me" , produces = "application/json; charset=utf-8")
+	public String deleteMyReply(@RequestParam("replyNoArr[]") String[] replyNoArr, HttpSession session) {
+		
+		//System.out.println("댓글삭제컨트롤러탄다");
+		//System.out.println(Arrays.toString(replyNoArr));
+		int result = 0 ;
+		
+	    for(String reNo : replyNoArr) {
+	    	 result = mService.deleteComment(reNo);
+	    }
+	    //System.out.println("리절트값 : " + result);
+	    return new Gson().toJson(result);
+	}
+	
 	@RequestMapping("myPageMainSelect.me")
 	public String myPageMainSelect() {
 		
@@ -432,17 +646,13 @@ public class MemberController {
 		return "member/myCarbakList";
 	}
 	
+	
+	
 	//회원탈퇴 jsp로 
 	@RequestMapping("unregister.me")
 	public String unregister() {
 		return "member/unregister";
 	}
-	//회원탈퇴 완료 jsp로 
-	@RequestMapping("unregisterFinish.me")
-	public String unregisterFinish() {
-		return "member/unregisterFinish";
-	}
-	
 	
 	//회원탈퇴전 확인받기 
 	@RequestMapping("deleteCheck.me")
@@ -455,7 +665,7 @@ public class MemberController {
 //			System.out.println("비번같음 탐");
 //			System.out.println("비번같음");
 //			// alert 띄어주기=> myProfileUpdate 로 
-			session.setAttribute("confirmMsg", "정말로 카앤핑을 탈퇴하시겠습니까");
+			session.setAttribute("confirmMsg", "정말로 카앤핑을 탈퇴하시겠습니까? ");
 //			//데이터를 조회해서 m으로 넘기기
 //			//model.addAttribute("m", m);
 //			System.out.println("진입 전 조회결과 : "+ m);
@@ -482,6 +692,12 @@ public class MemberController {
 			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
 			return "common/errorPage";
 		}
+	}
+	
+	//회원탈퇴 완료 jsp로 
+	@RequestMapping("unregisterFinish.me")
+	public String unregisterFinish() {
+		return "member/unregisterFinish";
 	}
 	
 	//소영끝  =======================

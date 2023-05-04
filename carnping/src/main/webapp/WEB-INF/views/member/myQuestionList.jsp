@@ -120,7 +120,11 @@
 		.title{
 			color : #1C3053;
 		}
-		
+		    
+	    #pagingArea {
+	        width: fit-content;
+	        margin: auto;
+	    }
 </style>
 </head>
 <body>
@@ -231,26 +235,57 @@
                     <div align="left" >
                         <br>
                         <a href="questionForm.me" class = "btn btn-sm btn-primary">문의 하기</a>
-                        <a href="myQuestionDetail.me" class = "btn btn-sm btn-primary">디테일</a>
+                        <!-- <a href="myQuestionDetail.me" class = "btn btn-sm btn-primary">디테일</a> -->
                         <br><br>
+                        
+                        
+                        
+                        
                     </div>  
-<!--                     <div id="pagingArea" align="center">
-                        <ul class="pagination">
-                            
-                                <li class="page-item"><a class="page-link" href=""> &lt;&lt; </a></li>
-                                <li class="page-item"><a class="page-link" href="">1</a></li>
-                                <li class="page-item"><a class="page-link" href="">2</a></li>
-                                <li class="page-item"><a class="page-link" href="">3</a></li>
-                                <li class="page-item"><a class="page-link" href="">4</a></li>
-                                <li class="page-item"><a class="page-link" href="">5</a></li>
-                                <li class="page-item"><a class="page-link" href="">&gt;&gt;</a></li>
-                        </ul>
-                    </div> -->
+
+                    
+                    
                 </div>
+                                                                              <!--  -->
+                    
+              <div id="pagingArea" align="center" >
+                <ul class="pagination" align="center">
+              
+              		<c:choose>
+              			<c:when test="${ pi.currentPage eq 1}">
+                       	 	<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                        </c:when>
+                        <c:otherwise>
+                        <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage -1 }">Previous</a></li>
+                        </c:otherwise>
+                   	</c:choose>
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                        <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ p }">${ p }</a></li>
+        			</c:forEach>
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+                            <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+                         </c:when>
+                         <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage +1 }">Next</a></li>
+                          </c:otherwise>
+                      </c:choose>
+                </ul>
             </div>
+                    
+                    <!--  -->
+
+            </div>
+
         </div>
+        
+
     </div>
-  </div>  
+    
 <jsp:include page="../common/footer.jsp"/>
+
+  </div>  
+  
+
 </body>
 </html>

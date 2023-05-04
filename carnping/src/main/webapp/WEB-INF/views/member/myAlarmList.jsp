@@ -111,17 +111,36 @@
 			
 		}
 		[type=checkbox] {
-		  position: static !important;
-		  opacity: 1 !important;
-		  width: auto !important;
-		  height: auto !important;
+            position: static !important;
+            opacity: 1 !important;
+            width: auto !important;
+            height: auto !important;
 		}
 		.title{
 			color : #1C3053;
 		}
+		.pagination > li > a{
+			border-radius : 100% !important;
+		}
+		.page-item.active .page-link{
+			color : #1C3053 !important;
+			background-color : white !important;
+		}
+		.page-item .active{
+			color: red;
+		}
+        .pagebtn.active{
+            color : green;
+
+        }
+       .pagination > li.active > a:hover{
+       		cursor: pointer;
+       }
+		
 </style>
 </head>
 <body>
+
 <input type = "hidden" name="memId" id="memId" value="${ loginMember.memId }">
 <jsp:include page="../common/header.jsp"/>
 <jsp:include page="../common/menubar.jsp"/>   
@@ -185,76 +204,132 @@
                             </li>
                             <li class="nav-item">
                              <!--  <a class="nav-link" href="myPostList.me">내가 쓴 글</a> -->
-                              <a class="nav-link" data-toggle="tab" onClick="myPostList();">내가 쓴 글</a>
+                              <a class="nav-link" data-toggle="tab" onClick="myPostList();" id="myPostTab">내가 쓴 글</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" data-toggle="tab" onClick="myReplyList();">내가 쓴 댓글</a>
+                              <a class="nav-link" data-toggle="tab" onClick="myReplyList();" id="myReplyTab">내가 쓴 댓글</a>
                             </li>
                           </ul>
                     </div>
 
                     <br>
-                    <table>
-                        <tr>
-                            <td colspan="5" class="td1"><input type="checkbox" name="" class="ckbox"></td>
-                            <td class="td1">&nbsp;&nbsp;전체선택</td>
-                        </tr>
-                    </table>
-                    <table border="0px" id = "result" class="table table-hover table1"  style="width: 100%; margin:auto;" align="center">
-                        <thead>
-
-                        </thead>
-                        
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                    
-                    <script type="text/javascript">
-                    
-                    //내가 쓴 게시글 목록
-                    function myPostList(){
-                    	$.ajax({
-                    		url: "myPostList.me",
-                            type: "POST",
-                            data: { memId: $("#memId").val() }, //로그인유저아이디
-                            success: function(list) {
-                            	
-         			            var html = "";
-         			            var value = "";
-         			            
-         			            value+= "<tr id='tr1'>";
-         			            value+= "<th width='50'>선택</th>";
-         			            value+= "<th width='40'>번호</th>";
-         			            value+= "<th width='150'>카테고리</th>";
-         			            value+= "<th width='500' style='text-align: center;'>제목</th>";
-         			            value+= "<th width='70'>조회수</th>";
-         			            value+= "<th width='150'>작성일</th>";
-         			            value+= "</tr>";
-         			           $("#result thead").html(value);
-         			           
-        			            if (list.length == 0) {
-        			                html += "<tr><td colspan='5' align='center'>존재하는 글이 없습니다</td></tr>";
-        			            } else {
-        			            	for(let i in list){
-        			                    html += "<tr>";
-        			                    html += "<td><input type='checkbox' class=''></td>";
-        			                    html += "<td>"+list[i].boardNo+"</td>";
-        			                    /* html += "<td>"+list[i].boardNo+"</td>"; */
-        			                        if (list[i].boardNo.startsWith('BRD')) {
-										        html += "<td>[자유게시판]</td>";
-										    } else if (list[i].boardNo.startsWith('PRT')) {
-										        html += "<td>[소모임]</td>";
-										    }  else {
-										    	 html += "<td>[무료나눔]</td>";
-										    }
-        			                    html += "<td>"+list[i].boardTitle+"</td>";
-        			                    html += "<td>"+list[i].count+"</td>";
-        			                    html += "<td>"+list[i].createDate+"</td>";
+				  <table>
+				    <tr>
+				        <td colspan="5" class="td1"><input type="checkbox" name="" class="ckbox-all"></td>
+				        <td class="td1" width="900">&nbsp;&nbsp;전체선택</td>
+				        <td class="td2"><a href="#" class = "btn btn-sm btn-primary" id="deleteBtn">삭제하기</a></td>
+				        
+				    </tr>
+				    
+				</table>
+				<br>
+				<table border="0px" id="result" class="table table-hover table1" style="width: 100%; margin:auto;" align="center">
+				    <thead>
+				
+				    </thead>
+				
+				    <tbody>
+				
+				    </tbody>
+				</table>
+				
+				<script type="text/javascript">
+				    $(document).on("change", ".ckbox-all", function(){
+				        var checked = $(this).is(":checked");
+				        $(".ckbox").prop("checked", checked);
+				    });
+				
+				    
+				    
+				    
+				    //내가 쓴 게시글 목록
+				    function myPostList(cpage){
+				        $.ajax({
+				            url: "myPostList.me",
+				            type: "POST",
+				            data:  { cpage: cpage }, 
+				            success: function(result) {
+				
+				            	console.log(result);
+				            	console.log(result.list[1].boardNo);
+				            	
+				                var html = "";
+				                var value = "";
+				
+				                value+= "<tr id='tr1'>";
+				                value+= "<th width='50'>선택</th>";
+				                value+= "<th width='40'>번호</th>";
+				                value+= "<th width='150'>카테고리</th>";
+				                value+= "<th width='500' style='text-align: center;'>제목</th>";
+				                value+= "<th width='70'>조회수</th>";
+				                value+= "<th width='150'>작성일</th>";
+				                value+= "</tr>";
+				                $("#result thead").html(value);
+				
+				                if (result.list.length == 0) {
+				                    html += "<tr><td colspan='5' align='center'>존재하는 글이 없습니다</td></tr>";
+				                } else {
+				                    for(let i in result.list){
+				                        html += "<tr>";
+				                        html += "<td><input type='checkbox' class='ckbox'></td>";
+				                        html += "<td>"+result.list[i].boardNo+"</td>";
+				                        if (result.list[i].boardNo.startsWith('BRD')) {
+				                            html += "<td>[자유게시판]</td>";
+				                        } else if (result.list[i].boardNo.startsWith('PRT')) {
+				                            html += "<td>[소모임]</td>";
+				                        }  else {
+				                            html += "<td>[무료나눔]</td>";
+														    }
+        			                    html += "<td>"+result.list[i].boardTitle+"</td>";
+        			                    html += "<td>"+result.list[i].count+"</td>";
+        			                    html += "<td>"+result.list[i].createDate+"</td>";
         			                    html += "</tr>";
+		
         			                }
         			            	 $("#result tbody").html(html);
-        			            } 
+        			            }
+			                    
+				                
+				                
+				                
+				                var a = '';
+					              var page = result.page;
+					              var startpage = result.startPage;
+					              var endpage = result.endPage;
+					              var list = result.list;
+					              var maxpage = result.maxPage;
+					              
+					              console.log(page+" , "+startpage+" , "+endpage+" , "+list);
+					             
+				            	  a += '<ul class="pagination" align="center">';
+				            	  if(page== 1) {
+				            		    // 실행할 코드
+				            		    console.log("페이지가1임")
+					            	  a += '<li class="page-item disabled"><a class="page-link" href="">이전</a></li>';
+				            	  }else{
+				            		    console.log("페이지가1이아님")
+					            	  a += '<li class="page-item"><a class="page-link"  onclick="myPostList('+(page- 1)+');">이전</a></li>';
+				            		  
+				            	  }
+				            		
+					              for(var num = startpage; num<= endpage; num++){
+			                    		 a += '<li class="page-item active pagebtn"><a class="page-link pagebtn" onclick="myPostList(' + num +'); return false;">' + num + '</a></li>'
+		                    		 }
+					            	
+					              if(page== maxpage){
+					            	  a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
+					              }else{
+					            	  a += '<li class="page-item"><a class="page-link"  onclick="myPostList(' + (page + 1) +'); return false;">다음</a></li>';
+					              }
+					              
+					              
+				            	  a += '</ul>';
+				            	  a += ' </div>';
+				
+
+				            	  $("#pagingArea").html(a);
+
+				                
  
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
@@ -266,12 +341,14 @@
                     
                  	
                   //내가 쓴 댓글 목록
-                    function myReplyList(){
+                    function myReplyList(cpage){
                     	$.ajax({
                     		url: "myReplyList.me",
                             type: "POST",
-                            data: { memId: $("#memId").val() }, //로그인유저아이디
-                            success: function(list) {
+                            data:  { cpage: cpage }, 
+                            success: function(result) {
+                            	
+                            	console.log(result);
                             	
          			            var html = "";
          			            var value = "";
@@ -284,19 +361,60 @@
          			            value+= "</tr>";
          			           $("#result thead").html(value);
          			           
-        			            if (list.length == 0) {
+        			            if (result.list.length == 0) {
         			                html += "<tr><td colspan='5' align='center'>존재하는 글이 없습니다</td></tr>";
         			            } else {
-        			            	for(let i in list){
+        			            	for(let i in result.list){
         			                    html += "<tr>";
-        			                    html += "<td><input type='checkbox' class=''></td>";
-        			                    html += "<td>"+list[i].reNo+"</td>";
-        			                    html += "<td>"+list[i].commContent+"<div><span class='myReplyBoardTitle' style='font-size: 13px;'> 원문 제목 : "+list[i].boardTitle+"</span></div></td>"; 
-        			                    html += "<td>"+list[i].createDate+"</td>";
+        			                    html += "<td><input type='checkbox' class='ckbox'></td>";
+        			                    html += "<td>"+result.list[i].reNo+"</td>";
+        			                    html += "<td>"+result.list[i].commContent+"<div><span class='myReplyBoardTitle' style='font-size: 13px;'> 원문 제목 : "+result.list[i].boardTitle+"</span></div></td>"; 
+        			                    html += "<td>"+result.list[i].createDate+"</td>";
         			                    html += "</tr>";
         			                }
         			            	 $("#result tbody").html(html);
-        			            }  
+        			            }
+        			            
+        			            
+        			            //////////////////////
+				                var a = '';
+					              var page = result.page;
+					              var startpage = result.startPage;
+					              var endpage = result.endPage;
+					              var list = result.list;
+					              var maxpage = result.maxPage;
+					              
+					              console.log(page+" , "+startpage+" , "+endpage+" , "+list);
+					             
+				            	  a += '<ul class="pagination" align="center">';
+				            	  if(page== 1) {
+				            		    // 실행할 코드
+				            		    console.log("페이지가1임")
+					            	  a += '<li class="page-item disabled"><a class="page-link" href="">이전</a></li>';
+				            	  }else{
+				            		    console.log("페이지가1이아님")
+					            	  a += '<li class="page-item"><a class="page-link"  onclick="myReplyList('+(page- 1)+');">이전</a></li>';
+				            		  
+				            	  }
+				            		
+					              for(var num = startpage; num<= endpage; num++){
+			                    		 a += '<li class="page-item active pagebtn"><a class="page-link pagebtn" onclick="myReplyList(' + num +'); return false;">' + num + '</a></li>'
+		                    		 }
+					            	
+					              if(page== maxpage){
+					            	  a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
+					              }else{
+					            	  a += '<li class="page-item"><a class="page-link"  onclick="myReplyList(' + (page + 1) +'); return false;">다음</a></li>';
+					              }
+					              
+					              
+				            	  a += '</ul>';
+				            	  a += ' </div>';
+				
+
+				            	  $("#pagingArea").html(a);
+        			            
+        			            /////////////////////////
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.log("Error: " + textStatus + " " + errorThrown);
@@ -306,29 +424,151 @@
                     }
                     
                     </script>
+
+
+<!--                     <div align="left" >
+                        <br>
+                        <a href="#" class = "btn btn-sm btn-primary" id="deleteBtn">삭제하기</a>
+                        <br><br>
+                    </div>   -->
+                    
+                    <script type="text/javascript">
+                    $("#deleteBtn").on("click", function() {
+                    	
+                        if ($("#myPostTab").hasClass("active")) {
+                            console.log("myPostTab 내글삭제삭제함수탄다")
+                            deleteMyPost();
+                        } else if ($("#myReplyTab").hasClass("active")) {
+                            deleteMyReply();
+                            console.log("myReplyTab 내댓글삭제삭제함수탄다")
+                        }
+                    });
+                    
+                    
+                    
+                    // 게시물 삭제 함수
+                    function deleteMyPost() {
+                        // 선택된 게시물 번호를 담을 배열
+                        var boardNoArr = [];
+                        $(".ckbox:checked").each(function() {
+                            boardNoArr.push($(this).closest("tr").find("td:eq(1)").text());
+                        });
+                        if (boardNoArr.length == 0) {
+                            alert("삭제할 게시물을 선택해주세요.");
+                            return;
+                        }
+                        if (!confirm("삭제하시겠습니까?")) {
+                            return;
+                        }
+                        
+                        console.log(boardNoArr);
+                        
+                        $.ajax({
+                            url: "deleteMyPost.me",
+                            type: "POST",
+                            data: { "boardNoArr[]": boardNoArr },
+                            success: function(result) {
+                                if (result>0) {
+                                	//console.log("게시물삭제완료");
+                                    alert("삭제되었습니다.");
+                                    myPostList();
+                                } else {
+                                	//console.log("게시물삭제 실패패패패패");
+                                    alert("삭제에 실패하였습니다.");
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.log("Error: " + textStatus + " " + errorThrown);
+                            }
+                        });
+                        
+                        
+                        
+                    }
+                    
+                    
+                    //댓글 삭제 함수
+                    function deleteMyReply(){
+                    	// 선택된 댓글 번호를 담을 배열
+                        var replyNoArr = [];
+                        $(".ckbox:checked").each(function() {
+                        	replyNoArr.push($(this).closest("tr").find("td:eq(1)").text());
+                        });
+                        if (replyNoArr.length == 0) {
+                            alert("삭제할 게시물을 선택해주세요.");
+                            return;
+                        }
+                        if (!confirm("삭제하시겠습니까?")) {
+                            return;
+                        }
+                        
+                        console.log(replyNoArr);
+                        
+                        $.ajax({
+                            url: "deleteMyReply.me",
+                            type: "POST",
+                            data: { "replyNoArr[]": replyNoArr },
+                            success: function(result) {
+                                if (result>0) {
+                                	//console.log("게시물삭제완료");
+                                    alert("삭제되었습니다.");
+                                    myReplyList();
+                                } else {
+                                	//console.log("게시물삭제 실패패패패패");
+                                    alert("삭제에 실패하였습니다.");
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.log("Error: " + textStatus + " " + errorThrown);
+                            }
+                        });
+                    	
+                    }
+                   
+                  //////////
+                    
+                    $("#deleteBtn").on("click", function() {
+                    	
+                        if ($("#myPostTab").hasClass("active")) {
+                            console.log("myPostTab 내글삭제삭제함수탄다")
+                            deleteMyPost();
+                        } else if ($("#myReplyTab").hasClass("active")) {
+                            deleteMyReply();
+                            console.log("myReplyTab 내댓글삭제삭제함수탄다")
+                        }
+                    });
+                    
+                    </script>
+                    
+                    
+
+                    
+               <div id="pagingArea" align="center" >
+
+          	  </div>
+                     
+
+                    
+                    
+                    
+                    
+<!--  -->
+
+
+
+
+
+
+
+
+
+
+<!--  -->
+                    
                     
 
 
-	
 
-
-                    <div align="left" >
-                        <br>
-                        <a href="#" class = "btn btn-sm btn-primary">삭제하기</a>
-                        <br><br>
-                    </div>  
-                    <div id="pagingArea" align="center">
-                        <ul class="pagination">
-                            
-                                <li class="page-item"><a class="page-link" href=""> &lt;&lt; </a></li>
-                                <li class="page-item"><a class="page-link" href="">1</a></li>
-                                <li class="page-item"><a class="page-link" href="">2</a></li>
-                                <li class="page-item"><a class="page-link" href="">3</a></li>
-                                <li class="page-item"><a class="page-link" href="">4</a></li>
-                                <li class="page-item"><a class="page-link" href="">5</a></li>
-                                    <li class="page-item"><a class="page-link" href="">&gt;&gt;</a></li>
-                        </ul>
-                    </div>
                    
                 </div>
             </div>

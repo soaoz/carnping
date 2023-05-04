@@ -323,9 +323,10 @@
 					    <a href="myQuestionList.me" class="btn btn-sm btn-light">목록가기</a>
 					    <!-- 히스토리백 /list.no-->
 					    <!-- 현재 로그인한 사용자가 해당 글을 쓴 본인일 경우  -->
-					    <c:if test="${ not empty loginMember.memId }">
+					    <c:if test="${ not empty loginMember.memId and loginMember.memId eq  q.memId }">
+					    
 					        <a class="btn btn-sm btn-warning" onclick="postFormSubmit(1);">수정하기</a>
-					        <a class="btn btn-sm btn-danger">삭제하기</a>
+					        <a class="btn btn-sm btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 					        
 					        <form id="postForm" action="" method="post" >
 						           <!-- 숨겨야하니까 포스트 넘기고싶은건 글번호 -->
@@ -342,7 +343,8 @@
 						        		   $("#postForm").attr("action", "questionUpdateForm.me").submit();
 						        		   //action을 updateForm.bo로 ...submit까지 해줘야 날라갈수잇음
 						        	   }else{ //삭제하기 클릭했다
-						        		   $("#postForm").attr("action","delete.bo").submit();
+						        		   console.log("삭제하기클릭해서 else 탄다 ");
+						        		   $("#postForm").attr("action","deleteQuestion.me").submit();
 						        	   }
 						           }
 						           </script>

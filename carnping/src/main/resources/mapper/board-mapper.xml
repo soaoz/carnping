@@ -31,11 +31,21 @@
 		<result column="MEM_NO" property="memNo"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COMM_CONTENT" property="commContent"/>
+		<result column="STATUS" property="status"/>
 		<result column="BOARD_TITLE" property="boardTitle"/>
 	</resultMap>
 	
 	
-	<select id="selectBoardList" resultMap="boardResultMap">
+	<select id="selectMyBoardListCount" resultType="_int">
+  	  SELECT
+  	  		 COUNT(*)
+  	  	FROM FBOARD
+  	   WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+  	     AND STATUS = 'Y'
+	</select>
+	
+	
+	<select id="selectMyBoardList" resultMap="boardResultMap">
 		SELECT
 			  BOARD_NO
 			, BOARD_TITLE
@@ -53,7 +63,17 @@
 		   BY CREATE_DATE DESC
 	</select>
 	
-	<select id="selectCommentList" resultMap="commentResultMap">
+	
+	<select id="selectMyCommentListCount" resultType="_int">
+  	  SELECT
+  	  		 COUNT(*)
+  	  	FROM REVIEW_COMMENT
+  	   WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+  	     AND STATUS = 'Y'
+	</select>
+	
+	
+	<select id="selectMyCommentList" resultMap="commentResultMap">
 		SELECT
 			  RE_NO
 			, REF_NO
@@ -64,12 +84,24 @@
 	     FROM REVIEW_COMMENT R
 		 JOIN FBOARD ON (REF_NO=BOARD_NO)
 		WHERE R.MEM_NO = (SELECT M.MEM_NO FROM MEMBER M WHERE MEM_ID = #{memId})
+		  AND R.STATUS = 'Y'
 		ORDER BY RE_NO DESC
 	</select>
 	
+
+	<update id="deleteBoard">
+		update 
+				fboard
+			set status = 'N'
+		  where board_no = #{boardNo}
+	</update>
 	
 	
-	
+	<update id="deleteComment">
+		update REVIEW_COMMENT
+		   set status = 'N'
+		 where RE_NO = #{reNo}
+	</update>
 	
 	
 </mapper>

@@ -2,11 +2,13 @@ package com.kh.carnping.member.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.Comment;
+import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
 
@@ -50,11 +52,27 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateProfile", m);
 	}
 	
-	public ArrayList<Question> questionSelectList(SqlSessionTemplate sqlSession,String memId) {
-		return (ArrayList)sqlSession.selectList("memberMapper.questionSelectList", memId);
-	}
 	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+	
+	public int selectQuestionListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.selectQuestionListCount");
+	}
+	
+	public ArrayList<Question> questionSelectList(SqlSessionTemplate sqlSession,PageInfo pi, String memId) {
+		
+		//페이지
+		//오프셋 : 몇개의 게시글을 건너 뛸 건지
+		int offset = (pi.getCurrentPage()-1 )*pi.getBoardLimit();
+		
+		//총 몇개를 조회해갈껀지 
+		int limit =pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.questionSelectList", memId , rowBounds);
 	}
 	
 	public Question selectQuestion(SqlSessionTemplate sqlSession,String queNo) {
@@ -67,15 +85,56 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateQuestion", q);
 	}
 	
+	public int deleteQuestion(SqlSessionTemplate sqlSession,String queNo) {
+		return sqlSession.update("memberMapper.deleteQuestion", queNo);
+	}
+	
 	public int deleteMember(SqlSessionTemplate sqlSession ,String memId) {
 		return sqlSession.update("memberMapper.deleteMember", memId);
 	}
 	
-	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession,String memId){
-		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", memId);
+	public int selectMyBoardListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("boardMapper.selectMyBoardListCount", memId);
+	} 
+	
+	public ArrayList<Board> selectMyBoardList(SqlSessionTemplate sqlSession, PageInfo pi, String memId){
+		
+		//페이지
+		//오프셋 : 몇개의 게시글을 건너 뛸 건지
+		int offset = (pi.getCurrentPage()-1 )*pi.getBoardLimit();
+		
+		//총 몇개를 조회해갈껀지 
+		int limit =pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMyBoardList", memId, rowBounds);
 	}
 	
-	public ArrayList<Comment> selectCommentList(SqlSessionTemplate sqlSession,String memId){
-		return (ArrayList)sqlSession.selectList("boardMapper.selectCommentList", memId);
+	public int selectMyCommentListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("boardMapper.selectMyCommentListCount", memId);
+	}
+	
+	public ArrayList<Comment> selectMyCommentList(SqlSessionTemplate sqlSession, PageInfo pi, String memId){
+		
+		//페이지
+		//오프셋 : 몇개의 게시글을 건너 뛸 건지
+		int offset = (pi.getCurrentPage()-1 )*pi.getBoardLimit();
+		
+		//총 몇개를 조회해갈껀지 
+		int limit =pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMyCommentList", memId , rowBounds);
+	}
+	
+	public int deleteBoard(SqlSessionTemplate sqlSession,String boardNo) {
+		return sqlSession.update("boardMapper.deleteBoard",boardNo);
+	}
+	
+	public int deleteComment(SqlSessionTemplate sqlSession,String reNo) {
+		return sqlSession.update("boardMapper.deleteComment",reNo);
 	}
 }

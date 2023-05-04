@@ -17,6 +17,9 @@ public class Comment {
 	private String memNo;		// 작성자
 	private String createDate;	// 작성일
 	private String commContent;	// 댓글내용
+	//아래는 추가된거
+	private String status;		// 상태 
 	private String boardTitle; // 원문제목
+	
 	}
 

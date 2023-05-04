@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.Comment;
+import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.member.model.dao.MemberDao;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -75,8 +76,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.updateProfile(sqlSession, m);
 	}
 	
-	public ArrayList<Question> questionSelectList(String memId){
-		return mDao.questionSelectList(sqlSession, memId);
+	public int selectQuestionListCount() {
+		return mDao.selectQuestionListCount(sqlSession); 
+	}
+	
+	public ArrayList<Question> questionSelectList(PageInfo pi, String memId){
+		return mDao.questionSelectList(sqlSession, pi,  memId);
 	}
 	
 	public Question selectQuestion(String queNo) {
@@ -91,17 +96,37 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.updateQuestion(sqlSession,q);
 	}
 	
+	public int deleteQuestion(String queNo) {
+		return mDao.deleteQuestion(sqlSession, queNo);
+	}
+	
 	@Override
 	public int deleteMember(String memId) {
 		return mDao.deleteMember(sqlSession , memId);
 	}
 	
-	public ArrayList<Board> selectBoardList(String memId){
-		return mDao.selectBoardList(sqlSession, memId);
+	public int selectMyBoardListCount(String memId) {
+		return mDao.selectMyBoardListCount(sqlSession, memId); 
 	}
 	
-	public ArrayList<Comment> selectCommentList(String memId){
-		return mDao.selectCommentList(sqlSession, memId);
+	public ArrayList<Board> selectMyBoardList(PageInfo pi, String memId){
+		return mDao.selectMyBoardList(sqlSession, pi, memId);
+	}
+		
+	public int selectMyCommentListCount(String memId) {
+		return mDao.selectMyCommentListCount(sqlSession, memId);
+	}
+	
+	public ArrayList<Comment> selectMyCommentList(PageInfo pi, String memId){
+		return mDao.selectMyCommentList(sqlSession, pi, memId);
+	}
+	
+	public int deleteBoard(String boardNo) {
+		return mDao.deleteBoard(sqlSession, boardNo);
+	}
+	
+	public int deleteComment(String reNo) {
+		return mDao.deleteComment(sqlSession, reNo);
 	}
 
 }
