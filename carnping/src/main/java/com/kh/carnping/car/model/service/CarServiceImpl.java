@@ -49,6 +49,12 @@ public class CarServiceImpl implements CarService{
 	public ArrayList<Comment> selectReviewComment(String reNo) {
 		return cDao.selectReviewComment(sqlSession, reNo);
 	}
+
+	@Override
+	public int reviewLike(String reNo) {
+		return cDao.reviewLike(sqlSession, reNo);
+	}
+
 	
 	
 	

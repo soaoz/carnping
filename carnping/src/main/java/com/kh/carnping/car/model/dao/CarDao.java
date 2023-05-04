@@ -37,6 +37,10 @@ public class CarDao {
 	public ArrayList<Comment> selectReviewComment(SqlSessionTemplate sqlSession, String reNo) {
 		return (ArrayList)sqlSession.selectList("carMapper.selectReviewComment", reNo);
 	}
+
+	public int reviewLike(SqlSessionTemplate sqlSession, String reNo) {
+		return sqlSession.update("carMapper.reviewLike", reNo);
+	}
 	
 	
 	

@@ -59,28 +59,41 @@ public class CarController {
 		Cinfo cinfo = cService.selectDetail(cinfoNo);
 		Review reCount = cService.selectReviewCount(cinfoNo);
 		String[] week = {"월","화","수","목","금","토","일"}; 
+		String[] facilities = {"화장실","편의점","카페","마트","음식점","주차장","캠핑장","병원"};
 		
+		model.addAttribute("facilities", facilities);
 		model.addAttribute("week", week);
 		model.addAttribute("cinfo", cinfo);
 		model.addAttribute("reCount", reCount);
 		return "car/carDetail";
 	}
 	
-	
+	// 리뷰 리스트
 	@ResponseBody
 	@RequestMapping(value = "selectReview.ca" , produces = "application/json; charset=utf-8")
 	public String selectReview(String cinfoNo) {
-		JSONObject jObj = new JSONObject();
 		ArrayList<Review> review = cService.selectReview(cinfoNo);
 		return new Gson().toJson(review);
 	}
 	
+	// 리뷰 댓글 리스트
 	@ResponseBody
 	@RequestMapping(value = "selectReviewComment.ca" , produces = "application/json; charset=utf-8")
 	public String selectComment(String reNo) {
-		JSONObject jObj = new JSONObject();
 		ArrayList<Comment> comment = cService.selectReviewComment(reNo);
 		return new Gson().toJson(comment);
+	}
+	
+	// 리뷰 좋아요
+	@RequestMapping(value = "like.ca")
+	public String reviewLike(String reNo) {
+		int like = cService.reviewLike(reNo);
+		if(like > 0) {
+			System.out.println("성공");
+		}else {
+			System.out.println("실패");
+		}
+		return "car/carDetail";
 	}
 	
 	

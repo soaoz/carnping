@@ -235,7 +235,13 @@
 				, CREATE_DATE
 				, COMM_CONTENT
 		  FROM REVIEW_COMMENT
-		 WHERE REF_NO = 'RVW1'
+		 WHERE REF_NO = #{reviewNo}
 		   AND STATUS = 'Y'
 	</select>
+	
+	<update id="reviewLike">
+		UPDATE REVIEW
+		   SET REVIEW_LIKE = REVIEW_LIKE+1
+		 WHERE REVIEW_NO = #{reNo}
+	</update>
 </mapper>

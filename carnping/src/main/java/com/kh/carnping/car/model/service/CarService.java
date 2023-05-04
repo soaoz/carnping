@@ -26,4 +26,9 @@ public interface CarService {
 	
 	// 리뷰 댓글 정보
 	ArrayList<Comment> selectReviewComment(String reNo);
+	
+	// 리뷰 좋아요
+	int reviewCount(String reNo);
+
+	int reviewLike(String reNo);
 }
