@@ -189,7 +189,7 @@
     </head>
     <body>
 <jsp:include page="../common/header.jsp"/>   
-
+<jsp:include page="../common/menubar.jsp"/>
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
 </div>
@@ -220,7 +220,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -237,7 +237,7 @@
                 <div class="col-sm-10 col-sm-offset-1 profiel-container">
 
 
-                    <form action="" method="">
+                    <form action="userPwdCheck.me" method="post">
 
                         <div class="profiel-header">
                             <h3>
@@ -258,12 +258,12 @@
                                 <div class="form-group">
                                     <br>
                                     <label>비밀번호 확인<small></small></label>
-                                    <input name="Password" type="password" class="form-control">
+                                    <input type="password" class="form-control" name="userPwd">
                                 </div>
                             </div>
                             <div class="col-sm-10 col-sm-offset-1">
                             	<br><br>
-                                <input type='button' class='btn btn-finish btn-primary pull-right' name='update' value='확인'  onclick="location.href='myProfileUpdate.me';"/>
+                                <input type='submit' class='btn btn-finish btn-primary pull-right' name='update' value='확인'  onclick="location.href='myProfileUpdate.me';"/>
                                 <br><br>
                             
                             </div>

@@ -33,7 +33,7 @@
 <body>
 
 <jsp:include page="../common/header.jsp"/>
-
+ <jsp:include page="../common/menubar.jsp"/>  
    
    
     <!-- Filter Begin -->
@@ -58,7 +58,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="" class="menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="logoutPage.me" class="menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -135,7 +135,7 @@
                                         <input type="checkbox" name="11" id="11">
                                     </td>
                                     <td>4352</td>
-                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</ㄴ></div></td>
+                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</span></div></td>
                                     <td width="100">김아무개</td>
                                     <td>234</td>
                                     <td>23.04.01 20:30</td>
@@ -146,7 +146,7 @@
                                         <input type="checkbox" name="11" id="11">
                                     </td>
                                     <td>4352</td>
-                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</ㄴ></div></td>
+                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</span></div></td>
                                     <td width="100">원문 작성자</td>
                                     <td>234</td>
                                     <td>23.04.01 20:30</td>
@@ -156,7 +156,7 @@
                                         <input type="checkbox" name="11" id="11">
                                     </td>
                                     <td>4352</td>
-                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</ㄴ></div></td>
+                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</span></div></td>
                                     <td width="100">김아무개</td>
                                     <td>234</td>
                                     <td>23.04.01 20:30</td>
@@ -167,7 +167,7 @@
                                         <input type="checkbox" name="11" id="11">
                                     </td>
                                     <td>4352</td>
-                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</ㄴ></div></td>
+                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</span></div></td>
                                     <td width="100">김아무개</td>
                                     <td>234</td>
                                     <td>23.04.01 20:30</td>
@@ -178,7 +178,7 @@
                                         <input type="checkbox" name="11" id="11">
                                     </td>
                                     <td>4352</td>
-                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span class="myReplyBoardTitle"> 원문 제목 : 강원도 차박지 추천해주세요(3)</ㄴ></div></td>
+                                    <td> 속초에 어쩌구 저쩌구 블라블라 <div><span > 원문 제목 : 강원도 차박지 추천해주세요(3)</span></div></td>
                                     <td width="100">김아무개</td>
                                     <td>234</td>
                                     <td>23.04.01 20:30</td>

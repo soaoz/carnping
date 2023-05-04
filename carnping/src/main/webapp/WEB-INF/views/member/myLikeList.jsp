@@ -190,7 +190,7 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-
+<jsp:include page="../common/menubar.jsp"/>
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
 </div>
@@ -221,7 +221,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>

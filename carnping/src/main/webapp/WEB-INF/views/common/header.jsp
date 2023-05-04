@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/style.css" type="text/css">
 
+
     <!-- icon(fontawesome.com) 등록 -->
     <script src="https://kit.fontawesome.com/78c41960c5.js" crossorigin="anonymous"></script>
     
@@ -44,12 +45,15 @@
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic" />
 
 
-    <!--member css  -->
-    <!--  
-    <link rel="stylesheet" href="resources/member/css/style.css" type="text/css">
-    <link rel="stylesheet" href="resources/member/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="resources/member/assets/css/style.css">
-	-->
+	<!-- 알람창 JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+
 
     <style>
         #addSite{
@@ -169,6 +173,14 @@
 
     </style>
 </head>
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+
+	
+	</c:if>
 <!--letter-spacing: 0.1em;-->
     <!-- Page Preloder -->
     <div id="preloder">
