@@ -1539,7 +1539,6 @@
     </section>
     <!-- Newslatter Section End -->
 	<a href="admin.ad">admin으로가기(임시)</a>
-	<br><a href="templogin">임시로그인</a>
 	<jsp:include page="common/footer.jsp"/>
 </body>
 </html>

@@ -192,32 +192,7 @@
 	    </style>
     </head>
     <body>
-    
-    
 <jsp:include page="../common/header.jsp"/>   
-<jsp:include page="../common/menubar.jsp"/>
-<c:if test="${ not empty confirmMsg }">
-		<script>
-			
-			
-			if (confirm('${confirmMsg}')) {
-				// 확인 버튼 클릭 시 탈퇴 처리
-	            $.ajax({
-	                type: "POST",
-	                url: "delete.me",
-	                data: {confirm: true},
-	                success: function() {
-	                	location.href='unregisterFinish.me';
-	                }
-	            });
-
-    		}else {
-				// 취소 버튼 클릭 시 이전 페이지로 이동
-				history.back();
-			}
-		</script>
-	<c:remove var="confirmMsg" scope="session"/>
-</c:if>
 
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
@@ -230,7 +205,8 @@
 				<div class="filter__title">
             <h5><i class="fa-sharp fa-solid fa-house"></i>마이페이지</h5>
         </div>
-        <div class="myPage_menu" id="fake"></div>
+        <div class="myPage_menu" id="fake">
+         </div>
 
         <div class="myPage_menu">
             <a href="myPageMainSelect.me" class="menu"><i class="fa fa fa-user"></i> 회원정보 </a>
@@ -248,7 +224,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -265,9 +241,8 @@
                 <div class="col-sm-10 col-sm-offset-1 profiel-container">
 
 
-                    <form action="deleteCheck.me" method="post">
-                    <input type="hidden" value="${loginMember.memId }" name="memId">
-						
+                    <form action="" method="">
+
                         <div class="profiel-header">
                             <h3>
                                 <br>
@@ -282,19 +257,18 @@
                         </div>
 
                         <div class="clear">
-						
+
                             <div class="col-sm-10 col-sm-offset-1">
                                 <br>
                                 <div class="form-group">
                                     <br>
                                     <label>비밀번호 확인<small></small></label>
-                                    <input name="userPwd" type="password" class="form-control" id="userPwd">
+                                    <input name="Password" type="password" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-10 col-sm-offset-1">
-                                <br><br>
-                                <!-- <input type='button' class='btn btn-finish btn-primary pull-right' name='deleteConfirm' value='탈퇴하기'  />  -->
-                                <button type="submit" class='btn btn-primary me-2'>탈퇴하기</button>
+                            	<br><br>
+                                <input type='button' class='btn btn-finish btn-primary pull-right' name='update' value='탈퇴하기'  onclick="';"/>
                                 <br><br>
                             
                             </div>

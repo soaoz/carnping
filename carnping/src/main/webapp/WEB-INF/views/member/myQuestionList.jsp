@@ -41,9 +41,6 @@
 			font-family: 'Dovemayo_gothic';
 			font-size: 16px;
 			letter-spacing :0.5px;
-            padding-top: 10px !important;
-            vertical-align: middle !important;
-            
 		}
 		.ckbox{
 			border:1px soild gray !important;
@@ -120,17 +117,12 @@
 		.title{
 			color : #1C3053;
 		}
-		    
-	    #pagingArea {
-	        width: fit-content;
-	        margin: auto;
-	    }
+		
 </style>
 </head>
 <body>
    
- <jsp:include page="../common/header.jsp"/>
- <jsp:include page="../common/menubar.jsp"/>  
+ <jsp:include page="../common/header.jsp"/>  
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
 </div>
@@ -162,7 +154,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -191,7 +183,7 @@
                     <table border="0px" class="table table-hover"  style="width: 100%; margin:auto;" align="center" id="postTable">
                         <thead>
                             <tr id="tr1">
-                                <th width="100">분류</th>
+                                <th width="40">번호</th>
                                 <th  width="500">제목</th>
                                 <th width="100">작성일</th>
                                 <th width="100">답변상태</th>
@@ -200,92 +192,49 @@
                         </thead>
                         
                         <tbody>
-                        	<c:if test="${empty list }">
                                 <tr>
                                     <td colspan="5" align="center">존재하는 글이 없습니다</td>
                                 </tr>
-                            </c:if>
+                                
 
-                            <c:forEach var="q" items="${ list }">
-
-                                <tr style="line-height: 14px;">
-                                    <td class="queNo">${ q.queNo }</td>
-                                    <td>${ q.queTitle }</td>
-                                    <td style="font-size: 13px; padding:10px;">${ q.queDate }</td>
-                                    <td>
-										<c:if test="${q.queStatus eq 'T'}">대기중</c:if>
-      									<c:if test="${q.queStatus eq 'Y'}">답변완료</c:if>
-									</td>
+                              
+                                <tr>
+                                    <td>1</td>
+                                    <td>악플러를 신고하고싶은데요</td>
+                                    <td>2023-04-01</td>
+                                    <td>답변 완료</td>
                                 </tr>
-                   			 </c:forEach>				
+                                <tr>
+                                    <td>2</td>
+                                    <td> 제안합니다 </td>
+                                    <td>2023-04-02</td>
+                                    <td>대기중</td>
+                                </tr>					
                         </tbody>
                     </table>
-        	<script>
-        	$(function(){
 
-				$("table>tbody>tr").click(function(){
-				  var queNo = $(this).children(".queNo").text();
-				  location.href='myQuestionDetail.me?queNo=' + queNo;
-				  
-				})
-				    			
-    		})
-        	
-        	</script>
                     <div align="left" >
                         <br>
                         <a href="questionForm.me" class = "btn btn-sm btn-primary">문의 하기</a>
-                        <!-- <a href="myQuestionDetail.me" class = "btn btn-sm btn-primary">디테일</a> -->
                         <br><br>
-                        
-                        
-                        
-                        
                     </div>  
-
-                    
-                    
+                    <div id="pagingArea" align="center">
+                        <ul class="pagination">
+                            
+                                <li class="page-item"><a class="page-link" href=""> &lt;&lt; </a></li>
+                                <li class="page-item"><a class="page-link" href="">1</a></li>
+                                <li class="page-item"><a class="page-link" href="">2</a></li>
+                                <li class="page-item"><a class="page-link" href="">3</a></li>
+                                <li class="page-item"><a class="page-link" href="">4</a></li>
+                                <li class="page-item"><a class="page-link" href="">5</a></li>
+                                    <li class="page-item"><a class="page-link" href="">&gt;&gt;</a></li>
+                        </ul>
+                    </div>
                 </div>
-                                                                              <!--  -->
-                    
-              <div id="pagingArea" align="center" >
-                <ul class="pagination" align="center">
-              
-              		<c:choose>
-              			<c:when test="${ pi.currentPage eq 1}">
-                       	 	<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
-                        </c:when>
-                        <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage -1 }">Previous</a></li>
-                        </c:otherwise>
-                   	</c:choose>
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                        <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ p }">${ p }</a></li>
-        			</c:forEach>
-                    <c:choose>
-                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-                            <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
-                         </c:when>
-                         <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage +1 }">Next</a></li>
-                          </c:otherwise>
-                      </c:choose>
-                </ul>
             </div>
-                    
-                    <!--  -->
-
-            </div>
-
         </div>
-        
-
     </div>
-    
-<jsp:include page="../common/footer.jsp"/>
-
   </div>  
-  
-
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>
