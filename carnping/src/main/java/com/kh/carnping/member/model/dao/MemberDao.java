@@ -56,6 +56,7 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 	
+
 	public int selectQuestionListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("memberMapper.selectQuestionListCount");
 	}
@@ -136,5 +137,21 @@ public class MemberDao {
 	
 	public int deleteComment(SqlSessionTemplate sqlSession,String reNo) {
 		return sqlSession.update("boardMapper.deleteComment",reNo);
+
+	public int findIdByEmailCheck(SqlSessionTemplate sqlSession,  Member m) {
+		return sqlSession.selectOne("memberMapper.findIdByEmailCheck", m);
+	}
+	
+	public Member findIdByEmail(SqlSessionTemplate sqlSession,  Member m) {
+		return sqlSession.selectOne("memberMapper.findIdByEmail", m);
+	}
+
+	public int findPwdCheck(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.findPwdCheck", m);
+	}
+
+	public int updatePwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.updatePwd", m);
+
 	}
 }

@@ -269,9 +269,18 @@
                                                 </div>
                                             </li>
                                             <li style="margin-left: 15px;">
-                                                <a href="#" class="nickname" style="padding: 3px 0px;">
-                                                    <i class="fa-solid fa-circle-user" style="padding: unset; font-size: 35px;"></i>
-                                                    <span style="vertical-align: 10px; padding-left: 3px;">
+                                                <a href="#" class="nickname" style="padding: 3px 0px; display:flex;" >
+                                                    <c:choose>
+                                                        <c:when test="${ not empty loginMember.memImgOrigin }">
+                                                            <div style="width: 35px; height: 35px; border-radius:50%; overflow:hidden;">
+                                                                <img src="${loginMember.memImgChange}" alt="" style="object-fit: cover;">
+                                                            </div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <i class="fa-solid fa-circle-user" style="padding: unset; font-size: 35px;"></i>
+                                                        </c:otherwise>    
+                                                    </c:choose>
+                                                    <span style="padding-left: 15px; line-height: 35px;">
                                                     <c:choose>
                                                     <c:when test="${ not empty loginMember.nickName }">${ loginMember.nickName }</c:when>
                                                     <c:otherwise>${ loginMember.memId }</c:otherwise>

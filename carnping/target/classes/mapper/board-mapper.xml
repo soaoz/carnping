@@ -103,5 +103,6 @@
 		 where RE_NO = #{reNo}
 	</update>
 	
+
 	
 </mapper>

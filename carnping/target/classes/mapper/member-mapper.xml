@@ -16,7 +16,7 @@
 		<result column="MEM_IMG_ORIGIN" property="memImgOrigin"/>
 		<result column="MEM_IMG_CHANGE" property="memImgChange"/>
 		<result column="PHONE" property="phone"/>
-		<result column="MEM_API_TYPE" property="memAplType"/>
+		<result column="MEM_API_TYPE" property="memApiType"/>
 		<result column="MEM_API_TOKEN" property="memApiToken"/>
 		<result column="MARKETING" property="marketing"/>
 		
@@ -70,6 +70,48 @@
 	       member
      where email = #{email}
 	</select>
+	
+	<select id="findIdByEmailCheck" resultType="_int">
+	select
+		   count(*)
+	  from
+	       member
+     where mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<select id="findIdByEmail" resultMap="memberResultSet">
+	select
+	       concat(substr(mem_id, 1, 4), lpad('*', length(mem_id) - 4, '*')) "mem_id",
+           to_CHAR(enroll_date,'YYYY-MM-DD') "enroll_date",
+		   mem_img_change
+
+	  from
+	       member
+     where mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<select id="findPwdCheck"  resultType="_int">
+	select
+		   count(*)
+	  from
+	       member
+     where mem_id = #{memId}
+       and mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<update id="updatePwd">
+	update
+		   member
+	   set 
+	       mem_pwd = #{memPwd}
+	 where mem_id = #{memId}
+       and mem_name = #{memName}
+       and email = #{email}
+	
+	</update>
 	
 	<select id="idCheck" resultType="_int"> 
 	select
@@ -163,9 +205,12 @@
 	        , MEM_API_TOKEN
 	        , MARKETING
 		 FROM MEMBER
-		WHERE MEM_ID = #{memId}
+		WHERE MEM_ID = #{memId} OR EMAIL = #{email}
 		  AND STATUS = 'Y'
 	</select>
+	
+
+	
 
 
 
