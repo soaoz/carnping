@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu May 04 13:11:27 KST 2023
+auto-value-annotations-1.10.1.jar>central=
+auto-value-annotations-1.10.1-sources.jar>central=
+auto-value-annotations-1.10.1.pom>central=

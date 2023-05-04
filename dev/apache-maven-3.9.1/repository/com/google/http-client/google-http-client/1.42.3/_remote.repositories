@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu May 04 13:11:30 KST 2023
+google-http-client-1.42.3.jar>central=
+google-http-client-1.42.3.pom>central=
+google-http-client-1.42.3-sources.jar>central=

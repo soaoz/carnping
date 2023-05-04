@@ -22,7 +22,7 @@ public class GoogleOAuthApi extends DefaultApi20  {
 
 	@Override
 	protected String getAuthorizationBaseUrl() {
-		return "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent";
+		return "https://accounts.google.com/o/oauth2/v2/auth";
 	}
 
 }
