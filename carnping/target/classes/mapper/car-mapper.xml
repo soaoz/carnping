@@ -112,7 +112,7 @@
 		 WHERE CINFO_STATUS ='Y'
 	</select> 
 	
-	<select id="carList1" resultMap="cinfoResultMap">
+	<select id="filterList" resultMap="cinfoResultMap">
 		SELECT  CINFO_NO
 		        ,CINFO_NAME
 		        ,CINFO_LTTD

@@ -13,7 +13,7 @@ public interface CarService {
 	ArrayList<Cinfo> carList();
 	
 	// 차박 필터 후 리스트
-	ArrayList<Cinfo> carList1(Filter filter);
+	ArrayList<Cinfo> filterList(Filter filter);
 	
 	// 차박 상세 정보
 	Cinfo selectDetail(String cinfoNo);
@@ -27,8 +27,6 @@ public interface CarService {
 	// 리뷰 댓글 정보
 	ArrayList<Comment> selectReviewComment(String reNo);
 	
-	// 리뷰 좋아요
-	int reviewCount(String reNo);
-
+	// 리뷰 좋아용
 	int reviewLike(String reNo);
 }

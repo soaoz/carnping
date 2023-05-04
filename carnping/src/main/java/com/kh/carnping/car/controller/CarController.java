@@ -25,6 +25,7 @@ public class CarController {
 	@Autowired
 	private CarServiceImpl cService;
 	
+	// 차박 정보 리스트
 	@RequestMapping("carList.ca")
 	public String carList(Model model) {
 		ArrayList<Cinfo> list = cService.carList();
@@ -38,9 +39,10 @@ public class CarController {
 		} 
 	}	
 	
+	// 차박 정보 리스트 (필터기능)
 	@RequestMapping("filter.ca")
-	public String carList1(Filter filter, Model model) {
-		ArrayList<Cinfo> list = cService.carList1(filter);
+	public String filterList(Filter filter, Model model) {
+		ArrayList<Cinfo> list = cService.filterList(filter);
 		if(!list.isEmpty()) {
 			model.addAttribute("filter", filter);
 			model.addAttribute("list", list);
@@ -95,13 +97,4 @@ public class CarController {
 		}
 		return "car/carDetail";
 	}
-	
-	
-//	@ResponseBody
-//	@RequestMapping(value = "filterMap.ca" , produces = "application/json; charset=utf-8")
-//	public String filterMap(Filter filter) {
-//		ArrayList<Cinfo> list = cService.carList();
-//
-//		return new Gson().toJson(list); // JSON 형태로 만들어서 문자열로 리턴해줌 맴버객체ㄹ의 필드명으로 키값이 잡힘!
-//	}
 }

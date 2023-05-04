@@ -18,8 +18,8 @@ public class CarDao {
 		return (ArrayList)sqlSession.selectList("carMapper.carList");
 	}
 	
-	public ArrayList<Cinfo> carList1(SqlSessionTemplate sqlSession, Filter filter){
-		return (ArrayList)sqlSession.selectList("carMapper.carList1", filter);
+	public ArrayList<Cinfo> filterList(SqlSessionTemplate sqlSession, Filter filter){
+		return (ArrayList)sqlSession.selectList("carMapper.filterList", filter);
 	}
 	
 	public Cinfo selectDetail(SqlSessionTemplate sqlSession, String cinfoNo) {
