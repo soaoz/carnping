@@ -30,4 +30,6 @@
 		<result column="COMM_CONTENT" property="commContent"/>
 	</resultMap>
 	
+
+	
 </mapper>
