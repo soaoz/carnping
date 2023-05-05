@@ -1,11 +1,16 @@
 package com.kh.carnping.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.member.model.dao.MemberDao;
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Question;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -60,7 +65,88 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePwd(Member m) {
 		return mDao.updatePwd(sqlSession, m);
 	}
-	
-	
 
+	
+	
+	
+	//소영시작 
+	
+	@Override
+	public Member selectMember(String memId) {
+		return mDao.selectMember(sqlSession, memId);
+	}
+
+	@Override
+	public int nickNameUpdate(Member m) {
+		return mDao.nickNameUpdate(sqlSession, m);
+	}
+
+	@Override
+	public int passwordUpdate(Member m) {
+		return mDao.passwordUpdate(sqlSession, m);
+	}
+
+	@Override
+	public int updateProfile(Member m) {
+		return mDao.updateProfile(sqlSession, m);
+	}
+
+	//내가쓴글 목록 페이징을 위한 내가쓴글 갯수 조회
+	public int selectMyBoardListCount(String memId) {
+		return mDao.selectMyBoardListCount(sqlSession, memId); 
+	}
+	
+	//내가쓴글 목록 조회
+	public ArrayList<Board> selectMyBoardList(PageInfo pi, String memId){
+		return mDao.selectMyBoardList(sqlSession, pi, memId);
+	}
+	
+	//문의하기 목록 페이징을 위한 문의글 개수 조회
+	public int selectQuestionListCount(String memId) {
+		return mDao.selectQuestionListCount(sqlSession, memId); 
+	}
+	
+	//문의하기 목록 조회
+	public ArrayList<Question> questionSelectList(PageInfo pi, String memId){
+		return mDao.questionSelectList(sqlSession, pi,  memId);
+	}
+	
+	
+	@Override
+	public Question selectQuestion(String queNo) {
+		return mDao.selectQuestion(sqlSession, queNo);
+	}
+
+	@Override
+	public int insertQuestion(Question q) {
+		return mDao.insertQuestion(sqlSession, q);
+	}
+
+	@Override
+	public int updateQuestion(Question q) {
+		return mDao.updateQuestion(sqlSession,q);
+	}
+
+	@Override
+	public int deleteQuestion(String queNo) {
+		return mDao.deleteQuestion(sqlSession, queNo);
+	}
+
+	@Override
+	public int deleteMember(String memId) {
+		return 0;
+	}
+
+	@Override
+	public int deleteBoard(String boardNo) {
+		return 0;
+	}
+
+	@Override
+	public int deleteComment(String reNo) {
+		return 0;
+	}
+	
+	
+	
 }

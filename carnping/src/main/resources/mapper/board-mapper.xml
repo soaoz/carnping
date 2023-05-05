@@ -30,6 +30,35 @@
 		<result column="COMM_CONTENT" property="commContent"/>
 	</resultMap>
 	
+	
+	
+	<!-- 소영 : 내가 쓴글 목록 조회(myPostList) 페이징을 위한 내가쓴게시판글 개수조회 -->
+	<select id="selectMyBoardListCount" resultType="_int">
+  	  SELECT
+  	  		 COUNT(*)
+  	  	FROM FBOARD
+  	   WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+  	     AND STATUS = 'Y'
+	</select>
+	
+	<!-- 소영 : 내가 쓴 게시글 목록 조회 -->
+	<select id="selectMyBoardList" resultMap="boardResultMap">
+		SELECT
+			  BOARD_NO
+			, BOARD_TITLE
+			, MEM_ID
+			, to_char(create_date, 'YY.MM.DD HH:mm:ss') as "CREATE_DATE"
+			, LOCATION
+			, BOARD_CONTENT
+			, COUNT
+			, F.STATUS
+		 FROM FBOARD F
+		 JOIN MEMBER M USING(MEM_NO)
+		WHERE MEM_ID = #{memId}
+		  AND F.STATUS = 'Y'
+		ORDER
+		   BY CREATE_DATE DESC
+	</select>
 
 	
 </mapper>

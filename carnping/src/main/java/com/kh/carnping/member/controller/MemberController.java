@@ -8,9 +8,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -37,13 +40,15 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.common.model.vo.PageInfo;
+import com.kh.carnping.common.template.Pagination;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.GoogleLoginBO;
 import com.kh.carnping.member.model.vo.KakaoLoginBO;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.NaverLoginBO;
+import com.kh.carnping.member.model.vo.Question;
 
 
 
@@ -243,7 +248,193 @@ public class MemberController {
 	}
 	
 	
+//----------------------소영시작 
 	
+	//마이프로필 진입 전 유저비번확인
+	@RequestMapping("userPwdCheck.me")
+	public String userCheck(HttpSession session, String userPwd, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		Member loginUser  = mService.selectMember(memId); 
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(userPwd, loginUser.getMemPwd())) {
+			model.addAttribute("m", loginUser);
+			return "member/myProfileUpdate";
+		}else {
+			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
+			return "member/myPageMainSelect";
+		}
+	}
+	
+	//회원정보화면 진입
+	@RequestMapping("mypage.me")
+	public String mypage(HttpSession session, Model model, Member m) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m = mService.selectMember(memId);
+		model.addAttribute("m", m);
+		return "member/myProfileUpdate";
+	}
+	
+	//닉네임만 업데이트
+	@ResponseBody
+	@RequestMapping("nickNameUpdate.me")
+	public int nickNameUpdate(HttpSession session, Member m, String nickName) {
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m.setNickName(nickName);
+		m.setMemId(memId);
+		int result = mService.nickNameUpdate(m);
+		return result;
+	}
+	
+	//비밀번호만 업데이트
+	@ResponseBody
+	@RequestMapping("passwordUpdate.me")
+	public int passwordUpdate(HttpSession session,Member m, String password) {
+		//System.out.println(password);
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String encPwd = bcryptPasswordEncoder.encode(password);
+		m.setMemPwd(encPwd);
+		m.setMemId(memId);
+		int result = mService.passwordUpdate(m);
+		return result;
+	}
+	
+	//회원정보 전체 업데이트
+	@RequestMapping("updateProfile.me")
+	public String updateProfile(HttpSession session,  MultipartFile reupfile, Member m, Model model) {
+	
+		//System.out.println(reupfile); 원래 이미지파일명 담겨있음 
+		//System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String memPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
+		m.setMemId(memId);
+		m.setMemPwd(memPwd);
+		
+		
+		if(!reupfile.getOriginalFilename().equals("")) { // 새로 넘어온 첨부파일이 있을 경우에 탄다
+					//진짜 원본명 리턴
+			
+			//기존에 첨부파일 있었을경우 , 또올림 => 기존의 첨부파일 지우고 
+			if(m.getMemImgOrigin() != null) { //널이아니면 제거
+				new File(session.getServletContext().getRealPath(m.getMemImgChange())).delete();
+				//기존의 실제 물리적인 파일 삭제 
+			}
+			//새로 넘어온 파일 서버 업로드 
+			String changeName = saveMemImg(reupfile, session);
+			m.setMemImgOrigin(reupfile.getOriginalFilename());//넘겨받은 첨부파일의 원본명
+			m.setMemImgChange("resources/uploadFiles/memImg/" + changeName);
+		}
+		int result = mService.updateProfile(m);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "redirect:mypage.me";
+		}else {
+			model.addAttribute("errorMsg", "회원 정보 수정에 실패했습니다.");
+			return "common/errorPage";
+		}
+	}
+		
+	//문의하기리스트 조회 (페이징까지)
+	@RequestMapping("myQuestionList.me")
+	public String questionSelectList (@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session,Question q, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		int listCount = mService.selectQuestionListCount(memId);
+	
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+	
+		ArrayList<Question> list = mService.questionSelectList(pi, memId);
+		
+		//System.out.println("문의하기 리스트 : " + list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "member/myQuestionList";
+	}
+	
+	//문의하기 입력 폼으로 이동 
+	@RequestMapping("questionForm.me")
+	public String questionForm() {
+		return "member/questionForm";
+	}
+
+	//문의하기 insert
+	@RequestMapping("questionInsert.me")
+	public String insertBoard(Question q,MultipartFile upfile, HttpSession session, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		q.setMemId(memId);
+		int result = mService.insertQuestion(q);
+		
+		if(result >0 ) {
+			session.setAttribute("alertMsg", "문의사항이 등록되었습니다.");
+			return "redirect:myQuestionList.me";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	//문의하기 상세페이지 조회
+	@RequestMapping("myQuestionDetail.me")
+	public String selectQuestion(String queNo, Model model) {
+		Question q = mService.selectQuestion(queNo);
+		//System.out.println(q);
+		//System.out.println(q);
+		model.addAttribute("q", q);
+		return "member/myQuestionDetail";
+	}
+
+	//문의하기 수정폼으로 이동
+	@RequestMapping("questionUpdateForm.me")
+	public String questionUpdateForm(String queNo, Model model) {
+		
+		Question q = mService.selectQuestion(queNo);
+		//System.out.println(q);
+		model.addAttribute("q", q);
+		return "member/questionUpdateForm";
+	}
+	
+	//문의하기 수정하기 업데이트 
+	@RequestMapping("updateQuestion.me")
+	public String updateQuestion(HttpSession session,Question q,String queNo, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		q.setMemId(memId);
+		q.setQueNo(queNo);
+		int result = mService.updateQuestion(q);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "redirect:myQuestionDetail.me?queNo="+queNo;
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	//문의하기 delete
+	@RequestMapping("deleteQuestion.me")
+	public String deleteQuestion(HttpSession session,Question q,String queNo, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		q.setMemId(memId);
+		q.setQueNo(queNo);
+		int result = mService.deleteQuestion(queNo);
+		
+		//System.out.println("리절트값 : " + result);
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+			return "redirect:myQuestionList.me";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
 	
 	@RequestMapping("myProfileUpdate.me")
 	public String myProfileUpdate() {
@@ -260,25 +451,66 @@ public class MemberController {
 		return "member/myLikeList";
 	}
 	
-	@RequestMapping("myPostList.me")
-	public String myPostList() {
-		return "member/myPostList";
+	//내가 작성한 게시글 목록 조회하기
+	@ResponseBody
+	@RequestMapping(value = "myPostList.me", produces = "application/json; charset=utf-8")
+	public Map<String, Object> myPostList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		//System.out.println("커런트페이지 : " + currentPage);
+		int listCount = mService.selectMyBoardListCount(memId);
+		//System.out.println("나의 게시판 글 수 : "+listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
+		
+		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
+		int page = pi.getCurrentPage(); 	// 현재페이지
+		int pageLimit = pi.getPageLimit();		// 페이징바의 페이지 최대개수  (1~10)(11~20) ->  10개 
+		int boardLimit = pi.getBoardLimit(); //보여질 보드게시글갯수
+		
+		int maxPage = pi.getMaxPage(); // 가장 마지막페이지 (총페이지) 전체게시글의 가장 끝
+		int startPage = pi.getStartPage(); //페이징바의 시작수  4번선택시 1, 12번시 11
+		int endPage = pi.getEndPage(); // 페이징바의 끝수 4번선택시10, 12선택시 20
+		
+		
+		//System.out.println(listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
+		//System.out.println("포스트리스트컨트롤러탐 유저아이디 : " + memId);
+		//System.out.println(list);
+		//sSystem.out.println(list);
+		result.put("list", list);
+		result.put("listcount", listcount);
+		result.put("page", page);
+		result.put("pageLimit", pageLimit);
+		result.put("boardLimit", boardLimit);
+		result.put("maxPage", maxPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		
+		//ArrayList<Board> resultList = (ArrayList<Board>) result.get("list");
+		//System.out.println(resultList);
+		/* return new Gson().toJson(list); */
+		
+//		for (Map.Entry<String, Object> entry : result.entrySet()) {
+//		    String key = entry.getKey();
+//		    Object value = entry.getValue();
+//		    System.out.println("해쉬맵ㅇㅇㅇㅇㅇㅇㅇㅇ" + key + " : " + value);
+//		}
+		return result;
 	}
-	
 	@RequestMapping("myReplyList.me")
 	public String myReplyList() {
 		return "member/myReplyList";
 	}
 	
-	@RequestMapping("myQuestionList.me")
-	public String questionList() {
-		return "member/myQuestionList";
-	}
+//	@RequestMapping("myQuestionList.me")
+//	public String questionList() {
+//		return "member/myQuestionList";
+//	}
 	
-	@RequestMapping("questionForm.me")
-	public String questionForm() {
-		return "member/questionForm";
-	}
+
 	
 	@RequestMapping("myPageMainSelect.me")
 	public String myPageMainSelect() {
@@ -295,7 +527,7 @@ public class MemberController {
 	}
 	
 	
-
+//----------------소영끝
 	
 	
 	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
