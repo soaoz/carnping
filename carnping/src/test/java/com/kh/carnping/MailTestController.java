@@ -9,7 +9,6 @@ import javax.mail.internet.MimeMessage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,13 +21,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @WebAppConfiguration 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/email-context.xml")
 
 public class MailTestController {
 
 
-	@Autowired
-	ApplicationContext context;
 	
    @Autowired
    JavaMailSenderImpl mailSender;

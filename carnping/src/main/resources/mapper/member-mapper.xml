@@ -13,10 +13,13 @@
 		<result column="EMAIL" property="email"/>
 		<result column="ENROLL_DATE" property="enrollDate"/>
 		<result column="STATUS" property="status"/>
-		<result column="MEM_IMG" property="memImg"/>
+		<result column="MEM_IMG_ORIGIN" property="memImgOrigin"/>
+		<result column="MEM_IMG_CHANGE" property="memImgChange"/>
 		<result column="PHONE" property="phone"/>
-		<result column="MEM_API_TYPE" property="memAplType"/>
+		<result column="MEM_API_TYPE" property="memApiType"/>
 		<result column="MEM_API_TOKEN" property="memApiToken"/>
+		<result column="MARKETING" property="marketing"/>
+		
 	</resultMap>
 
 	<resultMap id="memberReportResultSet" type="MemberReport">
@@ -67,6 +70,48 @@
      where email = #{email}
 	</select>
 	
+	<select id="findIdByEmailCheck" resultType="_int">
+	select
+		   count(*)
+	  from
+	       member
+     where mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<select id="findIdByEmail" resultMap="memberResultSet">
+	select
+	       concat(substr(mem_id, 1, 4), lpad('*', length(mem_id) - 4, '*')) "mem_id",
+           to_CHAR(enroll_date,'YYYY-MM-DD') "enroll_date",
+		   mem_img_change
+
+	  from
+	       member
+     where mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<select id="findPwdCheck"  resultType="_int">
+	select
+		   count(*)
+	  from
+	       member
+     where mem_id = #{memId}
+       and mem_name = #{memName}
+       and email = #{email}
+	</select>
+	
+	<update id="updatePwd">
+	update
+		   member
+	   set 
+	       mem_pwd = #{memPwd}
+	 where mem_id = #{memId}
+       and mem_name = #{memName}
+       and email = #{email}
+	
+	</update>
+	
 	<select id="idCheck" resultType="_int"> 
 	select
 		   count(*)
@@ -80,8 +125,46 @@
 		   count(*)
 	  from
 	       member
-     where mem_id = #{nickname}
+     where nickname = #{nickName}
 	</select>
+	
+	<insert id="insertMember" >
+		insert
+		  into member
+		     (
+		       MEM_NO
+		     , MEM_ID
+		     , MEM_PWD
+		     , MEM_NAME
+		     , NICKNAME
+		     , EMAIL
+		     , ENROLL_DATE
+		     , STATUS
+		     , MEM_IMG_ORIGIN
+		     , MEM_IMG_CHANGE
+		     , PHONE
+		     , MEM_API_TYPE
+		     , MEM_API_TOKEN
+		     , MARKETING
+		     )
+	    values
+	         (
+	           'MEM' || TO_CHAR(SEQ_MEM_NO.NEXTVAL)
+	         , #{memId}
+	         , #{memPwd}
+	         , #{memName}
+	         , #{nickName}
+	         , #{email}
+	         , DEFAULT
+	         , DEFAULT
+	         , #{memImgOrigin}
+	         , #{memImgChange}
+	         , #{phone}
+	         , #{memApiType}
+	         , #{memApiToken}
+	         , #{marketing}
+	         )
+	</insert>
 
 
 	<select  id="selectMemberList" resultMap="memberResultSet">
@@ -94,13 +177,39 @@
 	        ,EMAIL
 	        ,ENROLL_DATE
 	        ,STATUS
-	        ,MEM_IMG
+	        , MEM_IMG_ORIGIN
+	        , MEM_IMG_CHANGE
 	        ,PHONE
 	        ,MEM_API_TYPE
 	        ,MEM_API_TOKEN
+	        ,MARKETING
 	 FROM MEMBER
 	WHERE MEM_ID != 'ADMIN'
 	</select>
+	
+	<select id="loginMember" resultMap="memberResultSet">
+	    SELECT
+	          MEM_NO
+	        , MEM_ID
+	        , MEM_PWD
+	        , MEM_NAME
+	        , NICKNAME
+	        , EMAIL
+	        , ENROLL_DATE
+	        , STATUS
+	        , MEM_IMG_ORIGIN
+	        , MEM_IMG_CHANGE
+	        , PHONE
+	        , MEM_API_TYPE
+	        , MEM_API_TOKEN
+	        , MARKETING
+		 FROM MEMBER
+		WHERE MEM_ID = #{memId} OR EMAIL = #{email}
+		  AND STATUS = 'Y'
+	</select>
+	
+
+	
 
 
 
