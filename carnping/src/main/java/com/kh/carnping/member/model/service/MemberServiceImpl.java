@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.Comment;
+import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.member.model.dao.MemberDao;
+import com.kh.carnping.member.model.vo.Like;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
 
@@ -133,20 +136,66 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteMember(String memId) {
-		return 0;
-	}
-
-	@Override
 	public int deleteBoard(String boardNo) {
-		return 0;
+		return mDao.deleteBoard(sqlSession, boardNo);
+	}
+	
+	public int selectMyCommentListCount(String memId) {
+		return mDao.selectMyCommentListCount(sqlSession, memId);
+	}
+	
+	public ArrayList<Comment> selectMyCommentList(PageInfo pi, String memId){
+		return mDao.selectMyCommentList(sqlSession, pi, memId);
 	}
 
 	@Override
 	public int deleteComment(String reNo) {
-		return 0;
+		return mDao.deleteComment(sqlSession, reNo);
 	}
 	
+	@Override
+	public int deleteMember(String memId) {
+		return mDao.deleteMember(sqlSession , memId);
+	}
 	
+	public int selectMyCarListCount(String memId) {
+		return mDao.selectMyCarListCount(sqlSession, memId);
+	}
+	
+	public ArrayList<Cinfo> selectMyCarList(PageInfo pi, String memId){
+		return mDao.selectMyCarList(sqlSession, pi, memId);
+	}
+	
+	public int deleteMyCinfo(String cinfoNo) {
+		return mDao.deleteMyCinfo(sqlSession, cinfoNo);
+	}
+	
+	public int selectMyLikeListCount(String memId) {
+		return mDao.selectMyLikeListCount(sqlSession, memId);
+	}
+	
+	public ArrayList<Cinfo> selectMyLikeList(PageInfo pi, String memId){
+		return mDao.selectMyLikeList(sqlSession, pi, memId);
+	}
+	
+	public int selectLikeCount(Like l) {
+		return mDao.selectLikeCount(sqlSession, l);
+	}
+	
+	public int deleteLike(Like l) {
+		return mDao.deleteLike(sqlSession, l);
+	}
+	
+	public int updateInsertLike(Like l) {
+		return mDao.updateInsertLike(sqlSession, l);
+	}
+	
+	public int selectLike(Like l) {
+		return mDao.selectLike(sqlSession, l);
+	}
+	
+	public int insertLike(Like l) {
+		return mDao.insertLike(sqlSession, l);
+	}
 	
 }

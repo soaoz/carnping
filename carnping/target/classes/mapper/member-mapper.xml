@@ -319,21 +319,21 @@
 	<insert id="insertQuestion">
 		INSERT 
     	  INTO QUESTION 
-          ( QUE_NO
-          , QUE_CATEGORY
-          , QUE_TITLE
-          , QUE_CONTENT
-          , MEM_NO
-          )
-      	  VALUES 
-          (
-            'QUE'||SEQ_QUE_NO.NEXTVAL
-          , #{queCategory}
-          , #{queTitle}
-          , #{queContent}
-          ,(SELECT MEM_NO 
-               FROM MEMBER 
-              WHERE MEM_ID = #{memId}))
+             ( QUE_NO
+             , QUE_CATEGORY
+             , QUE_TITLE
+             , QUE_CONTENT
+             , MEM_NO
+             )
+      	VALUES 
+             (
+               'QUE'||SEQ_QUE_NO.NEXTVAL
+              , #{queCategory}
+              , #{queTitle}
+              , #{queContent}
+              ,(SELECT MEM_NO 
+           FROM MEMBER 
+          WHERE MEM_ID = #{memId}))
 	</insert>
 
 	<!-- 소영 : 문의하기 수정 업데이트  -->
@@ -350,9 +350,79 @@
 	<!-- 소영 : 문의하기 삭제하기  -->
 	<update id="deleteQuestion">
 		UPDATE
-				QUESTION 
+			   QUESTION 
 		   SET QUE_STATUS = 'N'     
 		 WHERE QUE_NO = #{queNo} 
 	</update>
+	
+	<!-- 소영 : 회원탈퇴  -->
+	<update id="deleteMember">
+        UPDATE
+               MEMBER
+           SET STATUS = 'N'
+         WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 소영 : 내 like 갯수 조회 (페이징)  -->
+	<select id="selectMyLikeListCount" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM TB_LIKE
+		 WHERE LIKE_STATUS = 'Y'
+		   AND MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+	</select>
+	
+	<!-- 소영 : 내 like 갯수 조회 (페이징)  -->
+	<select id="selectLikeCount" resultType="_int">
+		SELECT 
+		        COUNT(*)
+		  FROM TB_LIKE
+		 WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memNo})
+		   AND LIKE_STATUS ='Y' 
+		   AND CINFO_NO = #{cinfoNo}
+	</select>
+	
+	<!-- 소영 : 좋아요 삭제 (해제)  -->
+	<update id="deleteLike">
+        UPDATE 
+        	   TB_LIKE
+           SET LIKE_STATUS = 'N'
+         WHERE CINFO_NO = #{cinfoNo}
+	</update>
+	
+	<!-- 소영 : 좋아요 업데이트   -->
+	<update id="updateInsertLike">
+        UPDATE 
+        	   TB_LIKE
+           SET LIKE_STATUS = 'Y'
+         WHERE CINFO_NO = #{cinfoNo}
+	</update>
+	
+	<!-- 소영 : like가 존재하는지 조회 (페이징)  -->
+	<select id="selectLike" resultType="_int">
+		SELECT 
+		        COUNT(*)
+		  FROM TB_LIKE
+		 WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memNo})
+		   AND CINFO_NO = #{cinfoNo}
+	</select>
+	
+	<!-- 소영 : 좋아요 인서트 -->
+	<insert id="insertLike">
+		INSERT 
+		  INTO TB_LIKE
+			 (
+			   MEM_NO,
+			   CINFO_NO,
+			   LIKE_STATUS
+			 )
+		VALUES
+			 (
+			   (SELECT M.MEM_NO FROM MEMBER M WHERE MEM_ID = #{memNo})
+			 , #{cinfoNo}
+			 , 'Y'
+			 )
+	</insert>
+	
 	
 </mapper>

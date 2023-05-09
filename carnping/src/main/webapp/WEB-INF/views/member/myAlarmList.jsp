@@ -174,7 +174,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="myLogoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -389,10 +389,10 @@
 				            	  a += '<ul class="pagination" align="center">';
 				            	  if(page== 1) {
 				            		    // 실행할 코드
-				            		    console.log("페이지가1임")
+				            		    //console.log("페이지가1임")
 					            	  a += '<li class="page-item disabled"><a class="page-link" href="">이전</a></li>';
 				            	  }else{
-				            		    console.log("페이지가1이아님")
+				            		    //console.log("페이지가1이아님")
 					            	  a += '<li class="page-item"><a class="page-link"  onclick="myReplyList('+(page- 1)+');">이전</a></li>';
 				            		  
 				            	  }
@@ -462,6 +462,7 @@
                         }
                         
                         console.log(boardNoArr);
+                        var deletedCount = 0; // 삭제된 게시물의 개수를 저장할 변수
                         
                         $.ajax({
                             url: "deleteMyPost.me",
@@ -469,21 +470,24 @@
                             data: { "boardNoArr[]": boardNoArr },
                             success: function(result) {
                                 if (result>0) {
-                                	//console.log("게시물삭제완료");
-                                    alert("삭제되었습니다.");
-                                    myPostList();
+                                	console.log("게시물삭제완료");
+                                	deletedCount = result;
+                                    alert(deletedCount + "개의 게시물이 삭제되었습니다.");
+                                    myPostList(); 
                                 } else {
-                                	//console.log("게시물삭제 실패패패패패");
+                                	console.log("게시물삭제 실패패패패패");
                                     alert("삭제에 실패하였습니다.");
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.log("Error: " + textStatus + " " + errorThrown);
+                            },
+                            complete: function() {
+                                // 삭제된 게시물의 개수에 따라 알림창을 한번만 띄우기 위해
+                                // ajax 요청이 완료된 후 deletedCount 값을 초기화합니다.
+                                deletedCount = 0;
                             }
                         });
-                        
-                        
-                        
                     }
                     
                     
@@ -495,7 +499,7 @@
                         	replyNoArr.push($(this).closest("tr").find("td:eq(1)").text());
                         });
                         if (replyNoArr.length == 0) {
-                            alert("삭제할 게시물을 선택해주세요.");
+                            alert("삭제할 댓글을 선택해주세요.");
                             return;
                         }
                         if (!confirm("삭제하시겠습니까?")) {
@@ -526,7 +530,7 @@
                     }
                    
                   //////////
-                    
+/*                     
                     $("#deleteBtn").on("click", function() {
                     	
                         if ($("#myPostTab").hasClass("active")) {
@@ -536,7 +540,7 @@
                             deleteMyReply();
                             console.log("myReplyTab 내댓글삭제삭제함수탄다")
                         }
-                    });
+                    }); */
                     
                     </script>
                     
