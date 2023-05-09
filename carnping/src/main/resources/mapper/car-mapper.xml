@@ -30,20 +30,16 @@
 		<result column="CINFO_IMG9" property="cinfoImg9"/>	
 		<result column="CINFO_IMG10" property="cinfoImg10"/>
 		<result column="PHONE" property="phone"/>
+		<result column="MEM_NAME" property="memName"/>
 	</resultMap>
 	
-	<resultMap type="CinfoImg" id="cinfoImgResultMap">
-		<result column="CINFO_NO" property="cinfoNo"/>	
-		<result column="CINFO_IMG1" property="cinfoImg1"/>	
-		<result column="CINFO_IMG2" property="cinfoImg2"/>	
-		<result column="CINFO_IMG3" property="cinfoImg3"/>	
-		<result column="CINFO_IMG4" property="cinfoImg4"/>	
-		<result column="CINFO_IMG5" property="cinfoImg5"/>	
-		<result column="CINFO_IMG6" property="cinfoImg6"/>	
-		<result column="CINFO_IMG7" property="cinfoImg7"/>	
-		<result column="CINFO_IMG8" property="cinfoImg8"/>	
-		<result column="CINFO_IMG9" property="cinfoImg9"/>	
-		<result column="CINFO_IMG10" property="cinfoImg10"/>	
+	<resultMap type="Comment" id="commentResultMap">
+		<result column="RE_NO" property="reNo"/>
+		<result column="REF_NO" property="refNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="MEM_IMG" property="memImg"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="COMM_CONTENT" property="commContent"/>
 	</resultMap>
 	
 	<resultMap type="Review" id="reviewResultMap">
@@ -58,6 +54,9 @@
 		<result column="REVIEW_LIKE" property="reviewLike"/>	
 		<result column="MEM_NO" property="memNo"/>	
 		<result column="CREATE_DATE" property="createDate"/>	
+		<result column="REVIEW_STATUS" property="reviewStatus"/>
+		<result column="REVIEW_ALL_VIEW" property="reviewAllView"/>
+		<result column="REVIEW_SCR" property="reviewScr"/>
 	</resultMap>
 	
 	<resultMap type="Verify" id="verifyResultMap">
@@ -112,5 +111,137 @@
 		 JOIN CINFO_IMG USING(CINFO_NO)
 		 WHERE CINFO_STATUS ='Y'
 	</select> 
+	
+	<select id="filterList" resultMap="cinfoResultMap">
+		SELECT  CINFO_NO
+		        ,CINFO_NAME
+		        ,CINFO_LTTD
+		        ,CINFO_HRDNS
+		        ,CINFO_STATUS
+		        ,CINFO_ADDRESS
+		        ,CINFO_FACILITIES
+		        ,CINFO_DAYS
+		        ,CINFO_TAG
+		        ,CINFO_RATING
+		        ,CINFO_VIEWS
+		        ,CINFO_MODIFIED
+		        ,CINFO_RGSTR_DATE
+		        ,(SELECT PHONE FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) PHONE
+		        ,CINFO_IMG1
+		 FROM CINFO
+		 JOIN CINFO_IMG USING(CINFO_NO)
+		 WHERE CINFO_STATUS ='Y'
+			
+		<if test="title != 'title'">
+			AND CINFO_NAME LIKE '%'||#{title}||'%'
+		</if>
+		
+		<if test="location != 'all'">
+			AND CINFO_ADDRESS LIKE ''||#{location}||'%'
+		</if>
+		
+		<if test="facility != null">
+ 		<foreach item='fac' collection="facility" separator=" ">
+	 		AND CINFO_FACILITIES LIKE '%'||#{fac}||'%'
+	 	</foreach>
+		</if>
+		
+		<choose>
+			<when test="sequence == 'rating'">
+				ORDER BY CINFO_RATING DESC
+			</when>
+			<when test="sequence == 'view'">
+				ORDER BY CINFO_VIEWS DESC
+			</when>
+			<when test="sequence == 'rating'">
+				ORDER BY CINFO_NAME
+			</when>
+		</choose>
+		
+	</select> 
 
+	<select id="selectDetail" resultMap="cinfoResultMap">
+		SELECT  CINFO_NO
+				,CINFO_NAME
+				,CINFO_CONTENT
+				,CINFO_NOTICE
+				,CINFO_LTTD
+				,CINFO_HRDNS
+				,CINFO_STATUS
+				,CINFO_ADDRESS
+				,CINFO_FACILITIES
+				,CINFO_DAYS
+				,CINFO_TAG
+				,CINFO_RATING
+				,CINFO_VIEWS
+				,CINFO_MODIFIED
+				,CINFO_RGSTR_DATE
+		        ,(SELECT PHONE FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) PHONE
+		        ,(SELECT MEM_NAME FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) MEM_NAME
+				,CINFO_IMG1
+				,CINFO_IMG2
+				,CINFO_IMG3
+				,CINFO_IMG4
+				,CINFO_IMG5
+				,CINFO_IMG6
+				,CINFO_IMG7
+				,CINFO_IMG8
+				,CINFO_IMG9
+				,CINFO_IMG10
+		 FROM CINFO
+		 JOIN CINFO_IMG USING(CINFO_NO)
+		 WHERE CINFO_STATUS ='Y'
+		   AND CINFO_NO = #{cinfoNo}
+	</select>
+
+	<select id="selectReview" resultMap="reviewResultMap">
+		SELECT    REVIEW_NO
+				, CINFO_NO
+				, TRUNC((REVIEW_VIEW + REVIEW_CONV + REVIEW_ACCESS + REVIEW_TYPE)/5,1) REVIEW_SCR
+				, REVIEW_VIEW
+				, REVIEW_CONV
+				, REVIEW_ACCESS
+				, REVIEW_TYPE
+				, REVIEW_CONTENT
+				, REVIEW_IMG
+				, REVIEW_LIKE
+				, REVIEW_STATUS
+				, (SELECT MEM_NAME FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW.MEM_NO) MEM_NO
+				, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') CREATE_DATE
+		  FROM  REVIEW
+		 WHERE  CINFO_NO = #{cinfoNo}
+		   AND  REVIEW_STATUS = 'Y'
+	</select>
+	
+	<select id="selectReviewCount" resultMap="reviewResultMap">
+		SELECT 
+		        COUNT(*) COUNT
+		        ,TRUNC(AVG(REVIEW_VIEW),1) REVIEW_VIEW
+		        ,TRUNC(AVG(REVIEW_CONV),1) REVIEW_CONV
+		        ,TRUNC(AVG(REVIEW_ACCESS),1) REVIEW_ACCESS
+		        ,TRUNC(AVG(REVIEW_TYPE),1) REVIEW_TYPE
+		        ,TRUNC((TRUNC(AVG(REVIEW_VIEW),1) + TRUNC(AVG(REVIEW_CONV),1) + TRUNC(AVG(REVIEW_ACCESS),1) + TRUNC(AVG(REVIEW_TYPE),1))/5,1) REVIEW_ALL_VIEW
+	  	  FROM 	REVIEW
+		 WHERE  CINFO_NO = 'CAR1'
+		 GROUP 
+		 	BY  CINFO_NO
+	</select>
+
+	<select id="selectReviewComment" resultMap="commentResultMap">
+		SELECT 
+				  RE_NO
+				, REF_NO
+				, (SELECT MEM_NAME FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW_COMMENT.MEM_NO) MEM_NO
+				, CREATE_DATE
+				, COMM_CONTENT
+		  FROM REVIEW_COMMENT
+		 WHERE REF_NO = #{reviewNo}
+		   AND STATUS = 'Y'
+	</select>
+	
+	<update id="reviewLike">
+		UPDATE REVIEW
+		   SET REVIEW_LIKE = REVIEW_LIKE+1
+		 WHERE REVIEW_NO = #{reNo}
+	</update>
 </mapper>
