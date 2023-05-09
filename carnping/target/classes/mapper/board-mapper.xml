@@ -11,16 +11,20 @@
 		<result column="BOARD_CONTENT" property="boardContent"/>
 		<result column="COUNT" property="count"/>
 		<result column="STATUS" property="status"/>
+		<result column="BOARD_ORIGIN_IMG1" property="boardOriginImg1"/>
+		<result column="BOARD_ORIGIN_IMG2" property="boardOriginImg2"/>
+		<result column="BOARD_ORIGIN_IMG3" property="boardOriginImg3"/>
+		<result column="BOARD_ORIGIN_IMG4" property="boardOriginImg4"/>
+		<result column="BOARD_ORIGIN_IMG5" property="boardOriginImg5"/>
+		<result column="BOARD_CHANGE_IMG1" property="boardChangeImg1"/>
+		<result column="BOARD_CHANGE_IMG2" property="boardChangeImg2"/>
+		<result column="BOARD_CHANGE_IMG3" property="boardChangeImg3"/>
+		<result column="BOARD_CHANGE_IMG4" property="boardChangeImg4"/>
+		<result column="BOARD_CHANGE_IMG5" property="boardChangeImg5"/>
+		<result column="MEM_ID" property="memId"/>
+		
 	</resultMap>
 
-	<resultMap type="BoardImg" id="boardImgResultMap">
-		<result column="BOARD_NO" property="boardNo"/>
-		<result column="BOARD_IMG1" property="boardImg1"/>
-		<result column="BOARD_IMG2" property="boardImg2"/>
-		<result column="BOARD_IMG3" property="boardImg3"/>
-		<result column="BOARD_IMG4" property="boardImg4"/>
-		<result column="BOARD_IMG5" property="boardImg5"/>
-	</resultMap>
 
 	<resultMap type="Comment" id="commentResultMap">
 		<result column="RE_NO" property="reNo"/>
@@ -30,6 +34,5 @@
 		<result column="COMM_CONTENT" property="commContent"/>
 	</resultMap>
 	
-
 	
 </mapper>

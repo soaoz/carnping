@@ -1412,6 +1412,11 @@ ol {
 	position: relative;
 }
 
+.listing__item__pic_IJS {
+	height: 500px;
+	position: relative;
+}
+
 .listing__item__pic img {
 	position: absolute;
 	width: 60px;
