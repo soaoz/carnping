@@ -17,9 +17,7 @@
 		<result column="MEM_IMG_CHANGE" property="memImgChange"/>
 		<result column="PHONE" property="phone"/>
 		<result column="MEM_API_TYPE" property="memApiType"/>
-		<result column="MEM_API_TOKEN" property="memApiToken"/>
 		<result column="MARKETING" property="marketing"/>
-		
 	</resultMap>
 
 	<resultMap id="memberReportResultSet" type="MemberReport">
@@ -145,7 +143,6 @@
 		     , MEM_IMG_CHANGE
 		     , PHONE
 		     , MEM_API_TYPE
-		     , MEM_API_TOKEN
 		     , MARKETING
 		     )
 	    values
@@ -162,7 +159,6 @@
 	         , #{memImgChange}
 	         , #{phone}
 	         , #{memApiType}
-	         , #{memApiToken}
 	         , #{marketing}
 	         )
 	</insert>
@@ -182,7 +178,6 @@
 	        , MEM_IMG_CHANGE
 	        ,PHONE
 	        ,MEM_API_TYPE
-	        ,MEM_API_TOKEN
 	        ,MARKETING
 	 FROM MEMBER
 	WHERE MEM_ID != 'ADMIN'
@@ -202,7 +197,6 @@
 	        , MEM_IMG_CHANGE
 	        , PHONE
 	        , MEM_API_TYPE
-	        , MEM_API_TOKEN
 	        , MARKETING
 		 FROM MEMBER
 		WHERE MEM_ID = #{memId} OR EMAIL = #{email}

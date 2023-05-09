@@ -18,6 +18,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -46,6 +47,15 @@ import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.common.template.Pagination;
+import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.people.v1.PeopleService;
+import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.GoogleLoginBO;
 import com.kh.carnping.member.model.vo.KakaoLoginBO;
@@ -818,9 +828,10 @@ public class MemberController {
 		model.addAttribute("urlKakao", kakaoAuthUrl);			
 		
 		/* 구글 URL */
-		String googleAuthUrl = googleLoginBO.getAuthorizationUrl(session);
-		System.out.println("구글:" + googleAuthUrl);		
-		model.addAttribute("urlGoogle", googleAuthUrl);	
+
+        String googleAuthUrl = GoogleLoginBO.getGoogleLoginUrl(session);
+        System.out.println("구글:"+googleAuthUrl);
+		model.addAttribute("urlGoogle", googleAuthUrl);		    
 
 		/* 생성한 인증 URL을 View로 전달 */
 		return "member/loginForm";
@@ -945,74 +956,74 @@ public class MemberController {
 	@RequestMapping(value = "callbackGoogle.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String callbackGoogle(Model model, Member m, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws Exception {
-		System.out.println("로그인 성공 callbackGoogle");
-		
-		List<String> scopes = Arrays.asList("email", "profile", "openid");
-//		GoogleAuthorizationCodeFlow flow = googleLoginBO.getGoogleAuthorizationCodeFlow();
-//		AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-//		String redirectUri = googleLoginBO.getRedirectUri();
-//		String url = authorizationUrl.setRedirectUri(redirectUri).setScopes(scopes).build();
-		
-		OAuth2AccessToken oauthToken;
-		
-        oauthToken = googleLoginBO.getAccessToken(session, code, state);
-        //로그인 사용자 정보를 읽어온다.
-	    apiResult = googleLoginBO.getUserProfile(oauthToken);
-	    System.out.println(apiResult);
-	    
-		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonObj;
-		
-		jsonObj = (JSONObject) jsonParser.parse(apiResult);
-		JSONObject response_obj = (JSONObject) jsonObj.get("response");			
-		// 프로필 조회
-		String email = (String) response_obj.get("email");
-		m.setEmail(email);
-		String memName = (String) response_obj.get("name");
-		m.setMemName(memName);
-		String nickName = (String) response_obj.get("nickname");
-		m.setNickName(nickName);
-		String phone = (String) response_obj.get("mobile");
-		m.setPhone(phone);
-		m.setMemApiType("구글");
-		String imgUrl = (String) response_obj.get("profile_image");
-		m.setMemImgOrigin(imgUrl);
-		System.out.println(m);
+			System.out.println("로그인 성공 callbackGoogle");
+			String accessToken = googleLoginBO.getAccessToken(code);
+			System.out.println(accessToken);
+	        HttpTransport httpTransport = new NetHttpTransport();
+	        JacksonFactory jsonFactory = new JacksonFactory();
+	        
+	        GoogleCredential credential = new GoogleCredential.Builder()
+	                .setTransport(httpTransport)
+	                .setJsonFactory(jsonFactory)
+	                .build();
+	        credential.setAccessToken(accessToken);
+	        
+	        PeopleService peopleService = new PeopleService.Builder(httpTransport, jsonFactory, credential)
+	                .setApplicationName("Carnping")
+	                .build();
 
-		
-		int count = mService.emailCheck(email);
-		if (count > 0) {
+	        Person profile = peopleService.people().get("people/me").setPersonFields("names,emailAddresses,phoneNumbers,photos").execute();
+	        
+	        System.out.println(profile);
+	        m.setMemApiType("구글");
+	        String nickName = profile.getNames().get(0).getDisplayName();
+	        m.setNickName(nickName);
+	        String email = profile.getEmailAddresses().get(0).getValue();
+	        m.setEmail(email);
+	        String imgUrl = profile.getPhotos().get(0).getUrl();
+	        m.setMemImgOrigin(imgUrl);
+	        
+	    	String phone = null;
+	    	List<PhoneNumber> phoneNumbers = profile.getPhoneNumbers();
+	    	if (phoneNumbers != null) {
+	    		PhoneNumber phoneNumber = phoneNumbers.get(0);
+	    		if (phoneNumber != null) {
+	    			phone = phoneNumber.getValue();
+	    			m.setPhone(phone);
+	    		}
+	    	}
+	    	
+	    	System.out.println(m);
+	    	
+	        int count = mService.emailCheck(email);
+			if (count > 0) {
 
-			Member loginMember=mService.loginMember(m);
-			System.out.println(loginMember);
-			session.setAttribute("loginMember", loginMember);
-			return "redirect:/"; 
-		} else { 
-			URL url = new URL(imgUrl);
-			URLConnection conn = url.openConnection();
-			String contentType = conn.getContentType();
-			String fileExtension = contentType.substring(contentType.lastIndexOf('/') + 1);
-			BufferedImage image = ImageIO.read(url);
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			ImageIO.write(image, fileExtension, os);
-			MultipartFile memImgOrigin = new MockMultipartFile("file", "image." + fileExtension, contentType, new ByteArrayInputStream(os.toByteArray()));
-			
-			
-			m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
-			mService.insertMember(m);
-			
-			Member loginMember = mService.loginMember(m);
-			System.out.println(loginMember+"else");
-			session.setAttribute("loginMember", loginMember);
-			return "redirect:/"; 
-		}
-	}
-    
-	// 소셜 로그인 성공 페이지
-	@RequestMapping("/loginSuccess.do")
-	public String loginSuccess() {
-		return "loginSuccess";
-	}
+				Member loginMember=mService.loginMember(m);
+				System.out.println(loginMember);
+				session.setAttribute("loginMember", loginMember);
+				return "redirect:/"; 
+			} else { 
+				URL url = new URL(imgUrl);
+				URLConnection conn = url.openConnection();
+				String contentType = conn.getContentType();
+				String fileExtension = contentType.substring(contentType.lastIndexOf('/') + 1);
+				BufferedImage image = ImageIO.read(url);
+				ByteArrayOutputStream os = new ByteArrayOutputStream();
+				ImageIO.write(image, fileExtension, os);
+				MultipartFile memImgOrigin = new MockMultipartFile("file", "image." + fileExtension, contentType, new ByteArrayInputStream(os.toByteArray()));
+				
+				
+				m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+				mService.insertMember(m);
+				
+				Member loginMember = mService.loginMember(m);
+				System.out.println(loginMember+"else");
+				session.setAttribute("loginMember", loginMember);
+				return "redirect:/"; 
+			}
+	        
+	    }
+
 
 }
 	
