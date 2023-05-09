@@ -46,6 +46,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.GoogleLoginBO;
 import com.kh.carnping.member.model.vo.KakaoLoginBO;
@@ -506,31 +507,58 @@ public class MemberController {
 	                .setApplicationName("Carnping")
 	                .build();
 
-	        Person profile = peopleService.people().get("people/me").setPersonFields("names,emailAddresses,phoneNumbers").execute();
+	        Person profile = peopleService.people().get("people/me").setPersonFields("names,emailAddresses,phoneNumbers,photos").execute();
 	        
 	        System.out.println(profile);
-	        String name = profile.getNames().get(0).getDisplayName();
+	        m.setMemApiType("구글");
+	        String nickName = profile.getNames().get(0).getDisplayName();
+	        m.setNickName(nickName);
 	        String email = profile.getEmailAddresses().get(0).getValue();
+	        m.setEmail(email);
+	        String imgUrl = profile.getPhotos().get(0).getUrl();
+	        m.setMemImgOrigin(imgUrl);
 	        
-	        
-	        
-//	        try {
-//	            email = GoogleLoginBO.getUserEmail(code, session);
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        }
+	    	String phone = null;
+	    	List<PhoneNumber> phoneNumbers = profile.getPhoneNumbers();
+	    	if (phoneNumbers != null) {
+	    		PhoneNumber phoneNumber = phoneNumbers.get(0);
+	    		if (phoneNumber != null) {
+	    			phone = phoneNumber.getValue();
+	    			m.setPhone(phone);
+	    		}
+	    	}
+	    	
+	    	System.out.println(m);
+	    	
+	        int count = mService.emailCheck(email);
+			if (count > 0) {
 
-	        System.out.println(email);
-	        return "redirect:/";
+				Member loginMember=mService.loginMember(m);
+				System.out.println(loginMember);
+				session.setAttribute("loginMember", loginMember);
+				return "redirect:/"; 
+			} else { 
+				URL url = new URL(imgUrl);
+				URLConnection conn = url.openConnection();
+				String contentType = conn.getContentType();
+				String fileExtension = contentType.substring(contentType.lastIndexOf('/') + 1);
+				BufferedImage image = ImageIO.read(url);
+				ByteArrayOutputStream os = new ByteArrayOutputStream();
+				ImageIO.write(image, fileExtension, os);
+				MultipartFile memImgOrigin = new MockMultipartFile("file", "image." + fileExtension, contentType, new ByteArrayInputStream(os.toByteArray()));
+				
+				
+				m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+				mService.insertMember(m);
+				
+				Member loginMember = mService.loginMember(m);
+				System.out.println(loginMember+"else");
+				session.setAttribute("loginMember", loginMember);
+				return "redirect:/"; 
+			}
+	        
 	    }
 
-	
-    
-	// 소셜 로그인 성공 페이지
-	@RequestMapping("/loginSuccess.do")
-	public String loginSuccess() {
-		return "loginSuccess";
-	}
 
 }
 	

@@ -269,6 +269,14 @@
             border-right-color: #0ca678;
         }
 
+		#kakao :hover, #naver :hover{
+		
+ 		transition: 0.6s;
+		filter: brightness(0.5); invert(1);}
+		
+		#findIdClick:hover, #findPwdClick:hover, #joinMember:hover{
+		color:#0ca678
+		}
 </style>
 </head>
 <body>
@@ -286,7 +294,7 @@
         	
             <div class="limiter">
                 <div class="container-login100" style="background-image: url('images/bg-01.jpg'); min-height:90vh;">
-                    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="position: absolute; top: 25px;">
+                    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="position: absolute; top: 25px; cursor:pointer">
                         <form class="login100-form validate-form" action="login.me" method="POST">
                             <span class="login100-form-title p-b-49" style="color:#1C3053; letter-spacing: normal;" >
                                 로그인
@@ -310,11 +318,11 @@
                             </div>
                             
                             <div class="text-right p-t-8 p-b-31">
-                                <a data-toggle="modal" data-target="#findIdModal">
+                                <a data-toggle="modal" data-target="#findIdModal" style="cursor:pointer" id="findIdClick">
                                     아이디
                                 </a>
                             ㆍ
-                                <a data-toggle="modal" data-target="#findPwdModal">
+                                <a data-toggle="modal" data-target="#findPwdModal" style="cursor:pointer" id="findPwdClick">
                                     비밀번호 찾기
                                 </a>
                             </div>
@@ -336,15 +344,15 @@
                             </div>
         
                             <div class="flex-c-m">
-                                <a href="${urlKakao}" class="login100-social-item bg1">
+                                <a href="${urlKakao}" class="login100-social-item bg1" id="kakao">
                                     <img style="max-width:unset; width: 55px; height: 55px;" src="resources/img/kakao.png" alt="">
                                 </a>
         
-                                <a href="${urlNaver}" class="login100-social-item bg2">
+                                <a href="${urlNaver}" class="login100-social-item bg2" id="naver">
                                     <img style="max-width:unset; width: 55px; height: 55px;" src="resources/img/naver.png" alt="">
                                 </a>
         
-                                <a href="${urlGoogle}" class="login100-social-item bg3">
+                                <a href="${urlGoogle}" class="login100-social-item bg3" style="width:55px; height:55px;">
                                     <i class="fa fa-google" style="padding: unset; position: relative;
                                     left: 2px;"></i>
                                 </a>
@@ -355,7 +363,7 @@
                                     아직 카앤핑 회원이 아니신가요?
                                 </span>
         
-                                <a href="enrollForm.me" class="txt2">
+                                <a href="enrollForm.me" class="txt2" id="joinMember">
                                     회원가입
                                 </a>
                             </div>
