@@ -20,4 +20,17 @@ public class Board {
 	private String boardContent;// 내용
 	private int count;			// 조회수
 	private String status;		// 상태
+	private String boardOriginImg1;	// 게시글 메인이미지
+	private String boardChangeImg1;	// 게시글 서브이미지
+	private String boardOriginImg2;	// 게시글 메인이미지
+	private String boardChangeImg2;	// 게시글 서브이미지
+	private String boardOriginImg3;	// 게시글 메인이미지
+	private String boardChangeImg3;	// 게시글 서브이미지
+	private String boardOriginImg4;	// 게시글 메인이미지
+	private String boardChangeImg4;	// 게시글 서브이미지
+	private String boardOriginImg5;	// 게시글 메인이미지
+	private String boardChangeImg5;	// 게시글 서브이미지
+	private String memId;
+	private String phone;
+	
 }
