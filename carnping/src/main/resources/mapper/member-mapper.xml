@@ -12,6 +12,7 @@
 		<result column="NICKNAME" property="nickName"/>
 		<result column="EMAIL" property="email"/>
 		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
 		<result column="STATUS" property="status"/>
 		<result column="MEM_IMG_ORIGIN" property="memImgOrigin"/>
 		<result column="MEM_IMG_CHANGE" property="memImgChange"/>
@@ -137,6 +138,7 @@
 		     , NICKNAME
 		     , EMAIL
 		     , ENROLL_DATE
+		     , MODIFY_DATE
 		     , STATUS
 		     , MEM_IMG_ORIGIN
 		     , MEM_IMG_CHANGE
@@ -152,6 +154,7 @@
 	         , #{memName}
 	         , #{nickName}
 	         , #{email}
+	         , DEFAULT
 	         , DEFAULT
 	         , DEFAULT
 	         , #{memImgOrigin}
@@ -172,6 +175,7 @@
 	        ,NICKNAME
 	        ,EMAIL
 	        ,ENROLL_DATE
+	        ,MODIFY_DATE
 	        ,STATUS
 	        , MEM_IMG_ORIGIN
 	        , MEM_IMG_CHANGE
@@ -179,7 +183,27 @@
 	        ,MEM_API_TYPE
 	        ,MARKETING
 	 FROM MEMBER
-	WHERE MEM_ID != 'ADMIN'
+	WHERE STATUS != 'A'
+	</select>
+	
+	<select  id="selectMember" resultMap="memberResultSet">
+	SELECT
+	         MEM_NO
+	        ,MEM_ID
+	        ,MEM_PWD
+	        ,MEM_NAME
+	        ,NICKNAME
+	        ,EMAIL
+	        ,ENROLL_DATE
+	        ,MODIFY_DATE
+	        ,STATUS
+	        , MEM_IMG_ORIGIN
+	        , MEM_IMG_CHANGE
+	        ,PHONE
+	        ,MEM_API_TYPE
+	        ,MARKETING
+	 FROM MEMBER
+	WHERE MEM_NO = #{memNo}
 	</select>
 	
 	<select id="loginMember" resultMap="memberResultSet">
@@ -191,6 +215,7 @@
 	        , NICKNAME
 	        , EMAIL
 	        , ENROLL_DATE
+	        , MODIFY_DATE
 	        , STATUS
 	        , MEM_IMG_ORIGIN
 	        , MEM_IMG_CHANGE
@@ -202,7 +227,16 @@
 		  AND STATUS = 'Y'
 	</select>
 	
-
+	<update id="deleteMember" >
+	update
+		   member
+	   set 
+	       status = 'N'
+	     , modify_date = sysdate
+	 where mem_no = #{memNo}
+	</update>
+	
+	
 	
 
 

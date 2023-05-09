@@ -2,10 +2,13 @@ package com.kh.carnping.admin.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.carnping.admin.model.service.AdminServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
@@ -15,7 +18,7 @@ public class AdminController {
 
 	
 	@Autowired
-	private AdminServiceImpl mService; 
+	private AdminServiceImpl aService; 
 	
 	/**
 	 * 관리자 페이지 이동
@@ -31,7 +34,7 @@ public class AdminController {
 	 */
 	@RequestMapping("member.ad")
 	public String memNotice(Model model) {
-		ArrayList<Member> list = mService.memNotice();
+		ArrayList<Member> list = aService.memNotice();
 		if(!list.isEmpty()) {
 			model.addAttribute("list", list);
 			return "admin/member";
@@ -148,6 +151,29 @@ public class AdminController {
 		return "admin/inquiryInsert";
 	}
 	
+	// ------------------------------
+	/**
+	 * 회원관리/회원수정으로 이동
+	 */
+	@ResponseBody
+	@RequestMapping("memDelete.ad")
+	public String memDelete(Member m, String memNo, HttpSession session) {
+		m.setMemNo(memNo);
+		int result = aService.deleteMember(m);
+		System.out.println(result);
+        if(result >0){
+        	return "success";
+        }else{
+        	return "failure";
+        }
+	}
+	
+	@ResponseBody
+	@RequestMapping("memDelete.ad")
+	public void memSelect(String memNo, HttpSession session) {
+		Member m  = aService.selectMember(memNo);
+
+	}
 	
 
 	

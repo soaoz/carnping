@@ -7,11 +7,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Jassa - Bootstrap Admin HTML Template</title>
+    <title>Carnping | 관리자 </title>
 
 </head>
 
 <body>
+
+
     <div class="main-wrapper">
 
         <jsp:include page="menubar.jsp"/>
@@ -57,7 +59,7 @@
                                             <tr>
                                                 <td>
                                                 	<c:choose>
-                                                		<c:when test="${ list.memImg eq null }">
+                                                		<c:when test="${ list.memImgOrigin eq null }">
 	                                                		<h2 class="table-avatar">
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }" class="avatar avatar-sm me-2"><img
 	                                                                class="avatar-img rounded-circle"
@@ -71,7 +73,7 @@
 	                                                		<h2 class="table-avatar">
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }" class="avatar avatar-sm me-2"><img
 	                                                                class="avatar-img rounded-circle"
-	                                                                src="${ list.memImg }"
+	                                                                src="${ list.memImgOrigin }"
 	                                                                alt="User Image"></a>
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }">${ list.memName } <span>${list.memNo }
 	                                                            </span></a>
@@ -101,13 +103,13 @@
                                                     <a href="memEdit.ad?memNo=${ list.memNo }"
                                                         class="btn btn-sm btn-white text-success me-2"><i
                                                             class="far fa-edit me-1"></i> 수정</a>
-                                                    <a href="javascript:void(0);"
+                                                    <a href="memDelete.ad?memNo=${ list.memNo }"
                                                         class="btn btn-sm btn-white text-danger me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#top-modal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#top-modal-${list.memNo}"><i
                                                             class="far fa-trash-alt me-1"></i>탈퇴</a>
 
 
-                                                    <div id="top-modal" class="modal fade" tabindex="-1" role="dialog"
+                                                    <div id="top-modal-${list.memNo}" class="modal fade" tabindex="-1" role="dialog"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-top">
                                                             <div class="modal-content">
@@ -119,7 +121,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <br>
-                                                                    <h5 align="center">정말 ***님을 탈퇴 시키겠습니까?</h5>
+                                                                    <h5 align="center">정말 ${ list.memNo }님을 탈퇴 시키겠습니까?</h5>
                                                                     <p align="center" style="color:gray">탈퇴시 복구가 매우 어렵습니다. 신중히 선택바랍니다.</p>
                                                                 </div>
                                                                 <hr>
@@ -151,14 +153,26 @@ function memDelete(memberNumber){
 		data:{
 			memNo: memberNumber
 		},success:function(result){
-            if(result >0){
-                alert("USER 삭제 완료되었습니다.");
-            }else{
-                alert("USER가 삭제되지 않았습니다.");
-            }
+			if(result==='success'){
+				alert(memberNumber+"(이)가 성공적으로 탈퇴 처리되었습니다.");
+				location.href='member.ad';
+			} else {
+				alert("회원탈퇴에 실패하였습니다.");
+			}
+            $('#top-modal-'+memberNumber).modal('hide');
+        }, error: function(){
+        	console.log("ajax 통신실패!");
         }
 	})
 }
+$(document).on('show.bs.modal', '#top-modal', function (event) {
+	  var button = $(event.relatedTarget) // 클릭된 버튼 가져오기
+	  var memNo = button.data('mem-no') // data-mem-no 속성값 가져오기
+	  
+	  // 모달 내용에 memNo 출력
+	  var modal = $(this)
+	  modal.find('.modal-body #mem-no').text(memNo)
+	})
 </script>
 </body>
 
