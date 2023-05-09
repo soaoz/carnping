@@ -20,4 +20,5 @@ public class Question {
 	private String queStatus;
 	private String queAnswer;
 	private String memNo;
+	private String memId; //추가함
 }

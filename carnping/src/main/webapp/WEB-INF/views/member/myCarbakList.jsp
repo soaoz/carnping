@@ -11,7 +11,7 @@
     <meta name="author" content="Kimarotec">
     <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>Carnping | 마이페이지</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
     <!-- Css Styles -->
@@ -39,9 +39,11 @@
 		    content: '';
 		    width: 2em; 
 		    height: 2em;
-		    border: 2px solid #272727;
+		    border: 1px solid #272727;
 		    background-color: #47D090;
-		    background: url('/img/noneimg.png') no-repeat;
+		  	background: url('/img/noneimg.png') no-repeat;
+		  	background: url('resoures/img/checkbox.png') no-repeat;
+		   /*  background: rgba(255, 255, 255, 0.2); */
 		    border-radius: 50%;
 		    margin: 0 5px -6px 0;
 		}
@@ -76,11 +78,11 @@
 		}
 		
 		.innercheckbox {
-		    display: none !important;
+		   /*  display: none !important; */
 		}
 
-		.listing__item:hover .innercheckbox {
-			display: block !important;
+		.listing__item .innercheckbox {
+			display: block !important; 
 			position: absolute !important;
 			right: 20px !important;
 			top: 10px !important;
@@ -189,7 +191,10 @@
 </style>
 </head>
 <body>
+
 <jsp:include page="../common/header.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
+
 
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
@@ -221,7 +226,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -254,247 +259,69 @@
                             <div class="checkbox" id="checkbox1">
                                 <input type="checkbox" name="check2" id="check2" value="2" class="checkbox2">
                                 <label for="check2">전체 선택</label>
-                                <a href="blog.html" class="btn-sm btn-primary me-2 float-right" id="delbtn"> 삭제하기 </a>
-                                
+                                <a href="" class="btn-sm btn-primary me-2 float-right" id="delbtn" onClick = "deleteMyCar();"> 삭제하기 </a>
                             </div>
                             <div class="row">
                                     <!-- Listing Section Begin -->  
                                 <section class="listing nice-scroll hover">
                                     <div class="listing__list">
-                                        <div class="listing__item">
-                                            <div class="listing__item__pic set-bg" data-setbg="img/yangyang_3.png">
-                                                <img src="img/listing/moutain.png" alt="">
-
-                                                <div class="checkbox innercheckbox">
-                                                    <input type="checkbox" name="check2" value="2" class="checkbox2" id="check3">
-                                                    <label for="check3" ></label>
-                                                </div>
-                                                <div class="listing__item__pic__tag">Popular</div>
-                                                <div class="listing__item__pic__btns">
-                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                                                    <a href="#"><span class="icon_heart_alt"></span></a>
-                                                </div>
-                                            </div>
-                                            <div class="listing__item__text">
-                                                <div class="listing__item__text__inside">
-                                                    <h5>서퍼들의 천국, <br>양양 죽도해변</h5>
-                                                    <div class="listing__item__text__rating">
-                                                        <div class="listing__item__rating__star">
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star-half_alt"></span>
-                                                        </div>
-                                                    </div>
-                                                    <ul>
-                                                        <li class="location"><span class="icon_pin_alt"></span>강원도 양양군 현남면 인구중앙길 88</li>
-                                                        <li><span class="icon_phone"></span> (+12) 345-678-910</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="listing__item__text__info">
-                                                    <div class="listing__item__text__info__left">
-                                                        <img src="img/listing/ocean.png" alt="">
-                                                        <span>오픈시간</span>
-                                                    </div>
-                                                    <div class="listing__item__text__info__right">12:00 ~ 18:00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listing__item">
-                                            <div class="listing__item__pic set-bg" data-setbg="img/test2.png">
-                                                <img src="img/listing/ocean.png" alt="">
-                                                <div class="checkbox innercheckbox">
-                                                    <input type="checkbox" name="check2" value="2" class="checkbox2" id="check4">
-                                                    <label for="check4"></label>
-                                                </div>
-                                                <div class="listing__item__pic__tag top_rate">Top Rate</div>
-                                                <div class="listing__item__pic__btns">
-                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                                                    <a href="#"><span class="icon_heart_alt"></span></a>
-                                                </div>
-                                            </div>
-                                            <div class="listing__item__text">
-                                                <div class="listing__item__text__inside">
-                                                    <h5>일출과 일몰을 함께, 당진 왜목마을</h5>
-                                                    <div class="listing__item__text__rating">
-                                                        <div class="listing__item__rating__star">
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star-half_alt"></span>
-                                                        </div>
-                                                    </div>
-                                                    <ul>
-                                                        <li class="location"><span class="icon_pin_alt"></span> 당진시 석문면 교로리 844-170 일원
-                                                        </li>
-                                                        <li><span class="icon_phone"></span> (+12) 345-678-910</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="listing__item__text__info">
-                                                    <div class="listing__item__text__info__left">
-                                                        <img src="img/listing/list_small_icon-2.png" alt="">
-                                                        <span>오픈시간</span>
-                                                    </div>
-                                                    <div class="listing__item__text__info__right closed">24:00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listing__item">
-                                            <div class="listing__item__pic set-bg" data-setbg="img/test2.png">
-                                                <img src="img/listing/ocean.png" alt="">
-                                                <div class="checkbox innercheckbox">
-                                                    <input type="checkbox" name="check2" value="2" class="checkbox2" id="check5">
-                                                    <label for="check5"></label>
-                                                </div>
-                                                <div class="listing__item__pic__tag top_rate">Top Rate</div>
-                                                <div class="listing__item__pic__btns">
-                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                                                    <a href="#"><span class="icon_heart_alt"></span></a>
-                                                </div>
-                                            </div>
-                                            <div class="listing__item__text">
-                                                <div class="listing__item__text__inside">
-                                                    <h5>일출과 일몰을 함께, 당진 왜목마을</h5>
-                                                    <div class="listing__item__text__rating">
-                                                        <div class="listing__item__rating__star">
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star-half_alt"></span>
-                                                        </div>
-                                                    </div>
-                                                    <ul>
-                                                        <li class="location"><span class="icon_pin_alt"></span> 당진시 석문면 교로리 844-170 일원
-                                                        </li>
-                                                        <li><span class="icon_phone"></span> (+12) 345-678-910</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="listing__item__text__info">
-                                                    <div class="listing__item__text__info__left">
-                                                        <img src="img/listing/list_small_icon-2.png" alt="">
-                                                        <span>오픈시간</span>
-                                                    </div>
-                                                    <div class="listing__item__text__info__right closed">24:00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="listing__item">
-                                            <div class="listing__item__pic set-bg" data-setbg="img/yangyang_3.png">
-                                                <img src="img/listing/moutain.png" alt="">
-                                                <div class="listing__item__pic__tag">Popular</div>
-                                                <div class="listing__item__pic__btns">
-                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                                                    <a href="#"><span class="icon_heart_alt"></span></a>
-                                                </div>
-                                            </div>
-                                            <div class="listing__item__text">
-                                                <div class="listing__item__text__inside">
-                                                    <h5>서퍼들의 천국, <br>양양 죽도해변</h5>
-                                                    <div class="listing__item__text__rating">
-                                                        <div class="listing__item__rating__star">
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star-half_alt"></span>
-                                                        </div>
-                                                    </div>
-                                                    <ul>
-                                                        <li class="location"><span class="icon_pin_alt"></span>강원도 양양군 현남면 인구중앙길 88</li>
-                                                        <li><span class="icon_phone"></span> (+12) 345-678-910</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="listing__item__text__info">
-                                                    <div class="listing__item__text__info__left">
-                                                        <img src="img/listing/ocean.png" alt="">
-                                                        <span>오픈시간</span>
-                                                    </div>
-                                                    <div class="listing__item__text__info__right">12:00 ~ 18:00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        <div class="listing__item">
-                                            <div class="listing__item__pic set-bg" data-setbg="img/yangyang_3.png">
-                                                <img src="img/listing/moutain.png" alt="">
-                                                <div class="listing__item__pic__tag">Popular</div>
-                                                <div class="listing__item__pic__btns">
-                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                                                    <a href="#"><span class="icon_heart_alt"></span></a>
-                                                </div>
-                                            </div>
-                                            <div class="listing__item__text">
-                                                <div class="listing__item__text__inside">
-                                                    <h5>서퍼들의 천국, 양양 죽도해변입니다 하하하하하</h5>
-                                                    <div class="listing__item__text__rating">
-                                                        <div class="listing__item__rating__star">
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star-half_alt"></span>
-                                                        </div>
-                                                    </div>
-                                                    <ul>
-                                                        <li class="location"><span class="icon_pin_alt"></span>강원도 양양군 현남면 인구중앙길 88 입니다 하하하</li>
-                                                        <li><span class="icon_phone"></span> (+12) 345-678-910</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="listing__item__text__info">
-                                                    <div class="listing__item__text__info__left">
-                                                        <img src="img/listing/ocean.png" alt="">
-                                                        <span>오픈시간</span>
-                                                    </div>
-                                                    <div class="listing__item__text__info__right">12:00 ~ 18:00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listing__item">
-                                            <div class="listing__item__pic set-bg" data-setbg="img/yangyang_3.png">
-                                                <img src="img/listing/moutain.png" alt="">
-                                                <div class="listing__item__pic__tag">Popular</div>
-                                                <div class="listing__item__pic__btns">
-                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                                                    <a href="#"><span class="icon_heart_alt"></span></a>
-                                                </div>
-                                            </div>
-                                            <div class="listing__item__text">
-                                                <div class="listing__item__text__inside">
-                                                    <h5>서퍼들의 천국, <br>양양 죽도해변</h5>
-                                                    <div class="listing__item__text__rating">
-                                                        <div class="listing__item__rating__star">
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star"></span>
-                                                            <span class="icon_star-half_alt"></span>
-                                                        </div>
-                                                    </div>
-                                                    <ul>
-                                                        <li class="location"><span class="icon_pin_alt"></span>강원도 양양군 현남면 인구중앙길 88</li>
-                                                        <li><span class="icon_phone"></span> (+12) 345-678-910</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="listing__item__text__info">
-                                                    <div class="listing__item__text__info__left">
-                                                        <img src="img/listing/ocean.png" alt="">
-                                                        <span>오픈시간</span>
-                                                    </div>
-                                                    <div class="listing__item__text__info__right">12:00 ~ 18:00</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        
-
-                                    </div>
-
                                     
+                                    
+                                    
+                                      <c:choose>
+								            <c:when test="${ not empty list }">
+								                <c:forEach var="list" items="${ list }" varStatus="status">
+                                        <div class="listing__item">
+                                            <div class="listing__item__pic set-bg" style="cursor:pointer; background-image : url(${ list.cinfoImg1 }); background-size : cover;">
+                                                <img src="resources/img/carList/icon/ocean.png" alt="">
+	
+                                                <div class="checkbox innercheckbox">
+                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }">
+                                                    <input type="checkbox" name="check2" value="${status.count}" class="check-item checkbox2" id="check-item${status.count}">
+                                                    <label for="check-item${status.count}" ></label>
+                                                </div>
+                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
+                                                <div class="listing__item__pic__btns">
+                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
+                                                    <a href="#"><span class="icon_heart_alt"></span></a>
+                                                </div>
+                                            </div>
+                                            <div class="listing__item__text">
+                                                <div class="listing__item__text__inside">
+                                                    <h5>${ list.cinfoName }</h5>
+
+                                                    <div class="listing__item__text__rating">
+                                                        <div class="listing__item__rating__star">
+			                                                <c:forEach var="rating" begin="1" end="${ list.cinfoRating }" 
+					                                            step="1">
+					                                            <span class="icon_star"></span>
+					                                        </c:forEach>
+			                                                <c:if test="${ ((list.cinfoRating)*10) % 10 >= 5  }">
+			                                            		<span class="icon_star-half_alt"></span>
+			                                       			 </c:if>
+                                                        </div>
+                                                    </div>
+                                                    <ul>
+                                                        <li class="location"><span class="icon_pin_alt"></span>${ list.cinfoAddress }</li>
+                                                        <li><span class="icon_phone"></span> (+12) 345-678-910</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="listing__item__text__info">
+                                                    <div class="listing__item__text__info__left">
+                                                        
+                                                        <span>오픈요일</span>
+                                                    </div>
+                                                    <div class="listing__item__text__info__right">${ list.cinfoDays }</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                   </c:forEach>
+            					</c:when>
+                                <c:otherwise>
+					                <h4>${ emp }</h4>
+					            </c:otherwise>
+					        </c:choose>      
+                                    </div>
                                 </section>
                         
                             </div>  <!--row-->
@@ -507,22 +334,94 @@
                 </div><!--col-sm-10 col-sm-offset-1-->   
                 
             </div><!--row-->
-            <div id="pagingArea" align="center">
-                <ul class="pagination">
-                    
-                        <li class="page-item"><a class="page-link" href=""> &lt;&lt; </a></li>
-                        <li class="page-item"><a class="page-link" href="">1</a></li>
-                        <li class="page-item"><a class="page-link" href="">2</a></li>
-                        <li class="page-item"><a class="page-link" href="">3</a></li>
-                        <li class="page-item"><a class="page-link" href="">4</a></li>
-                        <li class="page-item"><a class="page-link" href="">5</a></li>
-                            <li class="page-item"><a class="page-link" href="">&gt;&gt;</a></li>
+            
+             <div id="pagingArea" align="center" >
+                <ul class="pagination" align="center">
+              
+              		<c:choose>
+              			<c:when test="${ pi.currentPage eq 1}">
+                       	 	<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                        </c:when>
+                        <c:otherwise>
+                        <li class="page-item"><a class="page-link" href="myCarbakList.me?cpage=${ pi.currentPage -1 }">Previous</a></li>
+                        </c:otherwise>
+                   	</c:choose>
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                        <li class="page-item"><a class="page-link" href="myCarbakList.me?cpage=${ p }">${ p }</a></li>
+        			</c:forEach>
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+                            <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+                         </c:when>
+                         <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="myCarbakList.me?cpage=${ pi.currentPage +1 }">Next</a></li>
+                          </c:otherwise>
+                      </c:choose>
                 </ul>
             </div>
+            
         </div><!--container-->
 
     </div><!-- content-area user-profiel -->
 <div class="space"></div>
+<script>
+//'전체 선택' 체크박스를 클릭하면 다른 체크박스들도 선택되게 하는 함수
+const selectAllCheckbox = document.getElementById('check2');
+const otherCheckboxes = document.querySelectorAll('.check-item');
+
+selectAllCheckbox.addEventListener('click', () => {
+    otherCheckboxes.forEach((checkbox) => {
+        checkbox.checked = selectAllCheckbox.checked;
+    });
+});
+
+// 다른 체크박스들을 클릭하면, '전체 선택' 체크박스도 선택되게 함
+otherCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('click', () => {
+        if (!checkbox.checked) {
+            selectAllCheckbox.checked = false;
+        } else if (document.querySelectorAll('.check-item:checked').length === otherCheckboxes.length) {
+            selectAllCheckbox.checked = true;
+        }
+    });
+});
+
+
+function deleteMyCar(){
+	
+	var cinfoNoArr = [];
+	$('.check-item:checked').each(function() {
+		cinfoNoArr.push($(this).siblings('input[name="post-id"]').val());
+	});
+	
+		//console.log(cinfoNoArr);
+		
+	  if (cinfoNoArr.length == 0) {
+	    alert("선택된 글이 없습니다.");
+	    return;
+	  }
+
+	  if (confirm("선택된 글을 삭제하시겠습니까?")) {
+		  //console.log("탄다ㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
+		  
+	    $.ajax({
+	      type: "POST",
+	      url: "deleteMyCar.me",
+	      data: { "cinfoNoArr[]" : cinfoNoArr },
+	      success: function(result) {
+	        // 삭제 성공시 처리할 로직
+	        
+	        alert(result +"개의 글이 삭제되었습니다.");
+	      
+	      },
+	      error: function(xhr, status, error) {
+	        // 삭제 실패시 처리할 로직
+	        alert("삭제 실패: " + error);
+	      }
+	    });
+	  }
+}
+</script>
  <%-- <jsp:include page="../common/footer.jsp"/> --%>
 <%--      <jsp:include page="../common/footer.jsp"/>	 --%>
 </div><!-- master-area -->

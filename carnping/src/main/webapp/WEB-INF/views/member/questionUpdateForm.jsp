@@ -11,7 +11,7 @@
     <meta name="author" content="Kimarotec">
     <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>Carnping | 문의하기</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
     <!-- Css Styles -->
@@ -129,9 +129,6 @@
 		.title{
 			color : #1C3053;
 		}
-		.textarea{
-			height: 300px;
-		}
     
     </style>
 </head>
@@ -193,11 +190,11 @@
                         <br><br>
                     </div>
                 </div>
+                
             </div>
             
-            
-           <form action="questionInsert.me" method="post" enctype="multipart/form-data">
-            
+            <form action="updateQuestion.me" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="queNo" value="${ q.queNo }">
             
             <div class="main-wrapper">
 
@@ -205,7 +202,7 @@
                     <div class="content container-fluid">
                     <div class="row">
                         <div class="col-xl-8 offset-xl-2">
-        
+                
                         <div class="card">
                             <div class="card-body">
                             <div class="bank-inner-details">
@@ -213,10 +210,10 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                     <label>제목<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="queTitle" required="required"/>
+                                    <input type="text" class="form-control" value="${ q.queTitle }" name="queTitle"/>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-12 col-md-12" id="selectbox">
                                     <div class="form-group modal-select-box">
                                     <label>카테고리</label>
                                     <select class="select" name="queCategory">
@@ -227,21 +224,35 @@
                                     </select>
                                     </div>
                                 </div>
+			                    <script>
+			                    var selectedValue = "${q.queCategory}";
 
-                                
+			                    var selectTag = document.getElementsByClassName("select")[0];
+			                    var options = selectTag.options;
+
+			                    for (var i = 0; i < options.length; i++) {
+			                      if (options[i].value === selectedValue) {
+			                        options[i].selected = true;
+			                        break;
+			                      }
+			                    }
+								</script>
+
+
+
+
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                     <label>파일 추가하기</label>
                                     <div class="change-photo-btn">
-                                        <input type="file" class="upload" name="reupfile" />
+                                        <input type="file" class="upload" />
                                     </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                     <label>내용</label>
-                                   <!--  <div id="editor" ></div> -->
-                                    <textarea class="form-control" required name="queContent" id="content" rows="20" style="resize:none;"></textarea>
+                                    <textarea class="form-control" required name="queContent" id="content" rows="20" style="resize:none;">${ q.queContent }</textarea>
                                     </div>
                                 </div>
                                 </div>
@@ -249,10 +260,7 @@
                             </div>
                             <div class="blog-categories-btn pt-0">
                             <div class="bank-details-btn" align="end">
-                                <!-- <a href="" class="btn btn-primary me-2"> 확인 </a> &nbsp;&nbsp;&nbsp;&nbsp; -->
-                                <!-- <input type='submit' class='btn btn-primary me-2' name='update' value='확인' />&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                <button type="submit" class='btn btn-primary me-2'>확인</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                                
+                                <button type="submit" class='btn btn-primary me-2'>확인</button> &nbsp;&nbsp;&nbsp;&nbsp;
                                 <br>
                             </div>
                             <br>
@@ -265,23 +273,14 @@
                 </div>
                 </form>
                 
-                
                 <script src="resources/member/assets2/js/jquery-3.6.0.min.js"></script>
-                
                 <script src="resources/member/assets2/js/bootstrap.bundle.min.js"></script>
-                
                 <script src="resources/member/assets2/js/feather.min.js"></script>
-                
                 <script src="resources/member/assets2/js/ckeditor.js"></script>
-                
                 <script src="resources/member/assets2/js/select2.min.js"></script>
-                
                 <script src="resources/member/assets2/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
-                
                 <script src="resources/member/assets2/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-                
                 <script src="resources/member/assets2/js/script.js"></script>
-
         </div>
     </div>
     <jsp:include page="../common/footer.jsp"/>
