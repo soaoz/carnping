@@ -169,7 +169,7 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("memDelete.ad")
+	@RequestMapping("memSelect.ad")
 	public void memSelect(String memNo, HttpSession session) {
 		Member m  = aService.selectMember(memNo);
 

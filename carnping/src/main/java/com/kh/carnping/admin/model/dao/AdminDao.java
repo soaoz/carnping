@@ -14,10 +14,10 @@ public class AdminDao {
 	}
 
 	public int deleteMember(SqlSessionTemplate sqlSession, Member m) {
-		return sqlSession.update("memberMapper.deleteMember", m);
+		return sqlSession.update("memberMapper.deleteMemberAdmin", m);
 	}
 
 	public Member selectMember(SqlSessionTemplate sqlSession, String memNo) {
-		return sqlSession.selectOne("memberMapper.selectMember", memNo);
+		return sqlSession.selectOne("memberMapper.selectMemberAdmin", memNo);
 	}
 }	
