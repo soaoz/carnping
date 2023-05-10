@@ -453,7 +453,7 @@
                         </div>
                         <div class="agreement">
                             <span type="join" class="css-s2m4or e1ss8rgr0">
-                                <input type="checkbox" class="check" id="marketing" name="marketing">
+                                <input type="checkbox" class="check" id="marketing" name="marketing" value="N">
                                 <label class="check" for="marketing"></label>
                                 <label class="checkLabelDesc" for="marketing" title="marketing">
                                     [선택]<!-- --> <!-- -->광고성 정보 수신 및 마케팅 활용 동의
@@ -687,14 +687,9 @@
             checkAgreeValid();
         });
 
-        //     //마케팅체크박스 값넘기기
-        // if(agreeValid4 == true){
-        //     $("#marketing").val('Y');
-        // } else {
-        //     $("#marketing").val('N');
-        // };
-
-
+        if (!$('#marketing').is(':checked')) {
+            $('#marketing').val('N');   
+        }
         function checkAgreeValid() {
             if(agreeValid1 && agreeValid2 && agreeValid3) {
                 $('#emailInput').prop('readonly', false);

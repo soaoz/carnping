@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu May 04 12:40:16 KST 2023
+google-oauth-client-jetty-1.31.2.jar>central=
+google-oauth-client-jetty-1.31.2.pom>central=
+google-oauth-client-jetty-1.31.2-sources.jar>central=

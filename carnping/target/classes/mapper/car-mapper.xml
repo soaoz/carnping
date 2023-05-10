@@ -319,4 +319,84 @@
 					, SYSDATE
 				)
 	</insert>
+	
+	
+	
+	
+	
+	
+	<!-- 소영 : 내가쓴 차박지목록 페이징을 위한 갯수조회-->
+	<select id="selectMyCarListCount" resultType="_int">
+		SELECT
+  	  		   COUNT(*)
+  	  	  FROM CINFO
+  	     WHERE CINFO_STATUS ='Y'
+           AND MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+	</select>
+	
+	<!-- 소영 : 내가 작성한 차박지목록 조회  -->
+	<select id="selectMyCarList" resultMap="cinfoResultMap">
+		SELECT  
+				CINFO_NO
+		      , CINFO_NAME
+		      , CINFO_CONTENT
+		      , CINFO_NOTICE
+		      , CINFO_LTTD
+		      , CINFO_HRDNS
+		      , CINFO_STATUS
+		      , CINFO_ADDRESS
+		      , CINFO_FACILITIES
+		      , CINFO_DAYS
+		      , CINFO_TAG
+		      , CINFO_RATING
+		      , CINFO_VIEWS
+		      , CINFO_MODIFIED
+		      , CINFO_RGSTR_DATE
+              , MEM_NO
+              , CINFO_IMG1
+		   FROM CINFO
+		   JOIN CINFO_IMG USING(CINFO_NO)
+		  WHERE CINFO_STATUS ='Y'
+            AND MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+		  ORDER BY 
+		  		CINFO_NO DESC
+	</select>
+	
+	<!-- 소영 : 내 차박지 글 삭제  -->
+	<update id="deleteMyCinfo">
+		UPDATE 
+				CINFO
+			SET CINFO_STATUS = 'N'
+		  WHERE CINFO_NO = #{cinfoNo}
+	</update>
+	
+	
+	<!-- 소영 : 내가 좋아요한 차박지 목록 조회  -->
+	<select id="selectMyLikeList" resultMap="cinfoResultMap">
+		SELECT  
+				C.CINFO_NO
+		      , C.CINFO_NAME
+		      , C.CINFO_CONTENT
+		      , C.CINFO_NOTICE
+		      , C.CINFO_LTTD
+		      , C.CINFO_HRDNS
+		      , C.CINFO_STATUS
+		      , C.CINFO_ADDRESS
+		      , C.CINFO_FACILITIES
+		      , C.CINFO_DAYS
+		      , C.CINFO_TAG
+		      , C.CINFO_RATING
+		      , C.CINFO_VIEWS
+		      , C.CINFO_MODIFIED
+		      , C.CINFO_RGSTR_DATE
+              , C.MEM_NO
+              , G.CINFO_IMG1
+		   FROM CINFO C
+		   JOIN CINFO_IMG G ON C.CINFO_NO = G.CINFO_NO
+          INNER JOIN TB_LIKE L ON C.CINFO_NO = L.CINFO_NO
+		  WHERE CINFO_STATUS ='Y'
+            AND L.MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+            AND LIKE_STATUS = 'Y'
+	</select>
+	
 </mapper>

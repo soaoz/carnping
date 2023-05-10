@@ -6,27 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<!-- Css Styles -->
-    <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/flaticon.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/barfiller.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/style.css" type="text/css">
+	
 </head>
 <body>
 
 	<jsp:include page="../common/header.jsp"/>
 	
 	
-
-    
-
     
 
     <!-- Listing Details Section Begin -->
@@ -40,18 +26,18 @@
                             <div class="listing__details__gallery__pic">
                                 <div class="listing__details__gallery__item">
                                     <img class="listing__details__gallery__item__large"
-                                        src="resources/img/listing/details/listing-details-1.jpg" alt="" style="margin-top: 50px;">
+                                        src="${ b.boardChangeImg1 }" alt="" style="margin-top: 50px;">
                                     <span><i class="fa fa-camera"></i> 170 Image</span>
                                 </div>
                                 <div class="listing__details__gallery__slider owl-carousel">
-                                    <img data-imgbigurl="resources/img/listing/details/listing-details-1.jpg"
-                                        src="resources/img/listing/details/thumb-1.jpg" alt="">
-                                    <img data-imgbigurl="img/listing/details/listing-details-1.jpg"
-                                        src="resources/img/listing/details/thumb-2.jpg" alt="">
-                                    <img data-imgbigurl="img/listing/details/listing-details-1.jpg"
-                                        src="resources/img/listing/details/thumb-3.jpg" alt="">
-                                    <img data-imgbigurl="img/listing/details/listing-details-1.jpg"
-                                        src="resources/img/listing/details/thumb-4.jpg" alt="">
+                                    <img data-imgbigurl="${ b.boardChangeImg1 }"
+                                        src="${ b.boardChangeImg1 }" alt="">
+                                    <img data-imgbigurl="${ b.boardChangeImg1 }"
+                                        src="${ b.boardChangeImg2 }" alt="">
+                                    <img data-imgbigurl="${ b.boardChangeImg1 }"
+                                        src="${ b.boardChangeImg3 }" alt="">
+                                    <img data-imgbigurl="${ b.boardChangeImg1 }"
+                                        src="${ b.boardChangeImg4 }" alt="">
                                 </div>
                             </div>
                         </div>
@@ -61,55 +47,44 @@
                                 <h2>무료나눔</h2>
                                 <br>
                                 
-                                <a class="btn btn-secondary" style="float:right" href="">목록으로</a>
+                                <a class="btn btn-secondary" style="float:right" href="freeBoard.bo">목록으로</a>
                                 <br><br>
                                 <table id="contentArea" align="center" class="table" border="1" style="border-color: lightgray;">
                                     <tr>
                                         <th width="100">제목</th>
-                                        <td colspan="3">텐트 무료 나눔</td>
+                                        <td colspan="3">${ b.boardTitle }</td>
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
-                                        <td>user01</td>
+                                        <td>${ b.memId }</td>
                                         <th>작성일</th>
-                                        <td>2023-03-31</td>
+                                        <td>${ b.createDate }</td>
                                     </tr>
                                     <tr>
                                         <th>지역</th>
                                         <td colspan="3">
-                                            <div class="filter__select">
-                                                <select>
-                                                    <option value="">서울</option>
-                                                    <option value="">경기</option>
-                                                    <option value="">인천</option>
-                                                    <option value="">대전</option>
-                                                    <option value="">대구</option>
-                                                    <option value="">광주</option>
-                                                    <option value="">부산</option>
-                                                    <option value="">제주도</option>
-                                                </select>
-                                                
-                                                
-                                            </div>
-                                            
+                                            ${ b.location }
                                         </td>
                                     </tr>
                                 
                                     <tr>
                                         <th>내용</th>
-                                        <td colspan="3"></td>
+                                        <td colspan="4"><p style="height:150px">${ b.boardContent }</p></td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="4"><p style="height:150px">무료나눔합니다</p></td>
-                                    </tr>
+                                 
                                 </table>
                                 <br>
                     
                                 <div align="center">
                                     <!-- 수정하기, 삭제하기 버튼은 이글이 본인글일 경우만 보여져야됨 -->
-                                    <button type="button" class="btn btn-success" style="background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);"><a href="freeBoardUpdate.bo">수정하기</button></a> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
-                                        <a class="btn btn-danger" onclick="">삭제하기</a>
+                                    <button type="button" class="btn btn-success" style="background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);" onclick="postFormSubmit(1)">수정하기</button> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
+                                        <a class="btn btn-danger" onclick="postFormSubmit(2)">삭제하기</a>
                                 </div><br><br>
+                                
+                                <form id="postForm" action="" method="post">
+									<input type="hidden" name="bno" value="${ b.boardNo }"/>
+									<input type="hidden" name="filePath" value="${ b.boardChangeImg1 }">
+				            	</form>
                                 
                         
                     
@@ -219,15 +194,22 @@
                 
             </div>
         </div>
+        
+        <jsp:include page="../common/footer.jsp"/>
+        
     </section>
-    <!-- Listing Details Section End -->
-
-   
-
-    <!-- Footer Section Begin -->
-   
-    <!-- Footer Section End -->
-
+    <script>
+    function postFormSubmit(num){
+		
+		if(num == 1){ // 수정하기 클릭시
+			$("#postForm").attr("action", "freeBoardUpdateForm.bo").submit();
+		}else{ // 삭제하기 클릭시
+			$("#postForm").attr("action", "freeBoardDelete.bo").submit();
+		}
+	}
+    
+    
+    </script>
     
 </body>
 </html>

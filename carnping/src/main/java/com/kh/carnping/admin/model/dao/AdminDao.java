@@ -12,4 +12,16 @@ public class AdminDao {
 	public ArrayList<Member> memNotice(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList");
 	}
+
+	public int deleteMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.deleteMemberAdmin", m);
+	}
+
+	public Member selectMember(SqlSessionTemplate sqlSession, String memNo) {
+		return sqlSession.selectOne("memberMapper.selectMemberAdmin", memNo);
+	}
+
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.updateMemberAdmin", m);
+	}
 }	

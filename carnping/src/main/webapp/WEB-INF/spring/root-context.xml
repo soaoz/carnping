@@ -49,7 +49,7 @@
 		 	
 		 </bean>
 		 
-		<!-- 이메일 인증 관련  -->	
+	<!-- 이메일 인증 관련  -->	
 	<bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.gmail.com" />
 	    <property name="port" value="587" /> 

@@ -8,13 +8,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -37,13 +41,28 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.gson.Gson;
+import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.Comment;
+import com.kh.carnping.car.model.vo.Cinfo;
+import com.kh.carnping.common.model.vo.PageInfo;
+import com.kh.carnping.common.template.Pagination;
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.people.v1.PeopleService;
+import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.GoogleLoginBO;
 import com.kh.carnping.member.model.vo.KakaoLoginBO;
+import com.kh.carnping.member.model.vo.Like;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.NaverLoginBO;
+import com.kh.carnping.member.model.vo.Question;
 
 
 
@@ -157,7 +176,13 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public String insertMember(Member m, MultipartFile memImg, Model model, HttpSession session) {
+
 		// 암호화 작업 (암호문 만들어내는 과정)
+		if (m.getMarketing() == null) {
+			System.out.println("여기를보셍!!!!!!!!!!!!!!!!!!");
+			System.out.println(m.getMarketing());
+		    //m.setMarketing("N");
+		}
 		if(memImg != null && !memImg.getOriginalFilename().equals("")) {
 			String changeName = saveMemImg(memImg, session);
 			m.setMemImgOrigin(memImg.getOriginalFilename());
@@ -178,15 +203,21 @@ public class MemberController {
 	@RequestMapping("login.me")
 	public String loginMember(Member m, HttpSession session) {
 		Member loginMember = mService.loginMember(m);
-		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd())) {
+		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd()) && loginMember.getStatus().equals("Y")) {
 			session.setAttribute("loginMember", loginMember);
+			return "redirect:/"; 
 			
+		} else if(loginMember.getStatus().equals("A")) { 
+			session.setAttribute("loginMember", loginMember);
+			return "admin/menubar";
+		} else if(loginMember.getStatus().equals("N")) {
+			session.setAttribute("alertMsg", "탈퇴한 회원의 아이디입니다.");
+			return "redirect:loginForm.me";
 		} else {
 			session.setAttribute("alertMsg", "아이디나 비밀번호를 확인하세요");
-			
+			return "redirect:loginForm.me";
 		}
 		
-		return "redirect:/"; 
 		
 	}
 
@@ -243,59 +274,513 @@ public class MemberController {
 	}
 	
 	
+//----------------------소영시작 
 	
-	
-	@RequestMapping("myProfileUpdate.me")
-	public String myProfileUpdate() {
-		return "member/myProfileUpdate";
-
+	//마이프로필 진입 전 유저비번확인
+	@RequestMapping("userPwdCheck.me")
+	public String userCheck(HttpSession session, String userPwd, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		Member loginUser  = mService.selectMember(memId); 
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(userPwd, loginUser.getMemPwd())) {
+			model.addAttribute("m", loginUser);
+			return "member/myProfileUpdate";
+		}else {
+			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
+			return "member/myPageMainSelect";
+		}
 	}
+	
+	//회원정보화면 진입
+	@RequestMapping("mypage.me")
+	public String mypage(HttpSession session, Model model, Member m) {
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m = mService.selectMember(memId);
+		model.addAttribute("m", m);
+		return "member/myProfileUpdate";
+	}
+	
+	//닉네임만 업데이트
+	@ResponseBody
+	@RequestMapping("nickNameUpdate.me")
+	public int nickNameUpdate(HttpSession session, Member m, String nickName) {
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m.setNickName(nickName);
+		m.setMemId(memId);
+		int result = mService.nickNameUpdate(m);
+		return result;
+	}
+	
+	//비밀번호만 업데이트
+	@ResponseBody
+	@RequestMapping("passwordUpdate.me")
+	public int passwordUpdate(HttpSession session,Member m, String password) {
+		//System.out.println(password);
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String encPwd = bcryptPasswordEncoder.encode(password);
+		m.setMemPwd(encPwd);
+		m.setMemId(memId);
+		int result = mService.passwordUpdate(m);
+		return result;
+	}
+
+	//회원정보 전체 업데이트
+	@RequestMapping("updateProfile.me")
+	public String updateProfile(HttpSession session,  MultipartFile reupfile, Member m, Model model) {
+	
+		//System.out.println(reupfile); 원래 이미지파일명 담겨있음 
+		//System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String memPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
+		m.setMemId(memId);
+		m.setMemPwd(memPwd);
+		
+		if(!reupfile.getOriginalFilename().equals("")) { // 새로 넘어온 첨부파일이 있을 경우에 탄다
+					//진짜 원본명 리턴
+			//기존에 첨부파일 있었을경우 , 또올림 => 기존의 첨부파일 지우고 
+			if(m.getMemImgOrigin() != null) { //널이아니면 제거
+				new File(session.getServletContext().getRealPath(m.getMemImgChange())).delete();
+				//기존의 실제 물리적인 파일 삭제 
+			}
+			//새로 넘어온 파일 서버 업로드 
+			String changeName = saveMemImg(reupfile, session);
+			m.setMemImgOrigin(reupfile.getOriginalFilename());//넘겨받은 첨부파일의 원본명
+			m.setMemImgChange("resources/uploadFiles/memImg/" + changeName);
+		}
+		int result = mService.updateProfile(m);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "redirect:mypage.me";
+		}else {
+			model.addAttribute("errorMsg", "회원 정보 수정에 실패했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+
+	//문의하기리스트 조회 (페이징까지)
+	@RequestMapping("myQuestionList.me")
+	public String questionSelectList (@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session,Question q, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		int listCount = mService.selectQuestionListCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Question> list = mService.questionSelectList(pi, memId);
+		
+		//System.out.println("문의하기 리스트 : " + list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "member/myQuestionList";
+	}
+	
+	//문의하기 입력 폼으로 이동 
+	@RequestMapping("questionForm.me")
+	public String questionForm() {
+		return "member/questionForm";
+	}
+
+	//문의하기 insert
+	@RequestMapping("questionInsert.me")
+	public String insertBoard(Question q,MultipartFile upfile, HttpSession session, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		q.setMemId(memId);
+		int result = mService.insertQuestion(q);
+		
+		if(result >0 ) {
+			session.setAttribute("alertMsg", "문의사항이 등록되었습니다.");
+			return "redirect:myQuestionList.me";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	//문의하기 상세페이지 조회
+	@RequestMapping("myQuestionDetail.me")
+	public String selectQuestion(String queNo, Model model) {
+		Question q = mService.selectQuestion(queNo);
+		//System.out.println(q);
+		//System.out.println(q);
+		model.addAttribute("q", q);
+		return "member/myQuestionDetail";
+	}
+
+	//문의하기 수정폼으로 이동
+	@RequestMapping("questionUpdateForm.me")
+	public String questionUpdateForm(String queNo, Model model) {
+		
+		Question q = mService.selectQuestion(queNo);
+		//System.out.println(q);
+		model.addAttribute("q", q);
+		return "member/questionUpdateForm";
+	}
+	
+	//문의하기 수정하기 업데이트 
+	@RequestMapping("updateQuestion.me")
+	public String updateQuestion(HttpSession session,Question q,String queNo, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		q.setMemId(memId);
+		q.setQueNo(queNo);
+		int result = mService.updateQuestion(q);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "redirect:myQuestionDetail.me?queNo="+queNo;
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	//문의하기 delete
+	@RequestMapping("deleteQuestion.me")
+	public String deleteQuestion(HttpSession session,Question q,String queNo, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		q.setMemId(memId);
+		q.setQueNo(queNo);
+		int result = mService.deleteQuestion(queNo);
+		
+		//System.out.println("리절트값 : " + result);
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+			return "redirect:myQuestionList.me";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
 	@RequestMapping("myAlarmList.me")
 	public String myAlarmList() {
 		return "member/myAlarmList";
 	}
 	
-	@RequestMapping("myLikeList.me")
-	public String myLikeList() {
-		return "member/myLikeList";
+	//내가 작성한 게시글 목록 조회하기
+	@ResponseBody
+	@RequestMapping(value = "myPostList.me", produces = "application/json; charset=utf-8")
+	public Map<String, Object> myPostList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		//System.out.println("커런트페이지 : " + currentPage);
+		int listCount = mService.selectMyBoardListCount(memId);
+		//System.out.println("나의 게시판 글 수 : "+listCount);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
+		
+		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
+		int page = pi.getCurrentPage(); 	// 현재페이지
+		int pageLimit = pi.getPageLimit();		// 페이징바의 페이지 최대개수  (1~10)(11~20) ->  10개 
+		int boardLimit = pi.getBoardLimit(); //보여질 보드게시글갯수
+		int maxPage = pi.getMaxPage(); // 가장 마지막페이지 (총페이지) 전체게시글의 가장 끝
+		int startPage = pi.getStartPage(); //페이징바의 시작수  4번선택시 1, 12번시 11
+		int endPage = pi.getEndPage(); // 페이징바의 끝수 4번선택시10, 12선택시 20
+		
+		//System.out.println(listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
+		//System.out.println("포스트리스트컨트롤러탐 유저아이디 : " + memId);
+		//System.out.println(list);
+		//sSystem.out.println(list);
+		result.put("list", list);
+		result.put("listcount", listcount);
+		result.put("page", page);
+		result.put("pageLimit", pageLimit);
+		result.put("boardLimit", boardLimit);
+		result.put("maxPage", maxPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		
+		//ArrayList<Board> resultList = (ArrayList<Board>) result.get("list");
+		//System.out.println(resultList);
+		/* return new Gson().toJson(list); */
+		
+//		for (Map.Entry<String, Object> entry : result.entrySet()) {
+//		    String key = entry.getKey();
+//		    Object value = entry.getValue();
+//		    System.out.println("해쉬맵ㅇㅇㅇㅇㅇㅇㅇㅇ" + key + " : " + value);
+//		}
+		return result;
 	}
 	
-	@RequestMapping("myPostList.me")
-	public String myPostList() {
-		return "member/myPostList";
+	//선택한 게시물들 삭제하기 
+	@ResponseBody
+	@RequestMapping(value="deleteMyPost.me" , produces = "application/json; charset=utf-8")
+	public String deleteMyPost(@RequestParam("boardNoArr[]") String[] boardNoArr, HttpSession session) {
+		
+		//System.out.println(Arrays.toString(boardNoArr));
+		int result = 0 ;
+		int deleteCount = 0;
+	    for(String boardNo : boardNoArr) {
+	    	 result = mService.deleteBoard(boardNo);
+	    	
+	         if (result == 1) { // 삭제에 성공한 경우에만 카운트 증가
+	             deleteCount++;
+	         }
+	    }
+	    //System.out.println("리절트값 : " + result + "count 값 " + deleteCount);
+	    return new Gson().toJson(deleteCount);
 	}
 	
-	@RequestMapping("myReplyList.me")
-	public String myReplyList() {
-		return "member/myReplyList";
+	
+//	@RequestMapping("myReplyList.me")
+//	public String myReplyList() {
+//		return "member/myReplyList";
+//	}
+
+	//내 댓글 리스트 조회
+	@ResponseBody
+	@RequestMapping(value = "myReplyList.me", produces = "application/json; charset=utf-8")
+	public Map<String, Object> myReplyList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		int listCount = mService.selectMyCommentListCount(memId);  // 내 댓글 총갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		//ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
+		ArrayList<Comment> list = mService.selectMyCommentList(pi, memId);
+		
+		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
+		int page = pi.getCurrentPage(); 	// 현재페이지
+		int pageLimit = pi.getPageLimit();		// 페이징바의 페이지 최대개수  (1~10)(11~20) ->  10개 
+		int boardLimit = pi.getBoardLimit(); //보여질 보드게시글갯수
+		int maxPage = pi.getMaxPage(); // 가장 마지막페이지 (총페이지) 전체게시글의 가장 끝
+		int startPage = pi.getStartPage(); //페이징바의 시작수  4번선택시 1, 12번시 11
+		int endPage = pi.getEndPage(); // 페이징바의 끝수 4번선택시10, 12선택시 20
+		
+		//System.out.println("대댇ㄱ그글"+listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
+		//System.out.println("리스트값: " + list);
+		//sSystem.out.println(list);
+		result.put("list", list);
+		result.put("listcount", listcount);
+		result.put("page", page);
+		result.put("pageLimit", pageLimit);
+		result.put("boardLimit", boardLimit);
+		result.put("maxPage", maxPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		
+		return result;
 	}
 	
-	@RequestMapping("myQuestionList.me")
-	public String questionList() {
-		return "member/myQuestionList";
+	//선택한 댓글들 삭제하기 
+	@ResponseBody
+	@RequestMapping(value="deleteMyReply.me" , produces = "application/json; charset=utf-8")
+	public String deleteMyReply(@RequestParam("replyNoArr[]") String[] replyNoArr, HttpSession session) {
+		
+		//System.out.println("댓글삭제컨트롤러탄다");
+		//System.out.println(Arrays.toString(replyNoArr));
+		int result = 0 ;
+	    for(String reNo : replyNoArr) {
+	    	 result = mService.deleteComment(reNo);
+	    }
+	    //System.out.println("리절트값 : " + result);
+	    return new Gson().toJson(result);
 	}
 	
-	@RequestMapping("questionForm.me")
-	public String questionForm() {
-		return "member/questionForm";
+	//메인페이지로
+	@RequestMapping("goHome")
+	public String goHome(){
+		return "redirect:/";
+	}
+	
+	//회원탈퇴페이지로
+	@RequestMapping("unregister.me")
+	public String unregister() {
+		return "member/unregister";
+	}
+	
+	//회원탈퇴전 확인받기 
+	@RequestMapping("deleteCheck.me")
+	public String deleteCheck(HttpSession session, Member m, String userPwd) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		Member loginUser  = mService.selectMember(memId); //로그인한 유저의 진짜 정보
+		if(loginUser != null && bcryptPasswordEncoder.matches(userPwd, loginUser.getMemPwd())) {
+			session.setAttribute("confirmMsg", "정말로 카앤핑을 탈퇴하시겠습니까? ");
+			return "member/unregister";
+		}else {
+			System.out.println("비번다름");
+			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
+			return "member/unregister";
+		}
+	}
+	
+	//회원 탈퇴
+	@RequestMapping("delete.me")
+	public String deleteMember(HttpSession session, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		int result = mService.deleteMember(memId);
+		
+		if(result>0) {
+			session.invalidate();
+			return "member/unregisterFinish";
+		}else {
+			model.addAttribute("errorMsg", "요청에 문제가 발생해 작업을 완료하지못했습니다.");
+			return "common/errorPage";
+		}
+	}
+//	//회원탈퇴 완료 jsp로 
+//	@RequestMapping("unregisterFinish.me")
+//	public String unregisterFinish() {
+//		return "member/unregisterFinish";
+//	}
+	
+	@RequestMapping("myLogoutPage.me")
+	public String myLogoutPage() {
+		return "member/myLogoutPage";
 	}
 	
 	@RequestMapping("myPageMainSelect.me")
 	public String myPageMainSelect() {
 		return "member/myPageMainSelect";
 	}
-	
+	//차박리스트 (페이징까지)
 	@RequestMapping("myCarbakList.me")
-	public String myCarbakList() {
+	public String myCarbakList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		int listCount = mService.selectMyCarListCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 6);
+	
+		ArrayList<Cinfo> list = mService.selectMyCarList(pi, memId);
+		//System.out.println(list);
+		//System.out.println(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
 		return "member/myCarbakList";
 	}
-	@RequestMapping("unregister.me")
-	public String unregister() {
-		return "member/unregister";
+	
+	//선택한 나의 차박지 목록 삭제하기
+	@ResponseBody
+	@RequestMapping(value="deleteMyCar.me" , produces = "application/json; charset=utf-8")
+	public String deleteMyCar(@RequestParam("cinfoNoArr[]") String[] cinfoNoArr, HttpSession session) {
+		
+		//System.out.println("차박목록삭제컨트롤러탄다");
+		//System.out.println(Arrays.toString(cinfoNoArr));
+		int result = 0 ;
+		int deleteCount = 0;
+	    for(String cinfoNo : cinfoNoArr) {
+	    	result = mService.deleteMyCinfo(cinfoNo);
+	    	if (result == 1) { // 삭제에 성공한 경우에만 카운트 증가
+	             deleteCount++;
+	         }
+	    }
+	    return new Gson().toJson(deleteCount);
+	}
+	
+	//내 좋아요 목록
+//	@RequestMapping("myLikeList.me")
+//	public String myLikeList() {
+//		return "member/myLikeList";
+//	}
+	@RequestMapping("myLikeList.me")
+	public String myLikeList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		int listCount = mService.selectMyLikeListCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 6);
+	
+		ArrayList<Cinfo> list = mService.selectMyLikeList(pi, memId);
+		//System.out.println(list);
+		//System.out.println(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "member/myLikeList";
 	}
 	
 	
+	//좋아요 조회
+	@ResponseBody
+	@RequestMapping(value="selectLike.me" , produces = "application/json; charset=utf-8")
+	public String selectLike(String cinfoNo, HttpSession session) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		//System.out.println("selectLike컨트롤러탄다");
+		//System.out.println(cinfoNo);
+		
+		Like l = new Like();
+		l.setCinfoNo(cinfoNo);
+		l.setMemNo(memId);
+		
+		//System.out.println(l.getMemNo() + l.getCinfoNo());
+		  
+		int result = mService.selectLikeCount(l);
+		//System.out.println(result);
+		 
+	    return new Gson().toJson(result);
+	}
+	
+	
+	//좋아요 삭제
+	@ResponseBody
+	@RequestMapping(value="deleteLike.me" , produces = "application/json; charset=utf-8")
+	public String deleteLike(String cinfoNo, HttpSession session) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		//System.out.println("deleteLike컨트롤러탄다");
+		//System.out.println(cinfoNo);
+		
+		Like l = new Like();
+		l.setCinfoNo(cinfoNo);
+		l.setMemNo(memId);
+		
+		//System.out.println(l.getMemNo() + l.getCinfoNo());
+		  
+		int result = mService.deleteLike(l);
+		//System.out.println(result);
+		 
+	    return new Gson().toJson(result);
+	}
 
+
+	//좋아요 insert 
+	@ResponseBody
+	@RequestMapping(value="insertLike.me" , produces = "application/json; charset=utf-8")
+	public String insertLike(String cinfoNo, HttpSession session) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		//System.out.println("INSERTLike컨트롤러탄다");
+		//System.out.println(cinfoNo);
+		
+		Like l = new Like();
+		l.setCinfoNo(cinfoNo);
+		l.setMemNo(memId);
+		//System.out.println(l.getMemNo() + l.getCinfoNo());
+		
+		//좋아요한거 테이블에 존재하는지 조회
+		int select = mService.selectLike(l);
+		//System.out.println(select +"셀렉트값");
+		int result = 0;
+		if(select > 0) {
+			//존재하면 status 를 'Y'로 
+			//System.out.println("셀렉트0이상");
+			 result = mService.updateInsertLike(l);
+		}else {
+			//존재하지않으면 insert
+			 result =  mService.insertLike(l);			
+		}
+		
+		  
+		//System.out.println(result);
+		 
+	    return new Gson().toJson(result);
+	}
+	
+	
+//----------------소영끝
 	
 	
 	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
@@ -341,6 +826,8 @@ public class MemberController {
 		
 	}
 	
+	
+	// 여기서부터 소셜로그인
 	@RequestMapping(value = "loginForm.me", method = { RequestMethod.GET, RequestMethod.POST })
 	public String socialLogin(Model model, HttpSession session) {
 		
@@ -355,9 +842,10 @@ public class MemberController {
 		model.addAttribute("urlKakao", kakaoAuthUrl);			
 		
 		/* 구글 URL */
-		String googleAuthUrl = googleLoginBO.getAuthorizationUrl(session);
-		System.out.println("구글:" + googleAuthUrl);		
-		model.addAttribute("urlGoogle", googleAuthUrl);	
+
+        String googleAuthUrl = GoogleLoginBO.getGoogleLoginUrl(session);
+        System.out.println("구글:"+googleAuthUrl);
+		model.addAttribute("urlGoogle", googleAuthUrl);		    
 
 		/* 생성한 인증 URL을 View로 전달 */
 		return "member/loginForm";
@@ -379,6 +867,7 @@ public class MemberController {
 		jsonObj = (JSONObject) jsonParser.parse(apiResult);
 		JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");	
 		JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
+		
 		// 프로필 조회
 		String nickName = (String) response_obj2.get("nickname");
 		m.setNickName(nickName);
@@ -387,7 +876,6 @@ public class MemberController {
 		m.setMemApiType("카카오");
 		String imgUrl = (String) response_obj2.get("profile_image_url");
 		m.setMemImgOrigin(imgUrl);
-//		System.out.println(m);
 		
 		int count = mService.emailCheck(email);
 		if (count > 0) {
@@ -408,6 +896,9 @@ public class MemberController {
 			
 			
 			m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+			if(m.getMarketing() == null) {
+				m.setMarketing("N");
+			}
 			mService.insertMember(m);
 			
 			Member loginMember = mService.loginMember(m);
@@ -417,6 +908,7 @@ public class MemberController {
 		}
 		
 	}
+	
 	
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "callbackNaver.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -448,9 +940,10 @@ public class MemberController {
 		String imgUrl = (String) response_obj.get("profile_image");
 		m.setMemImgOrigin(imgUrl);
 		System.out.println(m);
+		
+		int count = mService.emailCheckAPI(m);
 
 		
-		int count = mService.emailCheck(email);
 		if (count > 0) {
 
 			Member loginMember=mService.loginMember(m);
@@ -469,6 +962,9 @@ public class MemberController {
 			
 			
 			m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+			if(m.getMarketing() == null) {
+				m.setMarketing("N");
+			}
 			mService.insertMember(m);
 			
 			Member loginMember = mService.loginMember(m);
@@ -482,74 +978,77 @@ public class MemberController {
 	@RequestMapping(value = "callbackGoogle.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String callbackGoogle(Model model, Member m, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws Exception {
-		System.out.println("로그인 성공 callbackGoogle");
-		
-		List<String> scopes = Arrays.asList("email", "profile", "openid");
-//		GoogleAuthorizationCodeFlow flow = googleLoginBO.getGoogleAuthorizationCodeFlow();
-//		AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-//		String redirectUri = googleLoginBO.getRedirectUri();
-//		String url = authorizationUrl.setRedirectUri(redirectUri).setScopes(scopes).build();
-		
-		OAuth2AccessToken oauthToken;
-		
-        oauthToken = googleLoginBO.getAccessToken(session, code, state);
-        //로그인 사용자 정보를 읽어온다.
-	    apiResult = googleLoginBO.getUserProfile(oauthToken);
-	    System.out.println(apiResult);
-	    
-		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonObj;
-		
-		jsonObj = (JSONObject) jsonParser.parse(apiResult);
-		JSONObject response_obj = (JSONObject) jsonObj.get("response");			
-		// 프로필 조회
-		String email = (String) response_obj.get("email");
-		m.setEmail(email);
-		String memName = (String) response_obj.get("name");
-		m.setMemName(memName);
-		String nickName = (String) response_obj.get("nickname");
-		m.setNickName(nickName);
-		String phone = (String) response_obj.get("mobile");
-		m.setPhone(phone);
-		m.setMemApiType("구글");
-		String imgUrl = (String) response_obj.get("profile_image");
-		m.setMemImgOrigin(imgUrl);
-		System.out.println(m);
+			System.out.println("로그인 성공 callbackGoogle");
+			String accessToken = googleLoginBO.getAccessToken(code);
+			System.out.println(accessToken);
+	        HttpTransport httpTransport = new NetHttpTransport();
+	        JacksonFactory jsonFactory = new JacksonFactory();
+	        
+	        GoogleCredential credential = new GoogleCredential.Builder()
+	                .setTransport(httpTransport)
+	                .setJsonFactory(jsonFactory)
+	                .build();
+	        credential.setAccessToken(accessToken);
+	        
+	        PeopleService peopleService = new PeopleService.Builder(httpTransport, jsonFactory, credential)
+	                .setApplicationName("Carnping")
+	                .build();
 
-		
-		int count = mService.emailCheck(email);
-		if (count > 0) {
+	        Person profile = peopleService.people().get("people/me").setPersonFields("names,emailAddresses,phoneNumbers,photos").execute();
+	        
+	        System.out.println(profile);
+	        m.setMemApiType("구글");
+	        String nickName = profile.getNames().get(0).getDisplayName();
+	        m.setNickName(nickName);
+	        String email = profile.getEmailAddresses().get(0).getValue();
+	        m.setEmail(email);
+	        String imgUrl = profile.getPhotos().get(0).getUrl();
+	        m.setMemImgOrigin(imgUrl);
+	        
+	    	String phone = null;
+	    	List<PhoneNumber> phoneNumbers = profile.getPhoneNumbers();
+	    	if (phoneNumbers != null) {
+	    		PhoneNumber phoneNumber = phoneNumbers.get(0);
+	    		if (phoneNumber != null) {
+	    			phone = phoneNumber.getValue();
+	    			m.setPhone(phone);
+	    		}
+	    	}
+	    	
+	    	System.out.println(m);
+	    	
+	        int count = mService.emailCheck(email);
+			if (count > 0) {
 
-			Member loginMember=mService.loginMember(m);
-			System.out.println(loginMember);
-			session.setAttribute("loginMember", loginMember);
-			return "redirect:/"; 
-		} else { 
-			URL url = new URL(imgUrl);
-			URLConnection conn = url.openConnection();
-			String contentType = conn.getContentType();
-			String fileExtension = contentType.substring(contentType.lastIndexOf('/') + 1);
-			BufferedImage image = ImageIO.read(url);
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			ImageIO.write(image, fileExtension, os);
-			MultipartFile memImgOrigin = new MockMultipartFile("file", "image." + fileExtension, contentType, new ByteArrayInputStream(os.toByteArray()));
-			
-			
-			m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
-			mService.insertMember(m);
-			
-			Member loginMember = mService.loginMember(m);
-			System.out.println(loginMember+"else");
-			session.setAttribute("loginMember", loginMember);
-			return "redirect:/"; 
-		}
-	}
-    
-	// 소셜 로그인 성공 페이지
-	@RequestMapping("/loginSuccess.do")
-	public String loginSuccess() {
-		return "loginSuccess";
-	}
+				Member loginMember=mService.loginMember(m);
+				System.out.println(loginMember);
+				session.setAttribute("loginMember", loginMember);
+				return "redirect:/"; 
+			} else { 
+				URL url = new URL(imgUrl);
+				URLConnection conn = url.openConnection();
+				String contentType = conn.getContentType();
+				String fileExtension = contentType.substring(contentType.lastIndexOf('/') + 1);
+				BufferedImage image = ImageIO.read(url);
+				ByteArrayOutputStream os = new ByteArrayOutputStream();
+				ImageIO.write(image, fileExtension, os);
+				MultipartFile memImgOrigin = new MockMultipartFile("file", "image." + fileExtension, contentType, new ByteArrayInputStream(os.toByteArray()));
+				
+				
+				m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+				if(m.getMarketing() == null) {
+					m.setMarketing("N");
+				}
+				mService.insertMember(m);
+				
+				Member loginMember = mService.loginMember(m);
+				System.out.println(loginMember+"else");
+				session.setAttribute("loginMember", loginMember);
+				return "redirect:/"; 
+			}
+	        
+	    }
+
 
 }
 	
