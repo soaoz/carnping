@@ -8,7 +8,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Carnping | 관리자 </title>
-
+<!--===============================================================================================-->	
+<link rel="icon" type="image/png" href="resources/resources/login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
 </head>
 
 <body>
@@ -43,15 +45,16 @@
                         <div class="card card-table">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-center table-hover datatable">
+                                    <table class="table table-center table-hover datatable" style="text-align:center;">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>이름</th>
-                                                <th>Email</th>
+                                                <th>이메일</th>
                                                 <th>닉네임</th>
                                                 <th>가입일</th>
-                                                <th>탈퇴유무</th>
-                                                <th class="text-end">옵션</th>
+                                                <th>회원 상태</th>
+                                                <th>가입 방식</th>
+                                                <th class="">옵션</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -73,7 +76,7 @@
 	                                                		<h2 class="table-avatar">
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }" class="avatar avatar-sm me-2"><img
 	                                                                class="avatar-img rounded-circle"
-	                                                                src="${ list.memImgOrigin }"
+	                                                                src="${ list.memImgChange }"
 	                                                                alt="User Image"></a>
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }">${ list.memName } <span>${list.memNo }
 	                                                            </span></a>
@@ -89,16 +92,42 @@
                                                 <td>${ list.nickName }</td>
                                                 <td>${ list.enrollDate }</td>
                                                 <td>
-                                                <c:choose >
-                                                	<c:when test="${ list.status eq 'Y' }">
-		                                                <span class="badge badge-pill bg-success-light">활동중</span>                                                	
-                                                	</c:when>
-                                                	<c:otherwise>
-                                                		<span class="badge badge-pill bg-danger-light">탈퇴</span>
-                                                	</c:otherwise>
-                                                </c:choose>
+                                                    <c:choose >
+                                                        <c:when test="${ list.status eq 'Y' }">
+                                                            <span class="badge badge-pill bg-success-light">활동중</span>                                                	
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="badge badge-pill bg-danger-light">탈퇴</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
-                                                <td class="text-end">
+
+                                                <td>
+                                                    <c:choose >
+                                                        <c:when test="${ list.memApiType eq '카카오' }">
+                                                            <img style="max-width:unset; width: 45px;
+                                                            height: 45px;
+                                                            border-radius: 50px;"src="resources/img/kakao.png" alt="">  
+                                                        </c:when>
+                                                        <c:when test="${ list.memApiType eq '네이버' }">
+                                                            <img style="max-width:unset; width: 45px;
+                                                            height: 45px;
+                                                            border-radius: 50px;"src="resources/img/naver.png" alt="">                                                	
+                                                        </c:when>
+                                                        <c:when test="${ list.memApiType eq '구글' }">
+                                                            <img style="max-width:unset; width: 35px;
+                                                            height: 35px;
+                                                            " src="resources/img/google.png" alt="">  
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <img style="max-width:unset; width: 50px;
+                                                            height: 50px;
+                                                            " src="resources/img/logo_login_1.png" alt="">  
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+
+                                                <td class="">
                                                     <!-- 회원 번호 -->
                                                     <a href="memEdit.ad?memNo=${ list.memNo }"
                                                         class="btn btn-sm btn-white text-success me-2"><i
@@ -134,6 +163,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
+
                                             </tr>
                                         	</c:forEach>
                                         </tbody>

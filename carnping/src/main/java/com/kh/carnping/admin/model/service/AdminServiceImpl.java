@@ -35,4 +35,10 @@ public class AdminServiceImpl implements AdminService{
 		return aDao.selectMember(sqlSession, memNo);
 	}
 
+
+	@Override
+	public int updateMember(Member m) {
+		return aDao.updateMember(sqlSession, m);
+	}
+
 }

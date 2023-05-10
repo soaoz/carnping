@@ -20,4 +20,8 @@ public class AdminDao {
 	public Member selectMember(SqlSessionTemplate sqlSession, String memNo) {
 		return sqlSession.selectOne("memberMapper.selectMemberAdmin", memNo);
 	}
+
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.updateMemberAdmin", m);
+	}
 }	

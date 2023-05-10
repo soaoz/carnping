@@ -176,10 +176,7 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public String insertMember(Member m, MultipartFile memImg, Model model, HttpSession session) {
-		System.out.println("===== insertMember 시작 ====");
-		System.out.println("Member m : ");
-		System.out.println(m);
-		System.out.println("===== insertMember 진행중 ====");
+
 		// 암호화 작업 (암호문 만들어내는 과정)
 		if (m.getMarketing() == null) {
 			System.out.println("여기를보셍!!!!!!!!!!!!!!!!!!");
@@ -943,9 +940,10 @@ public class MemberController {
 		String imgUrl = (String) response_obj.get("profile_image");
 		m.setMemImgOrigin(imgUrl);
 		System.out.println(m);
+		
+		int count = mService.emailCheckAPI(m);
 
 		
-		int count = mService.emailCheck(email);
 		if (count > 0) {
 
 			Member loginMember=mService.loginMember(m);

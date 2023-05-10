@@ -14,4 +14,7 @@ public interface AdminService {
 	
 	// 회원정보 수정용 조회(select)
 	Member selectMember(String memNo);
+	
+	// 회원정보 수정(update)
+	int updateMember(Member m);
 }

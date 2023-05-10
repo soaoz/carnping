@@ -1,6 +1,10 @@
 package com.kh.carnping.admin.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.carnping.admin.model.service.AdminServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
@@ -95,13 +100,7 @@ public class AdminController {
 
 	//----------------------
 	
-	/**
-	 * 회원관리/회원수정으로 이동
-	 */
-	@RequestMapping("memEdit.ad")
-	public String memEdit() {
-		return "admin/memEdit";
-	}
+
 	
 	/**
 	 * 차박게시글/차박 게시글 수정 및 상세정보로 이동
@@ -168,11 +167,63 @@ public class AdminController {
         }
 	}
 	
-	@ResponseBody
-	@RequestMapping("memSelect.ad")
-	public void memSelect(String memNo, HttpSession session) {
-		Member m  = aService.selectMember(memNo);
+	@RequestMapping("memEdit.ad")
+	public String memEdit(String memNo, Model model) {
+		Member m = aService.selectMember(memNo);
+		model.addAttribute("m", m);
+		model.addAttribute("memNo", memNo);
+		return "admin/memEdit";
 
+	}
+	
+	// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할 
+	public String saveMemImg(MultipartFile memImg, HttpSession session) {
+		
+		String originName = memImg.getOriginalFilename(); // flower.png
+		
+		// "20230331101855" (년월일시분초)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 랜덤한 숫자 5자리
+		int ranNum = (int)(Math.random() * 90000 + 10000 ); // 10000~99999 사이 -> 시작수는 더하고 몇개 생성할지 곱하기 
+		
+		// 확장자
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		// 최종 수정명
+		String changeName = currentTime + ranNum + ext;
+		
+		// 업로드 시키고자 하는 폴더의 물리적인 경로를 알아내기 
+		String memImgPath = session.getServletContext().getRealPath("/resources/uploadFiles/memImg/"); // "/" => webapp 의미 
+							   // getServletContext() => 애플리케이션 영역에 진입
+		// 서버에 파일을 업로드
+		try {
+			memImg.transferTo(new File(memImgPath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
+	
+	@RequestMapping("memUpdate.ad")
+	public String memUpdate(Member m, String memNo, MultipartFile memImg,HttpSession session) {
+		if(memImg != null && !memImg.getOriginalFilename().equals("")) {
+			String changeName = saveMemImg(memImg, session);
+			m.setMemImgOrigin(memImg.getOriginalFilename());
+			m.setMemImgChange("resources/uploadFiles/memImg/" + changeName);
+		}
+		int result = aService.updateMember(m);
+		Member resultMem = aService.selectMember(memNo);
+		System.out.println(resultMem);
+		if (result > 0) { // 성공 => 메인페이지 url 재요청! 알람창
+			
+			session.setAttribute("m", m);
+			return "redirect:memEdit.ad?memNo=" + memNo;
+		} else { // 실패 => 에러 문구 담아서 에러페이지 포워딩
+			session.setAttribute("alertMsg", "회원 정보 수정 실패");
+			return "redirect:memEdit.ad?memNo=" + memNo;
+		}
 	}
 	
 
