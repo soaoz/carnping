@@ -18,6 +18,8 @@
 		<result column="CINFO_VIEWS" property="cinfoViews"/>	
 		<result column="CINFO_MODIFIED" property="cinfoModified"/>	
 		<result column="CINFO_RGSTR_DATE" property="cinfoRgstrDate"/>	
+		<result column="MEM_NAME" property="memName"/>	
+		<result column="MEM_IMG_CHANGE" property="memImg"/>
 		<result column="MEM_NO" property="memNo"/>	
 		<result column="CINFO_IMG1" property="cinfoImg1"/>	
 		<result column="CINFO_IMG2" property="cinfoImg2"/>	
@@ -37,7 +39,7 @@
 		<result column="RE_NO" property="reNo"/>
 		<result column="REF_NO" property="refNo"/>
 		<result column="MEM_NO" property="memNo"/>
-		<result column="MEM_IMG" property="memImg"/>
+		<result column="MEM_IMG_CHANGE" property="memImg"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COMM_CONTENT" property="commContent"/>
 	</resultMap>
@@ -53,10 +55,13 @@
 		<result column="REVIEW_IMG" property="reviewImg"/>	
 		<result column="REVIEW_LIKE" property="reviewLike"/>	
 		<result column="MEM_NO" property="memNo"/>	
+		<result column="MEM_NAME" property="memName"/>	
+		<result column="MEM_IMG_CHANGE" property="memImg"/>
 		<result column="CREATE_DATE" property="createDate"/>	
 		<result column="REVIEW_STATUS" property="reviewStatus"/>
 		<result column="REVIEW_ALL_VIEW" property="reviewAllView"/>
 		<result column="REVIEW_SCR" property="reviewScr"/>
+		<result column="REVIEW_COUNT" property="reviewCount"/>
 	</resultMap>
 	
 	<resultMap type="Verify" id="verifyResultMap">
@@ -204,11 +209,14 @@
 				, REVIEW_TYPE
 				, REVIEW_CONTENT
 				, REVIEW_IMG
-				, REVIEW_LIKE
 				, REVIEW_STATUS
-				, (SELECT MEM_NAME FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW.MEM_NO) MEM_NO
+				, (SELECT COUNT(*) FROM REVIEW_LIKE WHERE REVIEW.REVIEW_NO = REVIEW_LIKE.REVIEW_NO) REVIEW_LIKE
+				, MEM_NO
+				, MEM_NAME
+				, MEM_IMG_CHANGE
 				, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') CREATE_DATE
 		  FROM  REVIEW
+		  JOIN  MEMBER USING(MEM_NO)
 		 WHERE  CINFO_NO = #{cinfoNo}
 		   AND  REVIEW_STATUS = 'Y'
 	</select>
@@ -220,7 +228,7 @@
 		        ,TRUNC(AVG(REVIEW_CONV),1) REVIEW_CONV
 		        ,TRUNC(AVG(REVIEW_ACCESS),1) REVIEW_ACCESS
 		        ,TRUNC(AVG(REVIEW_TYPE),1) REVIEW_TYPE
-		        ,TRUNC((TRUNC(AVG(REVIEW_VIEW),1) + TRUNC(AVG(REVIEW_CONV),1) + TRUNC(AVG(REVIEW_ACCESS),1) + TRUNC(AVG(REVIEW_TYPE),1))/5,1) REVIEW_ALL_VIEW
+		        ,TRUNC((TRUNC(AVG(REVIEW_VIEW),1) + TRUNC(AVG(REVIEW_CONV),1) + TRUNC(AVG(REVIEW_ACCESS),1) + TRUNC(AVG(REVIEW_TYPE),1))/4,1) REVIEW_ALL_VIEW
 	  	  FROM 	REVIEW
 		 WHERE  CINFO_NO = 'CAR1'
 		 GROUP 
@@ -232,16 +240,91 @@
 				  RE_NO
 				, REF_NO
 				, (SELECT MEM_NAME FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW_COMMENT.MEM_NO) MEM_NO
+				, (SELECT MEM_IMG_CHANGE FROM MEMBER WHERE MEMBER.MEM_NO = REVIEW_COMMENT.MEM_NO) MEM_IMG_CHANGE
 				, CREATE_DATE
 				, COMM_CONTENT
 		  FROM REVIEW_COMMENT
 		 WHERE REF_NO = #{reviewNo}
 		   AND STATUS = 'Y'
+		 ORDER 
+		    BY CREATE_DATE DESC
 	</select>
+	
+	<select id="reviewLikeCheck" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM REVIEW_LIKE 
+		 WHERE REVIEW_NO = #{reNo}
+		   AND MEM_NO = #{memNo}
+	</select>
+	
+	<update id="reviewNoLike">
+		UPDATE REVIEW
+		   SET REVIEW_LIKE = REVIEW_LIKE-1
+		 WHERE REVIEW_NO = #{reNo}
+	</update>
 	
 	<update id="reviewLike">
 		UPDATE REVIEW
 		   SET REVIEW_LIKE = REVIEW_LIKE+1
 		 WHERE REVIEW_NO = #{reNo}
 	</update>
+	
+	<delete id="deleteReviewLike">
+		DELETE FROM REVIEW_LIKE
+		 WHERE REVIEW_NO = #{reNo}
+		   AND MEM_NO = #{memNo}
+	</delete>
+	
+	<insert id="insertReviewLike">
+		INSERT 
+		  INTO
+				REVIEW_LIKE
+		VALUES  (
+				  #{reNo}
+				, #{memNo}
+				)
+	</insert>
+	
+	<insert id="insertComment">
+		INSERT 
+		  INTO
+				REVIEW_COMMENT
+		VALUES  (
+				'RVC'||SEQ_RVC_NO.NEXTVAL
+				, #{reNo}
+				, #{memNo}
+				, SYSDATE
+				, #{text}
+				, 'Y'
+				)
+		
+	</insert>
+	
+	<insert id="insertReview">
+		INSERT
+		  INTO 
+		  		REVIEW
+		VALUES	(
+					  'RVW'||SEQ_RVW_NO.NEXTVAL
+					, #{cinfoNo}
+					, #{reviewView}
+					, #{reviewConv}
+					, #{reviewAccess}
+					, #{reviewType}
+					, #{reviewContent}
+					, #{reviewImg}
+					, 0
+					, 'Y'
+					, #{memNo}
+					, SYSDATE
+				)
+	</insert>
+	
+	<select id="reviewCheck" resultType="_int">
+		SELECT 
+				COUNT(*)
+	      FROM  REVIEW
+	     WHERE  CINFO_NO = #{cinfoNo}
+	       AND  MEM_NO = #{memNo}
+	</select>
 </mapper>

@@ -2,6 +2,8 @@ package com.kh.carnping.car.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
@@ -21,12 +23,30 @@ public interface CarService {
 	// 리뷰정보
 	ArrayList<Review> selectReview(String cinfoNo);
 	
+	// 리뷰 등록
+	int insertReview(Review review);
+	
 	// 리뷰 카운터 정보
 	Review selectReviewCount(String cinfoNo);
 	
 	// 리뷰 댓글 정보
 	ArrayList<Comment> selectReviewComment(String reNo);
 	
-	// 리뷰 좋아용
+	// 리뷰 좋아요 COUNT ++
 	int reviewLike(String reNo);
+	
+	// 리뷰 좋아요 체크
+	int reviewLikeCheck(String reNo, String memNo);
+	
+	// 리뷰 좋아요 삭제
+	int deleteReviewLike(String reNo, String memNo);	
+	
+	// 리뷰 좋아요 테이블 생성
+	int insertReviewLike(String reNo,  String memNo);
+	
+	// 리뷰 코멘트 등록
+	int insertComment(String reNo, String memNo, String text);
+	
+	// 리뷰 체크
+	int reviewCheck(String memNo, String cinfoNo);
 }

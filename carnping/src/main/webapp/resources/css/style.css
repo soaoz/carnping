@@ -160,7 +160,7 @@ ol {
 	color: #ffffff;
 	text-transform: uppercase;
 	font-weight: 700;
-	background: #f03250;
+	background: #0ca678;
 	border-radius: 2px;
 }
 
@@ -171,7 +171,7 @@ ol {
 	text-transform: uppercase;
 	display: inline-block;
 	padding: 13px 30px 12px;
-	background: #f03250;
+	background: #0ca678;
 	border: none;
 }
 
@@ -519,7 +519,7 @@ ol {
 	border: none;
 	font-size: 14px;
 	font-weight: 700;
-	background: #f03250;
+	background: #0ca678;
 	color: #ffffff;
 	text-transform: uppercase;
 }
@@ -573,13 +573,13 @@ ol {
 	bottom: -2px;
 	height: 2px;
 	width: 100%;
-	background: #f03250;
+	background: #0ca678;
 	content: "";
 	opacity: 0;
 }
 
 .most__search__tab .nav-tabs .nav-link.active {
-	color: #f03250;
+	color: #0ca678;
 }
 
 .most__search__tab .nav-tabs .nav-link.active:after {
@@ -633,7 +633,7 @@ ol {
 .work__item__number {
 	font-size: 60px;
 	font-weight: 700;
-	color: #f03250;
+	color: #0ca678;
 	opacity: 0.1;
 	position: absolute;
 	left: -16px;
@@ -705,7 +705,7 @@ ol {
 	margin: 0 auto;
 	font-family: "FontAwesome";
 	content: "";
-	color: #f03250;
+	color: #0ca678;
 	opacity: 0.2;
 	font-size: 60px;
 	z-index: -1;
@@ -747,7 +747,7 @@ ol {
 }
 
 .testimonial__slider.owl-carousel .owl-nav button:hover {
-	background: #f03250;
+	background: #0ca678;
 }
 
 .testimonial__item {
@@ -766,7 +766,7 @@ ol {
 
 .testimonial__item span {
 	font-size: 15px;
-	color: #f03250;
+	color: #0ca678;
 	font-weight: 600;
 }
 
@@ -859,7 +859,7 @@ ol {
 	font-size: 14px;
 	font-weight: 700;
 	color: #ffffff;
-	background: #f03250;
+	background: #0ca678;
 	display: inline-block;
 	border: none;
 	position: absolute;
@@ -928,7 +928,7 @@ ol {
 }
 
 .footer__address ul li .footer__social a:hover {
-	color: #f03250;
+	color: #0ca678;
 }
 
 .footer__address ul li .footer__social a:last-child {
@@ -972,7 +972,7 @@ ol {
 .footer__copyright__text span,
 .footer__copyright__text i,
 .footer__copyright__text a {
-	color: #f03250;
+	color: #0ca678;
 }
 
 .footer__copyright__links {
@@ -990,7 +990,7 @@ ol {
 }
 
 .footer__copyright__links a:hover {
-	color: #f03250;
+	color: #0ca678;
 }
 
 .footer__copyright__links a:last-child {
@@ -1049,7 +1049,7 @@ ol {
 }
 
 .filter__search input:focus {
-	border-color: #f03250;
+	border-color: #0ca678;
 }
 
 .filter__search input::-webkit-input-placeholder {
@@ -1128,7 +1128,7 @@ ol {
 }
 
 .filter__location input:focus {
-	border-color: #f03250;
+	border-color: #0ca678;
 }
 
 .filter__location input::-webkit-input-placeholder {
@@ -1153,7 +1153,7 @@ ol {
 
 .filter__location i {
 	font-size: 20px;
-	color: #f03250;
+	color: #0ca678;
 	position: absolute;
 	right: 0;
 	bottom: 17px;
@@ -1176,14 +1176,14 @@ ol {
 }
 
 .filter__radius .ui-slider-horizontal .ui-slider-range-min {
-	background: #f03250;
+	background: #0ca678;
 }
 
 .filter__radius .ui-slider .ui-slider-handle {
 	height: 10px;
 	width: 10px;
 	display: inline-block;
-	background: #f03250;
+	background: #0ca678;
 	cursor: pointer;
 	border: 1.5px solid #fff;
 	border-radius: 50%;
@@ -1202,7 +1202,7 @@ ol {
 }
 
 .filter__radius .price-input input {
-	color: #f03250;
+	color: #0ca678;
 	font-weight: 600;
 	font-size: 15px;
 	width: 50px;
@@ -1227,14 +1227,14 @@ ol {
 }
 
 .filter__price .ui-slider .ui-slider-range {
-	background: #f03250;
+	background: #0ca678;
 }
 
 .filter__price .ui-slider .ui-slider-handle {
 	height: 10px;
 	width: 10px;
 	display: inline-block;
-	background: #f03250;
+	background: #0ca678;
 	cursor: pointer;
 	border: 1.5px solid #fff;
 	border-radius: 50%;
@@ -1258,12 +1258,12 @@ ol {
 	top: 12px;
 	height: 2px;
 	width: 4px;
-	background: #f03250;
+	background: #0ca678;
 	content: "";
 }
 
 .filter__price .price-input input {
-	color: #f03250;
+	color: #0ca678;
 	font-weight: 600;
 	font-size: 15px;
 	width: 35px;
@@ -1316,7 +1316,7 @@ ol {
 	font-weight: 700;
 	text-transform: uppercase;
 	color: #ffffff;
-	background: #f03250;
+	background: #0ca678;
 	border: none;
 	border-radius: 2px;
 	width: 100%;
@@ -1424,7 +1424,7 @@ ol {
 .listing__item__pic__tag {
 	font-size: 12px;
 	color: #ffffff;
-	background: #f03250;
+	background: #0ca678;
 	font-weight: 600;
 	display: inline-block;
 	padding: 5px 15px 5px 10px;
@@ -1519,7 +1519,7 @@ ol {
 
 .listing__item__text__rating h6 {
 	font-size: 15px;
-	color: #f03250;
+	color: #0ca678;
 	font-weight: 600;
 	float: right;
 }
@@ -1559,7 +1559,7 @@ ol {
 }
 
 .listing__item__text__info__right.closed {
-	color: #f03250;
+	color: #0ca678;
 }
 
 .listing__map {
@@ -1860,7 +1860,7 @@ ol {
 
 .listing__details__comment__item__text span {
 	font-size: 13px;
-	color: #f03250;
+	color: #0ca678;
 }
 
 .listing__details__comment__item__text h5 {
@@ -2094,7 +2094,7 @@ ol {
 }
 
 .listing__sidebar__working__hours ul li span.closed {
-	color: #f03250;
+	color: #0ca678;
 }
 
 /*---------------------
@@ -2123,7 +2123,7 @@ ol {
 }
 
 .breadcrumb__option a i {
-	color: #f03250;
+	color: #0ca678;
 }
 
 .breadcrumb__option a:after {
@@ -2212,7 +2212,7 @@ ol {
 .blog__item__pic .play-btn {
 	height: 50px;
 	width: 50px;
-	background: #f03250;
+	background: #0ca678;
 	border-radius: 50%;
 	line-height: 50px;
 	text-align: center;
@@ -2235,7 +2235,7 @@ ol {
 	font-weight: 700;
 	text-transform: uppercase;
 	margin-right: 15px;
-	color: #f03250;
+	color: #0ca678;
 	position: relative;
 	font-size: 12px;
 }
@@ -2246,7 +2246,7 @@ ol {
 	top: 6px;
 	height: 4px;
 	width: 4px;
-	background: #f03250;
+	background: #0ca678;
 	border-radius: 50%;
 	content: "";
 }
@@ -2352,9 +2352,9 @@ ol {
 }
 
 .blog__pagination a:hover {
-	background: #f03250;
+	background: #0ca678;
 	color: #ffffff;
-	border-color: #f03250;
+	border-color: #0ca678;
 }
 
 /*---------------------
@@ -2450,7 +2450,7 @@ ol {
 	font-size: 11px;
 	text-transform: uppercase;
 	font-weight: 700;
-	color: #f03250;
+	color: #0ca678;
 	margin-bottom: 10px;
 }
 
@@ -2548,7 +2548,7 @@ ol {
 .blog__hero__text .label {
 	font-size: 13px;
 	color: #ffffff;
-	background: #f03250;
+	background: #0ca678;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 1px;
@@ -2627,7 +2627,7 @@ ol {
 .blog__details__video .play-btn {
 	height: 60px;
 	width: 60px;
-	background: #f03250;
+	background: #0ca678;
 	border-radius: 50%;
 	line-height: 60px;
 	text-align: center;
@@ -2819,7 +2819,7 @@ ol {
 .about__video .play-btn {
 	height: 90px;
 	width: 90px;
-	background: #f03250;
+	background: #0ca678;
 	border-radius: 50%;
 	line-height: 92px;
 	text-align: center;
@@ -2848,7 +2848,7 @@ ol {
 
 .team__item span {
 	font-size: 13px;
-	color: #f03250;
+	color: #0ca678;
 	font-weight: 600;
 	display: block;
 	text-transform: uppercase;
