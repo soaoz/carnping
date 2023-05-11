@@ -56,6 +56,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.Person;
 import com.google.api.services.people.v1.model.PhoneNumber;
+import com.kh.carnping.member.model.service.MailSendService;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
 import com.kh.carnping.member.model.vo.GoogleLoginBO;
 import com.kh.carnping.member.model.vo.KakaoLoginBO;
@@ -92,6 +93,9 @@ public class MemberController {
 	
 	@Autowired // 카카오로그인
 	private GoogleLoginBO googleLoginBO;
+	
+	@Autowired //소영: 메일보내기
+	private MailSendService mailService;
 	
 	@RequestMapping("loginForm.me")
 	public String memberLoginForm(){
@@ -264,6 +268,32 @@ public class MemberController {
 	
 //----------------------소영시작 
 	
+	@RequestMapping("myPageMainSelect.me")
+	public String myPageMainSelect(HttpSession session, Member m,Model model) {
+		
+		
+		//만약 멤버api가 null 이 아니면 api 전용 회원업데이트 화면으로 이동 		
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+	
+		m.setMemNo(memNo);
+		
+		Member loginUser  = mService.selectMember(m); 
+		System.out.println(loginUser);
+		
+		//로그인유저의의 api 값이 null이 아니면 api전용 회원정보조회화면으로 
+		if(loginUser.getMemApiType() != null) {
+			model.addAttribute("m", loginUser);
+			//데이터 보내주면서 회원정보화면으로 바로 진입
+			return "member/myProfileUpdateApi";
+			
+		}else {	
+			
+			return "member/myPageMainSelect";
+		}
+		
+	}
+	
+	
 	//마이프로필 진입 전 유저비번확인
 	@RequestMapping("userPwdCheck.me")
 	public String userCheck(HttpSession session, String userPwd, Model model) {
@@ -280,14 +310,16 @@ public class MemberController {
 		}
 	}
 	
-	//회원정보화면 진입
-	@RequestMapping("mypage.me")
-	public String mypage(HttpSession session, Model model, Member m) {
-		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
-		m = mService.selectMember(memId);
-		model.addAttribute("m", m);
-		return "member/myProfileUpdate";
-	}
+//	//회원정보화면 진입
+//	@RequestMapping("mypage.me")
+//	public String mypage(HttpSession session, Model model, Member m) {
+//		
+//		
+//		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+//		m = mService.selectMember(memId);
+//		model.addAttribute("m", m);
+//		return "member/myProfileUpdate";
+//	}
 	
 	//닉네임만 업데이트
 	@ResponseBody
@@ -313,16 +345,20 @@ public class MemberController {
 		return result;
 	}
 
-	//회원정보 전체 업데이트
+	//회원정보 프로필 전체 업데이트
 	@RequestMapping("updateProfile.me")
 	public String updateProfile(HttpSession session,  MultipartFile reupfile, Member m, Model model) {
 	
 		//System.out.println(reupfile); 원래 이미지파일명 담겨있음 
-		//System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
+		System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
 		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
 		String memPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
 		m.setMemId(memId);
 		m.setMemPwd(memPwd);
+		
+		System.out.println(reupfile);
+		
+		System.out.println();
 		
 		if(!reupfile.getOriginalFilename().equals("")) { // 새로 넘어온 첨부파일이 있을 경우에 탄다
 					//진짜 원본명 리턴
@@ -627,10 +663,7 @@ public class MemberController {
 		return "member/myLogoutPage";
 	}
 	
-	@RequestMapping("myPageMainSelect.me")
-	public String myPageMainSelect() {
-		return "member/myPageMainSelect";
-	}
+
 	//차박리스트 (페이징까지)
 	@RequestMapping("myCarbakList.me")
 	public String myCarbakList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
@@ -767,6 +800,67 @@ public class MemberController {
 	    return new Gson().toJson(result);
 	}
 	
+	//이메일만 업데이트
+	@RequestMapping("emailUpdate.me")
+	@ResponseBody
+	public int emailUpdate(HttpSession session, String email, Member m) {
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		System.out.println(email);
+		
+		m.setEmail(email);
+		m.setMemId(memId);
+		
+		int result = mService.emailUpdate(m);
+		return result;
+			
+	}
+	
+	
+
+	
+	//이메일보내기
+	@RequestMapping("emailSend.me")
+	@ResponseBody
+	public String mailCheck(String email) {
+		//System.out.println("이메일 인증 요청이 들어옴!");
+		//System.out.println("이메일 인증 이메일 : " + email);
+		return mailService.joinEmail(email);
+			
+	}
+	
+	//문자인증-----------------------------------------------
+	/*@ResponseBody
+	@RequestMapping(value="sms.api" , produces = "application/json; charset=utf-8")
+	public String sendSms(String cinfoNo, HttpSession session) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		//System.out.println("INSERTLike컨트롤러탄다");
+		//System.out.println(cinfoNo);
+		
+		Like l = new Like();
+		l.setCinfoNo(cinfoNo);
+		l.setMemNo(memId);
+		//System.out.println(l.getMemNo() + l.getCinfoNo());
+		
+		//좋아요한거 테이블에 존재하는지 조회
+		int select = mService.selectLike(l);
+		//System.out.println(select +"셀렉트값");
+		int result = 0;
+		if(select > 0) {
+			//존재하면 status 를 'Y'로 
+			//System.out.println("셀렉트0이상");
+			 result = mService.updateInsertLike(l);
+		}else {
+			//존재하지않으면 insert
+			 result =  mService.insertLike(l);			
+		}
+		
+		  
+		//System.out.println(result);
+		 
+	    return new Gson().toJson(result);
+	}*/
+	//---------------------------문자인증
 	
 //----------------소영끝
 	

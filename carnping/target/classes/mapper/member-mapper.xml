@@ -213,23 +213,10 @@
 
 	<!-- 소영: 유저의 정보 조회 -->
 	<select id="selectMember" resultMap="memberResultSet">
-		SELECT
-				MEM_NO
-			  , MEM_ID
-			  , MEM_PWD
-			  , MEM_NAME
-			  , NICKNAME
-			  , EMAIL
-			  , ENROLL_DATE
-			  , STATUS
-			  , MEM_IMG_ORIGIN
-			  , PHONE
-			  , MEM_API_TYPE
-			  , MEM_API_TOKEN
-			  , MARKETING
-			  , MEM_IMG_CHANGE
-	 FROM MEMBER
-	WHERE MEM_ID = #{memID}
+	SELECT MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, NICKNAME, EMAIL, ENROLL_DATE, STATUS, MEM_IMG_ORIGIN, PHONE, MEM_API_TYPE, MEM_API_TOKEN, MARKETING, MEM_IMG_CHANGE
+	FROM MEMBER
+	WHERE MEM_ID = #{memId} AND MEM_ID IS NOT NULL
+	   OR MEM_NO = #{memNo} AND MEM_NO IS NOT NULL
 	</select>
 	
 	<!-- 소영 : 닉네임 업데이트  -->
@@ -260,6 +247,7 @@
              , MEM_IMG_ORIGIN = #{memImgOrigin}
              , MEM_IMG_CHANGE = #{memImgChange}
              , PHONE = #{phone}
+             , MARKETING = #{marketing}
   	   WHERE MEM_ID = #{memId}
 	</update>
 
@@ -417,6 +405,15 @@
 			 , 'Y'
 			 )
 	</insert>
+	
+		<!-- 소영 : 비번 업데이트  -->
+	<update id="emailUpdate">
+		update
+			    member
+		    set email = #{email}
+		  where mem_id = #{memId}
+	</update>
+	
 	
 	
 </mapper>

@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -33,6 +35,16 @@
 	<!-- GoogleLoginBO Class에 대한 Bean설정 추가 -->
 	<beans:bean id="googleLoginBO" class="com.kh.carnping.member.model.vo.GoogleLoginBO" />
 
-		
+	<!-- 소영 :  실시간 알람을 위한 웹소켓 핸들러   -->
+		<beans:bean id="alarmHandler" class="com.kh.carnping.common.model.vo.AlarmHandler" />
+		<websocket:handlers> 
+		<!-- 네임스페이스 등록안하면 빨간줄 , 아래 탭에서 체크하기 -->
+			<websocket:mapping handler="alarmHandler" path="/alarm" />
+		    <websocket:handshake-interceptors>
+			    	<!-- 로그인한 유저의 아이디를 작성자(알람받을사람)에게 알려줘야하니까 웹소켓세션에다가 HTTP세션을 올려줌  -->
+		        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		    </websocket:handshake-interceptors>	
+		</websocket:handlers>
+	<!-- 소영 끝  -->
 	
 </beans:beans>

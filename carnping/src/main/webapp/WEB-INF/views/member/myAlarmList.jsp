@@ -136,13 +136,19 @@
        .pagination > li.active > a:hover{
        		cursor: pointer;
        }
+       
+
+
 		
 </style>
 </head>
 <body>
 
 <input type = "hidden" name="memId" id="memId" value="${ loginMember.memId }">
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="../common/header.jsp"/> 
+
+
+
 <jsp:include page="../common/menubar.jsp"/>   
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->

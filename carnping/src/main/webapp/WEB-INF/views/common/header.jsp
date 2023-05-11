@@ -305,6 +305,34 @@
     <!-- Header Section End -->
 
     
+    
+    <!-- JSP 페이지에서 WebSocket 생성 및 서버와 연결 : 소영-->
+<script type="text/javascript">
+	var socket = null;
+	$(document).ready(function(){
+		connectWS();
+		
+	});
+	function connectWS(){
+		console.log("ttttttttttt")
+	    socket = new WebSocket("ws://localhost:8282/carnping/alarm");
+	    console.log(WebSocket);
+	    socket.onopen = function() { //커넥션이 연결되었을 때 실행된다
+	        //console.log("커넥션 연결됨");
+	    };
+	    socket.onmessage = function(event) { //메세지 받았을 때 실행됨
+	        //console.log("Received message 돌아온 메세지 : " + event.data);
+	        // Handle the message here
+	    };
+	    socket.onclose = function(event) {//클로즈 됐을 때 실행됨
+	        //console.log("WebSocket connection closed: " + event.code + " (" + event.reason + ")");
+	    };
+	    socket.onerror = function(err){
+	    	//console.log('Error:', err);
+	    };
+	}
+</script>
+    
 
     <!-- Js Plugins -->
     <script src="resources/js/jquery-3.3.1.min.js"></script>

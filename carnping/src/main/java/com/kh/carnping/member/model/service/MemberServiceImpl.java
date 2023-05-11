@@ -78,6 +78,10 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectMember(String memId) {
 		return mDao.selectMember(sqlSession, memId);
 	}
+	
+	public Member selectMember(Member m) {
+		return mDao.selectMember(sqlSession, m);
+	}
 
 	@Override
 	public int nickNameUpdate(Member m) {
@@ -198,4 +202,7 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.insertLike(sqlSession, l);
 	}
 	
+	public int emailUpdate(Member m) {
+		return mDao.emailUpdate(sqlSession, m);
+	}
 }

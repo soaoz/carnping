@@ -55,8 +55,12 @@ public class MemberDao {
 	
 	///소영시작--------------------------------
 	
-	public Member selectMember(SqlSessionTemplate sqlSession,String memID) {
-		return sqlSession.selectOne("memberMapper.selectMember", memID);
+	public Member selectMember(SqlSessionTemplate sqlSession,String memId) {
+		return sqlSession.selectOne("memberMapper.selectMember", memId);
+	}
+	
+	public Member selectMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.selectMember", m);
 	}
 	
 	public int selectMyBoardListCount(SqlSessionTemplate sqlSession, String memId) {
@@ -194,5 +198,9 @@ public class MemberDao {
 	
 	public int insertLike(SqlSessionTemplate sqlSession, Like l) {
 		return sqlSession.insert("memberMapper.insertLike", l);
+	}
+	
+	public int emailUpdate(SqlSessionTemplate sqlSession,Member m) {
+		return sqlSession.update("memberMapper.emailUpdate", m);
 	}
 }
