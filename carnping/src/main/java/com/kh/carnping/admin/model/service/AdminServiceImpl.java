@@ -23,4 +23,22 @@ public class AdminServiceImpl implements AdminService{
 		return aDao.memNotice(sqlSession);
 	}
 
+
+	@Override
+	public int deleteMember(Member m) {
+		return aDao.deleteMember(sqlSession, m);
+	}
+
+
+	@Override
+	public Member selectMember(String memNo) {
+		return aDao.selectMember(sqlSession, memNo);
+	}
+
+
+	@Override
+	public int updateMember(Member m) {
+		return aDao.updateMember(sqlSession, m);
+	}
+
 }

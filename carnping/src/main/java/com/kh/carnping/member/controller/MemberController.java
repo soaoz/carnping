@@ -180,7 +180,13 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public String insertMember(Member m, MultipartFile memImg, Model model, HttpSession session) {
+
 		// 암호화 작업 (암호문 만들어내는 과정)
+		if (m.getMarketing() == null) {
+			System.out.println("여기를보셍!!!!!!!!!!!!!!!!!!");
+			System.out.println(m.getMarketing());
+		    //m.setMarketing("N");
+		}
 		if(memImg != null && !memImg.getOriginalFilename().equals("")) {
 			String changeName = saveMemImg(memImg, session);
 			m.setMemImgOrigin(memImg.getOriginalFilename());
@@ -201,15 +207,21 @@ public class MemberController {
 	@RequestMapping("login.me")
 	public String loginMember(Member m, HttpSession session) {
 		Member loginMember = mService.loginMember(m);
-		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd())) {
+		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd()) && loginMember.getStatus().equals("Y")) {
 			session.setAttribute("loginMember", loginMember);
+			return "redirect:/"; 
 			
+		} else if(loginMember.getStatus().equals("A")) { 
+			session.setAttribute("loginMember", loginMember);
+			return "admin/menubar";
+		} else if(loginMember.getStatus().equals("N")) {
+			session.setAttribute("alertMsg", "탈퇴한 회원의 아이디입니다.");
+			return "redirect:loginForm.me";
 		} else {
 			session.setAttribute("alertMsg", "아이디나 비밀번호를 확인하세요");
-			
+			return "redirect:loginForm.me";
 		}
 		
-		return "redirect:/"; 
 		
 	}
 
@@ -908,6 +920,8 @@ public class MemberController {
 		
 	}
 	
+	
+	// 여기서부터 소셜로그인
 	@RequestMapping(value = "loginForm.me", method = { RequestMethod.GET, RequestMethod.POST })
 	public String socialLogin(Model model, HttpSession session) {
 		
@@ -947,6 +961,7 @@ public class MemberController {
 		jsonObj = (JSONObject) jsonParser.parse(apiResult);
 		JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");	
 		JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
+		
 		// 프로필 조회
 		String nickName = (String) response_obj2.get("nickname");
 		m.setNickName(nickName);
@@ -955,7 +970,6 @@ public class MemberController {
 		m.setMemApiType("카카오");
 		String imgUrl = (String) response_obj2.get("profile_image_url");
 		m.setMemImgOrigin(imgUrl);
-//		System.out.println(m);
 		
 		int count = mService.emailCheck(email);
 		if (count > 0) {
@@ -976,6 +990,9 @@ public class MemberController {
 			
 			
 			m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+			if(m.getMarketing() == null) {
+				m.setMarketing("N");
+			}
 			mService.insertMember(m);
 			
 			Member loginMember = mService.loginMember(m);
@@ -985,6 +1002,7 @@ public class MemberController {
 		}
 		
 	}
+	
 	
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "callbackNaver.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -1016,9 +1034,10 @@ public class MemberController {
 		String imgUrl = (String) response_obj.get("profile_image");
 		m.setMemImgOrigin(imgUrl);
 		System.out.println(m);
+		
+		int count = mService.emailCheckAPI(m);
 
 		
-		int count = mService.emailCheck(email);
 		if (count > 0) {
 
 			Member loginMember=mService.loginMember(m);
@@ -1037,6 +1056,9 @@ public class MemberController {
 			
 			
 			m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+			if(m.getMarketing() == null) {
+				m.setMarketing("N");
+			}
 			mService.insertMember(m);
 			
 			Member loginMember = mService.loginMember(m);
@@ -1108,6 +1130,9 @@ public class MemberController {
 				
 				
 				m.setMemImgChange("resources/uploadFiles/memImg/"+saveMemImg(memImgOrigin,session));
+				if(m.getMarketing() == null) {
+					m.setMarketing("N");
+				}
 				mService.insertMember(m);
 				
 				Member loginMember = mService.loginMember(m);

@@ -34,6 +34,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.emailCheck(sqlSession, checkEmail);
 	}
 	
+	public int emailCheckAPI(Member m) {
+		return mDao.emailCheckAPI(sqlSession,  m);
+	}
+	
 	@Override
 	public int idCheck(String checkId) {
 		return mDao.idCheck(sqlSession, checkId);
@@ -201,6 +205,8 @@ public class MemberServiceImpl implements MemberService {
 	public int insertLike(Like l) {
 		return mDao.insertLike(sqlSession, l);
 	}
+
+
 	
 	public int emailUpdate(Member m) {
 		return mDao.emailUpdate(sqlSession, m);

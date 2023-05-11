@@ -24,6 +24,11 @@ public class MemberDao {
 	public int emailCheck(SqlSessionTemplate sqlSession, String checkEmail) {
 		return sqlSession.selectOne("memberMapper.emailCheck", checkEmail);
 	}
+	
+	public int emailCheckAPI(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.emailCheckAPI", m);
+	}
+	
 	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
 		return sqlSession.selectOne("memberMapper.idCheck", checkId);
 	}
@@ -203,4 +208,6 @@ public class MemberDao {
 	public int emailUpdate(SqlSessionTemplate sqlSession,Member m) {
 		return sqlSession.update("memberMapper.emailUpdate", m);
 	}
+
+
 }

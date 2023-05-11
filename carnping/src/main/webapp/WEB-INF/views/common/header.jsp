@@ -169,12 +169,6 @@
 
     </style>
 </head>
-<c:if test="${ not empty alertMsg }">
-	<script>
-		alert("${alertMsg}");
-	</script>
-	<c:remove var="alertMsg" scope="session"/>
-</c:if>
 <!--letter-spacing: 0.1em;-->
     <!-- Page Preloder -->
     <div id="preloder">
@@ -188,7 +182,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
                         <div class="header__logo" style="padding:20px 0px; text-align: center;">
-                            <a href="./index.html"><img src="resources/img/logo_1.png" width="250px" alt=""></a>
+                            <a href="./index.jsp"><img src="resources/img/logo_1.png" width="250px" alt=""></a>
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-9">
@@ -333,6 +327,12 @@
 	}
 </script>
     
+    	<c:if test="${ not empty alertMsg }">
+	<script>
+		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>
+	</script>
+	<c:remove var="alertMsg" scope="session"/>
+	</c:if>
 
     <!-- Js Plugins -->
     <script src="resources/js/jquery-3.3.1.min.js"></script>
