@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.dao.CarDao;
@@ -27,7 +28,7 @@ public class CarServiceImpl implements CarService{
 	}
 	
 	public ArrayList<Cinfo> filterList(Filter filter) {
-		return cDao.carList1(sqlSession, filter);
+		return cDao.filterList(sqlSession, filter);
 	}
 
 	@Override
@@ -55,8 +56,33 @@ public class CarServiceImpl implements CarService{
 		return cDao.reviewLike(sqlSession, reNo);
 	}
 
+	@Override
+	public int reviewLikeCheck(String reNo, String memNo) {
+		return cDao.reviewLikeCheck(sqlSession, reNo, memNo);
+	}
+
+	@Override
+	public int deleteReviewLike(String reNo, String memNo) {
+		return cDao.deleteReviewLike(sqlSession, reNo , memNo);
+	}
+
+	@Override
+	public int insertReviewLike(String reNo, String memNo) {
+		return cDao.insertReviewLike(sqlSession, reNo , memNo);
+	}
+
+	@Override
+	public int insertComment(String reNo, String memNo, String text) {
+		return cDao.insertComment(sqlSession, reNo, memNo, text);
+	}
+
+	@Override
+	public int insertReview(Review review) {
+		return cDao.insertReview(sqlSession, review);
+	}
 	
-	
-	
-	
+	@Override
+	public int reviewCheck(String memNo, String cinfoNo) {
+		return cDao.reviewCheck(sqlSession, memNo, cinfoNo);
+	}
 }

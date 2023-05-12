@@ -145,13 +145,9 @@
 
 
 <header class="header header--normal">
-
-
     <div class="header_back">
         <jsp:include page="../common/header.jsp" />
     </div>
-
-
 </header>
 
 
@@ -455,8 +451,11 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
     // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
     map.setLevel(level, {anchor: cluster.getCenter()});
     });
+    
 });
-
+detail = function(cinfoNo){
+	location.href='detail.ca?cinfoNo=' +cinfoNo; 
+}
 </script>
 
 <script src="resources/js/main.js"></script>

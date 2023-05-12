@@ -22,7 +22,9 @@ public class Review {
 	private String reviewImg;	//리뷰 이미지
 	private int reviewLike;		//좋아요
 	private String reviewStatus; 
-	private String memNo; 		// 리뷰 작성자
+	private String memNo; 		// 리뷰 작성자번호
+	private String memImg; 		// 리뷰 작성자번호
+	private String memName; 		// 리뷰 작성자
 	private String createDate; 	// 작성일
 	private int count;
 	private double reviewAllView;
