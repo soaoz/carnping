@@ -26,4 +26,7 @@ public class Member {
 	private String phone;			// 휴대폰
 	private String memApiType;		// 소셜종류
 	private String marketing;   	// 마케팅이용약관동의
+	private int reportCount;
+	private int suspendCount;
+	private String reportedMemNo;
 }

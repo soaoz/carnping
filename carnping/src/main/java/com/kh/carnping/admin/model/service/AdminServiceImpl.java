@@ -41,4 +41,9 @@ public class AdminServiceImpl implements AdminService{
 		return aDao.updateMember(sqlSession, m);
 	}
 
+
+	public ArrayList<Member> reportMem() {
+		return aDao.reportMem(sqlSession);
+	}
+
 }

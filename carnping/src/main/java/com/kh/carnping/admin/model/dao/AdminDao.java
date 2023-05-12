@@ -24,4 +24,8 @@ public class AdminDao {
 	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.updateMemberAdmin", m);
 	}
+
+	public ArrayList<Member> reportMem(SqlSessionTemplate sqlSession) {
+		return  (ArrayList)sqlSession.selectList("memberMapper.selectReportMemberList");
+	}
 }	

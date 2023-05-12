@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Jassa - Bootstrap Admin HTML Template</title>
+    <title>Carnping | 관리자</title>
 </head>
 
 <body>
@@ -43,6 +43,7 @@
                                             <tr>
                                                 <th>이름</th>
                                                 <th>닉네임</th>
+                                                <th>이메일</th>
                                                 <th>신고누적횟수</th>
                                                 <th>정지누적횟수</th>
                                                 <th>현재 계정상태</th>
@@ -50,22 +51,55 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <c:forEach var="list" items="${ list }">
                                             <tr>
                                                 <td>
-                                                    <h2 class="table-avatar" style="cursor: pointer;">
-                                                        <a data-bs-toggle="modal" data-bs-target="#scrollable-modal" class="avatar avatar-sm me-2"><img
-                                                                class="avatar-img rounded-circle"
-                                                                src="assets/img/profiles/usermain.jpg"
-                                                                alt="User Image"></a>
-                                                        <a data-bs-toggle="modal" data-bs-target="#scrollable-modal">최민수 <span>1
-                                                            </span></a>
-                                                    </h2>
+                                                	<c:choose>
+	                                                	<c:when test="${ list.memImgOrigin eq null }">
+		                                                    <h2 class="table-avatar" style="cursor: pointer;">
+																<a href="#" class="avatar avatar-sm me-2"><img
+				                                                                class="avatar-img rounded-circle"
+				                                                                src="resources/admin/assets/img/userImg.png"
+				                                                                alt="User Image"></a>
+			                                                    <a href="#">${ list.memName } <span>${list.reportedMemNo }
+			                                                           </span></a>
+		                                                   	</h2>
+                                             			</c:when>
+	                                           			<c:otherwise>
+		                                          			<h2 class="table-avatar">
+			                                                  	<a href="#" class="avatar avatar-sm me-2"><img
+			                                                           class="avatar-img rounded-circle"
+			                                                           src="${ list.memImgChange }"
+			                                                           alt="User Image"></a>
+				                                             	<a href="#">${ list.memName } <span>${list.reportedMemNo }
+			                                                      </span></a>
+			                                              	</h2>
+	                                             		</c:otherwise>
+                                                		
+                                               		</c:choose>
                                                 </td>
-                                                <td>일원동최민수</td>
-                                                <td>12</td>
-                                                <td>1</td>
-                                                <td><span class="badge badge-pill bg-success-light">활동중</span></td>
-                                                <td class="text-end">
+                                                <td>${ list.nickName }</td>
+                                                <td>
+                                                	${ list.email }
+                                                </td>
+                                                <td>${ list.reportCount }</td>
+                                                <td>${ list.suspendCount }</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${ list.status eq 'Y' }">
+			                                                <span class="badge badge-pill bg-success-light">활동중</span>
+	                                                	</c:when>
+                                                        <c:when test="${ list.status eq 'S' }">
+			                                                <span class="badge badge-pill bg-danger-light">활동 정지</span>
+	                                                	</c:when>	                                                	
+                                                        <c:otherwise>
+                                                            <span class="badge badge-pill bg-danger-light">영구 정지</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                 </td>
+	                                                
+                                                <td class="">
+                                                 <!-- -${list.reportedMemNo} -->
                                                     <a data-bs-toggle="modal" data-bs-target="#scrollable-modal"
                                                         class="btn btn-sm btn-white text-success me-2"><i
                                                             class="far fa-edit me-1"></i>상세</a>
@@ -74,31 +108,7 @@
                                                             class="far fa-trash-alt me-1"></i>정지</a>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <h2 class="table-avatar" style="cursor: pointer;">
-                                                        <a data-bs-toggle="modal" data-bs-target="#scrollable-modal" class="avatar avatar-sm me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#scrollable-modal"><img
-                                                                class="avatar-img rounded-circle"
-                                                                src="assets/img/profiles/avatar-03.jpg"
-                                                                alt="User Image"></a>
-                                                        <a 
-                                                        data-bs-toggle="modal" data-bs-target="#scrollable-modal">양꼬치 <span>2</span></a>
-                                                    </h2>
-                                                </td>
-                                                <td>문어</td>
-                                                <td>5</td>
-                                                <td>0</td>
-                                                <td><span class="badge badge-pill bg-danger-light">정지</span></td>
-                                                <td class="text-end">
-                                                    <button type="button" class="btn btn-sm btn-white text-success me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#scrollable-modal"><i
-                                                            class="far fa-edit me-1"></i> 상세</button>
-                                                    <a href="javascript:void(0);"
-                                                        class="btn btn-sm btn-white text-danger me-2"  data-bs-toggle="modal" data-bs-target="#top-modal"><i
-                                                            class="far fa-trash-alt me-1"></i>정지</a>
-                                                </td>
-                                            </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                             
@@ -114,7 +124,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <br>
-                                                    <h5 align="center">정말 ***님을 정지 또는 정지해제 시키겠습니까?</h5>
+                                                    <h5 align="center">정말 ${ list.reportedMemNo }님을 정지 시키겠습니까?</h5>
                                                     <p align="center" style="color:gray">그렇다면 정지의 유형을 선택해주세요.</p>
                                                 </div>
                                                 <hr>
@@ -171,11 +181,13 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
+                                                                            <!-- 
+                                                                            <c:forEach var="list" items="${ reportList }">
                                                                                 <tr role="row" class="odd">
-                                                                                    <td class="sorting_1">1</td>
-                                                                                    <td>2</td>
-                                                                                    <td>Tokyo</td>
-                                                                                    <td>2020-02-11</td>
+                                                                                    <td class="sorting_1">${reportList.reportNo}</td>
+                                                                                    <td>${reportList.reportRefNo }</td>
+                                                                                    <td>${reportDetail }</td>
+                                                                                    <td>${reportDate}</td>
                             
                                                                                 </tr>
                                                                                 <tr role="row" class="even">
@@ -185,6 +197,8 @@
                                                                                     <td>2020-02-11</td>
                             
                                                                                 </tr>
+                                                                                </c:forEach>
+                                                                                 -->
                                                                             </tbody>
                                                                         </table>
                                                                     </div>

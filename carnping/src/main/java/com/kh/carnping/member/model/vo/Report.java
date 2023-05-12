@@ -17,4 +17,5 @@ public class Report {
 	private String reportRefNo;	// 글번호
 	private String reportDate;	// 신고날짜
 	private String reportDetail;// 신고사유
+	private String reporterMemNo; //신고한 회원번호
 }

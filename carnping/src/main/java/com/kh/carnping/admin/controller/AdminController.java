@@ -54,8 +54,16 @@ public class AdminController {
 	 * 신고 및 정지관리로 이동
 	 */
 	@RequestMapping("memReport.ad")
-	public String memReport() {
-		return "admin/memReport";
+	public String memReport(Model model) {
+		ArrayList<Member> list = aService.reportMem();
+		System.out.println(list);
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+			return "admin/memReport";
+		}else {
+			model.addAttribute("errorMsg", "회원이 없습니다.");
+			return "admin/memReport";
+		}
 	}
 	
 	/**
