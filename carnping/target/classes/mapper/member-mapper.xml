@@ -283,7 +283,7 @@
 
 	<!-- 소영: 유저의 정보 조회 -->
 	<select id="selectMember" resultMap="memberResultSet">
-	SELECT MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, NICKNAME, EMAIL, ENROLL_DATE, STATUS, MEM_IMG_ORIGIN, PHONE, MEM_API_TYPE, MEM_API_TOKEN, MARKETING, MEM_IMG_CHANGE
+	SELECT MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, NICKNAME, EMAIL, ENROLL_DATE, STATUS, MEM_IMG_ORIGIN, PHONE, MEM_API_TYPE, MARKETING, MEM_IMG_CHANGE
 	FROM MEMBER
 	WHERE MEM_ID = #{memId} AND MEM_ID IS NOT NULL
 	   OR MEM_NO = #{memNo} AND MEM_NO IS NOT NULL
@@ -297,6 +297,13 @@
 		 where mem_id = #{memId}
 	</update>
 
+	<!-- 소영 : 폰 업데이트  -->
+	<update id="phoneUpdate">
+		update
+			    member
+		    set phone = #{phone}
+		  where mem_id = #{memId}
+	</update>
 
 	<!-- 소영 : 비번 업데이트  -->
 	<update id="passwordUpdate">

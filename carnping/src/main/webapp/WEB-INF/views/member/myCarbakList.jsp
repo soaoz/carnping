@@ -261,16 +261,17 @@
                                 <label for="check2">전체 선택</label>
                                 <a href="" class="btn-sm btn-primary me-2 float-right" id="delbtn" onClick = "deleteMyCar();"> 삭제하기 </a>
                             </div>
+
                             <div class="row">
                                     <!-- Listing Section Begin -->  
                                 <section class="listing nice-scroll hover">
                                     <div class="listing__list">
                                     
-                                    
+
                                     
                                       <c:choose>
-								            <c:when test="${ not empty list }">
-								                <c:forEach var="list" items="${ list }" varStatus="status">
+								           <c:when test="${ not empty list }">
+								               <c:forEach var="list" items="${ list }" varStatus="status">
                                         <div class="listing__item">
                                             <div class="listing__item__pic set-bg" style="cursor:pointer; background-image : url(${ list.cinfoImg1 }); background-size : cover;">
                                                 <img src="resources/img/carList/icon/ocean.png" alt="">
@@ -402,7 +403,7 @@ function deleteMyCar(){
 	  }
 
 	  if (confirm("선택된 글을 삭제하시겠습니까?")) {
-		  //console.log("탄다ㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
+		  console.log(cinfoNoArr);
 		  
 	    $.ajax({
 	      type: "POST",

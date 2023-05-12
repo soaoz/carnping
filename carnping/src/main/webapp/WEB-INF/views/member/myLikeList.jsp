@@ -214,6 +214,10 @@
 		.fa-solid.fa-heart {
 		  color: red;
 		}
+		.listing {
+			overflow: hidden;
+		}
+
 
 </style>
 </head>
@@ -306,7 +310,13 @@
                                 <section class="listing nice-scroll hover">
                                     <div class="listing__list">
                                     
-                                    
+                            <c:if test="${empty list }">
+                                
+                                <h4> 좋아요한 장소가 없습니다. <br><br> <a href="carList.ca" style="color : #b3d9b1;"> ▶ 차박지 구경하러가기 </a></h4>
+                               
+                               
+                                
+                             </c:if>
                                     
                                       <c:choose>
 								            <c:when test="${ not empty list }">
@@ -375,7 +385,8 @@
 																	    $(this).find('i.fa-solid').toggleClass('fa-regular');
 																	});
 																	</script>
-			                                                   <a href="#" class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></a> 
+			                                                   <%-- <a href="#" class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></a> --%>
+			                                                   <a href="#"><span class="like-button" class="" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span></a> 
 			                                                </div>
 			                                                
 			                                            </div>
@@ -423,6 +434,9 @@
                 </div><!--col-sm-10 col-sm-offset-1-->   
             </div><!--row-->
             
+            <c:if test="${ pi.maxPage >= 1  }">
+            
+           
             <div id="pagingArea" align="center" >
                 <ul class="pagination" align="center">
               
@@ -448,6 +462,7 @@
                 </ul>
             </div>
             
+             </c:if>
         </div><!--container-->
 
     </div><!-- content-area user-profiel -->
@@ -455,6 +470,8 @@
 
 
 <script>
+
+
 
 function like(cinfoNo , id){
 	//클래스가 뭐면 insert 
@@ -582,6 +599,151 @@ function deleteMyCar(){
 	  }
 }
 */
+
+	$(function(){
+	$('.listing__item').on('click', function(){
+		location.href='detail.ca?cinfoNo=' +$(this).children("input[type=hidden]").val(); 
+	})
+    var $positions = [];
+    var map;
+
+/* 		// 차박정보를 불러와 위도 경도 값을 ajax로 받아오는 ajax 
+	$("input[name=title]").val(filter.title); */
+	
+	let array = new Array();
+	/* console.log(formData);
+	let a = formData.split('&');
+	console.log(a); */
+	<c:forEach items="${list}" var="item">
+		array.push([{cinfoNo : "${item.cinfoNo}"
+				, cinfoName :"${item.cinfoName}"
+				, cinfoContent :"${item.cinfoContent}"
+				, cinfoNotice :"${item.cinfoNotice}"
+				, cinfoLttd :"${item.cinfoLttd}"
+				, cinfoHrdns :"${item.cinfoHrdns}"
+				, cinfoStatus :"${item.cinfoStatus}"
+				, cinfoAddress :"${item.cinfoAddress}"
+				, cinfoFacilities :"${item.cinfoFacilities}"
+				, cinfoDays :"${item.cinfoDays}"
+				, cinfoTag :"${item.cinfoTag}"
+				, cinfoRating :"${item.cinfoRating}"
+				, cinfoViews :"${item.cinfoViews}"
+				, cinfoModified :"${item.cinfoModified}"
+				, cinfoRgstrDate :"${item.cinfoRgstrDate}"
+				, memNo :"${item.memNo}"
+				, cinfoImg1 :"${item.cinfoImg1}"
+				, cinfoImg2 :"${item.cinfoImg2}"
+				, cinfoImg3 :"${item.cinfoImg3}"
+				, cinfoImg4 :"${item.cinfoImg4}"
+				, cinfoImg5 :"${item.cinfoImg5}"
+				, cinfoImg6 :"${item.cinfoImg6}"
+				, cinfoImg7 :"${item.cinfoImg7}"
+				, cinfoImg8 :"${item.cinfoImg8}"
+				, cinfoImg9 :"${item.cinfoImg9}"
+				, cinfoImg10 :"${item.cinfoImg10}"
+				, phone :"${item.phone}"}])
+	</c:forEach>
+	
+	
+	
+	array.forEach(function (rs) {
+		
+        $positions.push([{
+            content: "<div style='cursor: pointer'onclick='detail(\""+rs[0].cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs[0].cinfoImg1+"\');> <img src='resources/img/carList/icon/ocean.png' alt=''></div>"
+                    +"<div class='listing__item__text'><div class='listing__item__text__inside'><h5>"+rs[0].cinfoName+"</h5><div class='listing__item__text__rating'></div>"
+                    +"<ul><li><span class='icon_pin_alt'></span>"+rs[0].cinfoAddress+"</li>"
+                    +"<li><span class='icon_phone'></span>"+rs[0].phone+"</li></ul></div></div></div></div>",
+            latlng: new kakao.maps.LatLng(rs[0].cinfoLttd, rs[0].cinfoHrdns)
+        }])
+    })
+    map = new kakao.maps.Map(document.getElementById('map'), { 
+           // 지도의 중심좌표
+           center : new kakao.maps.LatLng(36.2683, 127.6358), 
+           // 지도의 확대 레벨
+           level : 10 
+	});
+	
+	/* $list.forEach(function(li,i){
+		console.log(li);
+	}) */
+	
+   /*  $.ajax({
+        url: 'carMap.ca',
+        async: false,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+        data: formData,
+
+        success: function (result) {
+            result.forEach(function (rs, i) {
+                $positions.push([{
+                    content: "<div style='cursor: pointer'onclick='detail(\""+rs.cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs.cinfoImg1+"\');> <img src='resources/img/carList/icon/ocean.png' alt=''></div>"
+                            +"<div class='listing__item__text'><div class='listing__item__text__inside'><h5>"+rs.cinfoName+"</h5><div class='listing__item__text__rating'></div>"
+                            +"<ul><li><span class='icon_pin_alt'></span>"+rs.cinfoAddress+"</li>"
+                            +"<li><span class='icon_phone'></span>"+rs.phone+"</li></ul></div></div></div></div>",
+                    latlng: new kakao.maps.LatLng(rs.cinfoLttd, rs.cinfoHrdns)
+                }])
+            })
+            map = new kakao.maps.Map(document.getElementById('map'), { 
+            // 지도의 중심좌표
+            center : new kakao.maps.LatLng(36.2683, 127.6358), 
+            // 지도의 확대 레벨
+            level : 10 
+            });
+        }
+    }) */
+    
+    <c:if test="${filter != null}">
+		$("input[name=title]").val("${filter.title}");
+		$("select[name=sequence]").val("${filter.sequence}").attr("selected",true);
+		$("select[name=sequence]").val("${filter.sequence}").prop("selected","selected");
+	console.log("${filter.sequence}");
+		//$("#${filter.location}").attr("selected");
+	console.log($("select[name=sequence]").val("${filter.sequence}"))
+</c:if>
+// 마커 클러스터러를 생성합니다
+var clusterer = new kakao.maps.MarkerClusterer({
+    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+    minLevel: 10, // 클러스터 할 최소 지도 레벨
+    disableClickZoom: true // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+});
+
+var markers = $($positions).map(function(i, position) {
+        return new kakao.maps.Marker({
+            position : position[0].latlng
+        });
+       
+    });
+
+// 클러스터러에 마커들을 추가합니다
+clusterer.addMarkers(markers);
+
+// 여러개의 마커들마다 click 값을 부여합니다.
+for(let i = 0 ; i < markers.length; i++ ){
+    kakao.maps.event.addListener(markers[i], 'click', function() {
+        // 마커 위에 인포윈도우를 표시합니다
+        new kakao.maps.InfoWindow({
+                content : $positions[i][0].content,
+                removable :true}).open(map, markers[i]) 
+    });
+}
+
+// 마커 클러스터러에 클릭이벤트를 등록합니다
+// 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
+// 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
+kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
+
+// 현재 지도 레벨에서 1레벨 확대한 레벨
+var level = map.getLevel()-1;
+
+// 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
+map.setLevel(level, {anchor: cluster.getCenter()});
+});
+
+});
+detail = function(cinfoNo){
+location.href='detail.ca?cinfoNo=' +cinfoNo; 
+}
 </script>
  <%-- <jsp:include page="../common/footer.jsp"/> --%>
 <%--      <jsp:include page="../common/footer.jsp"/>	 --%>

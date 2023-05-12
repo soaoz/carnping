@@ -290,7 +290,7 @@ public class MemberController {
 		m.setMemNo(memNo);
 		
 		Member loginUser  = mService.selectMember(m); 
-		System.out.println(loginUser);
+		//System.out.println(loginUser);
 		
 		//로그인유저의의 api 값이 null이 아니면 api전용 회원정보조회화면으로 
 		if(loginUser.getMemApiType() != null) {
@@ -322,16 +322,16 @@ public class MemberController {
 		}
 	}
 	
-//	//회원정보화면 진입
-//	@RequestMapping("mypage.me")
-//	public String mypage(HttpSession session, Model model, Member m) {
-//		
-//		
-//		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
-//		m = mService.selectMember(memId);
-//		model.addAttribute("m", m);
-//		return "member/myProfileUpdate";
-//	}
+	//회원정보화면 진입
+	@RequestMapping("mypage.me")
+	public String mypage(HttpSession session, Model model, Member m) {
+		
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m = mService.selectMember(memId);
+		model.addAttribute("m", m);
+		return "member/myProfileUpdate";
+	}
 	
 	//닉네임만 업데이트
 	@ResponseBody
@@ -341,6 +341,19 @@ public class MemberController {
 		m.setNickName(nickName);
 		m.setMemId(memId);
 		int result = mService.nickNameUpdate(m);
+		return result;
+	}
+	
+	//폰번호만 업데이트
+	@ResponseBody
+	@RequestMapping("phoneUpdate.me")
+	public int phoneUpdate(HttpSession session, Member m, String phone) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m.setPhone(phone);
+		m.setMemId(memId);
+		//System.out.println(phone +" , "+ memId);
+		int result = mService.phoneUpdate(m);
 		return result;
 	}
 	
@@ -361,6 +374,11 @@ public class MemberController {
 	@RequestMapping("updateProfile.me")
 	public String updateProfile(HttpSession session,  MultipartFile reupfile, Member m, Model model) {
 	
+		
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		m.setMemNo(memNo);
+		
 		//System.out.println(reupfile); 원래 이미지파일명 담겨있음 
 		System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
 		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
@@ -368,9 +386,9 @@ public class MemberController {
 		m.setMemId(memId);
 		m.setMemPwd(memPwd);
 		
+		System.out.println(memId);
 		System.out.println(reupfile);
 		
-		System.out.println();
 		
 		if(!reupfile.getOriginalFilename().equals("")) { // 새로 넘어온 첨부파일이 있을 경우에 탄다
 					//진짜 원본명 리턴
@@ -385,6 +403,7 @@ public class MemberController {
 			m.setMemImgChange("resources/uploadFiles/memImg/" + changeName);
 		}
 		int result = mService.updateProfile(m);
+		System.out.println(m);
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
@@ -700,7 +719,7 @@ public class MemberController {
 	public String deleteMyCar(@RequestParam("cinfoNoArr[]") String[] cinfoNoArr, HttpSession session) {
 		
 		//System.out.println("차박목록삭제컨트롤러탄다");
-		//System.out.println(Arrays.toString(cinfoNoArr));
+		System.out.println(Arrays.toString(cinfoNoArr));
 		int result = 0 ;
 		int deleteCount = 0;
 	    for(String cinfoNo : cinfoNoArr) {
@@ -826,9 +845,6 @@ public class MemberController {
 		return result;
 			
 	}
-	
-	
-
 	
 	//이메일보내기
 	@RequestMapping("emailSend.me")

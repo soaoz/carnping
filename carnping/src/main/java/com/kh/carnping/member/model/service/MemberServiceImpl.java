@@ -92,6 +92,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.nickNameUpdate(sqlSession, m);
 	}
 
+	public int phoneUpdate(Member m) {
+		return mDao.phoneUpdate(sqlSession, m);
+	}
+
 	@Override
 	public int passwordUpdate(Member m) {
 		return mDao.passwordUpdate(sqlSession, m);
@@ -206,8 +210,6 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.insertLike(sqlSession, l);
 	}
 
-
-	
 	public int emailUpdate(Member m) {
 		return mDao.emailUpdate(sqlSession, m);
 	}

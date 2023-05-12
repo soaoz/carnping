@@ -238,10 +238,7 @@
 
                                 <div class="col-sm-5 padding-top-25">
 
-                                    <div class="form-group">
-                                        <label>이름</label>
-                                        <input name="name" type="text" class="form-control" value="${m.memName}" readonly>
-                                    </div>
+
                                     
                                     <div class="form-group checkdiv">
                                         <label>닉네임</label>
