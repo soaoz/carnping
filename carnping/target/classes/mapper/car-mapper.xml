@@ -320,6 +320,14 @@
 				)
 	</insert>
 	
+	<select id="reviewCheck" resultType="_int">
+		SELECT 
+				COUNT(*)
+	      FROM  REVIEW
+	     WHERE  CINFO_NO = #{cinfoNo}
+	       AND  MEM_NO = #{memNo}
+	</select>
+	
 	
 	
 	

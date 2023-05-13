@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.carnping.admin.model.dao.AdminDao;
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Report;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -44,6 +45,36 @@ public class AdminServiceImpl implements AdminService{
 
 	public ArrayList<Member> reportMem() {
 		return aDao.reportMem(sqlSession);
+	}
+
+
+	public ArrayList<Report> reportDetail(String reportedMemNo) {
+		return aDao.reportDetail(sqlSession, reportedMemNo);
+	}
+
+
+	public int suspendMember1(String memNo) {
+		return aDao.suspendMember1(sqlSession, memNo);
+	}
+
+
+	public int suspendMember2(String memNo) {
+		return aDao.suspendMember2(sqlSession, memNo);
+	}
+
+
+	public int suspendMember3(String memNo) {
+		return aDao.suspendMember3(sqlSession, memNo);
+	}
+
+
+	public int banMember(String memNo) {
+		return aDao.banMember(sqlSession, memNo);
+	}
+
+
+	public int memRecover(String memNo) {
+		return aDao.memRecover(sqlSession, memNo);
 	}
 
 }

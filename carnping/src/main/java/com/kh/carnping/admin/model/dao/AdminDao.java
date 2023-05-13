@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Report;
 
 @Repository
 public class AdminDao {
@@ -27,5 +28,29 @@ public class AdminDao {
 
 	public ArrayList<Member> reportMem(SqlSessionTemplate sqlSession) {
 		return  (ArrayList)sqlSession.selectList("memberMapper.selectReportMemberList");
+	}
+
+	public ArrayList<Report> reportDetail(SqlSessionTemplate sqlSession, String reportedMemNo) {
+		return  (ArrayList)sqlSession.selectList("memberMapper.selectReportDetailist", reportedMemNo);
+	}
+
+	public int suspendMember1(SqlSessionTemplate sqlSession, String memNo) {
+		return sqlSession.update("memberMapper.suspendMember1", memNo);
+	}
+
+	public int suspendMember2(SqlSessionTemplate sqlSession, String memNo) {
+		return sqlSession.insert("memberMapper.suspendMember2", memNo);
+	}
+
+	public int suspendMember3(SqlSessionTemplate sqlSession, String memNo) {
+		return sqlSession.insert("memberMapper.suspendMember3", memNo);
+	}
+
+	public int banMember(SqlSessionTemplate sqlSession, String memNo) {
+		return sqlSession.update("memberMapper.banMember", memNo);
+	}
+
+	public int memRecover(SqlSessionTemplate sqlSession, String memNo) {
+		return sqlSession.update("memberMapper.memRecover", memNo);
 	}
 }	
