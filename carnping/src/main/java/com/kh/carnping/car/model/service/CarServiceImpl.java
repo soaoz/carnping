@@ -85,4 +85,10 @@ public class CarServiceImpl implements CarService{
 	public int reviewCheck(String memNo, String cinfoNo) {
 		return cDao.reviewCheck(sqlSession, memNo, cinfoNo);
 	}
+
+	@Override
+	public int deleteReview(String reNo) {
+		return cDao.deleteReview(sqlSession, reNo);
+	}
+	
 }

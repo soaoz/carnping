@@ -185,7 +185,7 @@ function readURL(input) {
         reader.onload = function (e) {
             $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
         }
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(input.f5iles[0]);
     }
 }
 

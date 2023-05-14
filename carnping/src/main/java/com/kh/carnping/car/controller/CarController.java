@@ -69,7 +69,16 @@ public class CarController {
 		model.addAttribute("reCount", reCount);
 		return "car/carDetail";
 	}
-
+	
+	// 리뷰 체크
+		@ResponseBody
+		@RequestMapping(value = "reviewCheck.ca", produces = "application/json;charset=utf-8")
+		public String reviewCheck(String memNo, String cinfoNo) {
+			int result = cService.reviewCheck(memNo, cinfoNo);
+			System.out.println(result);
+			return new Gson().toJson(result);
+		}
+		
 	// 리뷰 리스트
 	@ResponseBody
 	@RequestMapping(value = "selectReview.ca", produces = "application/json; charset=utf-8")
@@ -94,9 +103,16 @@ public class CarController {
 			}
 		}
 		int result = cService.insertReview(review);
-		return "redirect:detail.ca?cinfoNo=CAR1";
+		return "redirect:detail.ca?cinfoNo="+review.getReviewNo();
 	}
 	
+	//리뷰 삭제
+	@ResponseBody
+	@RequestMapping(value = "deleteReview.ca", produces = "application/json;charset=utf-8")
+	public String deleteReview(String reNo) {
+		int result = cService.deleteReview(reNo);
+		return new Gson().toJson(result);
+	}
 
 	// 리뷰 댓글 리스트
 	@ResponseBody
@@ -141,13 +157,9 @@ public class CarController {
 		return new Gson().toJson(result);
 	}
 	
-	// 리뷰 체크
-	@ResponseBody
-	@RequestMapping(value = "reviewCheck.ca", produces = "application/json;charset=utf-8")
-	public String reviewCheck(String memNo, String cinfoNo) {
-		int result = cService.reviewCheck(memNo, cinfoNo);
-		System.out.println(result);
-		return new Gson().toJson(result);
+	// 차박지 등록으로 이동
+	@RequestMapping("insertCarEnroll.ca")
+	public String insertCarEnroll(){
+		return "car/insertCar";
 	}
-	
 }

@@ -21,6 +21,12 @@
 <!-- Css Styles -->
 
 <style>
+.commentImg{
+
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
 .list_detail_reply {
 	padding-left: 75px;
 }
@@ -609,6 +615,13 @@ to {
 								</c:forEach>
 							</ul>
 						</div>
+						<br>
+						<div class="listing__sidebar__working__hours">
+							<div align="center">
+							<button class="primary-btn btn" >수정요청</button>
+							</div>
+							
+						</div>
 					</div>
 				</div>
 			</div>
@@ -627,46 +640,7 @@ to {
 	<!-- Listing Details Section End -->
 
 
-<!-- Button to trigger the modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Open modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">리뷰 수정</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="inputName">뷰(View)</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Enter name">
-            <label for="inputName">편의성(Conv)</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Enter name">
-            <label for="inputName">접근성(Access)</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Enter name">
-            <label for="inputName">지형(Type)</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Enter name">
-          </div>
-          <div class="form-group">
-            <label for="inputEmail">리뷰멘트</label>
-            <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
-            <label for="inputFile">리뷰사진</label>
-            <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 	<jsp:include page="../common/footer.jsp" />
 
 	<!-- Js Plugins -->
@@ -825,9 +799,8 @@ function selectReview(){
                     	</c:choose>
                     	values += "<li><button type='button' class='btn scroll_reply' onclick='commentScroll(\""+ review[i].reviewNo +"\")'>댓글</button>"
                     	if(userNo == review[i].memNo){
-                    		values+= "<li><button class='btn' onclick='updateReview(\""+review[i] +"\");'>댓글 수정</button></li>"               			
-                    				+"<li><button class='btn'>댓글 삭제</button></li>";                			
-                    		}
+                    		values+= "<li><button class='btn' onclick='deleteReview(\""+ review[i].reviewNo +"\");'>리뷰 삭제</button></li>";                			
+                    	}
                     	values+=  "<input type='hidden' value='"+review[i].reviewNo+"'></li>"
                         + "<br><br></ul></div></div>";
                         
@@ -836,9 +809,8 @@ function selectReview(){
                         }else{
 	                        values += "<ul class='ul_line ul_reply "+ review[i].reviewNo +"'>";
                         }
-                        
                         values += reviewComment(review[i].reviewNo) +"</ul></li>";
-				}
+			}
 				$('.listing__details__comment div').html(values);
 		}
 	})
@@ -866,7 +838,7 @@ function reviewComment(reviewNo){
 				        if(result[j].memImg == null){
 						comment += "<i class='fa-solid fa-circle-user' style='padding: unset; font-size: 35px;'></i>"				        	
 				        }else{
-						comment += "<img src='"+ result[j].memImg +"'>"
+						comment += "<img class='commentImg' src='"+ result[j].memImg +"'>"
 				        }
 				        comment += 		"</div>"
 				        +		"<div class='listing__details__comment__item__text'>"
@@ -982,19 +954,25 @@ $("#imgView").click(function(){
   $("#imgView").css("display", "none");
 });
 
-// 
-function updateReview(review){
-	  $("#updateReview").css("display", "block");
-	  $(".modal_content").prop("src", view);
-	}
-
-	$(".close").click(function(){
-	  $("#updateReview").css("display", "none");
-	});
-
-	$("#updateReview").click(function(){
-	  $("#updateReview").css("display", "none");
-	});
+//리뷰 삭제 
+function deleteReview(review){
+	$.ajax({
+		url : "deleteReview.ca",
+		data:{
+			reNo :review
+		},
+		success: function(result){
+			if(result > 0) {
+				alert("리뷰가 성공적으로 삭제되었습니다.");
+				selectReview();
+			} else{
+				alert("리뷰 삭제를 실패하였습니다.");
+				selectReview();
+			}
+		}
+	})
+	
+}
 
 // 리뷰등록시 정규화
 $("#insertReview").on("submit", function(){

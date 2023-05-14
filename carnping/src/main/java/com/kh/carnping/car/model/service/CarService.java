@@ -26,6 +26,9 @@ public interface CarService {
 	// 리뷰 등록
 	int insertReview(Review review);
 	
+	// 리뷰 삭제
+	int deleteReview(String reNo);
+
 	// 리뷰 카운터 정보
 	Review selectReviewCount(String cinfoNo);
 	
@@ -49,4 +52,5 @@ public interface CarService {
 	
 	// 리뷰 체크
 	int reviewCheck(String memNo, String cinfoNo);
+	
 }

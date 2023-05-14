@@ -86,6 +86,10 @@ public class CarDao {
 		map.put("memNo", memNo);
 		return sqlSession.selectOne("carMapper.reviewCheck", map);
 	}
+
+	public int deleteReview(SqlSessionTemplate sqlSession, String reNo) {
+		return sqlSession.update("carMapper.updateReview", reNo);
+	}
 	
 	
 	

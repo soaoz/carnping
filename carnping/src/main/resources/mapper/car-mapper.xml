@@ -328,10 +328,11 @@
 	       AND  MEM_NO = #{memNo}
 	</select>
 	
-	
-	
-	
-	
+	<update id="deleteReview">
+		UPDATE REVIEW
+		   SET REVIEW_STATUS = 'N'
+		 WHERE REVIEW_NO = #{reNo}
+	</update>
 	
 	<!-- 소영 : 내가쓴 차박지목록 페이징을 위한 갯수조회-->
 	<select id="selectMyCarListCount" resultType="_int">
