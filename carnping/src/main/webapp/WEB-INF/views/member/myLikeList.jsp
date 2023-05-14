@@ -188,6 +188,8 @@
 		.space{
 			height : 200px;
 		}
+		
+		/* 좌여css 시작  */
 		.listing__item__pic__btns a {
 		    font-size: 17px !important;
 		    color: #ffffff;
@@ -217,6 +219,7 @@
 		.listing {
 			overflow: hidden;
 		}
+		/* 좌여css 끝   */	
 
 
 </style>
@@ -331,8 +334,8 @@
 			                                                    <label for="check-item${status.count}" ></label>
 			                                                </div> --%>
 			                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
-			                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }" >
-			                                                <div class="listing__item__pic__btns">
+			                                                <input type="hidden" name="post-id" value="${ list.cinfoNo }" >
+			                                                <div class="listing__item__pic__btns" onClick="event.stopPropagation();">
 			                                                   <!--  <a href="#"><span class="icon_zoom-in_alt"></span></a> -->
 			                                                      <script>
 			                                                      $(document).ready(function() {
@@ -386,7 +389,10 @@
 																	});
 																	</script>
 			                                                   <%-- <a href="#" class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></a> --%>
-			                                                   <a href="#"><span class="like-button" class="" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span></a> 
+			                                                   <a href="#">
+			                                                   		<span class="like-button" class="" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');">
+			                                                   		<i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span>
+			                                                   </a> 
 			                                                </div>
 			                                                
 			                                            </div>
@@ -475,6 +481,9 @@
 
 function like(cinfoNo , id){
 	//클래스가 뭐면 insert 
+	
+	
+	
 	console.log("글번호 : "+cinfoNo+ " 아이디 : " + id);
 	
 	if ($(id).hasClass('fa-solid')) {

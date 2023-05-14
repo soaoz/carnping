@@ -155,7 +155,9 @@
 		abbr[title] {
    			border-bottom: none !important; 
    			text-decoration: none !important;
-   			
+		}
+		.phone-check-box{
+			display : none ; 
 		}
 
     
@@ -172,7 +174,7 @@
 	    <!-- Filter Begin -->
 	<div class="filter nice-scroll">
 	
-					<div class="filter__title">
+			<div class="filter__title">
 	            <h5><i class="fa-sharp fa-solid fa-house"></i>마이페이지</h5>
 	        </div>
 	        <div class="myPage_menu" id="fake">
@@ -215,7 +217,7 @@
                             <div class="profiel-header">
                                 <h3>
                                     <br>
-                                    <b class="title">회원 정보 </b> MY PROFILE <br>
+                                    <b class="title">회원 정보 수정</b> MY PROFILE <br>
                                     <br>
                                     <small></small>
                                 </h3>
@@ -238,24 +240,22 @@
 
                                 <div class="col-sm-5 padding-top-25">
 
-
                                     
                                     <div class="form-group checkdiv">
                                         <label>닉네임</label>
                                         <input name="nickName" type="text" class="form-control" placeholder="" id="nickName" value="${m.nickName}">
+                                        <input type="hidden" class="form-control" placeholder="" id="originNickName" value="${m.nickName}">
                                         <input type='button' id="nickUpdate" class='btn btn-finish btn-primary check' name='' value='변경하기' />
                                         <div id="nickNameCheckResult"  style="font-size: 0.8em; display:none"></div>
 
                                     </div>
-                                    
-                                    <div class="form-group checkdiv">
+                                        <div class="form-group checkdiv">
                                         <label>이메일</label>
-                                        <input name="email" type="email" class="form-control" placeholder="email@email.com" id="email" value="${m.email}">
+                                        <input name="email" type="email" class="form-control" placeholder="email@email.com" id="email" value="${m.email}" readonly>
                                         <div id="emailCheckResult"  style="font-size: 0.8em; display:none"></div>
                                         <label style="font-size: 11px; font-weight : nomal;"><abbr title="다양한 정보 및 이벤트를 이메일로 받을 실 수 있습니다."><input type="checkbox" name="marketing" value="Y" id="mailing" style="font-size: 10px;"   ${m.marketing eq 'Y' ? 'checked="checked"' : ''} > 메일링 수신하기</abbr> </label>
-                                        <input type='button' id="email-Btn" class='btn btn-finish btn-primary check' name='' value='인증하기' onClick="mailajax();"/>
-
                                     </div> 
+                                    
                                     <div class="form-group checkdiv mail-check-box">
 											<input type="text" class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요" id="codeInput" name="" >
 	                                        <input type='button' id="email-check-Btn" class='btn btn-finish btn-primary check1' name='' value='인증확인'  onClick=""/>
@@ -264,26 +264,18 @@
 									</div>
                                     <div class="form-group checkdiv">
                                         <label>연락처</label>
-                                        <input name="phone" type="text" class="form-control" value="${m.phone}">
-                                        <input type='button' id="" class='btn btn-finish btn-primary check' name='' value='인증하기' />
+                                        <input name="phone" type="text" class="form-control" value="${m.phone}" id="tel">
+                                        <input type='button' id="phoneBtn" class='btn btn-finish btn-primary check' name='' value='인증하기'  />
                                     </div>
-<!--                                     <div class="form-group">
-                                        <label>비밀번호</label>
-                                        <input name="password1" id="password1" type="password" class="form-control">
-                                        <div id="passRegResult"></div>
-                                    </div>
-                                    <div class="form-group checkdiv">
-                                        <label>비밀번호 확인</label>
-                                        <input name="password2" id="password2" type="password" class="form-control">
-                                        <div id="passwordEquls"  style=" display:none"></div>
-                                        <input type='button' id="passwordUpdate" class='btn btn-finish btn-primary check' name='' value='변경하기' />
-                                    </div> -->
-                                
+                                    <div class="form-group checkdiv phone-check-box">
+											<input type="text" class="form-control phone-check-input" placeholder="인증번호 6자리를 입력해주세요" id="phoneCodeInput" name="" >
+	                                        <input type='button' id="phoneCheckBtn" class='btn btn-finish btn-primary check1' name='' value='인증확인'  onClick=""/>
+	                                        <span id="timer" style="color : red;"></span>
+	                                        <div id="phoneNumberCheckResult"  style="font-size: 0.8em; display:none"></div>
+									</div>
                                 </div>
                             </div>
                             <script>
-
-					        
 					        
           					 </script>
 
@@ -301,10 +293,134 @@
         </div>
         <script>
 
+        //핸드폰인증 ------------------------------------------------
+        
+        //인증하기 클릭했을 시 문자발송
+        $(function(){
+        	$("#phoneBtn").click(function(){
+        		
+        		$('#updateBtn').attr('disabled',true);
+        		
+        		const tel = $("#tel").val(); //전화번호 
+        		console.log("탄다 폰번 " +tel );
+        		 $('#phoneBtn').attr('disabled', false);
+     			const mailCheckBox = document.querySelector('.phone-check-box');
+     			mailCheckBox.style.display = 'block';
+     			//const email = $('#email').val()  // 폰번
+     			
+     			
+        		 console.log(tel);
+        		$.ajax({
+    				url:"sms.api",
+    				method : 'post',
+    				data:{ phoneNumber: tel},
+    				success:function(data){
+    					console.log("성공");
+    					//console.log(data.response.body.items);
+    					console.log(data +"데이터값");
+    					$('#phoneBtn').attr('disabled',true);
+    					
+    					
+    					
+    					if(data == "0"){
+    						alert("에러발생");
+    						console.log("널값" + data);
+    					}else{
+    						//console(data + "데이터값");
+    						alert("인증 번호 발송 완료.")
+    						$("#phoneNumberCheckResult").css("color", "green").text("인증번호를 입력해주세요");
+    						number = data;
+    					}
+        		
+    					
+    					
+    				},error:function(){
+    					console.log("ajax 통신 실패!!");
+    				}
+    			});
+        		
+        		
+        	});
+        });
+        
+        
+        
+      //폰번호 인증번호 맞는지 확인---------------------
+          $(function(){
+        	
+        	  
+
+					const $checkNum = $('#phoneCodeInput'); // 인증번호 입력하는곳
+					console.log("입력한번호 : " +$checkNum);
+					$('#phoneCheckBtn').val('인증확인');
+					$('#phoneCodeInput').keyup(function(){ 
+						console.log("실행됨");
+						console.log($checkNum.val());
+						if($checkNum.val().length>=6){
+							console.log("6자리이상");
+		 					if(number == $checkNum.val()){
+								console.log("같음");
+								$('#updateBtn').attr('disabled',false);
+								//같으면 번호 업데이트  -> div에 일차한다고 결과 보여주고 버튼은 변경하기로 변경 누르면 업데이트 
+								//alert("인증번호가 일치합니다.");
+								$("#phoneNumberCheckResult").show();
+								$("#phoneNumberCheckResult").css("color", "green").text("인증번호가 일치합니다.");
+			                    $('#phoneCheckBtn').val('변경하기');
+			                    $('#phoneCheckBtn').attr('disabled',false);
+							}else{
+								$('#phoneCheckBtn').val('인증확인');
+								console.log("다름");
+								//다르면 alert
+								//alert("인증번호가 일치하지 않습니다.")
+								 $("#phoneNumberCheckResult").show();
+								$("#phoneNumberCheckResult").css("color", "red").text("인증번호가 일치하지않습니다.");
+							} 
+						}else if($checkNum.val().length <=6){
+							console.log("xka");
+							$("#phoneNumberCheckResult").show();
+							$("#phoneNumberCheckResult").text("");
+						}
+					});
+				});
+      
+      
+      	//폰번호만 업데이트
+          $('#phoneCheckBtn').on('click', function(){
+  		    if($(this).val() === '변경하기'){
+  		    	
+  		    	 var phone = $("#tel").val();
+  		    	 console.log("폰번:"+phone);
+  		    	 $.ajax({
+  	                url: "phoneUpdate.me",
+  	                type: "POST",
+  	                data: { "phone": phone },
+  	                success: function(result) {
+  	                    console.log(result+"리절트값");
+  	                    if(result>0){
+  	                    	console.log("리절트 0이상탄다");
+  	                    	alert("핸드폰 번호가 변경 되었습니다.");
+  	                        
+  	                    }else{
+  	                        
+  	                    alert("핸드폰 변경 오류 발생");
+  	                    }
+  	                },
+  	                error: function() {
+  	                    console.log("ajax요청 실패");
+  	                }
+  	                });
+  		    	
+  		    	}
+  		    });
+        //=========================================================
+        
+        
+        
         //닉네임 변경만 저장 ajax--------------------
         $(function(){
             $("#nickUpdate").click(function() {
                 
+            	console.log("닉네임변경저장함수탄다");
                 var nickName = $("#nickName").val();
                 
                 $.ajax({
@@ -314,7 +430,11 @@
                 success: function(result) {
                     console.log(result)
                     if(result>0){
-                    alert("닉네임이 변경 되었습니다.");
+	                    alert("닉네임이 변경 되었습니다.");
+	                    location.reload();
+	                    $("#nickNameCheckResult").show();
+	                    $("#nickNameCheckResult").css("color", "red").text("");
+	                    
                         
                     }else{
                         
@@ -331,12 +451,22 @@
 
         //닉네임 변경시 아래의 div에 중복확인 메세지 출력--------------------
 		$(function(){
+			
+			
 			const $nickInput = $("#nickName");
 			const $nickUpdate = $("#nickUpdate");
+			const originNic = $("#originNickName").val();
+			
+			if($nickInput.val() == originNic ){
+
+				$nickUpdate.prop("disabled", true);
+				//현재닉네임이랑 같을경우 변경하기버튼 클릭안되게 
+				
+			}
 			
 			$nickInput.keyup(function(){ //띄어지는순간 계쏙 실행
 				console.log($nickInput.val());
-			
+				$nickUpdate.prop("disabled", false);
 				if($nickInput.val().length >= 3){
                     $.ajax({
                         url : "nicknameCheck.me",
@@ -346,7 +476,7 @@
                                 $("#nickNameCheckResult").show();
                                 $("#nickNameCheckResult").css("color", "red").text("중복된 닉네임이 존재합니다. 다시 입력해주세요.");
                                 $nickUpdate.prop("disabled", true);
-                            } else { // 사용가능
+                            }else { // 사용가능
                                 // => 초록색 메세지 (사용가능) 출력
                                 $("#nickNameCheckResult").show();
                                 $("#nickNameCheckResult").css("color", "green").text("사용가능한 닉네임입니다!");
@@ -410,7 +540,7 @@
         	
         	alert("전송을 요청하였습니다. 이메일 전송은 수초 이상 걸릴 수 있습니다.")
            	
-        	
+        	 $("#emailCheckResult").text("");
            	$('#email-check-Btn').attr('disabled', false); 
 			const mailCheckBox = document.querySelector('.mail-check-box');
 			mailCheckBox.style.display = 'block';
@@ -443,7 +573,7 @@
 		
 		    // 인증번호 발송 및 타이머 함수 실행
 		        // 남은 시간(초)
-		        var leftSec = 180,
+		        var leftSec = 60,
 		        display = document.querySelector('#timer');
 		        // 이미 타이머가 작동중이면 중지
 		        if (isRunning){
@@ -465,6 +595,7 @@
 		                clearInterval(timer);
 		                display.textContent = "";
 		                isRunning = false;
+		                $("#timer").css("color", "green").css("font-size", "12px").html("시간이 초과되었습니다.<br>위의 재전송 버튼을 눌러 새로운 인증번호를 입력해주세요. ");
 		                $('#email-Btn').val('재전송');
 		                $('#email-check-Btn').attr('disabled', true); 
 		            }
@@ -520,7 +651,9 @@
 	                    console.log(result)
 	                    if(result>0){
 	                    alert("이메일이 변경되었습니다.");
-	                        
+	                    $("#emailCheckResult").show();   
+                        $("#emailCheckResult").css("color", "green").text("이메일이 변경되었습니다.");
+                        
 	                    }else{
 	                        
 	                    alert("이메일 변경 오류 발생");

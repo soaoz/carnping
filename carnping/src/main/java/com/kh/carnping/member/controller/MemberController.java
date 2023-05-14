@@ -322,24 +322,40 @@ public class MemberController {
 		}
 	}
 	
-	//회원정보화면 진입
+	//페이지 수정 후 회원정보화면 다시 
 	@RequestMapping("mypage.me")
 	public String mypage(HttpSession session, Model model, Member m) {
 		
 		
-		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
-		m = mService.selectMember(memId);
-		model.addAttribute("m", m);
-		return "member/myProfileUpdate";
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		m = mService.selectMember(memNo);
+		
+		
+		
+		//로그인유저의의 api 값이 null이 아니면 api전용 회원정보조회화면으로 
+		if(m.getMemApiType() != null) {
+			model.addAttribute("m", m);
+			//데이터 보내주면서 회원정보화면으로 바로 진입
+			return "member/myProfileUpdateApi";
+			
+		}else {	
+			
+			model.addAttribute("m", m);
+			return "member/myProfileUpdate";
+		}
+		
+		
+		
 	}
 	
 	//닉네임만 업데이트
 	@ResponseBody
 	@RequestMapping("nickNameUpdate.me")
 	public int nickNameUpdate(HttpSession session, Member m, String nickName) {
-		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 		m.setNickName(nickName);
-		m.setMemId(memId);
+		m.setMemNo(memNo);
 		int result = mService.nickNameUpdate(m);
 		return result;
 	}
@@ -349,9 +365,9 @@ public class MemberController {
 	@RequestMapping("phoneUpdate.me")
 	public int phoneUpdate(HttpSession session, Member m, String phone) {
 		
-		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 		m.setPhone(phone);
-		m.setMemId(memId);
+		m.setMemNo(memNo);
 		//System.out.println(phone +" , "+ memId);
 		int result = mService.phoneUpdate(m);
 		return result;
@@ -375,18 +391,20 @@ public class MemberController {
 	public String updateProfile(HttpSession session,  MultipartFile reupfile, Member m, Model model) {
 	
 		
-		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
-		
-		m.setMemNo(memNo);
-		
 		//System.out.println(reupfile); 원래 이미지파일명 담겨있음 
 		System.out.println("업데이트 버튼 누르고 담긴 m 값 : " + m);
-		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
-		String memPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
-		m.setMemId(memId);
-		m.setMemPwd(memPwd);
 		
-		System.out.println(memId);
+		
+		
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		m.setMemNo(memNo);
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m.setMemId(memId);
+
+		System.out.println("넣고나서 m 값 : " + m);
+		
+		
 		System.out.println(reupfile);
 		
 		
@@ -403,7 +421,7 @@ public class MemberController {
 			m.setMemImgChange("resources/uploadFiles/memImg/" + changeName);
 		}
 		int result = mService.updateProfile(m);
-		System.out.println(m);
+		//System.out.println(m);
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
@@ -662,7 +680,7 @@ public class MemberController {
 			session.setAttribute("confirmMsg", "정말로 카앤핑을 탈퇴하시겠습니까? ");
 			return "member/unregister";
 		}else {
-			System.out.println("비번다름");
+			//System.out.println("비번다름");
 			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
 			return "member/unregister";
 		}
@@ -719,7 +737,7 @@ public class MemberController {
 	public String deleteMyCar(@RequestParam("cinfoNoArr[]") String[] cinfoNoArr, HttpSession session) {
 		
 		//System.out.println("차박목록삭제컨트롤러탄다");
-		System.out.println(Arrays.toString(cinfoNoArr));
+		//System.out.println(Arrays.toString(cinfoNoArr));
 		int result = 0 ;
 		int deleteCount = 0;
 	    for(String cinfoNo : cinfoNoArr) {
@@ -835,11 +853,12 @@ public class MemberController {
 	@RequestMapping("emailUpdate.me")
 	@ResponseBody
 	public int emailUpdate(HttpSession session, String email, Member m) {
-		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 		System.out.println(email);
 		
 		m.setEmail(email);
-		m.setMemId(memId);
+		m.setMemNo(memNo);
 		
 		int result = mService.emailUpdate(m);
 		return result;

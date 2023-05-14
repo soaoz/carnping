@@ -294,7 +294,7 @@
 		update
 			   member
 		   set nickname = #{nickName}
-		 where mem_id = #{memId}
+		 where mem_no = #{memNo}
 	</update>
 
 	<!-- 소영 : 폰 업데이트  -->
@@ -302,7 +302,7 @@
 		update
 			    member
 		    set phone = #{phone}
-		  where mem_id = #{memId}
+		  where mem_no = #{memNo}
 	</update>
 
 	<!-- 소영 : 비번 업데이트  -->
@@ -318,14 +318,14 @@
 	    UPDATE
 				MEMBER
 	  	 SET 
-               MEM_PWD = #{memPwd}
+               MEM_PWD = CASE WHEN #{memPwd} IS NULL THEN MEM_PWD ELSE #{memPwd} END
              , NICKNAME = #{nickName}
              , EMAIL = #{email}
              , MEM_IMG_ORIGIN = #{memImgOrigin}
              , MEM_IMG_CHANGE = #{memImgChange}
              , PHONE = #{phone}
              , MARKETING = #{marketing}
-  	   WHERE MEM_ID = #{memId}
+  	   WHERE MEM_NO = #{memNo}
 	</update>
 
 	<!-- 소영 : 내 문의사항 갯수 조회 (페이징)  -->
@@ -483,12 +483,12 @@
 			 )
 	</insert>
 	
-		<!-- 소영 : 비번 업데이트  -->
+		<!-- 소영 : 이메일 업데이트  -->
 	<update id="emailUpdate">
 		update
 			    member
 		    set email = #{email}
-		  where mem_id = #{memId}
+		  where mem_no = #{memNo}
 	</update>
 	
 	

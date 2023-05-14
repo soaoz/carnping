@@ -451,6 +451,9 @@
                     console.log(result)
                     if(result>0){
                     alert("닉네임이 변경 되었습니다.");
+                    $("#nickNameCheckResult").show();
+                    $("#nickNameCheckResult").css("color", "red").text("");
+                       
                         
                     }else{
                         
@@ -482,7 +485,7 @@
 			$nickInput.keyup(function(){ //띄어지는순간 계쏙 실행
 				console.log($nickInput.val());
 				$nickUpdate.prop("disabled", false);
-				if($nickInput.val().length >= 3){
+				if( $nickInput.val().length >= 3 && $nickInput.val().length <= 6){
                     $.ajax({
                         url : "nicknameCheck.me",
                         data:{nickname:$nickInput.val()},
@@ -501,7 +504,11 @@
                             console.log("ajax 통신 실패!");
                         }
                     });
-                } else {
+                }else if($nickInput.val().length >= 6){
+                	 $("#nickNameCheckResult").show();
+                     $("#nickNameCheckResult").css("color", "green").text("6글자 이하로 지정해주세요!");
+                     $nickUpdate.prop("disabled", true);
+                }else {
                     $("#nickNameCheckResult").hide();
                     $nickUpdate.prop("disabled", true);
                     }
@@ -550,7 +557,7 @@
 		});
          
         
-        //이메일 인증하기 클릭시 이메일 보내기 ---------------------
+        //이메일 인증하기 클릭시 이메일 보내기 ajax---------------------
         function mailajax(){
         	
         	alert("전송을 요청하였습니다. 이메일 전송은 수초 이상 걸릴 수 있습니다.")
@@ -650,7 +657,7 @@
 	       	return;
         }
         
-        //이메일 변경하기 클릭시 이메일만 변경 
+        //이메일 변경하기 클릭시 이메일만 변경 ajax
         $('#email-check-Btn').on('click', function(){
 		    if($(this).val() === '변경하기'){
 		        // 실행할 코드
