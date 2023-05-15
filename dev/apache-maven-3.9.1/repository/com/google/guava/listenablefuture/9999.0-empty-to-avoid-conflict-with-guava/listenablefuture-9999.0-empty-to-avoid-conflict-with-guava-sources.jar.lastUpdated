@@ -1,6 +1,8 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Wed May 03 15:12:49 KST 2023
+#Sun May 14 21:37:58 KST 2023
 http\://www.datanucleus.org/downloads/maven2/.lastUpdated=1683094369467
 https\://repo.maven.apache.org/maven2/.lastUpdated=1683094369492
 http\://www.datanucleus.org/downloads/maven2/.error=
+http\://0.0.0.0/.error=Could not transfer artifact com.google.guava\:listenablefuture\:jar\:sources\:9999.0-empty-to-avoid-conflict-with-guava from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [Datanucleus (http\://www.datanucleus.org/downloads/maven2/, default, releases+snapshots)]
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1684067878311
 https\://repo.maven.apache.org/maven2/.error=

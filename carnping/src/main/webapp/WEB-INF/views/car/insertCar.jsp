@@ -14,7 +14,6 @@
 <meta name="keyword"
 	content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <style>
 .wrap-vertical {
 	width: 500px;
@@ -136,498 +135,427 @@
 	/* 폰트 크기를 0으로 설정하여 공백 제거 */
 	font-size: 0;
 }
+
 </style>
 </head>
 <body>
 	<div class="myPage-header-area">
 		<jsp:include page="../common/header.jsp" />
-</div>
-<br>
-<br>
+	</div>
+	<br>
+	<br>
 
-<div align="center">
-	<h4>차박정보 등록</h4>
-	<small style="color: gray">자신이 다녀온 차박지를 편하게 소개해주세요!</small>
-</div>
+	<div align="center">
+		<h4>차박정보 등록</h4>
+		<small style="color: gray">자신이 다녀온 차박지를 편하게 소개해주세요!</small>
+	</div>
 
-<div id="progress">
+	<div id="progress">
 
-	<div id="progress-bar"></div>
-	<ul id="progress-num">
-		<li class="step active">1</li>
-		<li class="step">2</li>
-		<li class="step">3</li>
-		<li class="step">4</li>
-	</ul>
-</div>
-<br>
-<form>
-	<div class="box-in">
+		<div id="progress-bar"></div>
+		<ul id="progress-num">
+			<li class="step active">1</li>
+			<li class="step">2</li>
+			<li class="step">3</li>
+			<li class="step">4</li>
+		</ul>
+	</div>
+	<br>
+	<form action="insertCar.ca" method="post" 
+                    enctype="multipart/form-data" id="insertCar" >
+		<div class="box-in">
 
-		<div id="step1">
-			<h4 align="center">차박의 얼굴을 만들어주세요</h4>
-			<br>
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-1">
-					<div align="center">
-						<img id="myFile1" class="avatar-img"
-                                       src="" onclick="myChooseFile();"
-                                        alt="클릭하여 대표이미지를 설정해주세요" style="width:300px; height:200px;  cursor:pointer">
-                                       
-                   <input type="file" name="cinfoImg1" id="myFileInput" style="display: none;" onchange="myLoadImg(this);" accept="image/*"/>
+			<div id="step1">
+				<h4 align="center">차박의 대표이미지와 위치를 알려주세요!</h4>
+				<br>
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-1">
+						<div align="center">
+							<img id="myFile1" class="avatar-img" src=""
+								onclick="myChooseFile();" alt="이미지 로딩 중입니다..."
+								onerror="this.onerror=null; this.src='resources/img/click.png'"
+								style="border: 0.5px solid lightgray; width: 200px; height: 200px; cursor: pointer; display: flex; justify-content: center; align-items: center;">
+
+							<input type="file" name="upfile" id="myFileInput"
+								style="display: none;" onchange="myLoadImg(this);"
+								accept="image/*"  />
+						</div>
+						<div align="center" id="mainImg">
+
+							<small style='color: red;'>대표 이미지를 삽입해주세요<br></small>
+
+						</div>
 					</div>
-					
-					<small align="center">메인에 나올 사진을 등록합니다 <br>
-					</small>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label>제목</label> <input name="#" type="text"
-							class="form-control" placeholder="추천하신 지역의 재치있는 이름을 지어주세요!">
-					</div>
-					<div class="form-group">
-						<label>내용</label>
-						<textarea name="#" type="text" class="form-control"
-							placeholder="추천하는 지역을 저희에게 소개해주세요!"></textarea>
-					</div>
-					<div class="form-group">
-						<label>주의사항</label>
-						<textarea name="#" type="text" class="form-control"
-							placeholder="추천하는 지역은 이걸 주의해야해요!"></textarea>
-					</div>
-				</div>
-			</div>
+					<div class="col-sm-6">
 
-		</div>
-		<div id="step2" style="display: none;">
-			<h4 align="center">위치는 어디일까요, 주변은 괜찮나요?</h4>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="col-sm-12">
 						<div class="form-group">
-							<div id="addressDiv2">
+							<label>제목</label> <input name="verifyName" type="text"
+								class="form-control" placeholder="추천하신 지역의 재치있는 이름을 지어주세요!"
+								>
+						</div>
+						<div class="form-group">
+							<label>내용</label>
+							<textarea name="verifyContent" type="text" class="form-control"
+								placeholder="추천하는 지역을 저희에게 소개해주세요!" ></textarea>
+						</div>
+						<div class="form-group">
+							<label>주의사항</label>
+							<textarea name="verifyNotice" type="text" class="form-control"
+								placeholder="추천하는 지역은 이걸 주의해야해요!" ></textarea>
+						</div>
+						<br>
+					</div>
+					<hr>
 
-								<input type="text" id="address1" placeholder="우편번호"
-									name="poster" class="form-control"> <input
-									type="button" class="btn primary-btn btn-md" onclick="juso();"
-									value="우편번호 찾기"><br> <br> <input type="text"
-									class="form-control" id="address2" placeholder="주소"
-									name="street"><br> <input type="text"
-									class="form-control" id="address3" placeholder="상세주소"
-									name="address">	
+					<div class="col-sm-6 padding-top-15">
+						<br>
+						<div class="form-group">
+							<div class="map_wrap">
+								<div id="map" style="width: 100%; height: 350px;"></div>
+								<div class="hAddr">
+									<span class="title">지도중심기준 행정동 주소정보</span> <span
+										id="centerAddr"></span>
+								</div>
+							</div>
+						</div>
+						<small>* 주소 입력 후 지도 내에 주소 클릭시 구글 검색이 가능합니다.</small>
+					</div>
+					<div class="col-sm-6">
+						<br>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<div id="addressDiv2">
+									<label>주소</label> <input type="text" class="form-control"
+										id="address2" placeholder="주소찾기를 통해 주소를 입력받으세요!"
+										name="verifyAddress" readonly><br> <input
+										type="button" class="btn primary-btn btn-md" onclick="juso();"
+										value="주소찾기"><br> <br> 
+										<input
+										type="hidden" name="verifyLttd"> 
+										<input type="hidden"
+										name="verifyHrdns">
+
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-12 padding-top-15">
-					<div class="form-group">
-						<div class="map_wrap">
-							<div id="map"></div>
-							<div class="hAddr">
-								<span class="title">지도중심기준 행정동 주소정보</span> <span
-									id="centerAddr"></span>
+
+			</div>
+			<!-- Step2 -->
+			<div id="step2" style="display: none;">
+				<h4 align="center">주변은 괜찮나요? 언제 오픈하나요?</h4>
+				<br> <br>
+				<div class="row">
+					<div class="col-sm-12">
+						<h5>편의시설</h5>
+						<br>
+					</div>
+					<div class="col-sm-3">
+						<div class="">
+							<label> <input type="checkbox"
+								style="position: static; opacity: 1; width: 15px; height: 15px"
+								name="verifyFacilitie" value="화장실"> 화장실
+							</label>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<div class="checkbox">
+								<label> <input type="checkbox"
+									style="position: static; opacity: 1; width: 15px; height: 15px"
+									name="verifyFacilitie" value="편의점"> 편의점
+								</label>
 							</div>
 						</div>
-					</div> 
-				</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<div class="checkbox">
+								<label> <input type="checkbox"
+									style="position: static; opacity: 1; width: 15px; height: 15px"
+									name="verifyFacilitie" value="카페"> 카페
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<div class="checkbox">
+								<label> <input type="checkbox"
+									style="position: static; opacity: 1; width: 15px; height: 15px"
+									name="verifyFacilitie" value="마트"> 마트
+								</label>
+							</div>
+						</div>
+					</div>
 
-				<div class="col-sm-3">
-					<div class="checkbox">
-						<label> <input type="checkbox"> 공중화장실
+
+					<div class="col-sm-3">
+						<div class="form-group">
+							<div class="checkbox">
+								<label> <input type="checkbox"
+									style="position: static; opacity: 1; width: 15px; height: 15px"
+									name="verifyFacilitie" value="음식점"> 음식점
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label> <input type="checkbox"
+								style="position: static; opacity: 1; width: 15px; height: 15px"
+								name="verifyFacilitie"  value="주차장"> 주차장
+							</label>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyFacilitie"  value="캠핑장"> 캠핑장
 						</label>
 					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<div class="checkbox">
-							<label> <input type="checkbox"> 주차장
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label> <input type="checkbox"
+								style="position: static; opacity: 1; width: 15px; height: 15px"
+								name="verifyFacilitie" value="병원">병원
 							</label>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<div class="checkbox">
-							<label> <input type="checkbox"> 병원
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<div class="checkbox">
-							<label> <input type="checkbox"> 편의점
-							</label>
-						</div>
-					</div>
-				</div>
 
-
-				<div class="col-sm-3">
-					<div class="form-group">
-						<div class="checkbox">
-							<label> <input type="checkbox"> 화기사용이 안돼요!
+					<div class="col-sm-12">
+						<hr>
+						<h5>오픈일자</h5>
+						<br>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<div class="checkbox">
+								<label> <input type="checkbox"
+									style="position: static; opacity: 1; width: 15px; height: 15px"
+									name="verifyDay" value="월요일"> 월요일
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label> <input type="checkbox"
+								style="position: static; opacity: 1; width: 15px; height: 15px"
+								name="verifyDay" value="화요일"> 화요일
 							</label>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label> <input type="checkbox"> 조용해야해요!
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyDay" value="수요일"> 수요일
 						</label>
 					</div>
-				</div>
-				<div class="col-sm-3">
-					<label> <input type="checkbox"> 취사가 안돼요!
-					</label>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label> <input type="checkbox" style="height: auto;">
-							수평이 안맞아요!
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label> <input type="checkbox"
+								style="position: static; opacity: 1; width: 15px; height: 15px"
+								name="verifyDay" value="목요일"> 목요일
+							</label>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyDay" value="금요일"> 금요일
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyDay" value="토요일"> 토요일
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyDay" value="일요일"> 일요일
+						</label>
+					</div>
+
+					<div class="col-sm-12">
+						<hr>
+						<h5>태그</h5>
+						<br>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="강"> 강
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="노지"> 노지
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="바다"> 바다
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="산"> 산
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="섬"> 섬
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="숲"> 숲
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="캠핑장"> 캠핑장
+						</label>
+					</div>
+					<div class="col-sm-3">
+						<label> <input type="checkbox"
+							style="position: static; opacity: 1; width: 15px; height: 15px"
+							name="verifyTags" value="공원"> 공원
 						</label>
 					</div>
 				</div>
 			</div>
+
+			<br>
+			<div id="step3" style="display: none;">
+				<h4 class="info-text">사진 조금 더 보여주실래요?</h4>
+				<div class="row">
+					<label for="file" class="col-form-label col-md-3">서브 이미지
+						(앞에서부터 채워주세요. 최소4장 최대9장)</label>
+					<hr>
+					<div class="wrap-vertical col-sm-12">
+						<table>
+							<tr>
+
+								<td><img id="contentImg1" width="200px" height="200px"
+									style="max-width: 1000px" onclick="chooseFile(2);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg2" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(3);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg3" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(4);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg4" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(5);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg5" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(6);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg6" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(7);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg7" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(8);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg8" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(9);"
+									onerror="this.style.display='none'"></td>
+								<td><img id="contentImg9" width="200" height="200"
+									style="max-width: 1000px" onclick="chooseFile(10);"
+									onerror="this.style.display='none'"></td>
+
+							</tr>
+						</table>
+
+						<input type="file" name="upfile" id="file2" style="display: none;"
+							onchange="loadImg(this,2);" > 
+							<input type="file"
+							name="upfile" id="file3" style="display: none;"
+							onchange="loadImg(this,3);" > 
+							<input type="file"
+							name="upfile" id="file4" style="display: none;"
+							onchange="loadImg(this,4);" > 
+							<input type="file"
+							name="upfile" id="file5" style="display: none;"
+							onchange="loadImg(this,5);" > 
+							<input type="file"
+							name="upfile" id="file6" style="display: none;"
+							onchange="loadImg(this,6);"> 
+							<input type="file"
+							name="upfile" id="file7" style="display: none;"
+							onchange="loadImg(this,7);"> 
+							<input type="file"
+							name="upfile" id="file8" style="display: none;"
+							onchange="loadImg(this,8);"> 
+							<input type="file"
+							name="upfile" id="file9" style="display: none;"
+							onchange="loadImg(this,9);"> 
+							<input type="file"
+							name="upfile" id="file10" style="display: none;"
+							onchange="loadImg(this,10);"> 
+							<input type="hidden"
+							name="memNo" value="${ loginMember.memNo }">
+					</div>
+				</div>
+			</div>
+			<div id="step4" style="display: none;">
+				<h4 class="info-text">관리자에게 제출하기</h4>
+				<br>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="">
+							<p>
+								<label><strong>Carnping</strong></label> 에서 해당 게시글을 확인 후 게시글을
+								등록하겠습니다. <br> 저희 홈페이지에 글을 남겨주셔서 감사합니다!
+							</p>
+							<div class="checkbox">
+								<label> <input type="checkbox"
+									style="position: static; opacity: 1; width: 15px; height: 15px"
+									 id="submitCheck" /><strong> 게시글을 제출하시겠습니까?</strong>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<br>
-		<div id="step3" style="display: none;">
-			<!-- step3의 내용 -->
-			<h4>3실행</h4>
+
+		<div class="box-in">
+			<div></div>
+			<div class="btn-div">
+				<button type="button" id="progress-prev" class="btn" disabled>이전</button>
+			</div>
+			<div class="btn-div" align="right">
+				<button type="button" id="progress-next" class="btn">다음</button>
+				<button type="submit" id="progress-submit" class="btn" 
+					style="display: none" disabled>제출</button>
+			</div>
 		</div>
-		<div id="step4" style="display: none;">
-			<h4>4 실행</h4>
-			<!-- step4의 내용 -->
-		</div>
-	</div>
+	</form>
 
-	<div class="box-in">
-		<div></div>
-		<div class="btn-div">
-			<button type="button" id="progress-prev" class="btn" disabled>이전</button>
-		</div>
-		<div class="btn-div" align="right">
-			<button type="button" id="progress-next" class="btn">다음</button>
-			<button id="progress-submit" class="btn" style="display: none">제출</button>
-		</div>
-	</div>
-</form>
+	<jsp:include page="../common/footer.jsp" />
 
-<!--       property area
-     <div class="content-area submit-property" style="background-color: #FCFCFC;">&nbsp;
-         <div class="container">
-             <div class="clearfix" > 
-                 <div class="wizard-container"> 
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-                     <div class="wizard-card ct-wizard-orange" id="wizardProperty">
-                         <form action="" method="">                        
-                             <div class="wizard-header">
-                                 <h3>
-                                     <b>차박정보 등록</b><br>
-                                     <small>차박 정보등록을 해주셔서 진심으로 감사드립니다.</small>
-                                 </h3>
-                                 <br>
-                             </div>
+	<script src="resources/assets/js/main.js"></script>
+	<!-- 지도 api -->
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services"></script>
+	<script>
 
-                             <ul class="nav nav-pills">
-                                 <li><a href="#step1" data-toggle="tab">Step 1 </a></li>
-                                 <li><a href="#step2" data-toggle="tab">Step 2 </a></li>
-                                 <li><a href="#step3" data-toggle="tab">Step 3 </a></li>
-                                 <li><a href="#step4" data-toggle="tab">Finished </a></li>
-                             </ul>
-
-                             <div class="tab-content">
-                                 
-                                 <div class="tab-pane" id="step1">
-                                     <h4 class="info-text">차박의 얼굴을 만들어주세요</h4>
-                                     <div class="row p-b-15  ">
-                                         
-                                         <div class="col-sm-4 col-sm-offset-1">
-                                             <div class="picture-container">
-                                                 <div class="picture">
-                                                     <img src="assets/img/default-property.jpg" class="picture-src" id="wizardPicturePreview" title=""/>
-                                                     <input type="file" id="wizard-picture">
-                                                 </div> 
-                                                 <small>메인 사진을 등록해주세요 가로x세로 길이는 동일하게 해주시면 감사합니다.</small>
-                                             </div>
-                                         </div>
-                                         <div class="col-sm-6">
-                                             <div class="form-group">
-                                                 <label>제목<small>(required)</small></label>
-                                                 <input name="#" type="text" class="form-control" placeholder="추천하신 지역의 재치있는 이름을 지어주세요!">
-                                             </div>
-
-                                             <div class="form-group">
-                                                 <label>내용 <small>(required)</small></label>
-                                                 <textarea name="#" type="text" class="form-control" placeholder="추천하는 지역을 저희에게 소개해주세요!"></textarea>
-                                             </div> 
-                                             <div class="form-group">
-                                                 <label>주의사항 <small>(required)</small></label>
-                                                 <textarea name="#" type="text" class="form-control" placeholder="추천하는 지역은 이걸 주의해야해요!"></textarea>
-                                             </div> 
-                                         </div>
-                                     </div>
-                                     
-                                 </div>
-                                  End step 1
-                                 
-                                 <div class="tab-pane" id="step2">
-                                     <h4 class="info-text"> 위치는 어디일까요, 주변은 괜찮나요? </h4>
-                                     <div class="row">
-                                         <div class="col-sm-12"> 
-                                             <div class="col-sm-12"> 
-                                                 <div class="form-group">
-                                                     <div id="addressDiv2">
-                                                        
-                                                         <input type="text" id="address1"
-                                                             placeholder="우편번호" name="poster"
-                                                             class="form-control">
-                                                         <input type="button"
-                                                             class="btn primary-btn btn-md"
-                                                             onclick="juso();" value="우편번호 찾기"><br><br>
-                                                         <input type="text" class="form-control"
-                                                             id="address2" placeholder="주소"
-                                                             name="street"><br>
-                                                         <input type="text" class="form-control"
-                                                             id="address3" placeholder="상세주소"
-                                                             name="address">
-                                                     </div>
-                                                 </div> 
-                                             </div> 
-                                         </div>
-                                         <div class="col-sm-12 padding-top-15">
-                                             <div class="form-group">
-                                                 <div class="map_wrap">
-                                                     <div id="map"></div>
-                                                     <div class="hAddr">
-                                                         <span class="title">지도중심기준 행정동 주소정보</span>
-                                                         <span id="centerAddr"></span>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                        
-                                         <div class="col-sm-12 padding-top-15">
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 공중화장실
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div> 
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 주차장
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div>                                                 
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 병원
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div>                                                 
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 편의점
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div> 
-                                         </div> 
-                                         <div class="col-sm-12 padding-bottom-15">
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 화기사용이 안돼요!
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 조용해야해요!
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 취사가 안돼요!
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-sm-3">
-                                                 <div class="form-group">
-                                                     <div class="checkbox">
-                                                         <label>
-                                                             <input type="checkbox"> 수평이 안맞아요!
-                                                         </label>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                         <br>
-                                     </div>
-                                 </div>
-                                 End step 2
-                                 
-                                 <div class="tab-pane" id="step3">                                        
-                                     <h4 class="info-text">사진 조금 더 보여주실래요? </h4>
-                                     <div class="row">  
-                                         <div class="wrap-vertical col-sm-12">
-                                             
-                                             <label for="file" class="col-form-label col-md-3">서브
-                                                 이미지 (최소4장 최대9장)</label>
-                                                 <hr>
-                                             <table>
-                                                 <tr>
-                                                     
-                                                     <td>
-                                                         <img id="contentImg1" width="200"
-                                                             height="200" onclick="chooseFile(2);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg2" width="200"
-                                                             height="200" onclick="chooseFile(3);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg3" width="200"
-                                                             height="200" onclick="chooseFile(4);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg4" width="200"
-                                                             height="200" onclick="chooseFile(5);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg5" width="200"
-                                                             height="200" onclick="chooseFile(6);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg6" width="200"
-                                                             height="200" onclick="chooseFile(7);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg7" width="200"
-                                                             height="200" onclick="chooseFile(8);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg8" width="200"
-                                                             height="200" onclick="chooseFile(9);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
-                                                     <td>
-                                                         <img id="contentImg9" width="200"
-                                                             height="200" onclick="chooseFile(10);"
-                                                             onerror="this.style.display='none'">
-                                                     </td>
- 
-                                                 </tr>
-                                             </table>
-                                                
-                                             <input type="file" name="file2" id="file2"
-                                                 style="display: none;" onchange="loadImg(this,2);" required>
-                                             <input type="file" name="file3" id="file3"
-                                                 style="display: none;" onchange="loadImg(this,3);" required>
-                                             <input type="file" name="file4" id="file4"
-                                                 style="display: none;" onchange="loadImg(this,4);" required>
-                                             <input type="file" name="file5" id="file5"
-                                                 style="display: none;" onchange="loadImg(this,5);" required>
-                                             <input type="file" name="file6" id="file6"
-                                                 style="display: none;" onchange="loadImg(this,6);" >
-                                             <input type="file" name="file7" id="file7"
-                                                 style="display: none;" onchange="loadImg(this,7);" >
-                                             <input type="file" name="file8" id="file8"
-                                                 style="display: none;" onchange="loadImg(this,8);" >
-                                             <input type="file" name="file9" id="file9"
-                                                 style="display: none;" onchange="loadImg(this,9);" >
-                                             <input type="file" name="file10" id="file10"
-                                                 style="display: none;" onchange="loadImg(this,10);">
-                                         </div>
-                                     </div>
-                                 </div>
-                                  End step 3
-
-
-                                 <div class="tab-pane" id="step4">                                        
-                                     <h4 class="info-text"> 관리자에게 제출하기 </h4>
-                                     <div class="row">  
-                                         <div class="col-sm-12">
-                                             <div class="">
-                                                 <p>
-                                                     <label><strong>Carnping</strong></label>
-                                                     에서 해당 게시글을 확인 후 게시글을 등록하겠습니다. <br>
-                                                 저희 홈페이지에 글을 남겨주셔서 감사합니다!
-                                             </p>
-
-
-
-                                                 <div class="checkbox">
-                                                     <label>
-                                                         <input type="checkbox" required/> <strong>게시글을 제출하시겠습니까?</strong>
-                                                     </label>
-                                                 </div> 
-
-                                             </div> 
-                                         </div>
-                                     </div>
-                                 </div>
-                                  End step 4
-
-                             </div>
-
-                             <div class="wizard-footer">
-                                 <div class="pull-right">
-                                     <input type='button' class='btn btn-next primary-btn' name='next' value='다음'/>
-                                     <input type='submit' class='btn btn-finish primary-btn ' name='finish' value='제출' />
-                                 </div>
-
-                                 <div class="pull-left">
-                                     <input type='button' class='btn btn-previous btn-default' name='previous' value='이전' />
-                                 </div>
-                                 <div class="clearfix"></div>                                            
-                             </div>	
-                         </form>
-                     </div>
-                     End submit form
-                 </div> 
-             </div>
-         </div>
-     </div> -->
-<jsp:include page="../common/footer.jsp" />
-
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<script src="resources/assets/js/main.js"></script>
-<!-- 지도 api -->
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services"></script>
-<script>
-
+//프로그래스 바
 const progressBar = document.getElementById("progress-bar");
 const progressNext = document.getElementById("progress-next");
 const progressSubmit = document.getElementById("progress-submit");
@@ -635,9 +563,6 @@ const progressPrev = document.getElementById("progress-prev");
 const steps = document.querySelectorAll(".step");
 let active= 1;
 
-myChooseFile = function() {
-    $("#myFileInput").click();
-}		
 
 progressNext.addEventListener("click", () => {
 	$("#step"+active).css("display", "none");
@@ -688,8 +613,11 @@ progressNext.addEventListener("click", () => {
 		  }
 		};
 		
+		myChooseFile = function() {
+		    $("#myFileInput").click();
+		}		
+
 		function myLoadImg(inputFile) {
-		    console.log("inputFile");
 		    if (inputFile.files.length == 1) { // 파일 선택된 경우 => 파일 읽어들임
 
 		        // 파일을 읽어들일 FileReader 객체 생성
@@ -702,14 +630,40 @@ progressNext.addEventListener("click", () => {
 		        //파일 읽어들이기가 완료 됐을 때 실행할 함수를 정의해두기
 		        reader.onload = function (e) {
 		            // e.target.result => 읽어들인 파일의 고유한 url                                            
-		        console.log(e.target.result);
+	            $("#mainImg").html("<small style='color:green;'>멋진 이미지이군요!<br></small>");
 		        $("#myFile1").removeAttr("src");
 		        $("#myFile1").attr("src", e.target.result); 
 		        }
 		    } else { //선택된 파일이 취소된 경우 => 미리보기 본것도 사라지게
+		    	
+		    	$("#mainImg").html("<small style='color:red;'>대표 이미지를 삽입해주세요<br></small>")
+    			
 		        $("#myFile1").removeAttr("src");
 		    }
 		} //loadImg end
+		
+
+
+// submitCheck 체크박스 요소 참조
+const submitCheck = document.getElementById('submitCheck');
+
+// progress-submit 버튼 요소 참조
+const progressSubmitBtn = document.getElementById('progress-submit');
+
+// submitCheck 체크 상태가 변경될 때마다 실행될 함수 등록
+submitCheck.addEventListener('change', function() {
+  // submitCheck 체크 상태가 true일 경우
+  if (submitCheck.checked) {
+    // progress-submit 버튼의 disabled 속성 제거
+    progressSubmitBtn.disabled = false;
+  } else {
+    // submitCheck 체크 상태가 false일 경우
+    // progress-submit 버튼의 disabled 속성 추가
+    progressSubmitBtn.disabled = true;
+  }
+});
+		
+// 주소 입력 받는 api
 let addressDetail ="";
 function juso() {
 new daum.Postcode({
@@ -723,14 +677,65 @@ new daum.Postcode({
             addr = data.jibunAddress;
         }
         // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        document.getElementById('address1').value = data.zonecode;
         addressDetail = document.getElementById("address2").value = addr;
+      
+        	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        	mapOption = {
+        	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        	        level: 7 // 지도의 확대 레벨
+        	    };  
+
+        	// 지도를 생성합니다    
+        	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+        	// 주소-좌표 변환 객체를 생성합니다
+        	var geocoder = new kakao.maps.services.Geocoder();
+
+        	// 주소로 좌표를 검색합니다
+        	geocoder.addressSearch($("#address2").val(), function(result, status) {
+
+        	    // 정상적으로 검색이 완료됐으면 
+        	     if (status === kakao.maps.services.Status.OK) {
+
+        	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        	        // 결과값으로 받은 위치를 마커로 표시합니다
+        	        var marker = new kakao.maps.Marker({
+        	            map: map,
+        	            position: coords
+        	        });
+        	        $("input[name=verifyLttd]").val(result[0].y);
+        	        $("input[name=verifyHrdns]").val(result[0].x);
+        	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        	        var infowindow = new kakao.maps.InfoWindow({
+        	            content: '<button type="button" class="btn" id="google-search-button" onclick="googleSearch()">'+addressDetail+'</button>'
+        	        });
+        	        infowindow.open(map, marker);
+
+        	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        	        map.setCenter(coords);
+        	    } 
+        	});    
+     
         // 커서를 상세주소 필드로 이동한다.
-        document.getElementById("address3").focus();
         
     }
 }).open()
 }
+
+function googleSearch() {
+	  // 검색어 입력값 가져오기
+	  var searchTerm = $("#address2").val();
+	  
+	  // 검색어가 비어있으면 아무것도 하지 않음
+	  if (searchTerm === "") {
+	    return;
+	  }
+	  
+	  // 검색어를 구글 검색 URL에 추가하여 새 창에서 열기
+	  var googleUrl = "https://www.google.com/search?q=" + encodeURIComponent(searchTerm);
+	  window.open(googleUrl, "_blank");
+	}
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
@@ -745,7 +750,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var geocoder = new kakao.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
-geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+geocoder.addressSearch(addressDetail, function(result, status) {
 
     // 정상적으로 검색이 완료됐으면 
      if (status === kakao.maps.services.Status.OK) {
@@ -757,7 +762,9 @@ geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function
             map: map,
             position: coords
         });
-
+        
+       
+		
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new kakao.maps.InfoWindow({
             content: '<div style="width:150px;text-align:center;padding:6px 0;">오우예</div>'
@@ -768,7 +775,8 @@ geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function
         map.setCenter(coords);
     } 
 });    
-     
+
+
    
 
     chooseFile = function(num){
@@ -795,7 +803,9 @@ geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function
             //파일 읽어들이기가 완료 됐을 때 실행할 함수를 정의해두기
             reader.onload = function(e){
                 // e.target.result => 읽어들인 파일의 고유한 url
-
+			if(num === 1 ){
+  
+			}
                 switch(num){
                     case 1: $("#titleImg").attr("src", e.target.result); break;
                     case 2: $("#contentImg1").attr("src", e.target.result); break;
@@ -812,6 +822,7 @@ geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function
                 }
                 
             } else { //선택된 파일이 취소된 경우 => 미리보기 본것도 사라지게
+            	
             switch(num){
                     case 1: $("#titleImg").attr("src", null); break;
                     case 2: $("#contentImg1").attr("src", null); break;
@@ -826,6 +837,56 @@ geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function
             }
         }
     }
+    
+  
+
+$("#insertCar").on("submit", function() {
+ 
+	// event.preventDefault(); // 기본 동작 방지
+	
+  const $verifyName = $("input[name=verifyName]");
+  const $verifyContent = $("textarea[name=verifyContent]");
+  const $verifyNotice = $("textarea[name=verifyNotice]");
+  const $verifyAddress = $("input[name=verifyAddress]");
+  const $file1 = $("#myFile1");
+  const $file2 = $("#contentImg1");
+  const $file3 = $("#contentImg2");
+  const $file4 = $("#contentImg3");
+  const $file5 = $("#contentImg4");
+  
+  if ($verifyName.val() === '') {
+	  alert('제목을 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($verifyContent.val() === '') {
+	  alert('차박정보 내용을 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($verifyNotice.val() === '') {
+	  alert('유의사항을 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($verifyAddress.val() === undefined ||$verifyAddress.val() === '' ) {
+	  alert('주소를 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($file1.attr('src') == undefined || $file1.attr('src') == '' || $file1.attr('src') == 'resources/img/click.png') {
+	  alert('메인 이미지를 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($file2.attr('src') == undefined || $file2.attr('src') === '') {
+	  alert('첫번째 서브 이미지를 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($file3.attr('src') == undefined || $file3.attr('src') === '') {
+	  alert('두번째 서브 이미지를 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($file4.attr('src') == undefined || $file4.attr('src') === '') {
+	  alert('세번째 서브 이미지를 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($file5.attr('src') == undefined || $file5.attr('src') === '') {
+	  alert('네번째 서브 이미지를 확인해주세요.');
+	  return false; // form submit 방지
+	} else {
+	  alert("제출 완료되었습니다.");
+	  return true;
+	  //$("#insertCar").submit();
+	}
+})
 
 </script>
 

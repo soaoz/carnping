@@ -2,12 +2,12 @@ package com.kh.carnping.car.model.service;
 
 import java.util.ArrayList;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
+import com.kh.carnping.car.model.vo.Verify;
+import com.kh.carnping.car.model.vo.VerifyImg;
 
 public interface CarService {
 	
@@ -52,5 +52,11 @@ public interface CarService {
 	
 	// 리뷰 체크
 	int reviewCheck(String memNo, String cinfoNo);
+	
+	// 차박 등록
+	int insertCar(Verify verify);
+	
+	// 차박 이미지 등록
+	int insertCarImg(VerifyImg verifyImg);
 	
 }

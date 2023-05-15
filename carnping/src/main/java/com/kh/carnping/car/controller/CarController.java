@@ -17,6 +17,8 @@ import com.kh.carnping.car.model.service.CarServiceImpl;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
+import com.kh.carnping.car.model.vo.Verify;
+import com.kh.carnping.car.model.vo.VerifyImg;
 import com.kh.carnping.common.template.SaveFile;
 
 @Controller
@@ -70,14 +72,14 @@ public class CarController {
 		return "car/carDetail";
 	}
 	
-	// 리뷰 체크
-		@ResponseBody
-		@RequestMapping(value = "reviewCheck.ca", produces = "application/json;charset=utf-8")
-		public String reviewCheck(String memNo, String cinfoNo) {
-			int result = cService.reviewCheck(memNo, cinfoNo);
-			System.out.println(result);
-			return new Gson().toJson(result);
-		}
+// 리뷰 체크
+	@ResponseBody
+	@RequestMapping(value = "reviewCheck.ca", produces = "application/json;charset=utf-8")
+	public String reviewCheck(String memNo, String cinfoNo) {
+		int result = cService.reviewCheck(memNo, cinfoNo);
+		System.out.println(result);
+		return new Gson().toJson(result);
+	}
 		
 	// 리뷰 리스트
 	@ResponseBody
@@ -161,5 +163,57 @@ public class CarController {
 	@RequestMapping("insertCarEnroll.ca")
 	public String insertCarEnroll(){
 		return "car/insertCar";
+	}
+	
+	// 차박 등록 
+	@RequestMapping(value = "insertCar.ca")
+	public String insertCar(Verify verify, MultipartFile[] upfile, Model model,HttpSession session){
+		VerifyImg verifyImg = new VerifyImg();
+		String verifyDay = verify.getVerifyDay().split(",");
+		for(int i = 0; i <= upfile.length; i++) {
+			if(!upfile[i].getOriginalFilename().equals("")) {
+				String changeName = new SaveFile().carFile(upfile[i], session);
+				switch (i) {
+			      case 0:
+			        verifyImg.setVerifyImg1("resources/img/carImg/" + changeName);
+			        break;
+			      case 1:
+			        verifyImg.setVerifyImg2("resources/img/carImg/" + changeName);
+			        break;
+			      case 2:
+			        verifyImg.setVerifyImg3("resources/img/carImg/" + changeName);
+			        break;
+			      case 3:
+			    	  verifyImg.setVerifyImg4("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 4:
+			    	  verifyImg.setVerifyImg5("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 5:
+			    	  verifyImg.setVerifyImg6("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 6:
+			    	  verifyImg.setVerifyImg7("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 7:
+			    	  verifyImg.setVerifyImg8("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 8:
+			    	  verifyImg.setVerifyImg9("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 9:
+			    	  verifyImg.setVerifyImg10("resources/img/carImg/" + changeName);
+			    	  break;
+			      default:
+			        break;
+			    }
+			}
+		}
+		
+		int result = cService.insertCar(verify);
+		int result = cService.insertCarImg(verifyImg);
+	
+		
+		return "main";
 	}
 }

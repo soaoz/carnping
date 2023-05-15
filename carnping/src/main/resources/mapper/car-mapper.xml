@@ -67,17 +67,17 @@
 	<resultMap type="Verify" id="verifyResultMap">
 		<result column="VERIFY_NO" property="verifyNo"/>	
 		<result column="VERIFY_NAME" property="verifyName"/>	
-		<result column="VERIFY_CONTENT" property="verifyText"/>	
-		<result column="VERIFY_NOTICE" property="verifyContent"/>	
-		<result column="VERIFY_LTTD" property="verifyNotice"/>	
-		<result column="VERIFY_HRDNS" property="verifyLttd"/>	
-		<result column="VERIFY_STATUS" property="verifyHrdns"/>	
-		<result column="VERIFY_ADDRESS" property="verifyStatus"/>	
-		<result column="VERIFY_FACILITIES" property="verifyAddress"/>	
-		<result column="VERIFY_DAYS" property="verifyFacilities"/>	
-		<result column="VERIFY_TAG" property="verifyDays"/>	
-		<result column="VERIFY_MODIFIED" property="verifyTag"/>	
-		<result column="VERIFY_RGSTR_DATE" property="verifyDate"/>	
+		<result column="VERIFY_CONTENT" property="verifyContent"/>	
+		<result column="VERIFY_NOTICE" property="verifyNotice"/>	
+		<result column="VERIFY_LTTD" property="verifyLttd"/>	
+		<result column="VERIFY_HRDNS" property="verifyHrdns"/>	
+		<result column="VERIFY_STATUS" property="verifyStatus"/>	
+		<result column="VERIFY_ADDRESS" property="verifyAddress"/>	
+		<result column="VERIFY_FACILITIES" property="verifyFacilities"/>	
+		<result column="VERIFY_DAYS" property="verifyDays"/>	
+		<result column="VERIFY_TAG" property="verifyTag"/>	
+		<result column="VERIFY_MODIFIED" property="verifyModified"/>	
+		<result column="VERIFY_RGSTR_DATE" property="verifyRgstrDate"/>	
 		<result column="VERIFY_REASON" property="verifyReason"/>	
 		<result column="MEM_NO" property="memNo"/>	
 	</resultMap>
@@ -334,6 +334,79 @@
 		 WHERE REVIEW_NO = #{reNo}
 	</update>
 	
+	<insert>
+		INSERT
+		  INTO 
+		  		VERIFY
+		  		(
+		  		VERIFY_NO
+				,VERIFY_NAME
+				,VERIFY_CONTENT
+				,VERIFY_NOTICE
+				,VERIFY_LTTD
+				,VERIFY_HRDNS
+				,VERIFY_STATUS
+				,VERIFY_ADDRESS
+				,VERIFY_FACILITIES
+				,VERIFY_DAYS
+				,VERIFY_TAG
+				,VERIFY_MODIFIED
+				,VERIFY_RGSTR_DATE
+				,VERIFY_REASON
+				,MEM_NO
+		  		)
+		VALUES	
+				(
+				  'VER'||SEQ_VER_NO.NEXTVAL
+				, #{verifyNo}
+				, #{verifyName}
+				, #{verifyContent}
+				, #{verifyNotice}
+				, #{verifyLttd}
+				, #{verifyHrdns}
+				, 'T'
+				, #{verifyAddress}
+				, #{verifyFacilities}
+				, #{verifyDays}
+				, #{verifyTag}
+				, SYSDATE
+				, SYSDATE
+				, #{memNo}
+				)
+	</insert>
+	
+	<insert>
+	 	INSERT 
+	 	  INTO
+	 			VERIFY_IMG
+	 			(
+	 			VERIFY_NO
+				,VERIFY_IMG1
+				,VERIFY_IMG2
+				,VERIFY_IMG3
+				,VERIFY_IMG4
+				,VERIFY_IMG5
+				,VERIFY_IMG6
+				,VERIFY_IMG7
+				,VERIFY_IMG8
+				,VERIFY_IMG9
+				,VERIFY_IMG10
+	 			)
+	 	VALUES
+	 			(
+	 			'VER'||(select Last_number-1 VER from user_sequences where sequence_name='SEQ_VER_NO')
+	 			, #{verifyImg1}
+	 			, #{verifyImg2}
+	 			, #{verifyImg3}
+	 			, #{verifyImg4}
+	 			, #{verifyImg5}
+	 			, #{verifyImg6}
+	 			, #{verifyImg7}
+	 			, #{verifyImg8}
+	 			, #{verifyImg9}
+	 			, #{verifyImg10}
+	 			)
+	</insert>
 	<!-- 소영 : 내가쓴 차박지목록 페이징을 위한 갯수조회-->
 	<select id="selectMyCarListCount" resultType="_int">
 		SELECT
@@ -407,5 +480,7 @@
             AND L.MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
             AND LIKE_STATUS = 'Y'
 	</select>
+	
+	
 	
 </mapper>
