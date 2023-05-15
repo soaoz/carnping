@@ -1,6 +1,7 @@
 package com.kh.carnping.car.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
@@ -59,4 +60,9 @@ public interface CarService {
 	// 차박 이미지 등록
 	int insertCarImg(VerifyImg verifyImg);
 	
+	// 요청 중복 체크
+	int checkRequest(String loginMember);
+	
+	// 차박 정보 삭제 요청
+	int deleteRequest(HashMap<String, Object> map);
 }

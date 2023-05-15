@@ -99,6 +99,18 @@ public class CarDao {
 	public int insertCarImg(SqlSessionTemplate sqlSession, VerifyImg verifyImg) {
 		return sqlSession.insert("carMapper.insertCarImg", verifyImg);
 	}
+
+	public int checkRequest(SqlSessionTemplate sqlSession, String loginMember) {
+		return sqlSession.selectOne("carMapper.checkRequest", loginMember);
+	}
+
+	public int deleteRequest(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		int result1 = sqlSession.insert("carMapper.deleteRequest", map);
+		int result2 = sqlSession.insert("carMapper.deleteImgRequest", map);
+		return result1 * result2;
+	}
+
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.kh.carnping.car.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,16 @@ public class CarServiceImpl implements CarService{
 	@Override
 	public int insertCarImg(VerifyImg verifyImg) {
 		return cDao.insertCarImg(sqlSession, verifyImg);
+	}
+
+	@Override
+	public int checkRequest(String loginMember) {
+		return cDao.checkRequest(sqlSession, loginMember);
+	}
+
+	@Override
+	public int deleteRequest(HashMap<String, Object> map) {
+		return cDao.deleteRequest(sqlSession, map);
 	}
 	
 	

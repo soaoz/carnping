@@ -616,12 +616,14 @@ to {
 							</ul>
 						</div>
 						<br>
+						<c:if test="${ loginMember != null }">
 						<div class="listing__sidebar__working__hours">
 							<div align="center">
+							<button class="btn" onclick="deleteRequest();">삭제요청</button>
 							<button class="primary-btn btn" >수정요청</button>
 							</div>
-							
 						</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -934,7 +936,8 @@ async function reviewInsertComment(reviewNo){
 				await commentScroll(reviewNo);
 				console.log("commentScroller 종료")
 			}else{
-				alert("리뷰댓글작성에 실패하셨습니다. 관리자에게 문의해주세요.");				
+				alert("리뷰댓글작성에 실패하셨습니다. 관리자에게 문의해주세요.");		
+				
 			}
 		}
 	})
@@ -1012,6 +1015,44 @@ $("#insertReview").on("submit", function(){
 	}
 	
 })
+function updateSDRequest(){
+	let result = prompt("삭제 사유를 말씀해주세요.","");
+	let cinfo[] = {
+			cinfoNo:"${cinfo.cinfoNo}",
+			cinfoName:"${cinfo.cinfoName}",
+			cinfoContent:"${cinfo.cinfoContent}",
+			cinfoNotice:"${cinfo.cinfoNotice}",
+			cinfoLttd:"${cinfo.cinfoLttd}",
+			cinfoHrdns:"${cinfo.cinfoHrdns}",
+			cinfoStatus:"${cinfo.cinfoStatus}",
+			cinfoAddress:"${cinfo.cinfoAddress}",
+			cinfoFacilities:"${cinfo.cinfoFacilities}",
+			cinfoDays:"${cinfo.cinfoDays}",
+			cinfoTag:"${cinfo.cinfoTag}",
+			cinfoImg1:"${cinfo.cinfoImg1}",
+			cinfoImg2:"${cinfo.cinfoImg2}",
+			cinfoImg3:"${cinfo.cinfoImg3}",
+			cinfoImg4:"${cinfo.cinfoImg4}",
+			cinfoImg5:"${cinfo.cinfoImg5}",
+			cinfoImg6:"${cinfo.cinfoImg6}",
+			cinfoImg7:"${cinfo.cinfoImg7}",
+			cinfoImg8:"${cinfo.cinfoImg8}",
+			cinfoImg9:"${cinfo.cinfoImg9}",
+			cinfoImg10:"${cinfo.cinfoImg10}"
+		
+	}
+	$.ajax({
+		url : "deleteRequest.ca", 
+		data : {
+			cinfo : cinfo
+			,result : result
+			,loginMember : '${loginMember.memNo}'}, 
+		success : function(re){
+			alert(re);
+		}
+	})
+	
+}
 </script>
 
 </body>

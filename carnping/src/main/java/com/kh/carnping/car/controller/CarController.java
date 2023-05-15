@@ -1,6 +1,7 @@
 package com.kh.carnping.car.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.service.CarServiceImpl;
 import com.kh.carnping.car.model.vo.Cinfo;
+import com.kh.carnping.car.model.vo.CinfoImg;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
 import com.kh.carnping.car.model.vo.Verify;
@@ -169,8 +171,17 @@ public class CarController {
 	@RequestMapping(value = "insertCar.ca")
 	public String insertCar(Verify verify, MultipartFile[] upfile, Model model,HttpSession session){
 		VerifyImg verifyImg = new VerifyImg();
-		String verifyDay = verify.getVerifyDay().split(",");
-		for(int i = 0; i <= upfile.length; i++) {
+		
+		String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
+		String verifyDay = String.join(",", verify.getVerifyDay());
+		String verifyTags = String.join(",", verify.getVerifyTags());
+
+		verify.setVerifyDays(verifyDay);
+		verify.setVerifyFacilities(verifyFacilitie);
+		verify.setVerifyTag(verifyTags);
+		System.out.println(verify);
+		System.out.println(upfile.length);
+		for(int i = 0; i < upfile.length; i++) {
 			if(!upfile[i].getOriginalFilename().equals("")) {
 				String changeName = new SaveFile().carFile(upfile[i], session);
 				switch (i) {
@@ -210,10 +221,35 @@ public class CarController {
 			}
 		}
 		
-		int result = cService.insertCar(verify);
-		int result = cService.insertCarImg(verifyImg);
-	
+		int result1 = cService.insertCar(verify);
+		int result2 = cService.insertCarImg(verifyImg);
+		System.out.println(result1);
+		System.out.println(result2);
 		
 		return "main";
+	}
+	
+	// 차박 삭제 요청
+	@ResponseBody
+	@RequestMapping(value = "deleteRequest.ca", produces = "application/json;charset=utf-8")
+	public String deleteRequest(Cinfo cinfo, String result, String loginMember, Model model){
+		int count = cService.checkRequest(loginMember);
+		int rs = 0;
+		System.out.println(cinfo);
+		if(count > 0) {
+			return new Gson().toJson("이미 삭제, 수정, 등록이 요청되어있는 아이디입니다.");
+		}else {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("cinfo", cinfo);
+			map.put("result", result);
+			map.put("loginMember", loginMember);
+			
+			rs = cService.deleteRequest(map);
+			if(rs > 0) {
+				return  new Gson().toJson("삭제요청이 완료되어있습니다.");
+			}else {
+				return  new Gson().toJson("삭제요청도중 오류발생");
+			}
+		}
 	}
 }

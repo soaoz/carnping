@@ -96,6 +96,7 @@
 		<result column="VERIFY_IMG10" property="verifyImg10"/>	
 	</resultMap>	
 
+	<!-- 차박 정보 리스트 -->
 	<select id="carList" resultMap="cinfoResultMap">
 		SELECT  CINFO_NO
 		        ,CINFO_NAME
@@ -117,6 +118,7 @@
 		 WHERE CINFO_STATUS ='Y'
 	</select> 
 	
+	<!-- 차박 필터 후 리스트 -->
 	<select id="filterList" resultMap="cinfoResultMap">
 		SELECT  CINFO_NO
 		        ,CINFO_NAME
@@ -162,9 +164,9 @@
 				ORDER BY CINFO_NAME
 			</when>
 		</choose>
-		
 	</select> 
 
+	<!-- 차박 상세 정보 -->
 	<select id="selectDetail" resultMap="cinfoResultMap">
 		SELECT  CINFO_NO
 				,CINFO_NAME
@@ -198,7 +200,8 @@
 		 WHERE CINFO_STATUS ='Y'
 		   AND CINFO_NO = #{cinfoNo}
 	</select>
-
+	
+	<!-- 리뷰 정보 -->
 	<select id="selectReview" resultMap="reviewResultMap">
 		SELECT    REVIEW_NO
 				, CINFO_NO
@@ -221,6 +224,7 @@
 		   AND  REVIEW_STATUS = 'Y'
 	</select>
 	
+	<!-- 리뷰 카운터 정보 -->
 	<select id="selectReviewCount" resultMap="reviewResultMap">
 		SELECT 
 		        COUNT(*) COUNT
@@ -235,6 +239,7 @@
 		 	BY  CINFO_NO
 	</select>
 
+	<!-- 리뷰 댓글 정보 -->
 	<select id="selectReviewComment" resultMap="commentResultMap">
 		SELECT 
 				  RE_NO
@@ -250,6 +255,7 @@
 		    BY CREATE_DATE DESC
 	</select>
 	
+	<!-- 리뷰 좋아요 체크 -->
 	<select id="reviewLikeCheck" resultType="_int">
 		SELECT COUNT(*) 
 		  FROM REVIEW_LIKE 
@@ -257,24 +263,28 @@
 		   AND MEM_NO = #{memNo}
 	</select>
 	
+	<!-- 리뷰 좋아요 COUNT - -->
 	<update id="reviewNoLike">
 		UPDATE REVIEW
 		   SET REVIEW_LIKE = REVIEW_LIKE-1
 		 WHERE REVIEW_NO = #{reNo}
 	</update>
 	
+	<!-- 리뷰 좋아요 COUNT ++ -->
 	<update id="reviewLike">
 		UPDATE REVIEW
 		   SET REVIEW_LIKE = REVIEW_LIKE+1
 		 WHERE REVIEW_NO = #{reNo}
 	</update>
 	
+	<!-- 리뷰 좋아요 삭제 -->
 	<delete id="deleteReviewLike">
 		DELETE FROM REVIEW_LIKE
 		 WHERE REVIEW_NO = #{reNo}
 		   AND MEM_NO = #{memNo}
 	</delete>
 	
+	<!-- 리뷰 좋아요 테이블 생성 -->
 	<insert id="insertReviewLike">
 		INSERT 
 		  INTO
@@ -285,6 +295,7 @@
 				)
 	</insert>
 	
+	<!-- 리뷰 코멘트 등록 -->
 	<insert id="insertComment">
 		INSERT 
 		  INTO
@@ -300,6 +311,7 @@
 		
 	</insert>
 	
+	<!--  리뷰 등록  -->
 	<insert id="insertReview">
 		INSERT
 		  INTO 
@@ -320,6 +332,7 @@
 				)
 	</insert>
 	
+	<!-- 리뷰 체크 -->
 	<select id="reviewCheck" resultType="_int">
 		SELECT 
 				COUNT(*)
@@ -328,13 +341,15 @@
 	       AND  MEM_NO = #{memNo}
 	</select>
 	
+	<!-- 리뷰 삭제 -->
 	<update id="deleteReview">
 		UPDATE REVIEW
 		   SET REVIEW_STATUS = 'N'
 		 WHERE REVIEW_NO = #{reNo}
 	</update>
 	
-	<insert>
+	<!-- 차박 등록 -->
+	<insert id="insertCar">
 		INSERT
 		  INTO 
 		  		VERIFY
@@ -358,7 +373,6 @@
 		VALUES	
 				(
 				  'VER'||SEQ_VER_NO.NEXTVAL
-				, #{verifyNo}
 				, #{verifyName}
 				, #{verifyContent}
 				, #{verifyNotice}
@@ -371,11 +385,13 @@
 				, #{verifyTag}
 				, SYSDATE
 				, SYSDATE
+				, 'null'
 				, #{memNo}
 				)
 	</insert>
 	
-	<insert>
+	<!--  차박 이미지 등록 -->
+	<insert id="insertCarImg">
 	 	INSERT 
 	 	  INTO
 	 			VERIFY_IMG
@@ -407,6 +423,98 @@
 	 			, #{verifyImg10}
 	 			)
 	</insert>
+
+	<insert id="deleteRequest">
+	INSERT
+		  INTO 
+		  		VERIFY
+		  		(
+		  		VERIFY_NO
+				,VERIFY_NAME
+				,VERIFY_CONTENT
+				,VERIFY_NOTICE
+				,VERIFY_LTTD
+				,VERIFY_HRDNS
+				,VERIFY_STATUS
+				,VERIFY_ADDRESS
+				,VERIFY_FACILITIES
+				,VERIFY_DAYS
+				,VERIFY_TAG
+				,VERIFY_MODIFIED
+				,VERIFY_RGSTR_DATE
+				,VERIFY_REASON
+				,MEM_NO
+		  		)
+		VALUES	
+				(
+				  'VER'||SEQ_VER_NO.NEXTVAL
+				, #{cinfo.cinfoName}
+				, #{cinfo.cinfoContent}
+				, #{cinfo.cinfoNotice}
+				, #{cinfo.cinfoLttd}
+				, #{cinfo.cinfoHrdns}
+				, 'D'
+				, #{cinfo.cinfoAddress}
+				, #{cinfo.cinfoFacilities}
+				, #{cinfo.cinfoDays}
+				, #{cinfo.cinfoTag}
+				, SYSDATE
+				, SYSDATE
+				, #{result}
+				, #{loginMember}
+				)
+	
+	</insert>
+	<insert id="deleteImgRequest">
+	 	INSERT 
+	 	  INTO
+	 			VERIFY_IMG
+	 			(
+	 			VERIFY_NO
+				,VERIFY_IMG1
+				,VERIFY_IMG2
+				,VERIFY_IMG3
+				,VERIFY_IMG4
+				,VERIFY_IMG5
+				,VERIFY_IMG6
+				,VERIFY_IMG7
+				,VERIFY_IMG8
+				,VERIFY_IMG9
+				,VERIFY_IMG10
+	 			)
+	 	VALUES
+	 			(
+	 			'VER'||(select Last_number-1 VER from user_sequences where sequence_name='SEQ_VER_NO')
+	 			, #{cinfo.cinfoImg1}
+	 			, #{cinfo.cinfoImg2}
+	 			, #{cinfo.cinfoImg3}
+	 			, #{cinfo.cinfoImg4}
+	 			, #{cinfo.cinfoImg5}
+	 			, #{cinfo.cinfoImg6}
+	 			, #{cinfo.cinfoImg7}
+	 			, #{cinfo.cinfoImg8}
+	 			, #{cinfo.cinfoImg9}
+	 			, #{cinfo.cinfoImg10}
+	 			)
+	</insert>
+	
+	<!-- 요청 중복 체크 --> 
+	<select id="checkRequest" resultType="_int">
+		SELECT 
+				COUNT(*)
+		  FROM  VERIFY
+		 WHERE  MEM_NO = #{loginMember}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 소영 : 내가쓴 차박지목록 페이징을 위한 갯수조회-->
 	<select id="selectMyCarListCount" resultType="_int">
 		SELECT
