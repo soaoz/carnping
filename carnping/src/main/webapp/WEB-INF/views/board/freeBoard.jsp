@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -21,11 +21,25 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-
+<style>
+	.header_back {
+        width: 100%;
+        height: 105px;
+        background-color: white;
+    }
+</style>
 </head>
 <body class="ov-hid">
 	
-	<jsp:include page="../common/header.jsp"/>
+	<header class="header header--normal">
+
+
+	    <div class="header_back">
+	        <jsp:include page="../common/header.jsp" />
+	    </div>
+
+
+	</header>
 
     
 
@@ -87,7 +101,7 @@
                         		${ b.boardTitle }</h5>
                         <div class="listing__item__text__rating">
                            
-                            <h6>${ b.memId }</h6>
+                            <h6>${ b.memNo }</h6>
                         </div>
                         <ul>
                             <li><span class="icon_pin_alt"></span>${ b.location }</li>
@@ -105,6 +119,8 @@
     </section>
     <!-- Listing Section End -->
     
+    	
+    
     <script>
   	 	$(function(){
   	 		$(".listing__item__text__inside>h5").click(function(){
@@ -113,8 +129,10 @@
   	 	})
   	 	
   	 	function freeBoardInsert(){
-  	 		location.href = 'enrollForm.bo';
+  	 		location.href = 'enrollFreeBoardForm.bo';
   	 	}
+  	 	
+  	 	
     </script>
     
     
