@@ -110,6 +110,15 @@ public class CarDao {
 		return result1 * result2;
 	}
 
+	public int updateCarRequest(SqlSessionTemplate sqlSession, Verify verify) {
+		return sqlSession.insert("carMapper.updateCarRequest", verify);
+	}
+
+	public int updateCarImgRequest(SqlSessionTemplate sqlSession, VerifyImg verifyImg) {
+		return sqlSession.insert("carMapper.updateCarImgRequest");
+	}
+
+
 	
 	
 	

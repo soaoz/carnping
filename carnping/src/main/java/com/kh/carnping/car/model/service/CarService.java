@@ -65,4 +65,12 @@ public interface CarService {
 	
 	// 차박 정보 삭제 요청
 	int deleteRequest(HashMap<String, Object> map);
+	
+	// 차박 정보 수정
+	int updateCarRequest(Verify verify);
+	
+	// 차박 정보 수정 Img
+	int updateCarImgRequest(VerifyImg verifyImg);
+	
+	
 }

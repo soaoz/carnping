@@ -28,6 +28,7 @@ public class Verify {
 	private String verifyRgstrDate;		// 검수 요청일
 	private String verifyReason;	// 사유
 	private String memNo;			// 회원번호
+	private String cinfoNo;
 	
 	private String[] verifyFacilitie;// 편의시설
 	private String[] verifyDay; 		// 영업일
