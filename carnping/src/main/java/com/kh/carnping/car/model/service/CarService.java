@@ -1,13 +1,14 @@
 package com.kh.carnping.car.model.service;
 
 import java.util.ArrayList;
-
-import org.springframework.web.multipart.MultipartFile;
+import java.util.HashMap;
 
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
+import com.kh.carnping.car.model.vo.Verify;
+import com.kh.carnping.car.model.vo.VerifyImg;
 
 public interface CarService {
 	
@@ -26,6 +27,9 @@ public interface CarService {
 	// 리뷰 등록
 	int insertReview(Review review);
 	
+	// 리뷰 삭제
+	int deleteReview(String reNo);
+
 	// 리뷰 카운터 정보
 	Review selectReviewCount(String cinfoNo);
 	
@@ -49,4 +53,16 @@ public interface CarService {
 	
 	// 리뷰 체크
 	int reviewCheck(String memNo, String cinfoNo);
+	
+	// 차박 등록
+	int insertCar(Verify verify);
+	
+	// 차박 이미지 등록
+	int insertCarImg(VerifyImg verifyImg);
+	
+	// 요청 중복 체크
+	int checkRequest(String loginMember);
+	
+	// 차박 정보 삭제 요청
+	int deleteRequest(HashMap<String, Object> map);
 }

@@ -202,13 +202,14 @@
                                 </ul>
                             </nav>
                             <div class="header__menu__right" style="display:inline-flex">
-                                <a href="#" class="primary-btn" id="addSite" style="line-height: 27px; margin-right:35px;"><i class="fa fa-plus"></i>나만의 차박지 등록</a>
                              	<c:choose>
-            				<c:when test="${ empty loginMember }">
-                                <a href="loginForm.me" class="primary-btn" id="loginBtn" >로그인</a>
-                            </c:when>
-                            <c:otherwise>
+		            				<c:when test="${ empty loginMember }">
+		                                <button type="button" onclick="alert('로그인후 이용바랍니다.');" class="primary-btn btn" id="addSite" style="line-height: 27px; margin-right:35px;"><i class="fa fa-plus"></i>나만의 차박지 등록</button>
+		                                <a href="loginForm.me" class="primary-btn" id="loginBtn" >로그인</a>
+		                            </c:when>
+		                            <c:otherwise>
                                 <!-- 로그인 후 -->
+		                                <a href="insertCarEnroll.ca" class="primary-btn" id="addSite" style="line-height: 27px; margin-right:35px;"><i class="fa fa-plus"></i>나만의 차박지 등록</a>
                                 <div class="loggedin" style="width: 225px; display:flex; margin-right: 40px;">
                                     
                                     
@@ -436,6 +437,8 @@
     	<c:if test="${ not empty alertMsg }">
 	<script>
 		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>
+		
+
 	</script>
 	<c:remove var="alertMsg" scope="session"/>
 	</c:if>

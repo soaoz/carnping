@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.carnping.admin.model.service.AdminServiceImpl;
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Report;
 
 @Controller
 public class AdminController {
@@ -54,9 +55,29 @@ public class AdminController {
 	 * 신고 및 정지관리로 이동
 	 */
 	@RequestMapping("memReport.ad")
-	public String memReport() {
-		return "admin/memReport";
+	public String memReport(Model model) {
+		ArrayList<Member> list = aService.reportMem();
+		ArrayList<Report> reportList = new ArrayList<>();
+	    if (!list.isEmpty()) {
+	        for (Member member : list) {
+	            ArrayList<Report> memberReportList = aService.reportDetail(member.getReportedMemNo());
+	            reportList.addAll(memberReportList);
+	        }
+	    }
+		
+		
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+			model.addAttribute("reportList", reportList);
+			return "admin/memReport";
+		}else {
+			model.addAttribute("errorMsg", "회원이 없습니다.");
+			return "admin/memReport";
+		}
+		
+
 	}
+
 	
 	/**
 	 * 차박게시글 관리로 이동
@@ -159,7 +180,6 @@ public class AdminController {
 	public String memDelete(Member m, String memNo, HttpSession session) {
 		m.setMemNo(memNo);
 		int result = aService.deleteMember(m);
-		System.out.println(result);
         if(result >0){
         	return "success";
         }else{
@@ -167,6 +187,12 @@ public class AdminController {
         }
 	}
 	
+	/**
+	 * 관리자 - 회원 수정
+	 * @param memNo
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("memEdit.ad")
 	public String memEdit(String memNo, Model model) {
 		Member m = aService.selectMember(memNo);
@@ -175,6 +201,58 @@ public class AdminController {
 		return "admin/memEdit";
 
 	}
+	
+	
+	/**
+	 * 관리자 - 회원 정지
+	 * @param memNo
+	 * @param flag
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("memSuspend.ad")
+	public String memSuspend( String memNo, String flag, HttpSession session) {
+		int result = 0;
+		System.out.println(flag);
+		System.out.println(memNo);
+
+		if(flag.equals("1")) {
+			result = aService.suspendMember1(memNo);
+		} else if(flag.equals("2")) {
+			result = aService.suspendMember2(memNo);
+		} else 	if(flag.equals("3")) {
+			
+			result = aService.suspendMember3(memNo);
+		} else {
+			result = aService.banMember(memNo);
+		}
+		
+		if (result > 0) { // 성공 => 메인페이지 url 재요청! 알람창
+			
+			session.setAttribute("alertMsg", "신고 회원 정보 수정 성공");
+		} else { // 실패 => 에러 문구 담아서 에러페이지 포워딩
+			session.setAttribute("alertMsg", "회원 정보 수정 실패");
+		}
+		return "redirect:memReport.ad";
+		
+	}
+	
+	@RequestMapping("memRecover.ad")
+	public String memRecover( String memNo,HttpSession session) {
+		int result = aService.memRecover(memNo);
+
+		
+		if (result > 0) { // 성공 => 메인페이지 url 재요청! 알람창
+			
+			session.setAttribute("alertMsg", "신고 회원 정보 수정 성공");
+		} else { // 실패 => 에러 문구 담아서 에러페이지 포워딩
+			session.setAttribute("alertMsg", "회원 정보 수정 실패");
+		}
+		return "redirect:memReport.ad";
+		
+	}
+	
+	
 	
 	// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할 
 	public String saveMemImg(MultipartFile memImg, HttpSession session) {

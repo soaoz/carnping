@@ -1,6 +1,7 @@
 package com.kh.carnping.car.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +16,11 @@ import com.google.gson.Gson;
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.service.CarServiceImpl;
 import com.kh.carnping.car.model.vo.Cinfo;
+import com.kh.carnping.car.model.vo.CinfoImg;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
+import com.kh.carnping.car.model.vo.Verify;
+import com.kh.carnping.car.model.vo.VerifyImg;
 import com.kh.carnping.common.template.SaveFile;
 
 @Controller
@@ -69,7 +73,16 @@ public class CarController {
 		model.addAttribute("reCount", reCount);
 		return "car/carDetail";
 	}
-
+	
+// 리뷰 체크
+	@ResponseBody
+	@RequestMapping(value = "reviewCheck.ca", produces = "application/json;charset=utf-8")
+	public String reviewCheck(String memNo, String cinfoNo) {
+		int result = cService.reviewCheck(memNo, cinfoNo);
+		System.out.println(result);
+		return new Gson().toJson(result);
+	}
+		
 	// 리뷰 리스트
 	@ResponseBody
 	@RequestMapping(value = "selectReview.ca", produces = "application/json; charset=utf-8")
@@ -94,9 +107,16 @@ public class CarController {
 			}
 		}
 		int result = cService.insertReview(review);
-		return "redirect:detail.ca?cinfoNo=CAR1";
+		return "redirect:detail.ca?cinfoNo="+review.getReviewNo();
 	}
 	
+	//리뷰 삭제
+	@ResponseBody
+	@RequestMapping(value = "deleteReview.ca", produces = "application/json;charset=utf-8")
+	public String deleteReview(String reNo) {
+		int result = cService.deleteReview(reNo);
+		return new Gson().toJson(result);
+	}
 
 	// 리뷰 댓글 리스트
 	@ResponseBody
@@ -141,13 +161,95 @@ public class CarController {
 		return new Gson().toJson(result);
 	}
 	
-	// 리뷰 체크
-	@ResponseBody
-	@RequestMapping(value = "reviewCheck.ca", produces = "application/json;charset=utf-8")
-	public String reviewCheck(String memNo, String cinfoNo) {
-		int result = cService.reviewCheck(memNo, cinfoNo);
-		System.out.println(result);
-		return new Gson().toJson(result);
+	// 차박지 등록으로 이동
+	@RequestMapping("insertCarEnroll.ca")
+	public String insertCarEnroll(){
+		return "car/insertCar";
 	}
 	
+	// 차박 등록 
+	@RequestMapping(value = "insertCar.ca")
+	public String insertCar(Verify verify, MultipartFile[] upfile, Model model,HttpSession session){
+		VerifyImg verifyImg = new VerifyImg();
+		
+		String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
+		String verifyDay = String.join(",", verify.getVerifyDay());
+		String verifyTags = String.join(",", verify.getVerifyTags());
+
+		verify.setVerifyDays(verifyDay);
+		verify.setVerifyFacilities(verifyFacilitie);
+		verify.setVerifyTag(verifyTags);
+		System.out.println(verify);
+		System.out.println(upfile.length);
+		for(int i = 0; i < upfile.length; i++) {
+			if(!upfile[i].getOriginalFilename().equals("")) {
+				String changeName = new SaveFile().carFile(upfile[i], session);
+				switch (i) {
+			      case 0:
+			        verifyImg.setVerifyImg1("resources/img/carImg/" + changeName);
+			        break;
+			      case 1:
+			        verifyImg.setVerifyImg2("resources/img/carImg/" + changeName);
+			        break;
+			      case 2:
+			        verifyImg.setVerifyImg3("resources/img/carImg/" + changeName);
+			        break;
+			      case 3:
+			    	  verifyImg.setVerifyImg4("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 4:
+			    	  verifyImg.setVerifyImg5("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 5:
+			    	  verifyImg.setVerifyImg6("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 6:
+			    	  verifyImg.setVerifyImg7("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 7:
+			    	  verifyImg.setVerifyImg8("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 8:
+			    	  verifyImg.setVerifyImg9("resources/img/carImg/" + changeName);
+			    	  break;
+			      case 9:
+			    	  verifyImg.setVerifyImg10("resources/img/carImg/" + changeName);
+			    	  break;
+			      default:
+			        break;
+			    }
+			}
+		}
+		
+		int result1 = cService.insertCar(verify);
+		int result2 = cService.insertCarImg(verifyImg);
+		System.out.println(result1);
+		System.out.println(result2);
+		
+		return "main";
+	}
+	
+	// 차박 삭제 요청
+	@ResponseBody
+	@RequestMapping(value = "deleteRequest.ca", produces = "application/json;charset=utf-8")
+	public String deleteRequest(Cinfo cinfo, String result, String loginMember, Model model){
+		int count = cService.checkRequest(loginMember);
+		int rs = 0;
+		System.out.println(cinfo);
+		if(count > 0) {
+			return new Gson().toJson("이미 삭제, 수정, 등록이 요청되어있는 아이디입니다.");
+		}else {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("cinfo", cinfo);
+			map.put("result", result);
+			map.put("loginMember", loginMember);
+			
+			rs = cService.deleteRequest(map);
+			if(rs > 0) {
+				return  new Gson().toJson("삭제요청이 완료되어있습니다.");
+			}else {
+				return  new Gson().toJson("삭제요청도중 오류발생");
+			}
+		}
+	}
 }

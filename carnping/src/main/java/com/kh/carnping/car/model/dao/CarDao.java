@@ -3,7 +3,6 @@ package com.kh.carnping.car.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +10,8 @@ import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
+import com.kh.carnping.car.model.vo.Verify;
+import com.kh.carnping.car.model.vo.VerifyImg;
 
 @Repository
 public class CarDao {
@@ -86,6 +87,30 @@ public class CarDao {
 		map.put("memNo", memNo);
 		return sqlSession.selectOne("carMapper.reviewCheck", map);
 	}
+
+	public int deleteReview(SqlSessionTemplate sqlSession, String reNo) {
+		return sqlSession.update("carMapper.updateReview", reNo);
+	}
+
+	public int insertCar(SqlSessionTemplate sqlSession, Verify verify) {
+		return sqlSession.insert("carMapper.insertCar", verify);
+	}
+
+	public int insertCarImg(SqlSessionTemplate sqlSession, VerifyImg verifyImg) {
+		return sqlSession.insert("carMapper.insertCarImg", verifyImg);
+	}
+
+	public int checkRequest(SqlSessionTemplate sqlSession, String loginMember) {
+		return sqlSession.selectOne("carMapper.checkRequest", loginMember);
+	}
+
+	public int deleteRequest(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		int result1 = sqlSession.insert("carMapper.deleteRequest", map);
+		int result2 = sqlSession.insert("carMapper.deleteImgRequest", map);
+		return result1 * result2;
+	}
+
+	
 	
 	
 	

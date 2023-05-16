@@ -19,12 +19,14 @@
 		<result column="PHONE" property="phone"/>
 		<result column="MEM_API_TYPE" property="memApiType"/>
 		<result column="MARKETING" property="marketing"/>
+		<result column="REPORT_COUNT" property="reportCount"/>
+		<result column="SUSPEND_COUNT" property="suspendCount"/>
+		<result column="REPORTED_MEM_NO" property="reportedMemNo"/>
 	</resultMap>
 
 	<resultMap id="memberReportResultSet" type="MemberReport">
 		<result column="REPORT_NO" property="reportNo"/>
 		<result column="REPORTED_MEM_NO" property="reportedMemNo"/>
-		<result column="REPORER_MEM_NO" property="reportMemNo"/>
 		<result column="REPORT_COUNT" property="reportCount"/>
 		<result column="SUSPEND_COUNT" property="suspendCount"/>
 	</resultMap>
@@ -47,6 +49,7 @@
 		<result column="REPORT_REFNO" property="reportRefNo"/>
 		<result column="REPORT_DATE" property="reportDate"/>
 		<result column="REPORT_DETAIL" property="reportDetail"/>
+		<result column="REPORTER_MEM_NO" property="reporterMemNo"/>
 	</resultMap>
 	
 	<resultMap id="chatResultSet" type="Chat">
@@ -286,7 +289,110 @@
 	 where mem_no = #{memNo}
 	</update>
 
-
+	<!-- 관리자 - 신고회원 리스트 조회 -->
+	<select  id="selectReportMemberList" resultMap="memberResultSet">
+	SELECT
+	         REPORTED_MEM_NO
+	        ,MEM_ID
+	        ,MEM_NAME
+	        ,NICKNAME
+	        ,EMAIL
+	        ,STATUS
+	        , MEM_IMG_ORIGIN
+	        , MEM_IMG_CHANGE
+	        ,MEM_API_TYPE
+	        ,REPORT_COUNT
+	        ,SUSPEND_COUNT
+	 FROM MEMBER_REPORT
+	 JOIN MEMBER ON(REPORTED_MEM_NO = MEM_NO)
+	 WHERE STATUS != 'N'
+	</select>
+	
+	<!-- 관리자 - 신고회원 상세내역 리스트 조회 -->
+	<select  id="selectReportDetailist" resultMap="reportResultSet">
+	SELECT
+	        REPORT_NO
+	        ,MEM_NO
+	        ,REPORT_REFNO
+	        ,REPORT_DATE
+	        ,REPORT_DETAIL
+	        ,REPORTER_MEM_NO
+	 FROM REPORT
+	 JOIN MEMBER_REPORT ON(REPORTED_MEM_NO = MEM_NO)
+	 WHERE MEM_NO = #{ reportedMemNo }
+	</select>
+	
+	<!-- 관리자 - 신고회원 정지 -->
+	<insert  id="suspendMember1" >
+	insert
+		  into suspend
+		     (
+		       SUSPEND_NO
+		     , SUSPEND_MEM_NO
+		     , SUSPEND_START
+		     , SUSPEND_END
+		     )
+	    values
+	         (
+	           'SUS' || TO_CHAR(SEQ_SUS_NO.NEXTVAL)
+	         , #{memNo}
+	         , DEFAULT
+	         , DEFAULT
+	         )
+	</insert>
+	<insert  id="suspendMember2" >
+	insert
+		  into suspend
+		     (
+		       SUSPEND_NO
+		     , SUSPEND_MEM_NO
+		     , SUSPEND_START
+		     , SUSPEND_END
+		     )
+	    values
+	         (
+	           'SUS' || TO_CHAR(SEQ_SUS_NO.NEXTVAL)
+	         , #{memNo}
+	         , DEFAULT
+	         , SYSDATE+14
+	         )
+	</insert>
+	<insert  id="suspendMember3" >
+	insert
+		  into suspend
+		     (
+		       SUSPEND_NO
+		     , SUSPEND_MEM_NO
+		     , SUSPEND_START
+		     , SUSPEND_END
+		     )
+	    values
+	         (
+	           'SUS' || TO_CHAR(SEQ_SUS_NO.NEXTVAL)
+	         , #{memNo}
+	         , DEFAULT
+	         , SYSDATE+21
+	         )
+	</insert>
+	
+	<update id="banMember" >
+	update
+		   member
+	   set 
+	       modify_date = sysdate
+	     , status = 'B'
+	 where mem_no = #{memNo}
+	</update>
+	
+	<!-- 회원 정지 해제 -->
+	<update id="memRecover" >
+	update
+		   member
+	   set 
+	       modify_date = sysdate
+	     , status = 'Y'
+	 where mem_no = #{memNo}
+	</update>
 
 
 <!-- 소영시작 -->

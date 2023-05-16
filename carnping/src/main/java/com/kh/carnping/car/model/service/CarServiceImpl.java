@@ -1,17 +1,19 @@
 package com.kh.carnping.car.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.dao.CarDao;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Filter;
 import com.kh.carnping.car.model.vo.Review;
+import com.kh.carnping.car.model.vo.Verify;
+import com.kh.carnping.car.model.vo.VerifyImg;
 
 @Service
 public class CarServiceImpl implements CarService{
@@ -85,4 +87,31 @@ public class CarServiceImpl implements CarService{
 	public int reviewCheck(String memNo, String cinfoNo) {
 		return cDao.reviewCheck(sqlSession, memNo, cinfoNo);
 	}
+
+	@Override
+	public int deleteReview(String reNo) {
+		return cDao.deleteReview(sqlSession, reNo);
+	}
+
+	@Override
+	public int insertCar(Verify verify) {
+		return cDao.insertCar(sqlSession, verify);
+	}
+
+	@Override
+	public int insertCarImg(VerifyImg verifyImg) {
+		return cDao.insertCarImg(sqlSession, verifyImg);
+	}
+
+	@Override
+	public int checkRequest(String loginMember) {
+		return cDao.checkRequest(sqlSession, loginMember);
+	}
+
+	@Override
+	public int deleteRequest(HashMap<String, Object> map) {
+		return cDao.deleteRequest(sqlSession, map);
+	}
+	
+	
 }

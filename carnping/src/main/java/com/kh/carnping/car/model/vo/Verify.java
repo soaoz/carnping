@@ -24,7 +24,12 @@ public class Verify {
 	private String verifyFacilities;// 편의시설
 	private String verifyDays; 		// 영업일
 	private String verifyTag; 		// 태그
-	private String verifyDate;		// 검수 요청일
+	private String verifyModified;		// 검수 수정일
+	private String verifyRgstrDate;		// 검수 요청일
 	private String verifyReason;	// 사유
 	private String memNo;			// 회원번호
+	
+	private String[] verifyFacilitie;// 편의시설
+	private String[] verifyDay; 		// 영업일
+	private String[] verifyTags; 		// 태그
 }

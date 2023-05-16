@@ -182,7 +182,7 @@
                     <a href="index.html"><i data-feather="home"></i> <span>대시보드</span></a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i data-feather="users"></i> <span>회원관리</span> <span
+                    <a href="member.ad"><i data-feather="users"></i> <span>회원관리</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="member.ad">회원관리</a></li>
