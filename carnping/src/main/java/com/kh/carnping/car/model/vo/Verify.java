@@ -29,6 +29,26 @@ public class Verify {
 	private String verifyReason;	// 사유
 	private String memNo;			// 회원번호
 	private String cinfoNo;
+	private String verifyImg1;	// 차박정보 메인이미지
+	private String verifyImg2;	// 차박정보 서브이미지
+	private String verifyImg3;	// 차박정보 서브이미지
+	private String verifyImg4;	// 차박정보 서브이미지
+	private String verifyImg5;	// 차박정보 서브이미지
+	private String verifyImg6;	// 차박정보 서브이미지
+	private String verifyImg7;	// 차박정보 서브이미지
+	private String verifyImg8;	// 차박정보 서브이미지
+	private String verifyImg9;	// 차박정보 서브이미지
+	private String verifyImg10;	// 차박정보 서브이미지
+	private String verifyOgImg1;	// 차박정보 메인이미지
+	private String verifyOgImg2;	// 차박정보 서브이미지
+	private String verifyOgImg3;	// 차박정보 서브이미지
+	private String verifyOgImg4;	// 차박정보 서브이미지
+	private String verifyOgImg5;	// 차박정보 서브이미지
+	private String verifyOgImg6;	// 차박정보 서브이미지
+	private String verifyOgImg7;	// 차박정보 서브이미지
+	private String verifyOgImg8;	// 차박정보 서브이미지
+	private String verifyOgImg9;	// 차박정보 서브이미지
+	private String verifyOgImg10;	// 차박정보 서브이미지
 	
 	private String[] verifyFacilitie;// 편의시설
 	private String[] verifyDay; 		// 영업일

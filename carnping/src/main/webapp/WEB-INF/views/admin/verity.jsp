@@ -57,52 +57,73 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    	<c:forEach var="list" items="${ list }">
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="memEdit.html" class="avatar avatar-md me-2"><img
-                                                            class="avatar-img rounded-circle"
-                                                            src="../car/img/yangyang_3.png"
-                                                            alt="User Image"></a>
-                                                    <a href="memEdit.html">서퍼들의 천국, 양양 죽도해변<span>CAR1
-                                                        </span></a>
+                                                    ${ list.verifyName }
+                                                    <span>${ list.verifyNo }</span>
                                                 </h2>
                                             </td>
                                             <td>
-                                               여기 너무좋은데 없어서 추가해봐요
+                                           	<c:choose>
+													<c:when test=" ${ list.verifyReason== null }">
+														<span> </span>
+													</c:when>                                            	
+													<c:otherwise>
+														<span>${ list.verifyReason }</span>
+													</c:otherwise>
+                                            	</c:choose>
+                                              
                                             </td>
                                             <td>
-                                                <span class="badge bg-info-light">등록</span>
+                                            	<c:choose>
+													<c:when test="${ list.verifyStatus == 'T' }">
+		                                                <span class="badge bg-info-light">등록</span>
+													</c:when>                                            	
+													<c:when test="${ list.verifyStatus == 'U' }">
+		                                             	<span class="badge bg-warning-light">수정</span>
+													</c:when>     
+													<c:when test="${ list.verifyStatus == 'Y' }">
+		                                             	<span class="badge bg-success-light">검수합격</span>
+													</c:when>                                       	
+													<c:otherwise>
+		                                             	<span class="badge bg-danger-light">검수불합격</span>
+													</c:otherwise>
+                                            	</c:choose>
                                             </td>
-                                            <td>2020-12-13</td>
-                                            <td>2020-12-13</td>
+                                            <td>${ list.verifyModified }</td>
+                                            <td>${ list.verifyRgstrDate }</td>
                                             <td class="text-end">
-                                                <a href="insertVerity.html"
-                                                    class="btn btn-sm btn-white text-success me-2"><i
-                                                        class="far fa-edit me-1"></i> 검수</a>
-                                                <a href="javascript:void(0);"
-                                                    class="btn btn-sm btn-white text-danger me-2"
-                                                    data-bs-toggle="modal" data-bs-target="#top-modal"><i
-                                                        class="far fa-trash-alt me-1"></i>기각</a>
-
-
+                                            	<c:choose>
+													<c:when test="${ list.verifyStatus == 'T' }">
+		                                                <button type="button" onclick="insertVerify('${list.verifyNo}');"
+		                                                    class="btn btn-sm btn-white text-success me-2">
+		                                                    <i class="far fa-edit me-1"></i> 검수</button>
+													</c:when>                                            	
+													<c:otherwise>
+		                                                <button onclick="updateVerify('${list.verifyNo}');"
+		                                                    class="btn btn-sm btn-white text-success me-2"><i
+		                                                        class="far fa-edit me-1"></i> 검수</button>
+													</c:otherwise>
+                                            	</c:choose>    
+	                                                <a href="javascript:void(0);"
+	                                                    class="btn btn-sm btn-white text-danger me-2"
+	                                                    data-bs-toggle="modal" data-bs-target="#top-modal">
+	                                                    <i class="far fa-trash-alt me-1"></i>기각</a>
                                                 <div id="top-modal" class="modal fade" tabindex="-1" role="dialog"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-top">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title" id="topModalLabel">게시글 삭제</h4>
+                                                                <h4 class="modal-title" id="topModalLabel">요청 철회</h4>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal"
                                                                     aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form action="#">
                                                                     <br>
                                                                     <h5 align="center">정말로 **를(을) 요청철회를 하시겠습니까?</h5>
-                                                                    <p align="center" style="color:gray">요청을 철회를 하신다면 사유를 입력해주세요.</p>
-                                                                    <textarea name="" id="" cols="60" rows="10"></textarea>
-                                                                </form>
                                                             </div>
                                                             <hr>
                                                             <div class="modal-footer">
@@ -115,34 +136,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="updateVerity.html" class="avatar avatar-md me-2"><img
-                                                            class="avatar-img rounded-circle"
-                                                            src="../car/img/test2.png"
-                                                            alt="User Image"></a>
-                                                    <a href="updateVerity.html">일출과 일몰을 함께, 당진 왜목마을<span>CAR2</span></a>
-                                                </h2>
-                                            </td>
-                                           
-                                            <td>너무 오래된 정보에요 화장실 추가되어 수정요청합니다.</td>
-                                            <td>
-                                                <span class="badge bg-warning-light">수정</span>w
-                                            </td>
-                                            <td>2020-02-11</td>
-                                            <td>2020-02-11</td>
-                                            <td class="text-end">
-                                                <a href="updateVerity.html"
-                                                    class="btn btn-sm btn-white text-success me-2"><i
-                                                        class="far fa-edit me-1"></i> 검수</a>
-                                                <a href="javascript:void(0);"
-                                                    class="btn btn-sm btn-white text-danger me-2"><i
-                                                        class="far fa-trash-alt me-1"></i>삭제</a>
-                                            </td>
-                                        </tr>
-
-
+                                    	</c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -154,6 +148,21 @@
     </div>
 
 </div>
+<script>
+
+function deleteVerify(verify){
+	location.href= "deleteVerify.ad?verifyNo="+ verify;	
+}
+
+function updateVerify(verify){
+	location.href= "updateVerify.ad?verifyNo="+ verify;
+}
+
+function insertVerify(verify){
+	location.href= "insertVerify.ad?verifyNo="+ verify;
+}
+
+</script>
 </body>
 
 </html>

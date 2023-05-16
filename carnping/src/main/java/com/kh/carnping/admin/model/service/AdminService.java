@@ -2,6 +2,7 @@ package com.kh.carnping.admin.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
 
 public interface AdminService {
@@ -17,4 +18,10 @@ public interface AdminService {
 	
 	// 회원정보 수정(update)
 	int updateMember(Member m);
+	
+	// ================================
+	
+	// 검수 리스트 조회
+	ArrayList<Verify> verifyList();
+	
 }

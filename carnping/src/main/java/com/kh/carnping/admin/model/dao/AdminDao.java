@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Report;
 
@@ -53,4 +54,13 @@ public class AdminDao {
 	public int memRecover(SqlSessionTemplate sqlSession, String memNo) {
 		return sqlSession.update("memberMapper.memRecover", memNo);
 	}
+
+	public ArrayList<Verify> verifyList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("carMapper.verifyList");
+	}
+
+	public Verify selectVerify(SqlSessionTemplate sqlSession, String verifyNo) {
+		return sqlSession.selectOne("carMapper.selectVerify", verifyNo);
+	}
+
 }	
