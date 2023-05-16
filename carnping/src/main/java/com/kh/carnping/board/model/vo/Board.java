@@ -33,4 +33,5 @@ public class Board {
 	private String memId;
 	private String phone;
 	
+	
 }
