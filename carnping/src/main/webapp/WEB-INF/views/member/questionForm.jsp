@@ -129,12 +129,17 @@
 		.title{
 			color : #1C3053;
 		}
+		.textarea{
+			height: 300px;
+		}
     
     </style>
 </head>
 <body>
     
    <jsp:include page="../common/header.jsp"/>
+    <jsp:include page="../common/menubar.jsp"/>  
+    
     <div class="myPage-header-area">
 	<!--     헤더 빈공간  -->
 	</div>
@@ -165,7 +170,7 @@
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="myLogoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -182,23 +187,18 @@
                         <h3>
                             <br><br>
                             <b class="title">문의 하기</b> MY QUESTION <br>
-                            
-                          
                             <small></small>
                         </h3>
                         <hr>
                         <br><br>
                     </div>
-
-                    
-
-
-
-
-                    
                 </div>
-                
             </div>
+            
+            
+           <form action="questionInsert.me" method="post" enctype="multipart/form-data">
+            
+            
             <div class="main-wrapper">
 
                 <div class="page-wrapper">
@@ -206,8 +206,6 @@
                     <div class="row">
                         <div class="col-xl-8 offset-xl-2">
         
-                            
-                
                         <div class="card">
                             <div class="card-body">
                             <div class="bank-inner-details">
@@ -215,16 +213,17 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                     <label>제목<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" name="queTitle" required="required"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group modal-select-box">
                                     <label>카테고리</label>
-                                    <select class="select">
-                                        <option value="1">불편사항</option>
-                                        <option value="2">신고하기</option>
-                                        <option value="3">제안하기</option>
+                                    <select class="select" name="queCategory">
+                                        <option value="문의하기">문의하기</option>
+                                        <option value="신고하기">신고하기</option>
+                                        <option value="제안하기">제안하기</option>
+                                        <option value="불편사항">불편사항</option>
                                     </select>
                                     </div>
                                 </div>
@@ -234,14 +233,15 @@
                                     <div class="form-group">
                                     <label>파일 추가하기</label>
                                     <div class="change-photo-btn">
-                                        <input type="file" class="upload" />
+                                        <input type="file" class="upload" name="reupfile" />
                                     </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                     <label>내용</label>
-                                    <div id="editor"></div>
+                                   <!--  <div id="editor" ></div> -->
+                                    <textarea class="form-control" required name="queContent" id="content" rows="20" style="resize:none;"></textarea>
                                     </div>
                                 </div>
                                 </div>
@@ -249,7 +249,10 @@
                             </div>
                             <div class="blog-categories-btn pt-0">
                             <div class="bank-details-btn" align="end">
-                                <a href="blog.html" class="btn btn-primary me-2"> 확인 </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <!-- <a href="" class="btn btn-primary me-2"> 확인 </a> &nbsp;&nbsp;&nbsp;&nbsp; -->
+                                <!-- <input type='submit' class='btn btn-primary me-2' name='update' value='확인' />&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                <button type="submit" class='btn btn-primary me-2'>확인</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                
                                 <br>
                             </div>
                             <br>
@@ -260,6 +263,8 @@
                     </div>
                 </div>
                 </div>
+                </form>
+                
                 
                 <script src="resources/member/assets2/js/jquery-3.6.0.min.js"></script>
                 

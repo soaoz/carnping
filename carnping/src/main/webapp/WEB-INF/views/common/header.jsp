@@ -169,6 +169,12 @@
 
     </style>
 </head>
+<c:if test="${ not empty alertMsg }">
+	<script>
+		alert("${alertMsg}");
+	</script>
+	<c:remove var="alertMsg" scope="session"/>
+</c:if>
 <!--letter-spacing: 0.1em;-->
     <!-- Page Preloder -->
     <div id="preloder">
@@ -182,7 +188,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
                         <div class="header__logo" style="padding:20px 0px; text-align: center;">
-                            <a href="./index.html"><img src="resources/img/logo_1.png" width="250px" alt=""></a>
+                            <a href="./index.jsp"><img src="resources/img/logo_1.png" width="250px" alt=""></a>
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-9">
@@ -196,13 +202,14 @@
                                 </ul>
                             </nav>
                             <div class="header__menu__right" style="display:inline-flex">
-                                <a href="#" class="primary-btn" id="addSite" style="line-height: 27px; margin-right:35px;"><i class="fa fa-plus"></i>나만의 차박지 등록</a>
                              	<c:choose>
-            				<c:when test="${ empty loginMember }">
-                                <a href="loginForm.me" class="primary-btn" id="loginBtn" >로그인</a>
-                            </c:when>
-                            <c:otherwise>
+		            				<c:when test="${ empty loginMember }">
+		                                <button type="button" onclick="alert('로그인후 이용바랍니다.');" class="primary-btn btn" id="addSite" style="line-height: 27px; margin-right:35px;"><i class="fa fa-plus"></i>나만의 차박지 등록</button>
+		                                <a href="loginForm.me" class="primary-btn" id="loginBtn" >로그인</a>
+		                            </c:when>
+		                            <c:otherwise>
                                 <!-- 로그인 후 -->
+		                                <a href="insertCarEnroll.ca" class="primary-btn" id="addSite" style="line-height: 27px; margin-right:35px;"><i class="fa fa-plus"></i>나만의 차박지 등록</a>
                                 <div class="loggedin" style="width: 225px; display:flex; margin-right: 40px;">
                                     
                                     
@@ -298,7 +305,14 @@
     </header>
     <!-- Header Section End -->
 
-    
+    	<c:if test="${ not empty alertMsg }">
+	<script>
+		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>
+		
+
+	</script>
+	<c:remove var="alertMsg" scope="session"/>
+	</c:if>
 
     <!-- Js Plugins -->
     <script src="resources/js/jquery-3.3.1.min.js"></script>

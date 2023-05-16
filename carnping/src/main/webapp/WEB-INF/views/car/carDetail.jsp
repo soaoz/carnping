@@ -21,6 +21,12 @@
 <!-- Css Styles -->
 
 <style>
+.commentImg{
+
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
 .list_detail_reply {
 	padding-left: 75px;
 }
@@ -609,6 +615,15 @@ to {
 								</c:forEach>
 							</ul>
 						</div>
+						<br>
+						<c:if test="${ loginMember != null }">
+						<div class="listing__sidebar__working__hours">
+							<div align="center">
+							<button class="btn" onclick="deleteRequest();">삭제요청</button>
+							<button class="primary-btn btn" >수정요청</button>
+							</div>
+						</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -665,6 +680,25 @@ to {
     </div>
   </div>
 </div>
+	<jsp:include page="../common/footer.jsp" />
+
+	<!-- Js Plugins -->
+	<script src="https://kit.fontawesome.com/0376f7be50.js"
+		crossorigin="anonymous"></script>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.nicescroll.min.js"></script>
+	<script src="js/jquery.barfiller.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
+
+
 	<jsp:include page="../common/footer.jsp" />
 
 	<!-- Js Plugins -->
@@ -772,6 +806,9 @@ function selectReview(){
                 			values +=  "<i class='fa-solid fa-circle-user'style='padding: unset; font-size: 65px;'></i>";
                 		}else{
                 			// 회원이미지가 있을때
+                		if(review[i].memImg==null){
+                			values +=  "<i class='fa-solid fa-circle-user'style='padding: unset; font-size: 65px;'></i>";
+                		}else{
                 			values +=  "<img src='"+ review[i].memImg +"' >";                
                 		}
                 values +=		"</div>"
@@ -796,6 +833,69 @@ function selectReview(){
                     	values+=  "<input type='hidden' value='"+review[i].reviewNo+"'></li>"
                         values += "<br><br></ul></div></div></li>";
 				}
+                		+ "<div class='listing__details__comment__item__rating'>";
+                		
+                		
+               	for(let j= 0; j < review[i].reviewScr.toFixed(); j++){
+               	 	values += "<span class='icon_star'></span>"
+               	}
+               	if(review[i].reviewScr != 5){
+	               	if((review[i].reviewScr * 10)%10 >= 5){
+	               		values += "<span class='icon_star-half_alt'></span>" ;
+	               	}else{
+	               	 	values += "<span class='icon_star_alt'></span>"
+	               	}
+	               	if(review[i].reviewScr <= 4){
+		               	for(let j=4; j > review[i].reviewScr.toFixed(); j--){
+		               	 	values += "<span class='icon_star_alt'></span>"
+		               	}	               		
+	               	}
+               	}
+                values +=			 "</div>"
+                    	+ 			 "<span>" + review[i].createDate +"</span>"
+                    	+ 			 "<h5>" + review[i].memName +"</h5>"
+                    	+ 			 "<div class='row'>"
+                    	+ 			 	"<div class='col-md-9'>";
+                    	if(review[i].reviewContent==null){
+	                    	values +="<p></p>"                    		
+                    	}else{
+	                    	values +="<p>" + review[i].reviewContent + "</p>"
+                    	}
+                    	if(review[i].reviewImg!=null){	
+               				values 	+= "</div><div class='col-md-3 reImg'>"
+                    				+		"<img src=\'"+ review[i].reviewImg +"' onclick='imgView(\""+review[i].reviewImg +"\");'>"
+                    	}else{
+               				values 	+= "</div><div class='col-md-3'>";
+                    	}
+                    	values += 		"</div>"
+                    	+			 "</div><br>"
+                    	+			 "<ul class='ul_line'>"
+                    	<c:choose>
+                    		<c:when test="${ empty loginMember }">
+                    			+ "<li><i class='fa-solid fa-heart'></i>" +review[i].reviewLike +" <a>좋아요</a></li>"
+                    		</c:when>
+                    		<c:otherwise>
+								if(reviewLikes(review[i].reviewNo)){
+									values += "<li style='cursor:pointer'><i class='fa-solid fa-heart' style='color: #f23131;'></i>" +review[i].reviewLike +" <button class='btn' type='button' onclick=\"reviewLike(\'"+ review[i].reviewNo + "', 1	);\">좋아요</button></li>"                    		                    		                    						                    						
+								}else{
+									values += "<li style='cursor:pointer'><i class='fa-regular fa-heart'></i>" +review[i].reviewLike +" <button class='btn' type='button' onclick=\"reviewLike(\'"+ review[i].reviewNo + "', 0);\">좋아요</button></li>"                    		                    		                    						                    						
+								}
+                    		</c:otherwise>
+                    	</c:choose>
+                    	values += "<li><button type='button' class='btn scroll_reply' onclick='commentScroll(\""+ review[i].reviewNo +"\")'>댓글</button>"
+                    	if(userNo == review[i].memNo){
+                    		values+= "<li><button class='btn' onclick='deleteReview(\""+ review[i].reviewNo +"\");'>리뷰 삭제</button></li>";                			
+                    	}
+                    	values+=  "<input type='hidden' value='"+review[i].reviewNo+"'></li>"
+                        + "<br><br></ul></div></div>";
+                        
+                        if(inRe != review[i].reviewNo) {          
+                        	values += "<ul class='ul_line ul_reply3 "+ review[i].reviewNo +"'>";
+                        }else{
+	                        values += "<ul class='ul_line ul_reply "+ review[i].reviewNo +"'>";
+                        }
+                        values += reviewComment(review[i].reviewNo) +"</ul></li>";
+			}
 				$('.listing__details__comment div').html(values);
 		}
 	})
@@ -805,6 +905,241 @@ function selectReview(){
 	
 
 
+// 리뷰 댓글
+function reviewComment(reviewNo){
+	let comment ="";
+	$.ajax({
+		url : "selectReviewComment.ca",
+		data : {reNo : reviewNo},
+		async : false,
+		success: function(result){
+			<c:if test="${ not empty loginMember}">
+			comment += "<li><div class='listing__details__review'><form name='"+reviewNo+"'>"
+			       	+ "<textarea placeholder='리뷰댓글 내용'name='text'></textarea>"
+			       	+ "<button type='button' onclick=\"reviewInsertComment('"+reviewNo+"');\" class='site-btn'>댓글 등록</button>"
+			   		+ "</form><br></div></li>";
+			</c:if>
+			if(!result.length == 0){
+				for(let j in result){
+					comment += "<div class='list_detail_reply'>"
+						+ 	"<li>"
+				        + 		"<div class=listing__details__comment__item__pic'>"
+				        if(result[j].memImg == null){
+						comment += "<i class='fa-solid fa-circle-user' style='padding: unset; font-size: 35px;'></i>"				        	
+				        }else{
+						comment += "<img class='commentImg' src='"+ result[j].memImg +"'>"
+				        }
+				        comment += 		"</div>"
+				        +		"<div class='listing__details__comment__item__text'>"
+				        + 			"<span>" + result[j].createDate + "</span>"
+				        + 			"<h5>"+ result[j].memNo +"</h5>"
+				        + 			" <p>"+ result[j].commContent +"</p>"
+				        + 		"</div>"
+				        +	"</li></div>";
+				}
+			}else{
+				comment+= "<hr><div class='list_detail_reply'>"
+						+ 	"<li>"
+				        + 			"<h5>리뷰댓글이 없습니다</h5>"
+				        +	"<br></li></div>";
+				}
+			}
+		})
+	return comment;
+	}
+	
+// 리뷰 댓글 클릭시 댓글 리스트 생성 이벤트 발생
+function commentScroll(reviewNo){
+	console.log("commentScroll 타나?")
+	
+	let $this = $("."+reviewNo)
+	if($this.css("display") == "none"){
+		 console.log("등록하고 타는지 확인해보자")
+		 $this.slideDown(); 
+		 $('.ul_reply3').not($this).css("display", "none");
+		 count++;
+	}else{ // 보이는 상태
+		 $this.slideUp(); 
+		 count--;
+	}
+}
+
+
+//리뷰 좋아요 클릭시 이벤트 발생
+reviewLike = function(reviewNo, result){
+	inRe = "";
+	$.ajax({
+		url : "like.ca",
+		data : {reNo : reviewNo,
+				rs : result,
+				memNo : '${loginMember.memNo}'},
+		success: function(result){
+				
+			selectReview();
+				 
+
+		}
+	})
+}
+
+//리뷰 좋아요 클릭시 좋아요 눌렀는지 점검
+function reviewLikes(reviewNo){
+	let whyLike ="";
+	$.ajax({
+		url : "reviewLike.ca",
+		data : { 
+			reNo : reviewNo,
+			memNo : '${loginMember.memNo}'
+		},
+		async : false,
+		success:function(result){
+			if(result >0){
+				whyLike = true;				
+			}else{
+				whyLike = false;				
+			}
+		}
+	})
+	return whyLike;
+}
+
+//리뷰댓글등록
+async function reviewInsertComment(reviewNo){
+	inRe = reviewNo;
+	let text = $("form[name='"+reviewNo+"'] textarea").val();
+	$.ajax({
+		url : "reviewComment.ca",
+		data : { 
+			reNo : reviewNo,
+			memNo : '${loginMember.memNo}',
+			text : text	
+		},
+		async : false,
+		success: async function(result){
+			if(result >0){
+				alert("리뷰댓글작성에 성공하셨습니다.");
+				await selectReview();
+				console.log("selectReview 종료");
+				await commentScroll(reviewNo);
+				console.log("commentScroller 종료")
+			}else{
+				alert("리뷰댓글작성에 실패하셨습니다. 관리자에게 문의해주세요.");		
+				
+			}
+		}
+	})
+}
+
+/* 모달을 이용해 리뷰 이미지 확대 */
+function imgView(view){
+  $("#imgView").css("display", "block");
+  $(".modal_content").prop("src", view);
+}
+
+$(".close").click(function(){
+  $("#imgView").css("display", "none");
+});
+
+$("#imgView").click(function(){
+  $("#imgView").css("display", "none");
+});
+
+//리뷰 삭제 
+function deleteReview(review){
+	$.ajax({
+		url : "deleteReview.ca",
+		data:{
+			reNo :review
+		},
+		success: function(result){
+			if(result > 0) {
+				alert("리뷰가 성공적으로 삭제되었습니다.");
+				selectReview();
+			} else{
+				alert("리뷰 삭제를 실패하였습니다.");
+				selectReview();
+			}
+		}
+	})
+	
+}
+
+// 리뷰등록시 정규화
+$("#insertReview").on("submit", function(){
+	let $view = $("input[name=reviewView]").val()
+	let $conv = $("input[name=reviewConv]").val()
+	let $access = $("input[name=reviewAccess]").val()
+	let $type = $("input[name=reviewType]").val()
+	let $content = $("textarea[name=reviewContent]").val()
+	let $result = 0;
+	
+	
+	$.ajax({
+		url : "reviewCheck.ca",
+		data:{
+			memNo : "${loginMember.memNo}",
+			cinfoNo : "${cinfo.cinfoNo}"
+		},
+		async:false,
+		success:function(result){
+			$result = result
+			
+		}
+	})
+	
+	if($result > 0){
+		alert("리뷰가 너무 많습니다!");
+		return false;
+	}
+	
+	if(!($view <= 5 && $view > 0 
+			&& $conv <= 5 && $conv > 0 
+			&& $access <= 5 && $access > 0 
+			&& $type <= 5 && $type > 0
+			)){
+		alert("1부터 5이하의 숫자를입력하셔야합니다.(소수 가능)");
+		return false;
+	}
+	
+})
+function updateSDRequest(){
+	let result = prompt("삭제 사유를 말씀해주세요.","");
+	let cinfo[] = {
+			cinfoNo:"${cinfo.cinfoNo}",
+			cinfoName:"${cinfo.cinfoName}",
+			cinfoContent:"${cinfo.cinfoContent}",
+			cinfoNotice:"${cinfo.cinfoNotice}",
+			cinfoLttd:"${cinfo.cinfoLttd}",
+			cinfoHrdns:"${cinfo.cinfoHrdns}",
+			cinfoStatus:"${cinfo.cinfoStatus}",
+			cinfoAddress:"${cinfo.cinfoAddress}",
+			cinfoFacilities:"${cinfo.cinfoFacilities}",
+			cinfoDays:"${cinfo.cinfoDays}",
+			cinfoTag:"${cinfo.cinfoTag}",
+			cinfoImg1:"${cinfo.cinfoImg1}",
+			cinfoImg2:"${cinfo.cinfoImg2}",
+			cinfoImg3:"${cinfo.cinfoImg3}",
+			cinfoImg4:"${cinfo.cinfoImg4}",
+			cinfoImg5:"${cinfo.cinfoImg5}",
+			cinfoImg6:"${cinfo.cinfoImg6}",
+			cinfoImg7:"${cinfo.cinfoImg7}",
+			cinfoImg8:"${cinfo.cinfoImg8}",
+			cinfoImg9:"${cinfo.cinfoImg9}",
+			cinfoImg10:"${cinfo.cinfoImg10}"
+		
+	}
+	$.ajax({
+		url : "deleteRequest.ca", 
+		data : {
+			cinfo : cinfo
+			,result : result
+			,loginMember : '${loginMember.memNo}'}, 
+		success : function(re){
+			alert(re);
+		}
+	})
+	
+}
 </script>
 
 </body>

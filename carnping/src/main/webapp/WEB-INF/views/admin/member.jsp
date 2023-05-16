@@ -7,11 +7,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Jassa - Bootstrap Admin HTML Template</title>
-
+    <title>Carnping | 관리자 </title>
+<!--===============================================================================================-->	
+<link rel="icon" type="image/png" href="resources/resources/login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
 </head>
 
 <body>
+
+
     <div class="main-wrapper">
 
         <jsp:include page="menubar.jsp"/>
@@ -41,15 +45,16 @@
                         <div class="card card-table">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-center table-hover datatable">
+                                    <table class="table table-center table-hover datatable" style="text-align:center;">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>이름</th>
-                                                <th>Email</th>
+                                                <th>이메일</th>
                                                 <th>닉네임</th>
                                                 <th>가입일</th>
-                                                <th>탈퇴유무</th>
-                                                <th class="text-end">옵션</th>
+                                                <th>회원 상태</th>
+                                                <th>가입 방식</th>
+                                                <th class="">옵션</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,7 +62,7 @@
                                             <tr>
                                                 <td>
                                                 	<c:choose>
-                                                		<c:when test="${ list.memImg eq null }">
+                                                		<c:when test="${ list.memImgOrigin eq null }">
 	                                                		<h2 class="table-avatar">
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }" class="avatar avatar-sm me-2"><img
 	                                                                class="avatar-img rounded-circle"
@@ -71,7 +76,7 @@
 	                                                		<h2 class="table-avatar">
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }" class="avatar avatar-sm me-2"><img
 	                                                                class="avatar-img rounded-circle"
-	                                                                src="${ list.memImg }"
+	                                                                src="${ list.memImgChange }"
 	                                                                alt="User Image"></a>
 	                                                        <a href="memEdit.ad?memNo=${ list.memNo }">${ list.memName } <span>${list.memNo }
 	                                                            </span></a>
@@ -87,27 +92,53 @@
                                                 <td>${ list.nickName }</td>
                                                 <td>${ list.enrollDate }</td>
                                                 <td>
-                                                <c:choose >
-                                                	<c:when test="${ list.status eq 'Y' }">
-		                                                <span class="badge badge-pill bg-success-light">활동중</span>                                                	
-                                                	</c:when>
-                                                	<c:otherwise>
-                                                		<span class="badge badge-pill bg-danger-light">탈퇴</span>
-                                                	</c:otherwise>
-                                                </c:choose>
+                                                    <c:choose >
+                                                        <c:when test="${ list.status eq 'Y' }">
+                                                            <span class="badge badge-pill bg-success-light">활동중</span>                                                	
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="badge badge-pill bg-danger-light">탈퇴</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
-                                                <td class="text-end">
+
+                                                <td>
+                                                    <c:choose >
+                                                        <c:when test="${ list.memApiType eq '카카오' }">
+                                                            <img style="max-width:unset; width: 45px;
+                                                            height: 45px;
+                                                            border-radius: 50px;"src="resources/img/kakao.png" alt="">  
+                                                        </c:when>
+                                                        <c:when test="${ list.memApiType eq '네이버' }">
+                                                            <img style="max-width:unset; width: 45px;
+                                                            height: 45px;
+                                                            border-radius: 50px;"src="resources/img/naver.png" alt="">                                                	
+                                                        </c:when>
+                                                        <c:when test="${ list.memApiType eq '구글' }">
+                                                            <img style="max-width:unset; width: 35px;
+                                                            height: 35px;
+                                                            " src="resources/img/google.png" alt="">  
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <img style="max-width:unset; width: 50px;
+                                                            height: 50px;
+                                                            " src="resources/img/logo_login_1.png" alt="">  
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+
+                                                <td class="">
                                                     <!-- 회원 번호 -->
                                                     <a href="memEdit.ad?memNo=${ list.memNo }"
                                                         class="btn btn-sm btn-white text-success me-2"><i
                                                             class="far fa-edit me-1"></i> 수정</a>
-                                                    <a href="javascript:void(0);"
+                                                    <a href="memDelete.ad?memNo=${ list.memNo }"
                                                         class="btn btn-sm btn-white text-danger me-2"
-                                                        data-bs-toggle="modal" data-bs-target="#top-modal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#top-modal-${list.memNo}"><i
                                                             class="far fa-trash-alt me-1"></i>탈퇴</a>
 
 
-                                                    <div id="top-modal" class="modal fade" tabindex="-1" role="dialog"
+                                                    <div id="top-modal-${list.memNo}" class="modal fade" tabindex="-1" role="dialog"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-top">
                                                             <div class="modal-content">
@@ -119,7 +150,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <br>
-                                                                    <h5 align="center">정말 ***님을 탈퇴 시키겠습니까?</h5>
+                                                                    <h5 align="center">정말 ${ list.memNo }님을 탈퇴 시키겠습니까?</h5>
                                                                     <p align="center" style="color:gray">탈퇴시 복구가 매우 어렵습니다. 신중히 선택바랍니다.</p>
                                                                 </div>
                                                                 <hr>
@@ -132,6 +163,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
+
                                             </tr>
                                         	</c:forEach>
                                         </tbody>
@@ -151,14 +183,26 @@ function memDelete(memberNumber){
 		data:{
 			memNo: memberNumber
 		},success:function(result){
-            if(result >0){
-                alert("USER 삭제 완료되었습니다.");
-            }else{
-                alert("USER가 삭제되지 않았습니다.");
-            }
+			if(result==='success'){
+				alert(memberNumber+"(이)가 성공적으로 탈퇴 처리되었습니다.");
+				location.href='member.ad';
+			} else {
+				alert("회원탈퇴에 실패하였습니다.");
+			}
+            $('#top-modal-'+memberNumber).modal('hide');
+        }, error: function(){
+        	console.log("ajax 통신실패!");
         }
 	})
 }
+$(document).on('show.bs.modal', '#top-modal', function (event) {
+	  var button = $(event.relatedTarget) // 클릭된 버튼 가져오기
+	  var memNo = button.data('mem-no') // data-mem-no 속성값 가져오기
+	  
+	  // 모달 내용에 memNo 출력
+	  var modal = $(this)
+	  modal.find('.modal-body #mem-no').text(memNo)
+	})
 </script>
 </body>
 

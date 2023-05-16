@@ -24,10 +24,6 @@
             margin: auto;
             padding-top: 100px;
         }
-        
-
-        
-
         .agreement{
             position: relative;
             -webkit-flex: 1 0 100%;

@@ -13,11 +13,18 @@
 <link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/fontawesome.min.css"type="text/css">
 <link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/all.min.css"type="text/css">
 <link rel="stylesheet" href="resources/admin/assets/css/style.css" type="text/css">
+
 </head>
 
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
-<div class="main-wrapper">
+<c:if test="${ not empty alertMsg }">
+	<script>
+		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>
+	</script>
+	<c:remove var="alertMsg" scope="session"/>
+</c:if>
 
+<div class="main-wrapper">
 
 <div class="header header-one">
     <div class="header-left header-left-one">
@@ -153,7 +160,11 @@
                     <img src="resources/admin/assets/img/userImg.png" alt="">
                     <span class="status online"></span>
                 </span>
-                <span>Admin</span>
+                <c:choose>
+                    <c:when test="${ not empty loginMember.nickName }"><span>${ loginMember.nickName }</span></c:when>
+                    <c:otherwise><span>${ loginMember.memId }</span></c:otherwise>
+                </c:choose>
+
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="login.html"><i data-feather="log-out" class="me-1"></i>
@@ -171,7 +182,7 @@
                     <a href="index.html"><i data-feather="home"></i> <span>대시보드</span></a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i data-feather="users"></i> <span>회원관리</span> <span
+                    <a href="member.ad"><i data-feather="users"></i> <span>회원관리</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="member.ad">회원관리</a></li>
