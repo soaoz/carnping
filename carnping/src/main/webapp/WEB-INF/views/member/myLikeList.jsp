@@ -267,18 +267,6 @@
         </div>
 
     </div>
-    
-    <script>
-
-    
-
-    $(document).ready(function() {
-    	  $('.like-button').click(function(e) {
-    	    e.preventDefault();
-    	    $(this).find('i.fa-regular').toggleClass('fa-solid');
-    	  });
-    	}); 
-    </script>
 
         <!-- Filter End -->
     <div class="space"></div> 
@@ -334,7 +322,11 @@
 			                                                    <label for="check-item${status.count}" ></label>
 			                                                </div> --%>
 			                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
-			                                                <input type="hidden" name="post-id" value="${ list.cinfoNo }" >
+			                                                <input type="hidden" name="post-id" value="${ list.cinfoNo }" id="cinfoNo" >
+			                                                <input type="hidden" name="" value="${ list.memNo }" id="inputMemNo">
+			                                                <input type="hidden" name="" value="${ list.cinfoName }" id="cinfoName">
+			                                                <input type="hidden" name="" value="${ loginMember.memNo }" id="inputLoginMemNo">
+			                                                
 			                                                <div class="listing__item__pic__btns" onClick="event.stopPropagation();">
 			                                                   <!--  <a href="#"><span class="icon_zoom-in_alt"></span></a> -->
 			                                                      <script>
@@ -388,9 +380,8 @@
 																	    $(this).find('i.fa-solid').toggleClass('fa-regular');
 																	});
 																	</script>
-			                                                   <%-- <a href="#" class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></a> --%>
 			                                                   <a href="#">
-			                                                   		<span class="like-button" class="" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');">
+			                                                   		<span class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');">
 			                                                   		<i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span>
 			                                                   </a> 
 			                                                </div>
@@ -476,14 +467,17 @@
 
 
 <script>
+$(document).ready(function() {
+	  $('.like-button').click(function(e) {
+	    e.preventDefault();
+	    $(this).find('i.fa-regular').toggleClass('fa-solid');
+	  });
+	  	  
+}); 
 
 
 
 function like(cinfoNo , id){
-	//클래스가 뭐면 insert 
-	
-	
-	
 	console.log("글번호 : "+cinfoNo+ " 아이디 : " + id);
 	
 	if ($(id).hasClass('fa-solid')) {
@@ -517,7 +511,8 @@ function like(cinfoNo , id){
 	} else {
 	    // fa-regular 클래스가 없을 때
 	    console.log("하트가 흰색일떄 클릭함 -> insert해야함 ")
-	    
+	    let memNo = $("#inputMemNo").val();
+	    let loginmemNo = $("#inputLoginMemNo").val();
 	    //좋아요 INSERT
         $.ajax({
             url: "insertLike.me",
@@ -529,6 +524,23 @@ function like(cinfoNo , id){
                 	/* deletedCount = result;
                     alert(deletedCount + "개의 게시물이 삭제되었습니다.");
                     myPostList();  */
+                    
+                    /* 웹소켓 알람보내기 시작*/
+                    console.log(socket);
+                    
+                    if(socket){
+                    	let socketMsg = "like,"+loginmemNo+","+memNo+","+cinfoNo;
+                    	console.log("ssssssssmsg>>>> "+socketMsg);
+                    	//socket.send("like,"+loginmemNo+","+memNo+","+cinfoNo);
+                    	socket.send(socketMsg);
+                    	
+                    }
+                    
+                    LikeNotification();
+                    /* 웹소켓 알람보내기 끝*/
+                    
+                    
+                    
                 } else {
                 	console.log("좋아요인서트실패패패패패");
                     /* alert("삭제에 실패하였습니다."); */
@@ -545,223 +557,68 @@ function like(cinfoNo , id){
 }
 
 
-/* 
-//좋아요 조회
-
-//좋아요 색 바꾸기 
-
-
-//'전체 선택' 체크박스를 클릭하면 다른 체크박스들도 선택되게 하는 함수
-const selectAllCheckbox = document.getElementById('check2');
-const otherCheckboxes = document.querySelectorAll('.check-item');
-
-selectAllCheckbox.addEventListener('click', () => {
-    otherCheckboxes.forEach((checkbox) => {
-        checkbox.checked = selectAllCheckbox.checked;
-    });
-});
-
-// 다른 체크박스들을 클릭하면, '전체 선택' 체크박스도 선택되게 함
-otherCheckboxes.forEach((checkbox) => {
-    checkbox.addEventListener('click', () => {
-        if (!checkbox.checked) {
-            selectAllCheckbox.checked = false;
-        } else if (document.querySelectorAll('.check-item:checked').length === otherCheckboxes.length) {
-            selectAllCheckbox.checked = true;
-        }
-    });
-});
-
-
-function deleteMyCar(){
-	
-	var cinfoNoArr = [];
-	$('.check-item:checked').each(function() {
-		cinfoNoArr.push($(this).siblings('input[name="post-id"]').val());
-	});
-	
-		//console.log(cinfoNoArr);
-		
-	  if (cinfoNoArr.length == 0) {
-	    alert("선택된 글이 없습니다.");
-	    return;
-	  }
-
-	  if (confirm("선택된 글을 삭제하시겠습니까?")) {
-		  //console.log("탄다ㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
-		  
-	    $.ajax({
-	      type: "POST",
-	      url: "deleteMyCar.me",
-	      data: { "cinfoNoArr[]" : cinfoNoArr },
-	      success: function(result) {
-	        // 삭제 성공시 처리할 로직
-	        
-	        alert(result +"개의 글이 삭제되었습니다.");
-	      
-	      },
-	      error: function(xhr, status, error) {
-	        // 삭제 실패시 처리할 로직
-	        alert("삭제 실패: " + error);
-	      }
-	    });
-	  }
-}
-*/
-
-	$(function(){
-	$('.listing__item').on('click', function(){
-		location.href='detail.ca?cinfoNo=' +$(this).children("input[type=hidden]").val(); 
-	})
-    var $positions = [];
-    var map;
-
-/* 		// 차박정보를 불러와 위도 경도 값을 ajax로 받아오는 ajax 
-	$("input[name=title]").val(filter.title); */
-	
-	let array = new Array();
-	/* console.log(formData);
-	let a = formData.split('&');
-	console.log(a); */
-	<c:forEach items="${list}" var="item">
-		array.push([{cinfoNo : "${item.cinfoNo}"
-				, cinfoName :"${item.cinfoName}"
-				, cinfoContent :"${item.cinfoContent}"
-				, cinfoNotice :"${item.cinfoNotice}"
-				, cinfoLttd :"${item.cinfoLttd}"
-				, cinfoHrdns :"${item.cinfoHrdns}"
-				, cinfoStatus :"${item.cinfoStatus}"
-				, cinfoAddress :"${item.cinfoAddress}"
-				, cinfoFacilities :"${item.cinfoFacilities}"
-				, cinfoDays :"${item.cinfoDays}"
-				, cinfoTag :"${item.cinfoTag}"
-				, cinfoRating :"${item.cinfoRating}"
-				, cinfoViews :"${item.cinfoViews}"
-				, cinfoModified :"${item.cinfoModified}"
-				, cinfoRgstrDate :"${item.cinfoRgstrDate}"
-				, memNo :"${item.memNo}"
-				, cinfoImg1 :"${item.cinfoImg1}"
-				, cinfoImg2 :"${item.cinfoImg2}"
-				, cinfoImg3 :"${item.cinfoImg3}"
-				, cinfoImg4 :"${item.cinfoImg4}"
-				, cinfoImg5 :"${item.cinfoImg5}"
-				, cinfoImg6 :"${item.cinfoImg6}"
-				, cinfoImg7 :"${item.cinfoImg7}"
-				, cinfoImg8 :"${item.cinfoImg8}"
-				, cinfoImg9 :"${item.cinfoImg9}"
-				, cinfoImg10 :"${item.cinfoImg10}"
-				, phone :"${item.phone}"}])
-	</c:forEach>
-	
-	
-	
-	array.forEach(function (rs) {
-		
-        $positions.push([{
-            content: "<div style='cursor: pointer'onclick='detail(\""+rs[0].cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs[0].cinfoImg1+"\');> <img src='resources/img/carList/icon/ocean.png' alt=''></div>"
-                    +"<div class='listing__item__text'><div class='listing__item__text__inside'><h5>"+rs[0].cinfoName+"</h5><div class='listing__item__text__rating'></div>"
-                    +"<ul><li><span class='icon_pin_alt'></span>"+rs[0].cinfoAddress+"</li>"
-                    +"<li><span class='icon_phone'></span>"+rs[0].phone+"</li></ul></div></div></div></div>",
-            latlng: new kakao.maps.LatLng(rs[0].cinfoLttd, rs[0].cinfoHrdns)
-        }])
-    })
-    map = new kakao.maps.Map(document.getElementById('map'), { 
-           // 지도의 중심좌표
-           center : new kakao.maps.LatLng(36.2683, 127.6358), 
-           // 지도의 확대 레벨
-           level : 10 
-	});
-	
-	/* $list.forEach(function(li,i){
-		console.log(li);
-	}) */
-	
-   /*  $.ajax({
-        url: 'carMap.ca',
-        async: false,
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-        data: formData,
-
-        success: function (result) {
-            result.forEach(function (rs, i) {
-                $positions.push([{
-                    content: "<div style='cursor: pointer'onclick='detail(\""+rs.cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs.cinfoImg1+"\');> <img src='resources/img/carList/icon/ocean.png' alt=''></div>"
-                            +"<div class='listing__item__text'><div class='listing__item__text__inside'><h5>"+rs.cinfoName+"</h5><div class='listing__item__text__rating'></div>"
-                            +"<ul><li><span class='icon_pin_alt'></span>"+rs.cinfoAddress+"</li>"
-                            +"<li><span class='icon_phone'></span>"+rs.phone+"</li></ul></div></div></div></div>",
-                    latlng: new kakao.maps.LatLng(rs.cinfoLttd, rs.cinfoHrdns)
-                }])
-            })
-            map = new kakao.maps.Map(document.getElementById('map'), { 
-            // 지도의 중심좌표
-            center : new kakao.maps.LatLng(36.2683, 127.6358), 
-            // 지도의 확대 레벨
-            level : 10 
-            });
-        }
-    }) */
+/* 좋아요알람 insert */
+ 
+ function LikeNotification(){
+    let memNo = $("#inputMemNo").val(); //작성자아이디번호 
+    let loginmemNo = $("#inputLoginMemNo").val(); //로그인한아이디번호
+    let cinfoNo = $("#cinfoNo").val(); //글번호 
+    let cinfoName = $("#cinfoName").val(); //글제목
+    console.log("좋아요알람 insert 함수: memNo : " + memNo + " ,로그인유저memNo : "+loginmemNo+ " ,글번호 : " + cinfoNo);
     
-    <c:if test="${filter != null}">
-		$("input[name=title]").val("${filter.title}");
-		$("select[name=sequence]").val("${filter.sequence}").attr("selected",true);
-		$("select[name=sequence]").val("${filter.sequence}").prop("selected","selected");
-	console.log("${filter.sequence}");
-		//$("#${filter.location}").attr("selected");
-	console.log($("select[name=sequence]").val("${filter.sequence}"))
-</c:if>
-// 마커 클러스터러를 생성합니다
-var clusterer = new kakao.maps.MarkerClusterer({
-    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-    minLevel: 10, // 클러스터 할 최소 지도 레벨
-    disableClickZoom: true // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
-});
-
-var markers = $($positions).map(function(i, position) {
-        return new kakao.maps.Marker({
-            position : position[0].latlng
-        });
-       
-    });
-
-// 클러스터러에 마커들을 추가합니다
-clusterer.addMarkers(markers);
-
-// 여러개의 마커들마다 click 값을 부여합니다.
-for(let i = 0 ; i < markers.length; i++ ){
-    kakao.maps.event.addListener(markers[i], 'click', function() {
-        // 마커 위에 인포윈도우를 표시합니다
-        new kakao.maps.InfoWindow({
-                content : $positions[i][0].content,
-                removable :true}).open(map, markers[i]) 
-    });
+	$.ajax({
+		
+		 url: "insertAlarm.me",
+         type: "POST",
+         data: { 
+        	 
+        	 memNo: memNo,  // 알림 수신자 ID
+             userNo: loginmemNo,   // 알림 발신자 ID
+             alaCategory: "like",        // 알림 유형 (예: 좋아요)
+             //cinfoName : cinfoName, //글제목 
+             alaContent: cinfoName.substring(0, 10) +"..글에 좋아요가 눌렸습니다. "  // 알림 내용
+         
+         },
+         success: function(result) {
+             if (result>0) {
+             	console.log("좌여 알람 인서트성공 : " + result);
+             } else {
+             	console.log("인서트실패패패패패");
+                 
+             }
+         },
+         error: function(jqXHR, textStatus, errorThrown) {
+             console.log("Error: " + textStatus + " " + errorThrown);
+         }
+		
+		
+		
+	});
+	
+	
+	
 }
+ 
+ 
+ 
+/* 좋아요알람 insert 끝 */
 
-// 마커 클러스터러에 클릭이벤트를 등록합니다
-// 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
-// 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
-kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
 
-// 현재 지도 레벨에서 1레벨 확대한 레벨
-var level = map.getLevel()-1;
 
-// 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
-map.setLevel(level, {anchor: cluster.getCenter()});
+$(function(){
+	$('.listing__item').on('click', function(){
+		console.log($(this).find('#cinfoNo').val());
+		location.href='detail.ca?cinfoNo=' +$(this).find('#cinfoNo').val();
+	})
+
 });
 
-});
-detail = function(cinfoNo){
-location.href='detail.ca?cinfoNo=' +cinfoNo; 
-}
 </script>
  <%-- <jsp:include page="../common/footer.jsp"/> --%>
 <%--      <jsp:include page="../common/footer.jsp"/>	 --%>
 </div><!-- master-area -->
     <!-- Js Plugins -->
 
-<!--     <script src="resources/member/assets/js/modernizr-2.6.2.min.js"></script>
-    <script src="resources/member/assets/js/jquery-1.10.2.min.js"></script>
-    <script src="resources/member/js/main.js"></script> -->
 
 <%-- <jsp:include page="../common/footer.jsp"/> 푸터에서 마지막 css  --%>
 

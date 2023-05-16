@@ -316,14 +316,14 @@
                                                 <img src="resources/img/carList/icon/ocean.png" alt="">
 	
                                                 <div class="checkbox innercheckbox">
-                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }">
+                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }" id="cinfoNo">
                                                     <input type="checkbox" name="check2" value="${status.count}" class="check-item checkbox2" id="check-item${status.count}">
                                                     <label for="check-item${status.count}" ></label>
                                                 </div>
                                                 
                                                 <!--  -->
 			                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
-			                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }" >
+			                                              
 			                                                <div class="listing__item__pic__btns">
 			                                                   <!--  <a href="#"><span class="icon_zoom-in_alt"></span></a> -->
 			                                                      <script>
@@ -600,6 +600,15 @@ function like(cinfoNo , id){
  
  
  /* 좌여 스크립트 끝  */
+ 
+ 
+ $(function(){
+	$('.listing__item').on('click', function(){
+		console.log($(this).find('#cinfoNo').val());
+		location.href='detail.ca?cinfoNo=' +$(this).find('#cinfoNo').val();
+	})
+
+});
 </script>
  <%-- <jsp:include page="../common/footer.jsp"/> --%>
 <%--      <jsp:include page="../common/footer.jsp"/>	 --%>

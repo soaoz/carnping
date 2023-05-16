@@ -10,6 +10,7 @@ import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
+import com.kh.carnping.member.model.vo.Alarm;
 import com.kh.carnping.member.model.vo.Like;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -212,6 +213,25 @@ public class MemberDao {
 	public int emailUpdate(SqlSessionTemplate sqlSession,Member m) {
 		return sqlSession.update("memberMapper.emailUpdate", m);
 	}
+	
+	public int insertAlarm(SqlSessionTemplate sqlSession,Alarm al) {
+		return sqlSession.insert("memberMapper.insertAlarm", al);
+	}
+	
+	public int selectMyAlarmListCount(SqlSessionTemplate sqlSession,String memNo) {
+		return sqlSession.selectOne("memberMapper.selectMyAlarmListCount", memNo);
+	}
+	
+	public ArrayList<Alarm> selectMyAlarmList(SqlSessionTemplate sqlSession,PageInfo pi,String memNo){
+		//페이지오프셋 : 몇개의 게시글을 건너 뛸 건지
+		int offset = (pi.getCurrentPage()-1 )*pi.getBoardLimit();
+		//총 몇개를 조회해갈껀지 
+		int limit =pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMyAlarmList", memNo , rowBounds);
+	}
+	
 
 
 }

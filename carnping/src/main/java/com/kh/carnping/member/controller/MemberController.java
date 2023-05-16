@@ -58,6 +58,7 @@ import com.google.api.services.people.v1.model.Person;
 import com.google.api.services.people.v1.model.PhoneNumber;
 import com.kh.carnping.member.model.service.MailSendService;
 import com.kh.carnping.member.model.service.MemberServiceImpl;
+import com.kh.carnping.member.model.vo.Alarm;
 import com.kh.carnping.member.model.vo.GoogleLoginBO;
 import com.kh.carnping.member.model.vo.KakaoLoginBO;
 import com.kh.carnping.member.model.vo.Like;
@@ -540,6 +541,7 @@ public class MemberController {
 	@RequestMapping(value = "myPostList.me", produces = "application/json; charset=utf-8")
 	public Map<String, Object> myPostList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
 
+		System.out.println("게시글목록조회컨트롤러탄다");
 		Map<String, Object> result = new HashMap<String, Object>();
 		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
 		
@@ -559,7 +561,7 @@ public class MemberController {
 		
 		//System.out.println(listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
 		//System.out.println("포스트리스트컨트롤러탐 유저아이디 : " + memId);
-		//System.out.println(list);
+		System.out.println("게시글목록조회한리스트"+list);
 		//sSystem.out.println(list);
 		result.put("list", list);
 		result.put("listcount", listcount);
@@ -874,6 +876,74 @@ public class MemberController {
 		return mailService.joinEmail(email);
 			
 	}
+	
+	
+	//좋아요시 알람에 추가 
+	@RequestMapping("insertAlarm.me")
+	@ResponseBody
+	public int insertAlarm(HttpSession session, Alarm al ) {
+		//
+		System.out.println("좋아요알람컨트롤러탄다>>>>>>>>>>>>");
+		System.out.println(al);
+		//System.out.println("m : "+memNo+" , "+ userNo+" , "+  type+" , "+  cinfoName +" , "+ message);
+		//String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+
+		
+		int result = 0;
+		result = mService.insertAlarm(al);
+		
+		
+		return result;
+			
+	}
+	
+	//활동 알람 내역에서 알람 테이블 조회하기
+	
+	//내 알ㄻ 리스트 조회
+	@ResponseBody
+	@RequestMapping(value = "myAlarmSelectList.me", produces = "application/json; charset=utf-8")
+	public Map<String, Object> myAlarmList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
+		
+		System.out.println("알람리스트ㅗ회 컨트롤러 탄다 ");
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		int listCount = mService.selectMyAlarmListCount(memNo);  // 내 알람 총갯수
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		//ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
+		ArrayList<Alarm> list = mService.selectMyAlarmList(pi, memNo);
+		
+		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
+		int page = pi.getCurrentPage(); 	// 현재페이지
+		int pageLimit = pi.getPageLimit();		// 페이징바의 페이지 최대개수  (1~10)(11~20) ->  10개 
+		int boardLimit = pi.getBoardLimit(); //보여질 보드게시글갯수
+		int maxPage = pi.getMaxPage(); // 가장 마지막페이지 (총페이지) 전체게시글의 가장 끝
+		int startPage = pi.getStartPage(); //페이징바의 시작수  4번선택시 1, 12번시 11
+		int endPage = pi.getEndPage(); // 페이징바의 끝수 4번선택시10, 12선택시 20
+		
+		//System.out.println("대댇ㄱ그글"+listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
+		System.out.println("알람 컨트롤러에서 조회하고 난 후 리스트값: " + list);
+		//sSystem.out.println(list);
+		result.put("list", list);
+		result.put("listcount", listcount);
+		result.put("page", page);
+		result.put("pageLimit", pageLimit);
+		result.put("boardLimit", boardLimit);
+		result.put("maxPage", maxPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		
+		return result;
+	}
+	
+	
+	
+	//활동 알람 내역에서 알람 테이블 조회하기끝
+	
+	
+	
 	
 	//문자인증-----------------------------------------------
 	/*@ResponseBody

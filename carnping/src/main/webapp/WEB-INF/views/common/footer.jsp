@@ -91,6 +91,30 @@
       transition: color .4s ease 0s,background-color .4s ease 0s
   }
 
+	.scroll-top {
+		position: fixed;
+		right: 50px;
+		bottom: 100px;
+		z-index: 100;
+		background-color: #999;
+		opacity: .8;
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		border: none;
+		color: #fff;
+	}
+	.scroll-top:hover {
+		cursor: pointer;
+		background-color: #0ca678;
+	}	
+	#iframeContainer {
+	  position: fixed;
+	  bottom: 250;
+	  right: 50;
+	  z-index: 9999; /* 필요한 경우 다른 요소들보다 상위로 위치시킬 수 있습니다. */
+	}
+
 </style>
 </head>
 
@@ -168,7 +192,37 @@
                 </div>
             </div>
         </div>
+
+    <button class="scroll-top" id="js-button" onclick="toggleIframe()">
+    BOT
+	</button>
+	<div id="iframeContainer"  style="display: none;">
+	<iframe
+    allow="microphone;"
+    width="350"
+    height="430"
+    src="https://console.dialogflow.com/api-client/demo/embedded/210e2b58-2fbe-4534-b034-514f1193f0ed">
+	</iframe>
+
+	</div>
+	<script>
+	var iframeVisible = true; // 초기에 iframe이 표시됨
+
+	function toggleIframe() {
+	  var container = document.getElementById("iframeContainer");
+	  
+	  if (iframeVisible) {
+	    container.style.display = "none"; // iframe을 숨김
+	  } else {
+	    container.style.display = "block"; // iframe을 표시
+	  }
+	  
+	  iframeVisible = !iframeVisible; // 상태 업데이트
+	}
+
+	</script>
     </footer>
+
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
