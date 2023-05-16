@@ -346,7 +346,7 @@
 			    size: "large"
 			  });
 			  
-			  
+			  /*
 			  $(function(){
 				  
 					$.ajax({
@@ -388,7 +388,7 @@
 									}
 									//html += "<td>"+result.list[i].alaContent+"</td>";
 										if (result.list[i].alaCategory=='like') {
-									html += "<td><a herf="detail.ca?cinfoNo="><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> 글에 좋아요가 눌렸습니다.</td></a>";
+									html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> 글에 좋아요가 눌렸습니다.</td>";
 										}
 									html += "<td>"+result.list[i].alaDate+"</td>";
 									html += "</tr>";
@@ -399,6 +399,7 @@
 							
 				  
 			  });
+					*/
 			  
 			  
 			  
