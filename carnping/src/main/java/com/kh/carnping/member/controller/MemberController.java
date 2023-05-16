@@ -938,9 +938,27 @@ public class MemberController {
 		return result;
 	}
 	
+	//확인하지않은 알람은 따로 만들기 
 	
+	//헤더에서 활동알람내역 조회하기
+	/*@RequestMapping("headerAlarmSelectList.me")
+	public String headerAlarmSelectList(HttpSession session, Model model) {
+		
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		//확인하지않은 알람카운트 조회?
+		//int listCount = mService.selectMyLikeListCount(memId);
+		
 	
-	//활동 알람 내역에서 알람 테이블 조회하기끝
+		ArrayList<Alarm> list = mService.selectMyAlarmList(memNo);
+		//System.out.println(list);
+		//System.out.println(pi);
+		
+		//model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "member/myLikeList";
+	}*/
 	
 	
 	
