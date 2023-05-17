@@ -776,7 +776,6 @@ public class MemberController {
 		return "member/myLikeList";
 	}
 	
-	
 	//좋아요 조회
 	@ResponseBody
 	@RequestMapping(value="selectLike.me" , produces = "application/json; charset=utf-8")
@@ -789,15 +788,11 @@ public class MemberController {
 		Like l = new Like();
 		l.setCinfoNo(cinfoNo);
 		l.setMemNo(memId);
-		
-		//System.out.println(l.getMemNo() + l.getCinfoNo());
 		  
 		int result = mService.selectLikeCount(l);
-		//System.out.println(result);
 		 
 	    return new Gson().toJson(result);
 	}
-	
 	
 	//좋아요 삭제
 	@ResponseBody
@@ -805,8 +800,6 @@ public class MemberController {
 	public String deleteLike(String cinfoNo, HttpSession session) {
 		
 		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
-		//System.out.println("deleteLike컨트롤러탄다");
-		//System.out.println(cinfoNo);
 		
 		Like l = new Like();
 		l.setCinfoNo(cinfoNo);
