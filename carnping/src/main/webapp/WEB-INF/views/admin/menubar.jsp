@@ -13,10 +13,27 @@
 <link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/fontawesome.min.css"type="text/css">
 <link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/all.min.css"type="text/css">
 <link rel="stylesheet" href="resources/admin/assets/css/style.css" type="text/css">
-
+    <script type="text/javascript">
+    	window.addEventListener( "pageshow", function ( event ) {
+    	  var historyTraversal = event.persisted || 
+    	                         ( typeof window.performance != "undefined" && 
+    	                              window.performance.navigation.type === 2 );
+    	  if ( historyTraversal ) {
+    	    // Handle page restore.
+    	    window.location.reload();
+    	  }
+    	});
+    </script>
 </head>
 
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
+<c:if test="${ loginMember == null }">
+<script type="text/javascript">
+	alert("로그인 세션이 만료되었습니다. 로그인 페이지로 이동합니다.");
+	location.href = "loginForm.me";
+</script>
+</c:if>
+
 <c:if test="${ not empty alertMsg }">
 	<script>
 		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>

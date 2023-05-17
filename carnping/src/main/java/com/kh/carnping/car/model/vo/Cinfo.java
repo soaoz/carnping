@@ -50,4 +50,7 @@ public class Cinfo {
 	private String cinfoOgImg9; // 차박정보 서브이미지
 	private String cinfoOgImg10; // 차박정보 서브이미지
 	private String phone;
+	private String[] cinfoFacilitie; // 편의시설
+	private String[] cinfoDay; // 영업일
+	private String[] cinfoTags; // 태그
 }

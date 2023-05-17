@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.carnping.admin.model.dao.AdminDao;
+import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Report;
@@ -87,6 +88,11 @@ public class AdminServiceImpl implements AdminService{
 
 	public Verify selectVerify(String verifyNo) {
 		return aDao.selectVerify(sqlSession, verifyNo);
+	}
+
+
+	public int insertCar(Cinfo cinfo) {
+		return aDao.insertCar(sqlSession, cinfo);
 	}
 
 

@@ -170,17 +170,27 @@ public class CarController {
 	}
 	
 	// 차박 등록 
-	@RequestMapping(value = "insertCar.ca")
-	public String insertCar(Verify verify, MultipartFile[] upfile, Model model,HttpSession session){
+	@RequestMapping(value = "insertCarRequest.ca")
+	public String insertCarRequest(Verify verify, MultipartFile[] upfile, Model model,HttpSession session){
 		VerifyImg verifyImg = new VerifyImg();
-		
-		String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
-		String verifyDay = String.join(",", verify.getVerifyDay());
-		String verifyTags = String.join(",", verify.getVerifyTags());
-
-		verify.setVerifyDays(verifyDay);
-		verify.setVerifyFacilities(verifyFacilitie);
-		verify.setVerifyTag(verifyTags);
+		if(verify.getVerifyFacilitie() != null) {
+			String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());			
+			verify.setVerifyFacilities(verifyFacilitie);
+		} else {
+			verify.setVerifyFacilities("");
+		}
+		if(verify.getVerifyDay() != null) {
+			String verifyDay = String.join(",", verify.getVerifyDay());
+			verify.setVerifyDays(verifyDay);
+		}else {
+			verify.setVerifyDays("");
+		}
+		if(verify.getVerifyTags() != null) {
+			String verifyTags = String.join(",", verify.getVerifyTags());
+			verify.setVerifyTag(verifyTags);
+		}else {
+			verify.setVerifyTag("");
+		}
 		for(int i = 0; i < upfile.length; i++) {
 			if(!upfile[i].getOriginalFilename().equals("")) {
 				String changeName = new SaveFile().carFile(upfile[i], session);
@@ -231,8 +241,8 @@ public class CarController {
 			}
 		}
 		
-		int result1 = cService.insertCar(verify);
-		int result2 = cService.insertCarImg(verifyImg);
+		int result1 = cService.insertCarRequest(verify);
+		int result2 = cService.insertCarImgRequest(verifyImg);
 		System.out.println(result1);
 		System.out.println(result2);
 		

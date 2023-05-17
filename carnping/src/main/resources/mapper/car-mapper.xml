@@ -100,16 +100,16 @@
 		<result column="VERIFY_IMG8" property="verifyImg8"/>	
 		<result column="VERIFY_IMG9" property="verifyImg9"/>	
 		<result column="VERIFY_IMG10" property="verifyImg10"/>	
-		<result column="VERIFY_OG_IMG1" property="verifyImg1"/>	
-		<result column="VERIFY_OG_IMG2" property="verifyImg2"/>	
-		<result column="VERIFY_OG_IMG3" property="verifyImg3"/>	
-		<result column="VERIFY_OG_IMG4" property="verifyImg4"/>	
-		<result column="VERIFY_OG_IMG5" property="verifyImg5"/>	
-		<result column="VERIFY_OG_IMG6" property="verifyImg6"/>	
-		<result column="VERIFY_OG_IMG7" property="verifyImg7"/>	
-		<result column="VERIFY_OG_IMG8" property="verifyImg8"/>	
-		<result column="VERIFY_OG_IMG9" property="verifyImg9"/>	
-		<result column="VERIFY_OG_IMG10" property="verifyImg10"/>
+		<result column="VERIFY_OG_IMG1" property="verifyOgImg1"/>	
+		<result column="VERIFY_OG_IMG2" property="verifyOgImg2"/>	
+		<result column="VERIFY_OG_IMG3" property="verifyOgImg3"/>	
+		<result column="VERIFY_OG_IMG4" property="verifyOgImg4"/>	
+		<result column="VERIFY_OG_IMG5" property="verifyOgImg5"/>	
+		<result column="VERIFY_OG_IMG6" property="verifyOgImg6"/>	
+		<result column="VERIFY_OG_IMG7" property="verifyOgImg7"/>	
+		<result column="VERIFY_OG_IMG8" property="verifyOgImg8"/>	
+		<result column="VERIFY_OG_IMG9" property="verifyOgImg9"/>	
+		<result column="VERIFY_OG_IMG10" property="verifyOgImg10"/>
 	</resultMap>
 	
 	<resultMap type="VerifyImg" id="verifyImgResultMap">
@@ -398,8 +398,8 @@
 		 WHERE REVIEW_NO = #{reNo}
 	</update>
 	
-	<!-- 차박 등록 -->
-	<insert id="insertCar">
+	<!-- 차박 등록 요청 -->
+	<insert id="insertCarRequest">
 		INSERT
 		  INTO 
 		  		VERIFY
@@ -440,8 +440,8 @@
 				)
 	</insert>
 	
-	<!--  차박 이미지 등록 -->
-	<insert id="insertCarImg">
+	<!--  차박 이미지 등록 요청 -->
+	<insert id="insertCarImgRequest">
 	 	INSERT 
 	 	  INTO
 	 			VERIFY_IMG
@@ -494,7 +494,7 @@
 	 			)
 	</insert>
 
-	<insert id="deleteRequest">
+<!-- 	<insert id="deleteRequest">
 	INSERT
 		  INTO 
 		  		VERIFY
@@ -532,9 +532,9 @@
 				, SYSDATE
 				, #{result}
 				, #{loginMember}
-				)
+				)	
 	
-	</insert>
+	</insert> -->
 	<!-- <insert id="deleteImgRequest">
 	 	INSERT 
 	 	  INTO
@@ -568,6 +568,96 @@
 	 			)
 	</insert> -->
 	
+	<insert id="insertCar">
+		INSERT
+		  INTO  CINFO
+				(
+				CINFO_NO
+				, CINFO_NAME
+				, CINFO_CONTENT
+				, CINFO_NOTICE
+				, CINFO_LTTD
+				, CINFO_HRDNS
+				, CINFO_STATUS
+				, CINFO_ADDRESS
+				, CINFO_FACILITIES
+				, CINFO_DAYS
+				, CINFO_TAG
+				, CINFO_RGSTR_DATE
+				, MEM_NO
+				)
+		VALUES
+				(
+				'CAR' || SEQ_CAR_NO.NEXTVAL
+				,#{cinfoName}
+				,#{cinfoContent}
+				,#{cinfoNotice}
+				,#{cinfoLttd}
+				,#{cinfoHrdns}
+				,'Y'
+				,#{cinfoAddress}
+				,#{cinfoFacilities}
+				,#{cinfoDays}
+				,#{cinfoTag}
+				,#{cinfoRating}
+				, SYSDATE
+				,#{memNo}
+				)
+	</insert>
+	
+	<!-- 차박 이미지 -->
+	<insert id="insertCarImg">
+		INSERT
+		  INTO CINFO_IMG
+		  		(
+		  		CINFO_NO
+				,CINFO_IMG1
+				,CINFO_IMG2
+				,CINFO_IMG3
+				,CINFO_IMG4
+				,CINFO_IMG5
+				,CINFO_IMG6
+				,CINFO_IMG7
+				,CINFO_IMG8
+				,CINFO_IMG9
+				,CINFO_IMG10
+				,CINFO_OG_IMG1
+				,CINFO_OG_IMG2
+				,CINFO_OG_IMG3
+				,CINFO_OG_IMG4
+				,CINFO_OG_IMG5
+				,CINFO_OG_IMG6
+				,CINFO_OG_IMG7
+				,CINFO_OG_IMG8
+				,CINFO_OG_IMG9
+				,CINFO_OG_IMG10
+		  		)
+		 VALUES 
+		 		(
+		 	 	'CAR'||(select Last_number-1 CAR from user_sequences where sequence_name='SEQ_CAR_NO')
+		 		,#{cinfoImg1}
+		 		,#{cinfoImg2}
+		 		,#{cinfoImg3}
+		 		,#{cinfoImg4}
+		 		,#{cinfoImg5}
+		 		,#{cinfoImg6}
+		 		,#{cinfoImg7}
+		 		,#{cinfoImg8}
+		 		,#{cinfoImg9}
+		 		,#{cinfoImg10}
+		 		,#{cinfoOgImg1}
+		 		,#{cinfoOgImg2}
+		 		,#{cinfoOgImg3}
+		 		,#{cinfoOgImg4}
+		 		,#{cinfoOgImg5}
+		 		,#{cinfoOgImg6}
+		 		,#{cinfoOgImg7}
+		 		,#{cinfoOgImg8}
+		 		,#{cinfoOgImg9}
+		 		,#{cinfoOgImg10}
+		 		)
+	</insert>
+	
 	<!-- 요청 중복 체크 --> 
 	<select id="checkRequest" resultType="_int">
 		SELECT 
@@ -576,6 +666,7 @@
 		 WHERE  MEM_NO = #{loginMember}
 	</select>
 	
+	<!-- 차박 업데이트 요청 -->
 	<insert id="updateCarRequest">
 		INSERT
 		  INTO 
@@ -619,6 +710,8 @@
 				)
 	</insert>
 	
+	
+	<!-- 차박 이미지 업데이트 요청 -->
 	<insert id="updateCarImgRequest">
 	INSERT 
 	 	  INTO
@@ -635,6 +728,16 @@
 				,VERIFY_IMG8
 				,VERIFY_IMG9
 				,VERIFY_IMG10
+				,VERIFY_OG_IMG1
+				,VERIFY_OG_IMG2
+				,VERIFY_OG_IMG3
+				,VERIFY_OG_IMG4
+				,VERIFY_OG_IMG5
+				,VERIFY_OG_IMG6
+				,VERIFY_OG_IMG7
+				,VERIFY_OG_IMG8
+				,VERIFY_OG_IMG9
+				,VERIFY_OG_IMG10
 	 			)
 	 	VALUES
 	 			(
@@ -649,9 +752,20 @@
 	 			, #{verifyImg8}
 	 			, #{verifyImg9}
 	 			, #{verifyImg10}
+	 			, #{cinfoOgImg1}
+	 			, #{cinfoOgImg2}
+	 			, #{cinfoOgImg3}
+	 			, #{cinfoOgImg4}
+	 			, #{cinfoOgImg5}
+	 			, #{cinfoOgImg6}
+	 			, #{cinfoOgImg7}
+	 			, #{cinfoOgImg8}
+	 			, #{cinfoOgImg9}
+	 			, #{cinfoOgImg10}
 	 			)
 	</insert>
 	
+	<!-- 검수 리스트 -->
 	<select id="verifyList" resultMap="verifyResultMap">
 		SELECT
 				 VERIFY_NO
@@ -693,6 +807,8 @@
 		  JOIN  VERIFY_IMG USING(VERIFY_NO)
 	</select>
 	
+	
+	<!-- 검수 상세 리스트 -->
 		<select id="selectVerify" resultMap="verifyResultMap">
 		SELECT
 				 VERIFY_NO

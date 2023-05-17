@@ -132,9 +132,17 @@ public class AdminController {
 	public String carDetail() {
 		return "admin/carDetail";
 	}
-	
-	
 
+	// 차박게시글 등록
+	@RequestMapping("insertCar.ad")
+	public String insertCar(Cinfo cinfo, Model model) {
+		int result = aService.insertCar(cinfo);
+		
+		return "redirect:/verify.ad";
+	}
+	
+	
+	
 	
 	
 	/**

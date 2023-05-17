@@ -94,13 +94,13 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public int insertCar(Verify verify) {
-		return cDao.insertCar(sqlSession, verify);
+	public int insertCarRequest(Verify verify) {
+		return cDao.insertCarRequest(sqlSession, verify);
 	}
 
 	@Override
-	public int insertCarImg(VerifyImg verifyImg) {
-		return cDao.insertCarImg(sqlSession, verifyImg);
+	public int insertCarImgRequest(VerifyImg verifyImg) {
+		return cDao.insertCarImgRequest(sqlSession, verifyImg);
 	}
 
 	@Override

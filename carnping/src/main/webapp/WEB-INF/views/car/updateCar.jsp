@@ -483,23 +483,23 @@
 						</table>
 
 						<input type="file" name="upfile" id="file2" style="display: none;"
-							onchange="loadImg(this,2);"> <input type="file"
+							onchange="loadImg(this,2);"  accept="image/*"> <input type="file"
 							name="upfile" id="file3" style="display: none;"
-							onchange="loadImg(this,3);"> <input type="file"
+							onchange="loadImg(this,3);" accept="image/*"> <input type="file"
 							name="upfile" id="file4" style="display: none;"
-							onchange="loadImg(this,4);"> <input type="file"
+							onchange="loadImg(this,4);" accept="image/*"> <input type="file"
 							name="upfile" id="file5" style="display: none;"
-							onchange="loadImg(this,5);"> <input type="file"
+							onchange="loadImg(this,5);" accept="image/*"> <input type="file"
 							name="upfile" id="file6" style="display: none;"
-							onchange="loadImg(this,6);"> <input type="file"
+							onchange="loadImg(this,6);" accept="image/*"> <input type="file"
 							name="upfile" id="file7" style="display: none;"
-							onchange="loadImg(this,7);"> <input type="file"
+							onchange="loadImg(this,7);" accept="image/*"> <input type="file"
 							name="upfile" id="file8" style="display: none;"
-							onchange="loadImg(this,8);"> <input type="file"
+							onchange="loadImg(this,8);" accept="image/*"> <input type="file"
 							name="upfile" id="file9" style="display: none;"
-							onchange="loadImg(this,9);"> <input type="file"
+							onchange="loadImg(this,9);" accept="image/*"> <input type="file"
 							name="upfile" id="file10" style="display: none;"
-							onchange="loadImg(this,10);"> <input type="hidden"
+							onchange="loadImg(this,10);" > <input type="hidden"
 							name="memNo" value="${ loginMember.memNo }">
 					</div>
 				</div>
