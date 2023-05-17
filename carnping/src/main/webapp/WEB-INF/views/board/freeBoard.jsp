@@ -44,31 +44,6 @@
     
 
     <!-- Filter Begin -->
-    <div class="filter nice-scroll">
-        <div class="filter__title">
-            <h5><i class="fa fa-filter"></i> 지역검색</h5>
-        </div>
-        <div class="filter__search">
-            <input type="text">
-        </div>
-        <div class="filter__select">
-            <select>
-                <option value="">서울</option>
-                <option value="">경기</option>
-                <option value="">인천</option>
-                <option value="">대전</option>
-                <option value="">대구</option>
-                <option value="">광주</option>
-                <option value="">부산</option>
-                <option value="">제주도</option>
-            </select>
-        </div>
-       
-        
-        
-       
-        
-    </div>
     <!-- Filter End -->
 
     <!-- Listing Section Begin -->
@@ -90,9 +65,6 @@
             <div class="listing__item">
                 <div class="listing__item__pic_IJS set-bg" data-setbg="${ b.boardChangeImg1 }"> <!-- 나눔상품이미지 -->
                     
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_heart_alt"></span></a> <!-- 찜하기 버튼 -->
-                    </div>
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
@@ -101,7 +73,7 @@
                         		${ b.boardTitle }</h5>
                         <div class="listing__item__text__rating">
                            
-                            <h6>${ b.memNo }</h6>
+                            <h6>${ b.memId }</h6>
                         </div>
                         <ul>
                             <li><span class="icon_pin_alt"></span>${ b.location }</li>

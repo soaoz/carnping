@@ -87,6 +87,7 @@
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
+
                                         <c:choose>
 	                                        <c:when test="${ not empty b.nickName }">
 	                                        	<td>${ b.nickName }</td>
@@ -95,6 +96,7 @@
 	                                        	<td>${ b.memId }</td>
 	                                       	</c:otherwise>
                                         </c:choose>
+
                                         <th>작성일</th>
                                         <td>${ b.createDate }</td>
                                     </tr>
@@ -113,7 +115,7 @@
                                 </table>
                                 <br>
                     	
-                    			<c:if test="${ not empty loginMember.memId and loginMember.memId eq b.memNo }">
+                    			<c:if test="${ not empty loginMember.memId and loginMember.memId eq b.memId }">
                                 <div align="center">
                                     <!-- 수정하기, 삭제하기 버튼은 이글이 본인글일 경우만 보여져야됨 -->
                                     <button type="button" class="btn btn-success" style="background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);" onclick="postFormSubmit(1)">수정하기</button> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
@@ -121,7 +123,7 @@
                                 </div><br><br>
                                 
                                 <form id="postForm" action="" method="post">
-									<input type="hidden" name="bno" value="${ b.boardNo }"/>
+									<input type="hidden" name="bno" value="${ b.boardNo }" id="boardNo"/>
 									<input type="hidden" name="filePath" value="${ b.boardChangeImg1 }">
 				            	</form>
                                 
@@ -159,56 +161,62 @@
         
     </section>
     <script>
-        
-        function postFormSubmit(num){
-            
-            if(num == 1){ // 수정하기 클릭시
-                $("#postForm").attr("action", "freeBoardUpdateForm.bo").submit();
-            }else{ // 삭제하기 클릭시
-                $("#postForm").attr("action", "freeBoardDelete.bo").submit();
-            }
-        }
-        
-        
-        $(function(){
-            selectFreeReplyList(); // 화면이 랜더링 되자마자 댓글 조회를 하겠다
-        })
-        
-        
-        function addFreeReply(){
-        
-            // 스페이스바 같은것만 치고 댓글 입력하게 안되게 조건 달기
-            if($("#freeContent").val().trim().length != 0){
-                // 댓글 쓰는 칸의 val가 trim(공백제거 된)후 length 길이가 0이 아닐때 == 유효한 댓글이 맞음
-                
-                $.ajax({
-                    url:"freeReplyInsert.bo",
-                    data:{
-                        boardNo:'${b.boardNo}',
-                        commContent:$("#freeContent").val(),
-                        memNo:'${loginMember.memNo}' // 문자열은 이렇게 묶어야함
-                    },
-                    success:function(status){
-                        if(status == "success"){
-                            selectFreeReplyList();
-                            $("#freeContent").val("");
-                            console.log("dddd");
-                        }
-                    },
-                    error:function(){
-                        console.log("댓글 작성용 ajax 통신 실패!");
-                    }
-                    
-                });
-                
-            }else{
-                alert("댓글 작성 후 등록 요청하세용!")
-            }
-        
-        }
-        
-        
-        
+    
+    function postFormSubmit(num){
+		
+		if(num == 1){ // 수정하기 클릭시
+			$("#postForm").attr("action", "freeBoardUpdateForm.bo").submit();
+		}else{ // 삭제하기 클릭시
+			$("#postForm").attr("action", "freeBoardDelete.bo").submit();
+		}
+	}
+    
+    
+    $(function(){
+		selectFreeReplyList(); // 화면이 랜더링 되자마자 댓글 조회를 하겠다
+	})
+	
+	
+    function addFreeReply(){
+       
+          // 스페이스바 같은것만 치고 댓글 입력하게 안되게 조건 달기
+          if($("#freeContent").val().trim().length != 0){
+             // 댓글 쓰는 칸의 val가 trim(공백제거 된)후 length 길이가 0이 아닐때 == 유효한 댓글이 맞음
+             
+             $.ajax({
+            	 url:"freeReplyInsert.bo",
+            	 data:{
+            		 boardNo:'${b.boardNo}',
+            		 commContent:$("#freeContent").val(),
+            		 memNo:'${loginMember.memNo}' // 문자열은 이렇게 묶어야함
+            	 },
+            	 success:function(status){
+            		 if(status == "success"){
+            			 selectFreeReplyList();
+            			 $("#freeContent").val("");
+            			 console.log("dddd");
+            		 }
+            		 
+            		 
+            		 freeReplyNotification();// 댓글 등록이 성공하면 알람테이블에 담기
+            		 
+            		 
+            	 },
+            	 error:function(){
+            		 console.log("댓글 작성용 ajax 통신 실패!");
+            	 }
+            	 
+             });
+             
+          }else{
+             alert("댓글 작성 후 등록 요청하세용!")
+          }
+       
+       }
+    
+    
+    
+
 
         
         function selectFreeReplyList(){ // 해당 게시글에 딸린 댓글 조회리스트 조회용 ajax
@@ -249,8 +257,52 @@
             
         }
     
-        
-        
+
+   	
+   	/* 댓글달림 알람테이블에 insert */
+   	function freeReplyNotification(){
+   	
+   	    let memNo = $("#memNo").text(); //작성자아이디번호 
+   	  //  let boardNo = "${ b.boardNo }"  //글제목
+   	    
+   	   console.log("댓글알람 작성자 : " + memNo );
+   	    
+   		 $.ajax({
+   			
+   			 url: "insertFreeReplyAlarm.me",
+   	         type: "POST",
+   	         data: {
+   	        	
+   	        	 memNo: memNo,  // 알림 수신자 ID
+   	             userNo: '${loginMember.memNo}',   // 알림 발신자 ID
+   	             alaCategory: "fReply",        // 알림 유형 : 무료게시판 댓글
+   	             //cinfoName : cinfoName, //글제목 
+   	             refNo:"${ b.boardNo }",
+   	             //alaContent: cinfoName.substring(0, 10) +"..글에 좋아요가 눌렸습니다. "  // 알림 내용
+   	         
+   	         },
+   	         success: function(result) {
+   	             if (result>0) {
+   	             	console.log("좌여 알람 인서트성공 : " + result);
+   	             } else {
+   	             	console.log("인서트실패패패패패");
+   	                 
+   	             }
+   	         },
+   	         error: function(jqXHR, textStatus, errorThrown) {
+   	             console.log("Error: " + textStatus + " " + errorThrown);
+   	         }
+   		}); 
+   	}
+   	 
+   		
+   		
+   		
+   	
+   
+    
+    
+
     </script>
 
     <div class="modal" id="reportModal" data-backdrop="static">

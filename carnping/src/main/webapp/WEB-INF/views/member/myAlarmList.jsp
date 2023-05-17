@@ -136,13 +136,29 @@
        .pagination > li.active > a:hover{
        		cursor: pointer;
        }
+       .highlight {
+		  color: #0CA678;
+		  font-size : 14px;
+		}
+
+
+
+
+
+
+       
+
+
 		
 </style>
 </head>
 <body>
 
 <input type = "hidden" name="memId" id="memId" value="${ loginMember.memId }">
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="../common/header.jsp"/> 
+
+
+
 <jsp:include page="../common/menubar.jsp"/>   
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
@@ -200,7 +216,8 @@
                         <br><br>
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                              <a class="nav-link active" data-toggle="tab" aria-current="page" href="myAlarmList.me">활동 알림</a>
+                              <a class="nav-link active" data-toggle="tab" aria-current="page" href="myAlarmList.me" onclick="myAlarmList();">활동 알림</a>
+                              
                             </li>
                             <li class="nav-item">
                              <!--  <a class="nav-link" href="myPostList.me">내가 쓴 글</a> -->
@@ -234,110 +251,234 @@
 				</table>
 				
 				<script type="text/javascript">
-				    $(document).on("change", ".ckbox-all", function(){
-				        var checked = $(this).is(":checked");
-				        $(".ckbox").prop("checked", checked);
-				    });
+					$(document).on("change", ".ckbox-all", function(){
+						var checked = $(this).is(":checked");
+						$(".ckbox").prop("checked", checked);
+					});
 				
-				    
-				    
-				    
-				    //내가 쓴 게시글 목록
-				    function myPostList(cpage){
-				        $.ajax({
-				            url: "myPostList.me",
-				            type: "POST",
-				            data:  { cpage: cpage }, 
-				            success: function(result) {
-				
-				            	console.log(result);
-				            	console.log(result.list[1].boardNo);
-				            	
-				                var html = "";
-				                var value = "";
-				
-				                value+= "<tr id='tr1'>";
-				                value+= "<th width='50'>선택</th>";
-				                value+= "<th width='40'>번호</th>";
-				                value+= "<th width='150'>카테고리</th>";
-				                value+= "<th width='500' style='text-align: center;'>제목</th>";
-				                value+= "<th width='70'>조회수</th>";
-				                value+= "<th width='150'>작성일</th>";
-				                value+= "</tr>";
-				                $("#result thead").html(value);
-				
-				                if (result.list.length == 0) {
-				                    html += "<tr><td colspan='5' align='center'>존재하는 글이 없습니다</td></tr>";
-				                } else {
-				                    for(let i in result.list){
-				                        html += "<tr>";
-				                        html += "<td><input type='checkbox' class='ckbox'></td>";
-				                        html += "<td>"+result.list[i].boardNo+"</td>";
-				                        if (result.list[i].boardNo.startsWith('BRD')) {
-				                            html += "<td>[자유게시판]</td>";
-				                        } else if (result.list[i].boardNo.startsWith('PRT')) {
-				                            html += "<td>[소모임]</td>";
-				                        }  else {
-				                            html += "<td>[무료나눔]</td>";
-														    }
-        			                    html += "<td>"+result.list[i].boardTitle+"</td>";
-        			                    html += "<td>"+result.list[i].count+"</td>";
-        			                    html += "<td>"+result.list[i].createDate+"</td>";
-        			                    html += "</tr>";
+					
+					//첫화면에서도 뜨게
+					$(document).ready(function() {
+						myAlarmList();
+					});
+					
+					
+					
+					//내 알람 목록
+					function myAlarmList(cpage){
+						
+						
+							$.ajax({
+								url: "myAlarmSelectList.me",
+								type: "POST",
+								data:  { cpage: cpage }, 
+								success: function(result) {
+					
+									console.log(result);
+									
+									
+									var html = "";
+									var value = "";
+									let likeCounts = {};
+									
+									value+= "<tr id='tr1'>";
+									value+= "<th width='50'>선택</th>";
+									value+= "<th width='50'>번호</th>";
+									value+= "<th width='150'>카테고리</th>";
+									value+= "<th width='500' style='text-align: center;'>제목</th>";
+									value+= "<th width='150'>작성일</th>";
+									value+= "</tr>";
+									$("#result thead").html(value);
+					
+									if (result.list.length == 0) {
+										html += "<tr><td colspan='5' align='center'>존재하는 알림이 없습니다.</td></tr>";
+									} else {
+										for(let i in result.list){
+											 const alaNo = result.list[i].alaNo;
+											
+											html += "<tr>";
+											html += "<td><input type='checkbox' class='ckbox'></td>";
+											html += "<td>"+result.list[i].alaNo+"</td>";
+											// html += "<td>"+result.list[i].alaCategory+"</td>";
+											
+											if (result.list[i].alaCategory=='like') {
+												html += "<td>[좋아요]</td>";
+											} else if (result.list[i].alaCategory=='fReply') {
+												html += "<td>[댓글]</td>";
+											}  else {
+												html += "<td>[승인]</td>";
+											}
+											//html += "<td>"+result.list[i].alaContent+"</td>";
+												if (result.list[i].alaCategory=='like') {
+											/* 		html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> ";
+												    html += "글에 좋아요";
+												    if (likeCounts[alaNo] > 1) {
+												      html += "(" + likeCounts[alaNo] + ")";
+												    }
+												    html += "가 눌렸습니다.</td>"; */
+													html += "<td>" + result.list[i].alaContent+"</td>";
+												}else if (result.list[i].alaCategory=='fReply') {
+													//~글에 댓글이 달렸습니다. html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> 글에 좋아요가 눌렸습니다.</td>";
+													html += "<td>" + result.list[i].alaContent+"</td>";
+												}
+											html += "<td>"+result.list[i].alaDate+"</td>";
+											html += "</tr>";
+			
+										}
+									}
+											$("#result tbody").html(html);
+									
+									
+									
+									
+									var a = '';
+										var page = result.page;
+										var startpage = result.startPage;
+										var endpage = result.endPage;
+										var list = result.list;
+										var maxpage = result.maxPage;
+										
+										console.log(page+" , "+startpage+" , "+endpage+" , "+list);
+										
+										a += '<ul class="pagination" align="center">';
+										if(page== 1) {
+											// 실행할 코드
+											console.log("페이지가1임")
+											a += '<li class="page-item disabled"><a class="page-link" href="">이전</a></li>';
+										}else{
+											console.log("페이지가1이아님")
+											a += '<li class="page-item"><a class="page-link"  onclick="myAlarmList('+(page- 1)+');">이전</a></li>';
+											
+										}
+										
+										for(var num = startpage; num<= endpage; num++){
+												a += '<li class="page-item active pagebtn"><a class="page-link pagebtn" onclick="myAlarmList(' + num +'); return false;">' + num + '</a></li>'
+											}
+										
+										if(page== maxpage){
+											a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
+										}else{
+											a += '<li class="page-item"><a class="page-link"  onclick="myAlarmList(' + (page + 1) +'); return false;">다음</a></li>';
+										}
+										
+										
+										a += '</ul>';
+										a += ' </div>';
+					
+
+										$("#pagingArea").html(a);
+
+									
 		
-        			                }
-        			            	 $("#result tbody").html(html);
-        			            }
-			                    
-				                
-				                
-				                
-				                var a = '';
-					              var page = result.page;
-					              var startpage = result.startPage;
-					              var endpage = result.endPage;
-					              var list = result.list;
-					              var maxpage = result.maxPage;
-					              
-					              console.log(page+" , "+startpage+" , "+endpage+" , "+list);
-					             
-				            	  a += '<ul class="pagination" align="center">';
-				            	  if(page== 1) {
-				            		    // 실행할 코드
-				            		    console.log("페이지가1임")
-					            	  a += '<li class="page-item disabled"><a class="page-link" href="">이전</a></li>';
-				            	  }else{
-				            		    console.log("페이지가1이아님")
-					            	  a += '<li class="page-item"><a class="page-link"  onclick="myPostList('+(page- 1)+');">이전</a></li>';
-				            		  
-				            	  }
-				            		
-					              for(var num = startpage; num<= endpage; num++){
-			                    		 a += '<li class="page-item active pagebtn"><a class="page-link pagebtn" onclick="myPostList(' + num +'); return false;">' + num + '</a></li>'
-		                    		 }
-					            	
-					              if(page== maxpage){
-					            	  a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
-					              }else{
-					            	  a += '<li class="page-item"><a class="page-link"  onclick="myPostList(' + (page + 1) +'); return false;">다음</a></li>';
-					              }
-					              
-					              
-				            	  a += '</ul>';
-				            	  a += ' </div>';
-				
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									console.log("Error: " + textStatus + " " + errorThrown);
+								}
+								
+							});
+						
+						
+						
+					}
+					
+					
+					
+				    //내가 쓴 게시글 목록
+				function myPostList(cpage){
+					$.ajax({
+						url: "myPostList.me",
+						type: "POST",
+						data:  { cpage: cpage }, 
+						success: function(result) {
+			
+							console.log(result);
+							//console.log(result.list[1].boardNo);
+							
+							var html = "";
+							var value = "";
+			
+							value+= "<tr id='tr1'>";
+							value+= "<th width='50'>선택</th>";
+							value+= "<th width='50'>번호</th>";
+							value+= "<th width='150'>카테고리</th>";
+							value+= "<th width='500' style='text-align: center;'>제목</th>";
+							value+= "<th width='70'>조회수</th>";
+							value+= "<th width='150'>작성일</th>";
+							value+= "</tr>";
+							$("#result thead").html(value);
+			
+							if (result.list.length == 0) {
+								html += "<tr><td colspan='6' align='center'>작성한 글이 없습니다.</td></tr>";
+							} else {
+								for(let i in result.list){
+									html += "<tr>";
+									html += "<td><input type='checkbox' class='ckbox'></td>";
+									html += "<td>"+result.list[i].boardNo+"</td>";
+									if (result.list[i].boardNo.startsWith('BRD')) {
+										html += "<td>[자유게시판]</td>";
+									} else if (result.list[i].boardNo.startsWith('PRT')) {
+										html += "<td>[소모임]</td>";
+									}  else {
+										html += "<td>[무료나눔]</td>";
+														}
+									html += "<td>"+result.list[i].boardTitle+"</td>";
+									html += "<td>"+result.list[i].count+"</td>";
+									html += "<td>"+result.list[i].createDate+"</td>";
+									html += "</tr>";
 
-				            	  $("#pagingArea").html(a);
+								}
+							}
+									$("#result tbody").html(html);
+							
+							
+							
+							
+							var a = '';
+								var page = result.page;
+								var startpage = result.startPage;
+								var endpage = result.endPage;
+								var list = result.list;
+								var maxpage = result.maxPage;
+								
+								console.log(page+" , "+startpage+" , "+endpage+" , "+list);
+								
+								a += '<ul class="pagination" align="center">';
+								if(page== 1) {
+									// 실행할 코드
+									console.log("페이지가1임")
+									a += '<li class="page-item disabled"><a class="page-link" href="">이전</a></li>';
+								}else{
+									console.log("페이지가1이아님")
+									a += '<li class="page-item"><a class="page-link"  onclick="myPostList('+(page- 1)+');">이전</a></li>';
+									
+								}
+								
+								for(var num = startpage; num<= endpage; num++){
+										a += '<li class="page-item active pagebtn"><a class="page-link pagebtn" onclick="myPostList(' + num +'); return false;">' + num + '</a></li>'
+									}
+								
+								if(page== maxpage){
+									a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
+								}else{
+									a += '<li class="page-item"><a class="page-link"  onclick="myPostList(' + (page + 1) +'); return false;">다음</a></li>';
+								}
+								
+								
+								a += '</ul>';
+								a += ' </div>';
+			
 
-				                
- 
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                console.log("Error: " + textStatus + " " + errorThrown);
-                            }
-                    		
-                    	});
-                    }
+								$("#pagingArea").html(a);
+
+							
+
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log("Error: " + textStatus + " " + errorThrown);
+						}
+						
+					});
+				}
                     
                  	
                   //내가 쓴 댓글 목록
@@ -348,32 +489,41 @@
                             data:  { cpage: cpage }, 
                             success: function(result) {
                             	
-                            	console.log(result);
+                            	console.log(result.list.length);
                             	
          			            var html = "";
          			            var value = "";
          			            
           			            value+= "<tr id='tr1'>";
-         			            value+= "<th width='50'>선택</th>";
-         			            value+= "<th width='40'>번호</th>";
+    							value+= "<th width='50'>선택</th>";
+    							value+= "<th width='50'>번호</th>";
+    							value+= "<th width='150'>카테고리</th>";
          			            value+= "<th width='500' style='text-align: center;'>제목</th>";
          			            value+= "<th width='150' style='text-align: center;'>작성일</th>";
          			            value+= "</tr>";
          			           $("#result thead").html(value);
          			           
-        			            if (result.list.length == 0) {
-        			                html += "<tr><td colspan='5' align='center'>존재하는 글이 없습니다</td></tr>";
+        			            if (result.list.length === 0) {
+        			                html += "<tr><td colspan='5' align='center'>작성한 댓글이 없습니다.</td></tr>";
+        			                
         			            } else {
         			            	for(let i in result.list){
         			                    html += "<tr>";
         			                    html += "<td><input type='checkbox' class='ckbox'></td>";
-        			                    html += "<td>"+result.list[i].reNo+"</td>";
+        			                    html += "<td>"+result.list[i].breNo+"</td>";
+        			                    if (result.list[i].boardNo.startsWith('BRD')) {
+    										html += "<td>[무료나눔]</td>";
+    									} else if (result.list[i].boardNo.startsWith('PRT')) {
+    										html += "<td>[소모임]</td>";
+    									}  else {
+    										html += "<td>[차박지]</td>";
+    														}
         			                    html += "<td>"+result.list[i].commContent+"<div><span class='myReplyBoardTitle' style='font-size: 13px;'> 원문 제목 : "+result.list[i].boardTitle+"</span></div></td>"; 
         			                    html += "<td>"+result.list[i].createDate+"</td>";
         			                    html += "</tr>";
         			                }
-        			            	 $("#result tbody").html(html);
         			            }
+        			            	 $("#result tbody").html(html);
         			            
         			            
         			            //////////////////////
@@ -498,6 +648,7 @@
                         $(".ckbox:checked").each(function() {
                         	replyNoArr.push($(this).closest("tr").find("td:eq(1)").text());
                         });
+                        
                         if (replyNoArr.length == 0) {
                             alert("삭제할 댓글을 선택해주세요.");
                             return;

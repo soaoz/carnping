@@ -65,6 +65,16 @@
 		<result column="LIKE_STATUS" property="likeStatus"/>
 	</resultMap>
 	
+	<resultMap id="alarmResultSet" type="Alarm">
+		<result column="ALA_NO" property="alaNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="ALA_CATEGORY" property="alaCategory"/>
+		<result column="ALA_CONTENT" property="alaContent"/>
+		<result column="ALA_DATE" property="alaDate"/>
+		<result column="ALA_STATUS" property="alaStatus"/>
+	</resultMap>
+	
 	<!-- 이메일 중복확인 -->
 	<select id="emailCheck" resultType="_int"> 
 	select
@@ -389,23 +399,10 @@
 
 	<!-- 소영: 유저의 정보 조회 -->
 	<select id="selectMember" resultMap="memberResultSet">
-		SELECT
-		       MEM_NO
-		     , MEM_ID
-		     , MEM_PWD
-		     , MEM_NAME
-		     , NICKNAME
-		     , EMAIL
-		     , ENROLL_DATE
-		     , MODIFY_DATE
-		     , STATUS
-		     , MEM_IMG_ORIGIN
-		     , MEM_IMG_CHANGE
-		     , PHONE
-		     , MEM_API_TYPE
-		     , MARKETING
-	 FROM MEMBER
-	WHERE MEM_ID = #{memID}
+	SELECT MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, NICKNAME, EMAIL, ENROLL_DATE, STATUS, MEM_IMG_ORIGIN, PHONE, MEM_API_TYPE, MARKETING, MEM_IMG_CHANGE
+	FROM MEMBER
+	WHERE MEM_ID = #{memId} AND MEM_ID IS NOT NULL
+	   OR MEM_NO = #{memNo} AND MEM_NO IS NOT NULL
 	</select>
 	
 	<!-- 소영 : 닉네임 업데이트  -->
@@ -413,9 +410,16 @@
 		update
 			   member
 		   set nickname = #{nickName}
-		 where mem_id = #{memId}
+		 where mem_no = #{memNo}
 	</update>
 
+	<!-- 소영 : 폰 업데이트  -->
+	<update id="phoneUpdate">
+		update
+			    member
+		    set phone = #{phone}
+		  where mem_no = #{memNo}
+	</update>
 
 	<!-- 소영 : 비번 업데이트  -->
 	<update id="passwordUpdate">
@@ -430,13 +434,14 @@
 	    UPDATE
 				MEMBER
 	  	 SET 
-               MEM_PWD = #{memPwd}
+               MEM_PWD = CASE WHEN #{memPwd} IS NULL THEN MEM_PWD ELSE #{memPwd} END
              , NICKNAME = #{nickName}
              , EMAIL = #{email}
              , MEM_IMG_ORIGIN = #{memImgOrigin}
              , MEM_IMG_CHANGE = #{memImgChange}
              , PHONE = #{phone}
-  	   WHERE MEM_ID = #{memId}
+             , MARKETING = #{marketing}
+  	   WHERE MEM_NO = #{memNo}
 	</update>
 
 	<!-- 소영 : 내 문의사항 갯수 조회 (페이징)  -->
@@ -593,6 +598,83 @@
 			 , 'Y'
 			 )
 	</insert>
+	
+	<!-- 소영 : 이메일 업데이트  -->
+	<update id="emailUpdate">
+		update
+			    member
+		    set email = #{email}
+		  where mem_no = #{memNo}
+	</update>
+	
+	<!-- 소영 : 좋아요 알람 인서트 -->
+	<insert id="insertAlarm">
+		INSERT 
+		  INTO ALARM
+			 (
+			   ALA_NO
+               , MEM_NO
+               , USER_NO
+               , ALA_CATEGORY
+               , ALA_CONTENT
+               , ALA_DATE
+               , ALA_STATUS
+               , STATUS
+               , REF_NO
+               
+			 )
+		VALUES
+			 (
+              'ALA'||SEQ_ALA_NO.NEXTVAL
+             ,#{memNo}
+             ,#{userNo}
+             ,#{alaCategory}
+             ,#{alaContent}
+             ,SYSDATE
+             ,'N'
+             ,'N'
+             ,#{refNo}
+             
+			 )
+	</insert>
+	
+
+	
+	<!-- 소영 : 마이페이지 : 내 활동 알람 페이징을 위한 알람갯수 조회  -->
+	<select id="selectMyAlarmListCount" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM ALARM
+		 WHERE STATUS = 'N'
+		   AND MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 소영 : 마이페이지 : 내 활동 알람 리스트 조회  -->
+	<select id="selectMyAlarmList" resultMap="alarmResultSet">
+        SELECT
+			  ALA_NO
+            , MEM_NO
+            , USER_NO
+            , ALA_CATEGORY
+            , ALA_CONTENT
+            , to_char(ALA_DATE , 'YY.MM.DD HH:mm:ss') as "ALA_DATE"
+            , ALA_STATUS
+            , STATUS
+            , REF_NO
+		 FROM ALARM
+		WHERE MEM_NO = #{memNo}
+		  AND STATUS = 'N'
+		ORDER
+		   BY ALA_NO desc
+	</select>
+	
+	<!-- 소영 : 알람테이블에 동일한 좋아요글이 몇갠지 -->
+	<select id="selectLikeAlarmCount" resultType="_int">
+	select count(*) from alarm where ref_no = #{refNo} AND STATUS ='N' and user_no=#{userNo}
+	</select>
+	
+
+	
 	
 	
 </mapper>

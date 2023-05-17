@@ -110,6 +110,7 @@ public class BoardController {
 	public String selectFreeBoardDetail(String bno, Model model) {
 		
 		Board b = bService.selectFreeBoardDetail(bno);
+
 		model.addAttribute("b", b);
 		
 		return "board/freeBoardDetail";
@@ -132,7 +133,6 @@ public class BoardController {
 	public String freeBoardInsert(Board b, MultipartFile upfile[], HttpSession session, Model model) {
 		
 		for(int i=0; i<upfile.length; i++) {
-			System.out.println(upfile[i]);
 		}
 		
 		// System.out.println(upfile);
@@ -198,7 +198,6 @@ public class BoardController {
 		   
 	   int result = bService.deleteFreeBoard(bno);
 	   
-	   System.out.println(result);
 	   
 	   if(result > 0) {
 		   // 삭제 성공
