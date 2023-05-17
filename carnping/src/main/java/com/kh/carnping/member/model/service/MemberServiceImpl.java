@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.BoardReply;
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.member.model.dao.MemberDao;
+import com.kh.carnping.member.model.vo.Alarm;
 import com.kh.carnping.member.model.vo.Like;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Question;
@@ -82,10 +84,18 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectMember(String memId) {
 		return mDao.selectMember(sqlSession, memId);
 	}
+	
+	public Member selectMember(Member m) {
+		return mDao.selectMember(sqlSession, m);
+	}
 
 	@Override
 	public int nickNameUpdate(Member m) {
 		return mDao.nickNameUpdate(sqlSession, m);
+	}
+
+	public int phoneUpdate(Member m) {
+		return mDao.phoneUpdate(sqlSession, m);
 	}
 
 	@Override
@@ -144,12 +154,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.deleteBoard(sqlSession, boardNo);
 	}
 	
-	public int selectMyCommentListCount(String memId) {
-		return mDao.selectMyCommentListCount(sqlSession, memId);
+	public int selectMyCommentListCount(String memNo) {
+		return mDao.selectMyCommentListCount(sqlSession, memNo);
 	}
 	
-	public ArrayList<Comment> selectMyCommentList(PageInfo pi, String memId){
-		return mDao.selectMyCommentList(sqlSession, pi, memId);
+	public ArrayList<BoardReply> selectMyCommentList(PageInfo pi, String memNo){
+		return mDao.selectMyCommentList(sqlSession, pi, memNo);
 	}
 
 	@Override
@@ -202,6 +212,38 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.insertLike(sqlSession, l);
 	}
 
+	public int emailUpdate(Member m) {
+		return mDao.emailUpdate(sqlSession, m);
+	}
+	
+	public int insertAlarm(Alarm al) {
+		return mDao.insertAlarm(sqlSession, al);
+	}
+	
+
+	public int selectMyAlarmListCount(String memNo) {
+		return mDao.selectMyAlarmListCount(sqlSession, memNo);
+	}
+	
+	public ArrayList<Alarm> selectMyAlarmList(PageInfo pi,String memNo){
+		return mDao.selectMyAlarmList(sqlSession, pi, memNo);
+	}
+	
+	public int selectLikeAlarmCount( Alarm al) {
+		return mDao.selectLikeAlarmCount(sqlSession, al);
+	}
+	
+	public Cinfo selectCinfoName(String cinfoNo) {
+		return mDao.selectCinfoName(sqlSession, cinfoNo);
+	}
+	
+	public Board selectBoardTitle(String boardNo) {
+		return mDao.selectBoardTitle(sqlSession, boardNo);
+	}
+	
+	
 
 	
+	
+
 }

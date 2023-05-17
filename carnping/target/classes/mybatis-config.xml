@@ -15,6 +15,7 @@
 		<typeAlias type="com.kh.carnping.member.model.vo.MemberReport" alias="MemberReport"/>
 		<typeAlias type="com.kh.carnping.member.model.vo.Question" alias="Question"/>
 		<typeAlias type="com.kh.carnping.member.model.vo.Report" alias="Report"/>
+		<typeAlias type="com.kh.carnping.member.model.vo.Alarm" alias="Alarm"/>
 		<typeAlias type="com.kh.carnping.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.kh.carnping.board.model.vo.BoardReply" alias="BoardReply"/>
 		<typeAlias type="com.kh.carnping.board.model.vo.Comment" alias="Comment"/>

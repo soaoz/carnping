@@ -65,7 +65,7 @@
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
-                                        <td>${ b.memNo }</td>
+                                        <td>${ b.memId }</td>
                                         <th>작성일</th>
                                         <td>${ b.createDate }</td>
                                     </tr>
@@ -79,7 +79,7 @@
                                 </table>
                                 <br>
                     
-                                <c:if test="${ not empty loginMember.memId and loginMember.memId eq b.memNo }">
+                                <c:if test="${ not empty loginMember.memId and loginMember.memId eq b.memId }">
                                 <div align="center">
                                     <!-- 수정하기, 삭제하기 버튼은 이글이 본인글일 경우만 보여져야됨 -->
                                     <button type="button" class="btn btn-success" style="background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);" onclick="postFormSubmit(1)">수정하기</button> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
@@ -121,7 +121,9 @@
                 
             </div>
         </div>
+        <input type="hidden" value="${ b.memNo }" id="memNo">
     </section>
+    
     <!-- Listing Details Section End -->
 
    	<script>
@@ -158,6 +160,8 @@
             		 if(status == "success"){
             			 selectPartyReplyList();
             			 $("#partyContent").val("");
+            			 
+            			ReplyNotification();// 댓글 등록이 성공하면 알람테이블에 담기
             			 
             		 }
             	 },
@@ -214,6 +218,45 @@
    		
    	}
 	
+   	/* 댓글달림 알람테이블에 insert */
+   	function ReplyNotification(){
+   	
+   	    let memNo = $("#memNo").val(); //작성자아이디번호 
+   	  //  let boardNo = "${ b.boardNo }"  //글제목
+   	    
+   	   console.log("댓글알람 작성자 : " + memNo );
+   	  
+   	    
+   		 $.ajax({
+   			
+   			 url: "insertFreeReplyAlarm.me",
+   	         type: "POST",
+   	         data: {
+   	        	
+   	        	 memNo: memNo,  // 알림 수신자 ID
+   	             userNo: '${loginMember.memNo}',   // 알림 발신자 ID
+   	             alaCategory: "pReply",        // 알림 유형 : 무료게시판 댓글
+   	             //cinfoName : cinfoName, //글제목 
+   	             refNo:"${ b.boardNo }",
+   	             //alaContent: cinfoName.substring(0, 10) +"..글에 좋아요가 눌렸습니다. "  // 알림 내용
+   	         
+   	         },
+   	         success: function(result) {
+   	             if (result>0) {
+   	             	console.log("좌여 알람 인서트성공 : " + result);
+   	             } else {
+   	             	console.log("인서트실패패패패패");
+   	                 
+   	             }
+   	         },
+   	         error: function(jqXHR, textStatus, errorThrown) {
+   	             console.log("Error: " + textStatus + " " + errorThrown);
+   	         }
+   		}); 
+   	}
+   	
+   	
+   	
    	</script>
 
     <!-- Footer Section Begin -->

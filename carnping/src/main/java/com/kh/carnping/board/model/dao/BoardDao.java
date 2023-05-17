@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.BoardReply;
+import com.kh.carnping.member.model.vo.Report;
 
 @Repository
 public class BoardDao {
@@ -232,6 +233,11 @@ public class BoardDao {
 	public int deleteNoticeBoard(SqlSessionTemplate sqlSession, String bno) {
 
 		return sqlSession.update("boardMapper.deleteNoticeBoard", bno);
+	}
+
+
+	public int insertReport(SqlSessionTemplate sqlSession, Report r) {
+		return sqlSession.update("boardMapper.insertReport", r);
 	}
 
 

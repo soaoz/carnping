@@ -10,6 +10,7 @@ import com.kh.carnping.board.model.dao.BoardDao;
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.BoardReply;
 import com.kh.carnping.common.model.vo.PageInfo;
+import com.kh.carnping.member.model.vo.Report;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -249,6 +250,11 @@ public class BoardServiceImpl implements BoardService{
 	public int updateNoticeBoard(Board b) {
 
 		return bDao.updateNoticeBoard(sqlSession, b);
+	}
+
+
+	public int insertReport(Report r) {
+		return bDao.insertReport(sqlSession, r);
 	}
 
 	

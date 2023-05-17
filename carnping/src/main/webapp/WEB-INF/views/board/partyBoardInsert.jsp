@@ -59,7 +59,7 @@
 								<div class="col-lg-12 col-md-12">
 									<div class="form-group">
 										<br> <label>작성자<span class="text-danger">
-												*</span></label> <input type="text" class="form-control" name="memNo" value="${ loginMember.memId }"
+												*</span></label> <input type="text" class="form-control" name="memNo" value="${ loginMember.memNo }"
 											style="width: 20%; text-align: center;" readonly="readonly">
 									</div>
 								</div>

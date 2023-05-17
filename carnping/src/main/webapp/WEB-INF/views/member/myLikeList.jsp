@@ -188,6 +188,8 @@
 		.space{
 			height : 200px;
 		}
+		
+		/* 좌여css 시작  */
 		.listing__item__pic__btns a {
 		    font-size: 17px !important;
 		    color: #ffffff;
@@ -214,6 +216,11 @@
 		.fa-solid.fa-heart {
 		  color: red;
 		}
+		.listing {
+			overflow: hidden;
+		}
+		/* 좌여css 끝   */	
+
 
 </style>
 </head>
@@ -260,18 +267,6 @@
         </div>
 
     </div>
-    
-    <script>
-
-    
-
-    $(document).ready(function() {
-    	  $('.like-button').click(function(e) {
-    	    e.preventDefault();
-    	    $(this).find('i.fa-regular').toggleClass('fa-solid');
-    	  });
-    	}); 
-    </script>
 
         <!-- Filter End -->
     <div class="space"></div> 
@@ -306,7 +301,13 @@
                                 <section class="listing nice-scroll hover">
                                     <div class="listing__list">
                                     
-                                    
+                            <c:if test="${empty list }">
+                                
+                                <h4> 좋아요한 장소가 없습니다. <br><br> <a href="carList.ca" style="color : #b3d9b1;"> ▶ 차박지 구경하러가기 </a></h4>
+                               
+                               
+                                
+                             </c:if>
                                     
                                       <c:choose>
 								            <c:when test="${ not empty list }">
@@ -321,8 +322,12 @@
 			                                                    <label for="check-item${status.count}" ></label>
 			                                                </div> --%>
 			                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
-			                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }" >
-			                                                <div class="listing__item__pic__btns">
+			                                                <input type="hidden" name="post-id" value="${ list.cinfoNo }" id="cinfoNo" >
+			                                                <input type="hidden" name="" value="${ list.memNo }" id="inputMemNo">
+			                                                <input type="hidden" name="" value="${ list.cinfoName }" id="cinfoName">
+			                                                <input type="hidden" name="" value="${ loginMember.memNo }" id="inputLoginMemNo">
+			                                                
+			                                                <div class="listing__item__pic__btns" onClick="event.stopPropagation();">
 			                                                   <!--  <a href="#"><span class="icon_zoom-in_alt"></span></a> -->
 			                                                      <script>
 			                                                      $(document).ready(function() {
@@ -375,13 +380,16 @@
 																	    $(this).find('i.fa-solid').toggleClass('fa-regular');
 																	});
 																	</script>
-			                                                   <a href="#" class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></a> 
+			                                                   <a href="#">
+			                                                   		<span class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');">
+			                                                   		<i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span>
+			                                                   </a> 
 			                                                </div>
 			                                                
 			                                            </div>
 			                                            <div class="listing__item__text">
 			                                                <div class="listing__item__text__inside">
-			                                                    <h5>${ list.cinfoName }</h5>
+			                                                    <h5 id="cName">${ list.cinfoName }</h5>
 			
 			                                                    <div class="listing__item__text__rating">
 			                                                        <div class="listing__item__rating__star">
@@ -423,6 +431,9 @@
                 </div><!--col-sm-10 col-sm-offset-1-->   
             </div><!--row-->
             
+            <c:if test="${ pi.maxPage >= 1  }">
+            
+           
             <div id="pagingArea" align="center" >
                 <ul class="pagination" align="center">
               
@@ -448,6 +459,7 @@
                 </ul>
             </div>
             
+             </c:if>
         </div><!--container-->
 
     </div><!-- content-area user-profiel -->
@@ -455,9 +467,17 @@
 
 
 <script>
+$(document).ready(function() {
+	  $('.like-button').click(function(e) {
+	    e.preventDefault();
+	    $(this).find('i.fa-regular').toggleClass('fa-solid');
+	  });
+	  	  
+}); 
+
+
 
 function like(cinfoNo , id){
-	//클래스가 뭐면 insert 
 	console.log("글번호 : "+cinfoNo+ " 아이디 : " + id);
 	
 	if ($(id).hasClass('fa-solid')) {
@@ -491,7 +511,10 @@ function like(cinfoNo , id){
 	} else {
 	    // fa-regular 클래스가 없을 때
 	    console.log("하트가 흰색일떄 클릭함 -> insert해야함 ")
-	    
+	    let memNo = $("#inputMemNo").val();
+	    let loginmemNo = $("#inputLoginMemNo").val();
+	    let cinfoName = $("#cinfoName").val();
+	    console.log(cinfoName);
 	    //좋아요 INSERT
         $.ajax({
             url: "insertLike.me",
@@ -503,6 +526,24 @@ function like(cinfoNo , id){
                 	/* deletedCount = result;
                     alert(deletedCount + "개의 게시물이 삭제되었습니다.");
                     myPostList();  */
+                    
+                    /* 웹소켓 알람보내기 시작*/
+                    console.log(socket);
+                    
+                    if(socket){
+                    	let socketMsg = "like,"+loginmemNo+","+memNo+","+cinfoNo;
+                    	console.log("ssssssssmsg>>>> "+socketMsg);
+                    	//socket.send("like,"+loginmemNo+","+memNo+","+cinfoNo);
+                    	socket.send(socketMsg);
+                    	
+                    }
+                    
+                    //console(memNo,loginmemNo, cinfoNo);
+                    LikeNotification(memNo,loginmemNo, cinfoNo);
+                    /* 웹소켓 알람보내기 끝*/
+                    
+                    
+                    
                 } else {
                 	console.log("좋아요인서트실패패패패패");
                     /* alert("삭제에 실패하였습니다."); */
@@ -519,78 +560,65 @@ function like(cinfoNo , id){
 }
 
 
-/* 
-//좋아요 조회
-
-//좋아요 색 바꾸기 
-
-
-//'전체 선택' 체크박스를 클릭하면 다른 체크박스들도 선택되게 하는 함수
-const selectAllCheckbox = document.getElementById('check2');
-const otherCheckboxes = document.querySelectorAll('.check-item');
-
-selectAllCheckbox.addEventListener('click', () => {
-    otherCheckboxes.forEach((checkbox) => {
-        checkbox.checked = selectAllCheckbox.checked;
-    });
-});
-
-// 다른 체크박스들을 클릭하면, '전체 선택' 체크박스도 선택되게 함
-otherCheckboxes.forEach((checkbox) => {
-    checkbox.addEventListener('click', () => {
-        if (!checkbox.checked) {
-            selectAllCheckbox.checked = false;
-        } else if (document.querySelectorAll('.check-item:checked').length === otherCheckboxes.length) {
-            selectAllCheckbox.checked = true;
-        }
-    });
-});
-
-
-function deleteMyCar(){
-	
-	var cinfoNoArr = [];
-	$('.check-item:checked').each(function() {
-		cinfoNoArr.push($(this).siblings('input[name="post-id"]').val());
+/* 좋아요알람 insert */
+ 
+ function LikeNotification(memNo,loginmemNo, cinfoNo){
+    //let memNo = $("#inputMemNo").val(); //작성자아이디번호 
+    //let loginmemNo = $("#inputLoginMemNo").val(); //로그인한아이디번호
+    //let cinfoNo = ("#cinfoNo").val(); //글번호 
+    // cinfoName = $(this).find('#cName').text();//글
+    //console.log("memNo : " + memNo + " ,로그인유저memNo : "+loginmemNo+ " ,글번호 : " + cinfoNo);
+	$.ajax({
+		
+		 url: "insertAlarm.me",
+         type: "POST",
+         data: { 
+        	 
+        	 memNo: memNo,  // 알림 수신자 ID
+             userNo: loginmemNo,   // 알림 발신자 ID
+             alaCategory: "like",// 알림 유형 (예: 좋아요)   
+             refNo: cinfoNo
+         },
+         success: function(result) {
+             if (result>0) {
+             	console.log("좌여 알람 인서트성공 : " + result);
+             } else {
+             	console.log("인서트실패패패패패");
+                 
+             }
+         },
+         error: function(jqXHR, textStatus, errorThrown) {
+             console.log("Error: " + textStatus + " " + errorThrown);
+         }
+		
+		
+		
 	});
 	
-		//console.log(cinfoNoArr);
-		
-	  if (cinfoNoArr.length == 0) {
-	    alert("선택된 글이 없습니다.");
-	    return;
-	  }
-
-	  if (confirm("선택된 글을 삭제하시겠습니까?")) {
-		  //console.log("탄다ㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
-		  
-	    $.ajax({
-	      type: "POST",
-	      url: "deleteMyCar.me",
-	      data: { "cinfoNoArr[]" : cinfoNoArr },
-	      success: function(result) {
-	        // 삭제 성공시 처리할 로직
-	        
-	        alert(result +"개의 글이 삭제되었습니다.");
-	      
-	      },
-	      error: function(xhr, status, error) {
-	        // 삭제 실패시 처리할 로직
-	        alert("삭제 실패: " + error);
-	      }
-	    });
-	  }
+	
+	
 }
-*/
+ 
+ 
+ 
+/* 좋아요알람 insert 끝 */
+
+
+
+$(function(){
+	$('.listing__item').on('click', function(){
+		console.log($(this).find('#cinfoNo').val());
+		location.href='detail.ca?cinfoNo=' +$(this).find('#cinfoNo').val();
+	})
+
+});
+
 </script>
  <%-- <jsp:include page="../common/footer.jsp"/> --%>
 <%--      <jsp:include page="../common/footer.jsp"/>	 --%>
 </div><!-- master-area -->
     <!-- Js Plugins -->
 
-<!--     <script src="resources/member/assets/js/modernizr-2.6.2.min.js"></script>
-    <script src="resources/member/assets/js/jquery-1.10.2.min.js"></script>
-    <script src="resources/member/js/main.js"></script> -->
 
 <%-- <jsp:include page="../common/footer.jsp"/> 푸터에서 마지막 css  --%>
 
