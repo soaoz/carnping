@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.BoardReply;
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
@@ -134,11 +135,11 @@ public class MemberDao {
 		return sqlSession.update("boardMapper.deleteBoard",boardNo);
 	}
 	
-	public int selectMyCommentListCount(SqlSessionTemplate sqlSession, String memId) {
-		return sqlSession.selectOne("boardMapper.selectMyCommentListCount", memId);
+	public int selectMyCommentListCount(SqlSessionTemplate sqlSession, String memNo) {
+		return sqlSession.selectOne("boardMapper.selectMyCommentListCount", memNo);
 	}
 	
-	public ArrayList<Comment> selectMyCommentList(SqlSessionTemplate sqlSession, PageInfo pi, String memId){
+	public ArrayList<BoardReply> selectMyCommentList(SqlSessionTemplate sqlSession, PageInfo pi, String memNo){
 		
 		//페이지오프셋 : 몇개의 게시글을 건너 뛸 건지
 		int offset = (pi.getCurrentPage()-1 )*pi.getBoardLimit();
@@ -146,7 +147,7 @@ public class MemberDao {
 		int limit =pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectMyCommentList", memId , rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMyCommentList", memNo , rowBounds);
 	}
 	
 	public int deleteComment(SqlSessionTemplate sqlSession,String reNo) {
@@ -217,13 +218,14 @@ public class MemberDao {
 	public int insertAlarm(SqlSessionTemplate sqlSession,Alarm al) {
 		return sqlSession.insert("memberMapper.insertAlarm", al);
 	}
+
 	
 	public int selectMyAlarmListCount(SqlSessionTemplate sqlSession,String memNo) {
 		return sqlSession.selectOne("memberMapper.selectMyAlarmListCount", memNo);
 	}
 	
 	public ArrayList<Alarm> selectMyAlarmList(SqlSessionTemplate sqlSession,PageInfo pi,String memNo){
-		//페이지오프셋 : 몇개의 게시글을 건너 뛸 건지
+		//페이지오프셋 : 몇개의 게시글을 건너 뛸 건
 		int offset = (pi.getCurrentPage()-1 )*pi.getBoardLimit();
 		//총 몇개를 조회해갈껀지 
 		int limit =pi.getBoardLimit();
@@ -232,6 +234,19 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMyAlarmList", memNo , rowBounds);
 	}
 	
+	public int selectLikeAlarmCount(SqlSessionTemplate sqlSession, Alarm al) {
+		return sqlSession.selectOne("memberMapper.selectLikeAlarmCount", al);
+	}
+	
+	public Cinfo selectCinfoName(SqlSessionTemplate sqlSession, String cinfoNo) {
+		return sqlSession.selectOne("carMapper.selectCinfoName", cinfoNo);
+	}
+	
+	public Board selectBoardTitle(SqlSessionTemplate sqlSession, String boardNo) {
+		return sqlSession.selectOne("boardMapper.selectBoardTitle", boardNo);
+	}
+
+
 
 
 }

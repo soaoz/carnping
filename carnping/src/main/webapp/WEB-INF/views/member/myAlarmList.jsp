@@ -279,7 +279,8 @@
 									
 									var html = "";
 									var value = "";
-					
+									let likeCounts = {};
+									
 									value+= "<tr id='tr1'>";
 									value+= "<th width='50'>선택</th>";
 									value+= "<th width='50'>번호</th>";
@@ -293,6 +294,8 @@
 										html += "<tr><td colspan='5' align='center'>존재하는 알림이 없습니다.</td></tr>";
 									} else {
 										for(let i in result.list){
+											 const alaNo = result.list[i].alaNo;
+											
 											html += "<tr>";
 											html += "<td><input type='checkbox' class='ckbox'></td>";
 											html += "<td>"+result.list[i].alaNo+"</td>";
@@ -300,14 +303,23 @@
 											
 											if (result.list[i].alaCategory=='like') {
 												html += "<td>[좋아요]</td>";
-											} else if (result.list[i].alaCategory=='comm') {
+											} else if (result.list[i].alaCategory=='fReply') {
 												html += "<td>[댓글]</td>";
 											}  else {
-												html += "<td></td>";
+												html += "<td>[승인]</td>";
 											}
 											//html += "<td>"+result.list[i].alaContent+"</td>";
 												if (result.list[i].alaCategory=='like') {
-											html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> 글에 좋아요가 눌렸습니다.</td>";
+											/* 		html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> ";
+												    html += "글에 좋아요";
+												    if (likeCounts[alaNo] > 1) {
+												      html += "(" + likeCounts[alaNo] + ")";
+												    }
+												    html += "가 눌렸습니다.</td>"; */
+													html += "<td>" + result.list[i].alaContent+"</td>";
+												}else if (result.list[i].alaCategory=='fReply') {
+													//~글에 댓글이 달렸습니다. html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> 글에 좋아요가 눌렸습니다.</td>";
+													html += "<td>" + result.list[i].alaContent+"</td>";
 												}
 											html += "<td>"+result.list[i].alaDate+"</td>";
 											html += "</tr>";
@@ -483,8 +495,9 @@
          			            var value = "";
          			            
           			            value+= "<tr id='tr1'>";
-         			            value+= "<th width='50'>선택</th>";
-         			            value+= "<th width='50'>번호</th>";
+    							value+= "<th width='50'>선택</th>";
+    							value+= "<th width='50'>번호</th>";
+    							value+= "<th width='150'>카테고리</th>";
          			            value+= "<th width='500' style='text-align: center;'>제목</th>";
          			            value+= "<th width='150' style='text-align: center;'>작성일</th>";
          			            value+= "</tr>";
@@ -497,7 +510,14 @@
         			            	for(let i in result.list){
         			                    html += "<tr>";
         			                    html += "<td><input type='checkbox' class='ckbox'></td>";
-        			                    html += "<td>"+result.list[i].reNo+"</td>";
+        			                    html += "<td>"+result.list[i].breNo+"</td>";
+        			                    if (result.list[i].boardNo.startsWith('BRD')) {
+    										html += "<td>[무료나눔]</td>";
+    									} else if (result.list[i].boardNo.startsWith('PRT')) {
+    										html += "<td>[소모임]</td>";
+    									}  else {
+    										html += "<td>[차박지]</td>";
+    														}
         			                    html += "<td>"+result.list[i].commContent+"<div><span class='myReplyBoardTitle' style='font-size: 13px;'> 원문 제목 : "+result.list[i].boardTitle+"</span></div></td>"; 
         			                    html += "<td>"+result.list[i].createDate+"</td>";
         			                    html += "</tr>";
@@ -628,6 +648,7 @@
                         $(".ckbox:checked").each(function() {
                         	replyNoArr.push($(this).closest("tr").find("td:eq(1)").text());
                         });
+                        
                         if (replyNoArr.length == 0) {
                             alert("삭제할 댓글을 선택해주세요.");
                             return;

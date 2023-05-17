@@ -620,6 +620,8 @@
                , ALA_DATE
                , ALA_STATUS
                , STATUS
+               , REF_NO
+               
 			 )
 		VALUES
 			 (
@@ -631,8 +633,12 @@
              ,SYSDATE
              ,'N'
              ,'N'
+             ,#{refNo}
+             
 			 )
 	</insert>
+	
+
 	
 	<!-- 소영 : 마이페이지 : 내 활동 알람 페이징을 위한 알람갯수 조회  -->
 	<select id="selectMyAlarmListCount" resultType="_int">
@@ -654,12 +660,20 @@
             , to_char(ALA_DATE , 'YY.MM.DD HH:mm:ss') as "ALA_DATE"
             , ALA_STATUS
             , STATUS
+            , REF_NO
 		 FROM ALARM
 		WHERE MEM_NO = #{memNo}
 		  AND STATUS = 'N'
 		ORDER
-		   BY ALA_DATE DESC
+		   BY ALA_NO desc
 	</select>
+	
+	<!-- 소영 : 알람테이블에 동일한 좋아요글이 몇갠지 -->
+	<select id="selectLikeAlarmCount" resultType="_int">
+	select count(*) from alarm where ref_no = #{refNo} AND STATUS ='N' and user_no=#{userNo}
+	</select>
+	
+
 	
 	
 	

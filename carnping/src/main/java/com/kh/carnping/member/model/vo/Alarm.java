@@ -22,4 +22,6 @@ public class Alarm {
 	//private String memNo;		//회원번호  
 	private String alaStatus;	//알림확인상태  CHECK IN('Y','N') : 확인했을때 Y, 디폴
 	private String status; 		//삭제상태 	  CHECK IN('Y','N') : 삭제아님,디폴트 N
+	private String refNo;		//참조글번호
+	private int count;
 }

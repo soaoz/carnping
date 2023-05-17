@@ -43,6 +43,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.Gson;
 import com.kh.carnping.board.model.vo.Board;
+import com.kh.carnping.board.model.vo.BoardReply;
 import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
@@ -615,12 +616,14 @@ public class MemberController {
 	public Map<String, Object> myReplyList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 		
-		int listCount = mService.selectMyCommentListCount(memId);  // 내 댓글 총갯수
+		int listCount = mService.selectMyCommentListCount(memNo);  // 내 댓글 총갯수
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		//ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
-		ArrayList<Comment> list = mService.selectMyCommentList(pi, memId);
+		ArrayList<BoardReply> list = mService.selectMyCommentList(pi, memNo);
+		
+		System.out.println(list);
 		
 		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
 		int page = pi.getCurrentPage(); 	// 현재페이지
@@ -883,28 +886,95 @@ public class MemberController {
 	@ResponseBody
 	public int insertAlarm(HttpSession session, Alarm al ) {
 		//
-		System.out.println("좋아요알람컨트롤러탄다>>>>>>>>>>>>");
+		
+		String cinfoNo = al.getRefNo();
+		
+		Cinfo c =  mService.selectCinfoName(cinfoNo);
+		System.out.println("c>>>"+c);
+		
+		//System.out.println("좋아요알람컨트롤러탄다>>>>>>>>>>>>");
+		al.setAlaContent("[ "+ c.getCinfoName().substring(0,10)+"... ]글에 좋아요가 눌렸습니다");
 		System.out.println(al);
-		//System.out.println("m : "+memNo+" , "+ userNo+" , "+  type+" , "+  cinfoName +" , "+ message);
-		//String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
-
+		
+		int selectCount = mService.selectLikeAlarmCount(al);
+		System.out.println("selectCount : " + selectCount);
+		
 		
 		int result = 0;
-		result = mService.insertAlarm(al);
+		if(selectCount >= 1) {
+		
+			
+		}else {
+			//insert 시키기 
+			result = mService.insertAlarm(al);
+		}
+		//System.out.println("m : "+memNo+" , "+ userNo+" , "+  type+" , "+  cinfoName +" , "+ message);
+		// REF_NO를 전달받아야함 -> 좋아요한 글의 글번호 
+		/*if(al.getMemNo().equals(al.getUserNo())){
+			result = 0;
+		}else {
+			result = mService.insertAlarm(al);
+		}*/
+		
+		return result;
+			
+	}
+	
+	//freeboardDetail 에서 내 게시글에 댓글 작성시 알람 테이블에 추가
+	@RequestMapping("insertFreeReplyAlarm.me")
+	@ResponseBody
+	public int insertFreeReplyAlarm(HttpSession session, Alarm al) {
+		//
+		//내 게시글에 댓글이 달렸을 때 알람테이블에 insert 되지만 그게 내 아이디면 안되야함 
+		System.out.println("댓글알람컨트롤러탄다>>>>>>>>>>>>" +al.getRefNo());
+		System.out.println(al);
+		//Alarm(alaNo=null, memNo=MEM10000, userNo=MEM10000, 
+		//alaCategory=fReply, alaContent=null, alaDate=null,
+		//alaStatus=null, status=null, refNo=BRD10004, count=0)
+				
+		//보드 제목 가져오기
+		String boardNo = al.getRefNo();
+		
+		Board b = mService.selectBoardTitle(boardNo); //b에는 댓글달린 게시물의 제목이 담겨있음
+		
+		if (b.getBoardTitle().length() <= 10) {
+			  al.setAlaContent( "[ "+b.getBoardTitle()+"... ]글에 댓글이 달렸습니다");
+		} else {
+		    //alaContent = boardTitle.substring(0, 10) + " ...글에 댓글이 달렸슴다";
+		    al.setAlaContent( b.getBoardTitle().substring(0,10)+"...글에 댓글이 달렸슴다");
+		}
+		
+		
+		System.out.println("ALARM >>> "+ al);
+		
+		
+		
+		int result = 0;
+		//result = mService.insertAlarm(al);
+		
+		if(al.getMemNo().equals(al.getUserNo())){//알람수신자랑 발신자가 같으면 알람x 
+			result = 0;
+		}else {
+			result = mService.insertAlarm(al);
+			System.out.println("인서트되고나서 result : " + result);
+		}
+		
+		//알람테이블에 댓글알람 추가하기 
 		
 		
 		return result;
 			
 	}
 	
-	//활동 알람 내역에서 알람 테이블 조회하기
 	
-	//내 알ㄻ 리스트 조회
+	//마이페이지 내알람 리스트 조회
 	@ResponseBody
 	@RequestMapping(value = "myAlarmSelectList.me", produces = "application/json; charset=utf-8")
 	public Map<String, Object> myAlarmList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
 		
 		System.out.println("알람리스트ㅗ회 컨트롤러 탄다 ");
+		//이미 동일한게 몇개있는지 
+
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();

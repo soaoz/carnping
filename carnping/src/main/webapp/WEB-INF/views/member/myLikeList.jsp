@@ -389,7 +389,7 @@
 			                                            </div>
 			                                            <div class="listing__item__text">
 			                                                <div class="listing__item__text__inside">
-			                                                    <h5>${ list.cinfoName }</h5>
+			                                                    <h5 id="cName">${ list.cinfoName }</h5>
 			
 			                                                    <div class="listing__item__text__rating">
 			                                                        <div class="listing__item__rating__star">
@@ -513,6 +513,8 @@ function like(cinfoNo , id){
 	    console.log("하트가 흰색일떄 클릭함 -> insert해야함 ")
 	    let memNo = $("#inputMemNo").val();
 	    let loginmemNo = $("#inputLoginMemNo").val();
+	    let cinfoName = $("#cinfoName").val();
+	    console.log(cinfoName);
 	    //좋아요 INSERT
         $.ajax({
             url: "insertLike.me",
@@ -536,7 +538,8 @@ function like(cinfoNo , id){
                     	
                     }
                     
-                    LikeNotification();
+                    //console(memNo,loginmemNo, cinfoNo);
+                    LikeNotification(memNo,loginmemNo, cinfoNo);
                     /* 웹소켓 알람보내기 끝*/
                     
                     
@@ -559,13 +562,12 @@ function like(cinfoNo , id){
 
 /* 좋아요알람 insert */
  
- function LikeNotification(){
-    let memNo = $("#inputMemNo").val(); //작성자아이디번호 
-    let loginmemNo = $("#inputLoginMemNo").val(); //로그인한아이디번호
-    let cinfoNo = $("#cinfoNo").val(); //글번호 
-    let cinfoName = $("#cinfoName").val(); //글제목
-    console.log("좋아요알람 insert 함수: memNo : " + memNo + " ,로그인유저memNo : "+loginmemNo+ " ,글번호 : " + cinfoNo);
-    
+ function LikeNotification(memNo,loginmemNo, cinfoNo){
+    //let memNo = $("#inputMemNo").val(); //작성자아이디번호 
+    //let loginmemNo = $("#inputLoginMemNo").val(); //로그인한아이디번호
+    //let cinfoNo = ("#cinfoNo").val(); //글번호 
+    // cinfoName = $(this).find('#cName').text();//글
+    //console.log("memNo : " + memNo + " ,로그인유저memNo : "+loginmemNo+ " ,글번호 : " + cinfoNo);
 	$.ajax({
 		
 		 url: "insertAlarm.me",
@@ -574,10 +576,8 @@ function like(cinfoNo , id){
         	 
         	 memNo: memNo,  // 알림 수신자 ID
              userNo: loginmemNo,   // 알림 발신자 ID
-             alaCategory: "like",        // 알림 유형 (예: 좋아요)
-             //cinfoName : cinfoName, //글제목 
-             alaContent: cinfoName.substring(0, 10) +"..글에 좋아요가 눌렸습니다. "  // 알림 내용
-         
+             alaCategory: "like",// 알림 유형 (예: 좋아요)   
+             refNo: cinfoNo
          },
          success: function(result) {
              if (result>0) {
