@@ -67,7 +67,7 @@
 									<div class="form-group">
 										<br> <label>작성자<span class="text-danger"> *</span></label> 
 										
-										<input type="text" id="writer" name="memId" class="form-control" value="${ b.memNo }" style="width: 20%; readonly text-align: center;" readonly>
+										<input type="text" id="writer" name="memId" class="form-control" value="${ b.memId }" style="width: 20%; readonly text-align: center;" readonly>
 									</div>
 									<br>
 									<div class="filter__select">
