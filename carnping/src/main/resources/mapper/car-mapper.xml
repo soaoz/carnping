@@ -813,6 +813,12 @@
             AND LIKE_STATUS = 'Y'
 	</select>
 	
-	
-	
+	<!-- 소영 : 차박지 제목 select -->
+	<select id="selectCinfoName" resultMap="cinfoResultMap">
+		SELECT  CINFO_NO
+		        ,CINFO_NAME
+		 FROM CINFO
+		 WHERE CINFO_STATUS ='Y'
+		 AND CINFO_NO = #{cinfoNo}
+	</select> 
 </mapper>

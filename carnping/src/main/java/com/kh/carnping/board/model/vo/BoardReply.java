@@ -21,4 +21,5 @@ public class BoardReply {
 	private String memImgOrigin;	// 회원이미지 원본
 	private String memImgChange;	// 회원이미지 파일명변경
 	private String status;
+	private String boardTitle; // 원문제목
 }

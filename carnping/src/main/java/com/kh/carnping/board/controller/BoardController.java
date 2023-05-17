@@ -109,7 +109,7 @@ public class BoardController {
 	public String selectFreeBoardDetail(String bno, Model model) {
 		
 		Board b = bService.selectFreeBoardDetail(bno);
-		
+		System.out.println("무료나눔게시판 상세조회 b : "+b);
 		model.addAttribute("b", b);
 		
 		return "board/freeBoardDetail";
