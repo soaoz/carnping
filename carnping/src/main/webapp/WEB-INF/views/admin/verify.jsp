@@ -154,7 +154,7 @@ function deleteVerify(verify){
 	location.href= "deleteVerify.ad?verifyNo="+ verify;	
 }
 
-function updateVerify(verify){
+function updateVerify(verify, cinfoNo){
 	location.href= "updateVerify.ad?verifyNo="+ verify;
 }
 

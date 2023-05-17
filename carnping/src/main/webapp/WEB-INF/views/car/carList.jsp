@@ -28,9 +28,9 @@
 <link rel="stylesheet" href="css/style.css" type="text/css"> -->
 <style>
     .header_back {
-        width: 100%;
-        height: 105px;
-        background-color: white;
+	 	width: 100%;
+		height: 110px;
+		background-color: #b3d9b1;
     }
 
     .wrap {
@@ -278,7 +278,6 @@
                   <div class="listing__item" >
 	                <input type="hidden" value="${ list.cinfoNo }">
                   <div class="listing__item__pic set-bg" data-setbg="${ list.cinfoImg1 }" style="cursor:pointer"> 
-                            <img src="resources/img/carList/icon/ocean.png" alt="">
 
                             <!--  
         <div class="listing__item__pic__tag">Popular</div>
@@ -291,7 +290,8 @@
         <!--  소영 : 좋아요 코드 시작 -->
         <div class="listing__item__pic__btns" onClick="event.stopPropagation();">
         <script>
-        $(document).ready(function() {
+        // 잠시 묶어 두겠습니다
+    /*     $(document).ready(function() {
             selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
             function selectLike(cinfoNo, id){
                 var cinfoNo = cinfoNo;
@@ -321,7 +321,7 @@
                     
                 });
             }
-        });
+        }); */
         
         $(document).on('click', '.like-button', function(e) {
             e.preventDefault();
@@ -510,7 +510,7 @@ function like(cinfoNo , id){
 		array.forEach(function (rs) {
 			
             $positions.push([{
-                content: "<div style='cursor: pointer'onclick='detail(\""+rs[0].cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs[0].cinfoImg1+"\');> <img src='resources/img/carList/icon/ocean.png' alt=''></div>"
+                content: "<div style='cursor: pointer'onclick='detail(\""+rs[0].cinfoNo+"\");'><div class='listing__item'><div class='listing__item__pic set-bg' style='background-image:url("+rs[0].cinfoImg1+"\');></div>"
                         +"<div class='listing__item__text'><div class='listing__item__text__inside'><h5>"+rs[0].cinfoName+"</h5><div class='listing__item__text__rating'></div>"
                         +"<ul><li><span class='icon_pin_alt'></span>"+rs[0].cinfoAddress+"</li>"
                         +"<li><span class='icon_phone'></span>"+rs[0].phone+"</li></ul></div></div></div></div>",

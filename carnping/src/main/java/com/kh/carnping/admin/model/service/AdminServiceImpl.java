@@ -96,6 +96,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
+	public int insertCarResponse(String verifyNo) {
+		return aDao.insertCarResponse(sqlSession, verifyNo);
+	}
+
+
 
 	
 	

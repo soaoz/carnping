@@ -135,7 +135,6 @@
 	/* 폰트 크기를 0으로 설정하여 공백 제거 */
 	font-size: 0;
 }
-
 </style>
 </head>
 <body>
@@ -161,8 +160,8 @@
 		</ul>
 	</div>
 	<br>
-	<form action="insertCarRequest.ca" method="post" 
-                    enctype="multipart/form-data" id="insertCar" >
+	<form action="insertCarRequest.ca" method="post"
+		enctype="multipart/form-data" id="insertCar">
 		<div class="box-in">
 
 			<div id="step1">
@@ -178,7 +177,7 @@
 
 							<input type="file" name="upfile" id="myFileInput"
 								style="display: none;" onchange="myLoadImg(this);"
-								accept="image/*"  />
+								accept="image/*" />
 						</div>
 						<div align="center" id="mainImg">
 
@@ -190,23 +189,22 @@
 
 						<div class="form-group">
 							<label>제목</label> <input name="verifyName" type="text"
-								class="form-control" placeholder="추천하신 지역의 재치있는 이름을 지어주세요!"
-								>
+								class="form-control" placeholder="추천하신 지역의 재치있는 이름을 지어주세요!">
 						</div>
 						<div class="form-group">
 							<label>내용</label>
 							<textarea name="verifyContent" type="text" class="form-control"
-								placeholder="추천하는 지역을 저희에게 소개해주세요!" ></textarea>
+								placeholder="추천하는 지역을 저희에게 소개해주세요!"></textarea>
 						</div>
 						<div class="form-group">
 							<label>주의사항</label>
 							<textarea name="verifyNotice" type="text" class="form-control"
-								placeholder="추천하는 지역은 이걸 주의해야해요!" ></textarea>
+								placeholder="추천하는 지역은 이걸 주의해야해요!"></textarea>
 						</div>
 						<div class="form-group">
 							<label>사유</label>
 							<textarea name="verifyReason" type="text" class="form-control"
-								placeholder="추천하는 지역은 이걸 주의해야해요!" ></textarea>
+								placeholder="추천하는 지역은 이걸 주의해야해요!"></textarea>
 						</div>
 						<br>
 					</div>
@@ -234,10 +232,8 @@
 										id="address2" placeholder="주소찾기를 통해 주소를 입력받으세요!"
 										name="verifyAddress" readonly><br> <input
 										type="button" class="btn primary-btn btn-md" onclick="juso();"
-										value="주소찾기"><br> <br> 
-										<input
-										type="hidden" name="verifyLttd"> 
-										<input type="hidden"
+										value="주소찾기"><br> <br> <input type="hidden"
+										name="verifyLttd"> <input type="hidden"
 										name="verifyHrdns">
 
 								</div>
@@ -310,14 +306,14 @@
 						<div class="form-group">
 							<label> <input type="checkbox"
 								style="position: static; opacity: 1; width: 15px; height: 15px"
-								name="verifyFacilitie"  value="주차장"> 주차장
+								name="verifyFacilitie" value="주차장"> 주차장
 							</label>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<label> <input type="checkbox"
 							style="position: static; opacity: 1; width: 15px; height: 15px"
-							name="verifyFacilitie"  value="캠핑장"> 캠핑장
+							name="verifyFacilitie" value="캠핑장"> 캠핑장
 						</label>
 					</div>
 					<div class="col-sm-3">
@@ -484,33 +480,24 @@
 						</table>
 
 						<input type="file" name="upfile" id="file2" style="display: none;"
-							onchange="loadImg(this,2);" accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file3" style="display: none;"
-							onchange="loadImg(this,3);" accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file4" style="display: none;"
-							onchange="loadImg(this,4);" accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file5" style="display: none;"
-							onchange="loadImg(this,5);" accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file6" style="display: none;"
-							onchange="loadImg(this,6);"accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file7" style="display: none;"
-							onchange="loadImg(this,7);" accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file8" style="display: none;"
-							onchange="loadImg(this,8);" accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file9" style="display: none;"
-							onchange="loadImg(this,9);" accept="image/*"> 
-							<input type="file"
-							name="upfile" id="file10" style="display: none;"
-							onchange="loadImg(this,10);" accept="image/*"> 
-							<input type="hidden"
-							name="memNo" value="${ loginMember.memNo }">
+							onchange="loadImg(this,2);" accept="image/*"> <input
+							type="file" name="upfile" id="file3" style="display: none;"
+							onchange="loadImg(this,3);" accept="image/*"> <input
+							type="file" name="upfile" id="file4" style="display: none;"
+							onchange="loadImg(this,4);" accept="image/*"> <input
+							type="file" name="upfile" id="file5" style="display: none;"
+							onchange="loadImg(this,5);" accept="image/*"> <input
+							type="file" name="upfile" id="file6" style="display: none;"
+							onchange="loadImg(this,6);" accept="image/*"> <input
+							type="file" name="upfile" id="file7" style="display: none;"
+							onchange="loadImg(this,7);" accept="image/*"> <input
+							type="file" name="upfile" id="file8" style="display: none;"
+							onchange="loadImg(this,8);" accept="image/*"> <input
+							type="file" name="upfile" id="file9" style="display: none;"
+							onchange="loadImg(this,9);" accept="image/*"> <input
+							type="file" name="upfile" id="file10" style="display: none;"
+							onchange="loadImg(this,10);" accept="image/*"> <input
+							type="hidden" name="memNo" value="${ loginMember.memNo }">
 					</div>
 				</div>
 			</div>
@@ -527,7 +514,7 @@
 							<div class="checkbox">
 								<label> <input type="checkbox"
 									style="position: static; opacity: 1; width: 15px; height: 15px"
-									 id="submitCheck" /><strong> 게시글을 제출하시겠습니까?</strong>
+									id="submitCheck" /><strong> 게시글을 제출하시겠습니까?</strong>
 								</label>
 							</div>
 						</div>
@@ -543,7 +530,7 @@
 			</div>
 			<div class="btn-div" align="right">
 				<button type="button" id="progress-next" class="btn">다음</button>
-				<button type="submit" id="progress-submit" class="btn" 
+				<button type="submit" id="progress-submit" class="btn"
 					style="display: none" disabled>제출</button>
 			</div>
 		</div>

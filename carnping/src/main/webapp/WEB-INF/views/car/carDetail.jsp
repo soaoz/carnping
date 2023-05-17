@@ -214,7 +214,7 @@ to {
 	<jsp:include page="../common/header.jsp" />
 
 
-	<section class="listing-hero set-bg" data-setbg="${ cinfo.cinfoImg1 }">
+	<section class="listing-hero set-bg" data-setbg="resources/img/temp3.jpg">
 		<div class="container"> 
 			<div class="row">
 				<div class="col-lg-8">
@@ -646,7 +646,7 @@ to {
 	<jsp:include page="../common/footer.jsp" />
 
 	<!-- Js Plugins -->
-	<script src="https://kit.fontawesome.com/0376f7be50.js"
+<!-- 	<script src="https://kit.fontawesome.com/0376f7be50.js"
 		crossorigin="anonymous"></script>
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -658,9 +658,7 @@ to {
 	<script src="js/jquery.slicknav.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
-
+ -->
 
 	<jsp:include page="../common/footer.jsp" />
 
