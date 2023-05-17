@@ -39,5 +39,15 @@ public class Cinfo {
 	private String cinfoImg8; // 차박정보 서브이미지
 	private String cinfoImg9; // 차박정보 서브이미지
 	private String cinfoImg10; // 차박정보 서브이미지
+	private String cinfoOgImg1; // 차박정보 메인이미지
+	private String cinfoOgImg2; // 차박정보 서브이미지
+	private String cinfoOgImg3; // 차박정보 서브이미지
+	private String cinfoOgImg4; // 차박정보 서브이미지
+	private String cinfoOgImg5; // 차박정보 서브이미지
+	private String cinfoOgImg6; // 차박정보 서브이미지
+	private String cinfoOgImg7; // 차박정보 서브이미지
+	private String cinfoOgImg8; // 차박정보 서브이미지
+	private String cinfoOgImg9; // 차박정보 서브이미지
+	private String cinfoOgImg10; // 차박정보 서브이미지
 	private String phone;
 }
