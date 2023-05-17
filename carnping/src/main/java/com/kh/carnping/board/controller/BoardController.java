@@ -21,6 +21,7 @@ import com.kh.carnping.board.model.service.BoardServiceImpl;
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.BoardReply;
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Report;
 
 
 
@@ -109,7 +110,6 @@ public class BoardController {
 	public String selectFreeBoardDetail(String bno, Model model) {
 		
 		Board b = bService.selectFreeBoardDetail(bno);
-		
 		model.addAttribute("b", b);
 		
 		return "board/freeBoardDetail";
@@ -595,6 +595,24 @@ public class BoardController {
 		   return "redirect:notice.ad";
 	   }else {
 		   model.addAttribute("errorMsg", "게시글 삭제 실패!");
+		   return "common/errorPage";
+	   }
+	   
+   }
+	
+	/**
+     *  게시글 신고 
+     */
+	@RequestMapping("report.bo")
+	public String reportBoard(Report r, HttpSession session, Model model) {
+		System.out.println("타나?");
+	   int result = bService.insertReport(r);
+	   
+	   if(result > 0) {
+		   session.setAttribute("alertMsg", "신고 접수 되었습니다. 접수된 신고는 관리자가 검토하여 처리할 예정입니다.");
+		   return "redirect:freeBoardDetail.bo";
+	   }else {
+		   model.addAttribute("errorMsg", "게시글 신고 실패!");
 		   return "common/errorPage";
 	   }
 	   

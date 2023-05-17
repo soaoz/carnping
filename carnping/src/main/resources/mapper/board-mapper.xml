@@ -102,6 +102,8 @@
 		       board_origin_img4,
 		       board_title,
 		       mem_no,
+		       mem_id,
+		       nickname,
 		       to_char(create_date, 'YYYY-MM-DD') as "create_date",
 		       location,
 		       board_content
@@ -513,5 +515,27 @@
 		   set status = 'N'
 		 where RE_NO = #{reNo}
 	</update>
+	
+	<insert id="insertReport">
+			insert
+ 		  into report
+		     (
+		       REPORT_NO,
+		       MEM_NO,
+		       REPORT_REFNO,
+		       REPORT_DATE,
+		       REPORT_DETAIL,
+		       REPORTER_MEM_NO
+		     )
+		values
+		     (
+		       'RPT'||seq_rpt_no.nextval,
+		       #{memNo},
+		       #{reportRefNo},
+		       default,
+		       #{reportDetail},
+		       #{reporterMemNo}
+		     ) 
+	</insert>
 	
 </mapper>
