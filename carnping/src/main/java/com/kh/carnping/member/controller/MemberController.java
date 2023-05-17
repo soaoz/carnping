@@ -941,7 +941,7 @@ public class MemberController {
 			  al.setAlaContent( "[ "+b.getBoardTitle()+"... ]글에 댓글이 달렸습니다");
 		} else {
 		    //alaContent = boardTitle.substring(0, 10) + " ...글에 댓글이 달렸슴다";
-		    al.setAlaContent( b.getBoardTitle().substring(0,10)+"...글에 댓글이 달렸슴다");
+		    al.setAlaContent( "[ "+b.getBoardTitle().substring(0,10)+"... ]글에 댓글이 달렸습니다");
 		}
 		
 		

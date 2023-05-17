@@ -102,12 +102,9 @@
 		       board_origin_img3,
 		       board_origin_img4,
 		       board_title,
-
 		       mem_no,
 		       mem_id,
 		       nickname,
-
-
 		       to_char(create_date, 'YYYY-MM-DD') as "create_date",
 		       location,
 		       board_content
