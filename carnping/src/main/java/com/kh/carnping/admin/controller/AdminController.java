@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.carnping.admin.model.service.AdminServiceImpl;
+import com.kh.carnping.car.model.service.CarServiceImpl;
+import com.kh.carnping.car.model.vo.Cinfo;
+import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Report;
 
@@ -25,6 +28,8 @@ public class AdminController {
 	
 	@Autowired
 	private AdminServiceImpl aService; 
+	@Autowired
+	private CarServiceImpl cService; 
 	
 	/**
 	 * 관리자 페이지 이동
@@ -91,7 +96,10 @@ public class AdminController {
 	 * 차박게시글 검수 관리로 이동
 	 */
 	@RequestMapping("verity.ad")
-	public String carVerity() {
+	public String verifyList(Model model) {
+		ArrayList<Verify> list = aService.verifyList();
+		System.out.println(list);
+		model.addAttribute("list", list);
 		return "admin/verity";
 	}
 	
@@ -132,17 +140,26 @@ public class AdminController {
 	/**
 	 * 차박게시글 등록 검수로 이동
 	 */
-	@RequestMapping("insertVerity.ad")
-	public String insertVerity() {
-		return "admin/insertVerity";
+	@RequestMapping("insertVerify.ad")
+	public String insertVerity(String verifyNo, Model model) {
+		Verify verify = aService.selectVerify(verifyNo);
+		model.addAttribute("verify", verify);
+		return "admin/insertVerify";
 	}	
 	
 	/**
 	 * 차박게시글 수정 검수로 이동
 	 */
-	@RequestMapping("updateVerity.ad")
-	public String updateVerity() {
-		return "admin/updateVerity";
+	@RequestMapping("updateVerify.ad")
+	public String updateVerity(String verifyNo, Model model) {
+		Verify verify = aService.selectVerify(verifyNo);
+		Cinfo cinfo = cService.selectDetail(verify.getCinfoNo());
+		
+		System.out.println("탐?");
+		model.addAttribute("cinfo", cinfo);
+		model.addAttribute("verify", verify);
+		
+		return "admin/updateVerify";
 	}
 
 	/**

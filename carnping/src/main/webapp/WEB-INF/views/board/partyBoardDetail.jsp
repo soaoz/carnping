@@ -65,7 +65,7 @@
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
-                                        <td>${ b.memNo }</td>
+                                        <td>${ b.memId }</td>
                                         <th>작성일</th>
                                         <td>${ b.createDate }</td>
                                     </tr>
@@ -79,7 +79,7 @@
                                 </table>
                                 <br>
                     
-                                <c:if test="${ not empty loginMember.memId and loginMember.memId eq b.memNo }">
+                                <c:if test="${ not empty loginMember.memId and loginMember.memId eq b.memId }">
                                 <div align="center">
                                     <!-- 수정하기, 삭제하기 버튼은 이글이 본인글일 경우만 보여져야됨 -->
                                     <button type="button" class="btn btn-success" style="background-color: rgb(104, 135, 115); color: white; border-color: rgb(104, 135, 115);" onclick="postFormSubmit(1)">수정하기</button> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->

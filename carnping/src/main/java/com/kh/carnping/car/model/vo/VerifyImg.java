@@ -23,4 +23,14 @@ public class VerifyImg {
 	private String verifyImg8;	// 차박정보 서브이미지
 	private String verifyImg9;	// 차박정보 서브이미지
 	private String verifyImg10;	// 차박정보 서브이미지
+	private String verifyOgImg1;	// 차박정보 메인이미지
+	private String verifyOgImg2;	// 차박정보 서브이미지
+	private String verifyOgImg3;	// 차박정보 서브이미지
+	private String verifyOgImg4;	// 차박정보 서브이미지
+	private String verifyOgImg5;	// 차박정보 서브이미지
+	private String verifyOgImg6;	// 차박정보 서브이미지
+	private String verifyOgImg7;	// 차박정보 서브이미지
+	private String verifyOgImg8;	// 차박정보 서브이미지
+	private String verifyOgImg9;	// 차박정보 서브이미지
+	private String verifyOgImg10;	// 차박정보 서브이미지
 }

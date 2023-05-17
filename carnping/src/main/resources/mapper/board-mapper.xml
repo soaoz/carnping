@@ -102,7 +102,7 @@
 		       board_origin_img3,
 		       board_origin_img4,
 		       board_title,
-		       mem_no,
+		       mem_id,
 		       to_char(create_date, 'YYYY-MM-DD') as "create_date",
 		       location,
 		       board_content
@@ -234,6 +234,7 @@
 		select 
 		       board_no,
 		       board_title,
+		       mem_id,
 		       mem_no,
 		       to_char(create_date, 'YYYY-MM-DD') as "create_date",
 		       board_content
@@ -525,5 +526,6 @@
          where status = 'Y' and board_no = #{boardNo}
          
 	</select>
+	
 	
 </mapper>
