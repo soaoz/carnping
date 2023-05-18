@@ -47,7 +47,7 @@
                         
                         
                         <div class="content">
-                            <br><br>
+                            <br><br><br><br><br><br><br>
                             <div class="innerOuter">
                                 <h2>공지사항</h2>
                                 <br>

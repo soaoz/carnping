@@ -533,6 +533,27 @@ public class BoardController {
 	}
 	
 	
+	
+	/**
+     *  공지사항 조회
+     */
+	@RequestMapping("noticeBoard.bo")
+	public String selectNoticeBoardList2(Model model) {
+		
+		ArrayList<Board> list = bService.selectNoticeBoardList();
+		
+		
+		if(list != null) {
+			model.addAttribute("list", list);
+			return "board/noticeBoard";
+		}else {
+			model.addAttribute("errorMsg", "게시글 조회 실패!");
+	    	return "common/errorPage";
+		}
+		
+	}
+	
+	
 	/**
      *  공지사항 상세조회
      */
