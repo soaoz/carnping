@@ -49,6 +49,7 @@
 				</div>
 				
 				<form id="enrollForm" method="post" action="partyBoardInsert.bo" enctype="multipart/form-data" >
+				<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 				<div class="card">
 					<div class="card-body">
 						<div class="bank-inner-details">
@@ -64,7 +65,7 @@
 									<div class="form-group">
 										<br> <label>작성자<span class="text-danger">
 												*</span></label> 
-												<input type="text" class="form-control" name="memNo" value="${ loginMember.memNo }"
+												<input type="text" class="form-control" name="memId" value="${ loginMember.memId }"
 												style="width: 20%; text-align: center;" readonly="readonly">
 									</div>
 								</div>
