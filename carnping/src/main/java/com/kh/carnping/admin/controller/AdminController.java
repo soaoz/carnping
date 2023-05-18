@@ -20,6 +20,7 @@ import com.kh.carnping.car.model.service.CarServiceImpl;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Question;
 import com.kh.carnping.member.model.vo.Report;
 
 @Controller
@@ -117,6 +118,7 @@ public class AdminController {
 	 */
 	@RequestMapping("inquiryList.ad")
 	public String inquiryList() {
+		ArrayList<Question> list = aService.inquiryList();
 		return "admin/inquiryList";
 	}
 

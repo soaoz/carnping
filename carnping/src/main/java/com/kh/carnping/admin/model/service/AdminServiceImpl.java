@@ -10,6 +10,7 @@ import com.kh.carnping.admin.model.dao.AdminDao;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Question;
 import com.kh.carnping.member.model.vo.Report;
 
 @Service
@@ -101,7 +102,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
-
-	
-	
+	public ArrayList<Question> inquiryList() {
+		return aDao.inquiryList(sqlSession);
+	}
 }
