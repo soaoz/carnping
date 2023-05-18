@@ -520,7 +520,7 @@ function like(cinfoNo , id){
 		let a = formData.split('&');
 		console.log(a); */
 		<c:forEach items="${list}" var="item">
-			array.push({cinfoNo : "${item.cinfoNo}"
+			array.push([{cinfoNo : "${item.cinfoNo}"
 					, cinfoName :"${item.cinfoName}"
 					, cinfoContent :"${item.cinfoContent}"
 					, cinfoNotice :"${item.cinfoNotice}"
@@ -546,7 +546,7 @@ function like(cinfoNo , id){
 					, cinfoImg8 :"${item.cinfoImg8}"
 					, cinfoImg9 :"${item.cinfoImg9}"
 					, cinfoImg10 :"${item.cinfoImg10}"
-					, phone :"${item.phone}"})
+					, phone :"${item.phone}"}])
 		</c:forEach>
 		
 		

@@ -770,7 +770,7 @@ toggleMap = function(active) {
                 		+ "<div class='listing__details__comment__item__rating'>";
                 		
                 		
-               	for(let j= 0; j < review[i].reviewScr.toFixed(); j++){
+               	for(let j= 0; j < Math.floor(review[i].reviewScr); j++){
                	 	values += "<span class='icon_star'></span>"
                	}
                	if(review[i].reviewScr != 5){
@@ -780,7 +780,7 @@ toggleMap = function(active) {
 	               	 	values += "<span class='icon_star_alt'></span>"
 	               	}
 	               	if(review[i].reviewScr <= 4){
-		               	for(let j=4; j > review[i].reviewScr.toFixed(); j--){
+		               	for(let j=4; j > Math.floor(review[i].reviewScr); j--){
 		               	 	values += "<span class='icon_star_alt'></span>"
 		               	}	               		
 	               	}
