@@ -77,13 +77,12 @@
                         <h5 class="card-title">기존 차박 게시글</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="post" enctype="multipart/form-data">
 
                             <div class="row form-group">
-                                <label for="id" class="col-sm-3 col-form-label input-label">게시 사유</label>
+                                <label for="id" class="col-sm-3 col-form-label input-label">작성자</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="cinfoName" placeholder=""
-                                        value="오늘 따라 게시하고싶네요" name="" readonly>
+                                        value="${ cinfo.memId }" name="memId" readonly>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -155,7 +154,7 @@
                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 유의사항</label>
                        <div class="col-sm-9">
                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
-                               style="height: 189px;" name="cinfoContent" placeholder="게시글 유의사항 입력"
+                               style="height: 189px;" name="cinfoNotice" placeholder="게시글 유의사항 입력"
                                readonly>${ cinfo.cinfoNotice }</textarea>
                        </div>
                    </div>
@@ -163,15 +162,15 @@
                    <div class="row form-group">
                        <label for="id" class="col-sm-3 col-form-label input-label">위도</label>
                        <div class="col-sm-9">
-                           <input type="text" class="form-control" id="cinfoName"
-                               placeholder="위도가 자동으로 입력됩니다." value="${ cinfo.cinfoLttd }" name="" readonly>
+                           <input type="text" class="form-control" 
+                               placeholder="위도가 자동으로 입력됩니다." value="${ cinfo.cinfoLttd }" name="cinfoLttd" readonly>
                        </div>
                    </div>
                    <div class="row form-group">
                        <label for="id" class="col-sm-3 col-form-label input-label">경도</label>
                        <div class="col-sm-9">
-                           <input type="text" class="form-control" id="cinfoName"
-                               placeholder="경도가 자동으로 입력됩니다." value="${ cinfo.cinfoHrdns }" name="" readonly>
+                           <input type="text" class="form-control" 
+                               placeholder="경도가 자동으로 입력됩니다." value="${ cinfo.cinfoHrdns }" name="cinfoCinfoHrdns" readonly>
                        </div>
                    </div>
 
@@ -179,8 +178,8 @@
                        <label for="phone" class="col-sm-3 col-form-label input-label">주소
                        </label>
                        <div class="col-sm-9">
-                           <input type="phone" class="form-control" placeholder="우편번호 이용"
-                               value="${ cinfo.cinfoAddress }" name="address" readonly>
+                           <input type="text" class="form-control" placeholder="우편번호 이용"
+                               value="${ cinfo.cinfoAddress }" name="cinfoAddress" readonly>
                        </div>
                    </div>
 
@@ -189,42 +188,42 @@
                        <div class="col-md-9">
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">화장실
+                                   <input type="checkbox" name="cinfoFacilitie" value="화장실">화장실
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">편의점
+                                   <input type="checkbox" name="cinfoFacilitie" value="편의점">편의점
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">카페
+                                   <input type="checkbox" name="cinfoFacilitie" value="카페">카페
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">마트
+                                   <input type="checkbox" name="cinfoFacilitie" value="마트">마트
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">음식점
+                                   <input type="checkbox" name="cinfoFacilitie" value="음식점">음식점
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">주차장
+                                   <input type="checkbox" name="cinfoFacilitie" value="주차장">주차장
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">캠핑장
+                                   <input type="checkbox" name="cinfoFacilitie" value="캠핑장">캠핑장
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">병원
+                                   <input type="checkbox" name="cinfoFacilitie" value="병원">병원
                                </label>
                            </div>
                        </div>
@@ -235,37 +234,37 @@
                        <div class="col-md-9">
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 월요일
+                                   <input type="checkbox" name="cinfoDay" value="월"> 월요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 화요일
+                                   <input type="checkbox" name="cinfoDay" value="화"> 화요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 수요일
+                                   <input type="checkbox" name="cinfoDay" value="수"> 수요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 목요일
+                                   <input type="checkbox" name="cinfoDay" value="목"> 목요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 금요일
+                                   <input type="checkbox" name="cinfoDay" value="금"> 금요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 토요일
+                                   <input type="checkbox" name="cinfoDay" value="토"> 토요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 일요일
+                                   <input type="checkbox" name="cinfoDay" value="일"> 일요일
                                </label>
                            </div>
 
@@ -277,55 +276,50 @@
                        <div class="col-md-9">
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 강
+                                   <input type="checkbox" name="cinfoTags" value="강"> 강
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 공원
+                                   <input type="checkbox" name="cinfoTags" value="공원"> 공원
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 노지
+                                   <input type="checkbox" name="cinfoTags" value="노지"> 노지
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 바다
+                                   <input type="checkbox" name="cinfoTags" value="바다"> 바다
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 산
+                                   <input type="checkbox" name="cinfoTags" value="산"> 산
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 숲
+                                   <input type="checkbox" name="cinfoTags" value="숲"> 숲
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 캠핑장
+                                   <input type="checkbox" name="cinfoTags" value="캠핑장"> 캠핑장
                                </label>
                            </div>
                        </div>
                    </div>
-
-
-
                    <div class="row form-group">
                        <label for="poster" class="col-sm-3 col-form-label input-label">요청일
                            <span class="text-muted"></span></label>
                        <div class="col-sm-9">
-                           <input type="phone" class="form-control" id="tel" placeholder="요청일" value=""
-                               name="EnrollDate" readonly>
+                           <input type="text" class="form-control" placeholder="요청일" value="${ cinfo.cinfoRgstrDate }"
+                               name="cinfoRgstrDate" readonly>
                        </div>
                    </div>
-
                   
-               </form>
 
            </div>
        </div>
@@ -337,19 +331,18 @@
                <h5 class="card-title">수정 요청 차박 게시글</h5>
            </div>
            <div class="card-body">
-               <form action="#" method="post" enctype="multipart/form-data">
-                   <input type="hidden" value="" name="imgSrc">
-                   <input type="hidden" value="" name="cinfoNo">
-
-
-                   <div class="row form-group">
-                       <label for="id" class="col-sm-3 col-form-label input-label">게시 사유</label>
+               <form method="post" enctype="multipart/form-data">
+				
+				 <div class="row form-group">
+                       <label for="id" class="col-sm-3 col-form-label input-label">수정인</label>
                        <div class="col-sm-9">
-                           <input type="text" class="form-control" id="cinfoName" placeholder=""
-                               value="오늘 따라 게시하고싶네요" name="" readonly>
+                           <input type="text" class="form-control" 
+                               placeholder="게시글 이름 입력" value="${ verify.memId }" name="memId" readonly>
                        </div>
                    </div>
+                   
                    <div class="row form-group">
+                   
                        <label for="id" class="col-sm-3 col-form-label input-label">이미지</label>
                        <div class="col-sm-9 contentImg">
                            <div class="bigImgs">
@@ -388,10 +381,15 @@
 	                           	<c:if test="${ verify.verifyImg9 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg9 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg10 }" name="verifyOgImg10">
+									<input type="hidden" value="${ verify.verifyImg10 }"name="verifyImg10">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg10 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg10 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg10 }" name="verifyOgImg10">
+									<input type="hidden" value="${ verify.verifyImg10 }"name="verifyImg10">
+	                                    //뷱[햐ㅐㅠㅂㄷ[기ㅠ다;ㅓ뮤믿그ㅓㅍ;ㅁ더ㅣㅏㅇ루피;ㅁ우ㅏㄹ;머ㅣ듈파ㅣ;ㅁ]]
 	                           	</c:if>
 
                            </div>
@@ -401,8 +399,8 @@
                    <div class="row form-group">
                        <label for="id" class="col-sm-3 col-form-label input-label">차박 게시글 이름</label>
                        <div class="col-sm-9">
-                           <input type="text" class="form-control" id="cinfoName"
-                               placeholder="게시글 이름 입력" value="${ verify.verifyName }" name="memId" readonly>
+                           <input type="text" class="form-control" id="verifyName"
+                               placeholder="게시글 이름 입력" value="${ verify.verifyName }" name="verifyName" readonly>
                        </div>
                    </div>
 
@@ -410,7 +408,7 @@
                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 내용</label>
                        <div class="col-sm-9">
                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
-                               style="height: 189px;" name="cinfoContent" placeholder="게시글 내용 입력"
+                               style="height: 189px;" name="verifyContent" placeholder="게시글 내용 입력"
                                readonly>${ verify.verifyContent }</textarea>
                        </div>
                    </div>
@@ -419,7 +417,7 @@
                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 유의사항</label>
                        <div class="col-sm-9">
                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
-                               style="height: 189px;" name="cinfoContent" placeholder="게시글 유의사항 입력"
+                               style="height: 189px;" name="verifyContent" placeholder="게시글 유의사항 입력"
                                readonly>${ verify.verifyNotice }</textarea>
                        </div>
                    </div>
@@ -443,7 +441,7 @@
                        <label for="phone" class="col-sm-3 col-form-label input-label">주소
                        </label>
                        <div class="col-sm-9">
-                           <input type="phone" class="form-control" placeholder="우편번호 이용"
+                           <input type="text" class="form-control" placeholder="우편번호 이용"
                                value="${ verify.verifyAddress }" name="address" readonly>
                        </div>
                    </div>
@@ -453,42 +451,42 @@
                        <div class="col-md-9">
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">화장실
+                                   <input type="checkbox" name="verifyFacilitie" value="화장실">화장실
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">편의점
+                                   <input type="checkbox" name="verifyFacilitie" value="편의점">편의점
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">카페
+                                   <input type="checkbox" name="verifyFacilitie" value="카페">카페
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">마트
+                                   <input type="checkbox" name="verifyFacilitie" value="마트">마트
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">음식점
+                                   <input type="checkbox" name="verifyFacilitie" value="음식점">음식점
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">주차장
+                                   <input type="checkbox" name="verifyFacilitie" value="주차장">주차장
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">캠핑장
+                                   <input type="checkbox" name="verifyFacilitie" value="캠핑장">캠핑장
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox">병원
+                                   <input type="checkbox" name="verifyFacilitie" value="병원">병원
                                </label>
                            </div>
                        </div>
@@ -499,37 +497,37 @@
                        <div class="col-md-9">
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 월요일
+                                   <input type="checkbox" name="verifyDay" value="월"> 월요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 화요일
+                                   <input type="checkbox" name="verifyDay" value="화"> 화요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 수요일
+                                   <input type="checkbox" name="verifyDay" value="수"> 수요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 목요일
+                                   <input type="checkbox" name="verifyDay" value="목"> 목요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 금요일
+                                   <input type="checkbox" name="verifyDay" value="금"> 금요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 토요일
+                                   <input type="checkbox" name="verifyDay" value="토"> 토요일
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 일요일
+                                   <input type="checkbox" name="verifyDay" value="일"> 일요일
                                </label>
                            </div>
 
@@ -541,37 +539,37 @@
                        <div class="col-md-9">
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 강
+                                   <input type="checkbox" name="verifyTags" value="강"> 강
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 공원
+                                   <input type="checkbox" name="verifyTags" value="공원"> 공원
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 노지
+                                   <input type="checkbox" name="verifyTags" value="노지"> 노지
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 바다
+                                   <input type="checkbox" name="verifyTags" value="바다"> 바다
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 산
+                                   <input type="checkbox" name="verifyTags" value="산"> 산
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 숲
+                                   <input type="checkbox" name="verifyTags" value="숲"> 숲
                                </label>
                            </div>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="checkbox"> 캠핑장
+                                   <input type="checkbox" name="verifyTags" value="캠핑장"> 캠핑장
                                </label>
                            </div>
                        </div>
@@ -583,44 +581,23 @@
                        <label for="poster" class="col-sm-3 col-form-label input-label">요청일
                            <span class="text-muted"></span></label>
                        <div class="col-sm-9">
-                           <input type="phone" class="form-control" id="tel" placeholder="요청일" value=""
-                               name="EnrollDate" readonly>
+                           <input type="text" class="form-control" id="tel" placeholder="요청일" value="${ verify.verifyRgstrDate }"
+                               name="verifyRgstrDate" readonly>
                        </div>
                    </div>
-
-                   <div id="top-modal" class="modal fade" tabindex="-1" role="dialog"
-                       aria-hidden="true">
-                       <div class="modal-dialog modal-top">
-                           <div class="modal-content">
-                               <div class="modal-header">
-                                   <h4 class="modal-title" id="topModalLabel">게시글 수정 철회</h4>
-                                   <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                       aria-label="Close"></button>
-                               </div>
-                               <div class="modal-body">
-                                   <form action="#">
-                                       <br>
-                                       <h5 align="center">정말로 **를(을) 요청철회를 하시겠습니까?</h5>
-                                       <p align="center" style="color:gray">요청을 철회를 하신다면 사유를 입력해주세요.
-                                       </p>
-                                       <textarea name="" id="" cols="60" rows="10"></textarea>
-                                   </form>
-                               </div>
-                               <hr>
-                               <div class="modal-footer">
-                                   <button type="button" class="btn btn-light"
-                                       data-bs-dismiss="modal">닫기</button>
-                                   <button type="button" class="btn btn-primary">철회</button>
-                               </div>
-                           </div>
+                   
+                   <div class="row form-group">
+                       <label for="id" class="col-sm-3 col-form-label input-label">게시 사유</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" placeholder=""
+                               value="${ verify.verifyReason }" name="verifyReason" readonly>
                        </div>
                    </div>
                    <div class="text-end">
                        <button type="button" onclick="history.back()"
                            class="btn btn-primary">뒤로가기</button>
-                                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#top-modal">요청철회</button>
-                                        <button type="submit" class="btn btn-primary">수정확인</button>
+                                        <button type="submit" class="btn btn-primary" formaction="">요청철회</button>
+                                        <button type="submit" class="btn btn-primary" formaction="">수정확인</button>
                                     </div>
                                 </form>
 
@@ -660,7 +637,138 @@ $(function () {
         $vbigPic.attr("src", $vsmallPicAttribute);
     }
     
+    // String
+	let vf = '${verify.verifyFacilities}';
+	let vd = '${verify.verifyDays}';
+	let vt = '${verify.verifyTag}';
+	let verifyFacilities;
+	let verifyTag;
+	let verifyDays;
+
+	if (vf.includes(",")) {
+		verifyFacilities = '${verify.verifyFacilities}'.split(",");
+		$("input[name=verifyFacilitie]")
+				.each(
+						function(index, value) {
+							for (let i = 0; i < verifyFacilities.length; i++) {
+								if (verifyFacilities[i] === ($(value)
+										.val())) {
+									console.log("탐?")
+									$(value).attr("checked", true);
+								}
+							}
+						})
+	} else {
+		verifyFacilities = '${verify.verifyFacilities}';
+		$("input[name=verifyFacilitie]").each(
+				function(index, value) {
+					if (verifyFacilities === ($(value).val())) {
+						$(value).attr("checked", true);
+					}
+				})
+	}
+
+	if (vt.includes(",")) {
+		verifyTag = '${verify.verifyTag}'.split(",");
+		$("input[name=verifyTags]").each(function(index, value) {
+			for (let i = 0; i < verifyTag.length; i++) {
+				if (verifyTag[i] === ($(value).val())) {
+					$(value).attr("checked", true);
+				}
+			}
+		})
+	} else {
+		verifyTag = '${verify.verifyTag}'
+		$("input[name=verifyTags]").each(function(index, value) {
+			if (verifyTag === ($(value).val())) {
+				$(value).attr("checked", true);
+			}
+		})
+	}
+	if (vd.includes(",")) {
+		verifyDays = '${verify.verifyDays}'.split(",");
+		$("input[name=verifyDay]").each(function(index, value) {
+			for (let i = 0; i < verifyDays.length; i++) {
+				if (verifyDays[i] === ($(value).val())) {
+					$(value).attr("checked", true);
+				}
+			}
+		})
+	} else {
+		verifyDays = '${verify.verifyDays}'
+		$("input[name=verifyDay]").each(function(index, value) {
+			if (verifyDays === ($(value).val())) {
+				$(value).attr("checked", true);
+			}
+		})
+	}
+
+let cf = '${cinfo.cinfoFacilities}';
+	let cd = '${cinfo.cinfoDays}';
+	let ct = '${cinfo.cinfoTag}';
+	let cinfoFacilities;
+	let cinfoDay;
+	let cinfoTag;
+
+	if (cf.includes(",")) {
+		cinfoFacilities = '${cinfo.cinfoFacilities}'.split(",");
+		$("input[name=cinfoFacilitie]")
+				.each(
+						function(index, value) {
+							for (let i = 0; i < cinfoFacilities.length; i++) {
+								if (cinfoFacilities[i] === ($(value)
+										.val())) {
+									console.log("탐?")
+									$(value).attr("checked", true);
+								}
+							}
+						})
+	} else {
+		cinfoFacilities = '${cinfo.cinfoFacilities}';
+		$("input[name=cinfoFacilitie]").each(
+				function(index, value) {
+					if (cinfoFacilities === ($(value).val())) {
+						$(value).attr("checked", true);
+					}
+				})
+	}
+
+	if (ct.includes(",")) {
+		cinfoTag = '${cinfo.cinfoTag}'.split(",");
+		$("input[name=cinfoTags]").each(function(index, value) {
+			for (let i = 0; i < cinfoTag.length; i++) {
+				if (cinfoTag[i] === ($(value).val())) {
+					$(value).attr("checked", true);
+				}
+			}
+		})
+	} else {
+		cinfoTag = '${cinfo.cinfoTag}'
+		$("input[name=cinfoTags]").each(function(index, value) {
+			if (cinfoTag === ($(value).val())) {
+				$(value).attr("checked", true);
+			}
+		})
+	}
+	if (cd.includes(",")) {
+		cinfoDays = '${cinfo.cinfoDays}'.split(",");
+		$("input[name=cinfoDay]").each(function(index, value) {
+			for (let i = 0; i < cinfoDays.length; i++) {
+				if (cinfoDays[i] === ($(value).val())) {
+					$(value).attr("checked", true);
+				}
+			}
+		})
+	} else {
+		cinfoDays = '${cinfo.cinfoDays}'
+		$("input[name=cinfoDay]").each(function(index, value) {
+			if (cinfoDays === ($(value).val())) {
+				$(value).attr("checked", true);
+			}
+		})
+	}
 })
+
 </script>
 </body>
 

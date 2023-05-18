@@ -25,6 +25,7 @@
 		<result column="BOARD_LTTD" property="boardLttd"/>
 		<result column="BOARD_HRDNS" property="boardHrdns"/>
 		<result column="BOARD_ADDRESS" property="boardAddress"/>
+		<result column="BRE_NO" property="breNo"/>
 	</resultMap>
 
 
@@ -315,6 +316,7 @@
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			 , comm_content
 			 , mem_id
+			 , nickName
 			 , mem_img_origin
 			 , mem_img_change
 		  from board_reply r
@@ -344,6 +346,14 @@
 		  , #{commContent}
 		  )
 	</insert>
+	
+	<!-- 무료나눔 게시판 댓글 삭제 -->
+	<update id="freeReplyDelete">
+		update
+			   board_reply
+		   set status = 'N'
+		 where bre_no = #{brno}
+	</update>
 	
 	
 	<!-- 소모임 댓글 리스트 조회 -->
@@ -384,6 +394,14 @@
 		  , #{commContent}
 		  )
 	</insert>
+	
+	<!-- 무료나눔 게시판 댓글 삭제 -->
+	<update id="partyReplyDelete">
+		update
+			   board_reply
+		   set status = 'N'
+		 where bre_no = #{brno}
+	</update>
 	
 	
 	

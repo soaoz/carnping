@@ -179,6 +179,16 @@ public class BoardServiceImpl implements BoardService{
 
 		return bDao.freeReplyInsert(sqlSession, r);
 	}
+	
+	
+	/**
+     *  무료나눔 게시판 댓글 삭제
+     */
+	@Override
+	public int freeReplyDelete(String brno) {
+
+		return bDao.freeReplyDelete(sqlSession, brno);
+	}
 
 	
 	/**
@@ -198,6 +208,16 @@ public class BoardServiceImpl implements BoardService{
 	public int partyReplyInsert(BoardReply r) {
 
 		return bDao.partyReplyInsert(sqlSession, r);
+	}
+	
+	
+	/**
+     *  소모임 게시판 댓글 삭제
+     */
+	@Override
+	public int partyReplyDelete(String brno) {
+
+		return bDao.partyReplyDelete(sqlSession, brno);
 	}
 
 
@@ -256,6 +276,12 @@ public class BoardServiceImpl implements BoardService{
 	public int insertReport(Report r) {
 		return bDao.insertReport(sqlSession, r);
 	}
+
+	
+	
+
+	
+	
 
 	
 	

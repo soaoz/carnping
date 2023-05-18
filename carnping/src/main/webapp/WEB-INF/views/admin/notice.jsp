@@ -48,7 +48,7 @@
                                 <table class="table table-center table-hover datatable">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>글이름(글번호)</th>
+                                            <th>글제목</th>
                                             <th>작성일</th>
                                             <th class="text-end">옵션</th>
                                         </tr>

@@ -19,6 +19,7 @@
 		<result column="CINFO_MODIFIED" property="cinfoModified"/>	
 		<result column="CINFO_RGSTR_DATE" property="cinfoRgstrDate"/>	
 		<result column="MEM_NAME" property="memName"/>	
+		<result column="MEM_ID" property="memId"/>	
 		<result column="MEM_IMG_CHANGE" property="memImg"/>
 		<result column="MEM_NO" property="memNo"/>	
 		<result column="CINFO_IMG1" property="cinfoImg1"/>	
@@ -164,6 +165,7 @@
 	<select id="filterList" resultMap="cinfoResultMap">
 		SELECT  CINFO_NO
 		        ,CINFO_NAME
+		        ,CINFO_CONTENT
 		        ,CINFO_LTTD
 		        ,CINFO_HRDNS
 		        ,CINFO_STATUS
@@ -185,13 +187,23 @@
 			AND CINFO_NAME LIKE '%'||#{title}||'%'
 		</if>
 		
+		<if test="keyword != null">
+			AND CINFO_CONTENT LIKE '%'||#{keyword}||'%'
+		</if>
+		
 		<if test="location != 'all'">
 			AND CINFO_ADDRESS LIKE ''||#{location}||'%'
 		</if>
 		
 		<if test="facility != null">
  		<foreach item='fac' collection="facility" separator=" ">
-	 		AND CINFO_FACILITIES LIKE '%'||#{fac}||'%'
+	 		AND CINFO_TAG LIKE '%'||#{fac}||'%'
+	 	</foreach>
+		</if>
+		
+		<if test="tag != null">
+ 		<foreach item='t' collection="tag" separator=",">
+	 		AND CINFO_FACILITIES LIKE '%'||#{t}||'%'
 	 	</foreach>
 		</if>
 		
@@ -227,6 +239,7 @@
 				,CINFO_RGSTR_DATE
 		        ,(SELECT PHONE FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) PHONE
 		        ,(SELECT MEM_NAME FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) MEM_NAME
+		        ,(SELECT MEM_ID FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) MEM_ID
 				,CINFO_IMG1
 				,CINFO_IMG2
 				,CINFO_IMG3
@@ -286,9 +299,9 @@
 		        ,TRUNC(AVG(REVIEW_TYPE),1) REVIEW_TYPE
 		        ,TRUNC((TRUNC(AVG(REVIEW_VIEW),1) + TRUNC(AVG(REVIEW_CONV),1) + TRUNC(AVG(REVIEW_ACCESS),1) + TRUNC(AVG(REVIEW_TYPE),1))/4,1) REVIEW_ALL_VIEW
 	  	  FROM 	REVIEW
-		 WHERE  CINFO_NO = 'CAR1'
+		 WHERE  CINFO_NO = #{cinfoNo}
 		 GROUP 
-		 	BY  CINFO_NO
+		 	BY  CINFO_NO 
 	</select>
 
 	<!-- 리뷰 댓글 정보 -->

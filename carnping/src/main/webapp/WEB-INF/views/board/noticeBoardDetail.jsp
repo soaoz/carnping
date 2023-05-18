@@ -68,7 +68,7 @@
                                 
                                     <tr>
                                         <th>내용</th>
-                                        <td colspan="4"><p style="height:150px">${ b.boardContent }</p></td>
+                                        <td colspan="4"><p style="height:300px">${ b.boardContent }</p></td>
                                     </tr>
                                     
                                 </table>

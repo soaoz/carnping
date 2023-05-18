@@ -9,6 +9,11 @@
     <meta name="keywords" content="Directing, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -29,9 +34,7 @@
 
     <!-- icon(fontawesome.com) 등록 -->
     <script src="https://kit.fontawesome.com/78c41960c5.js" crossorigin="anonymous"></script>
-    
-    <!--jquery-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
       <!--드롭다운-->
     <!-- Our CSS stylesheet file -->
@@ -320,27 +323,6 @@
 <c:set var="loginMember" value="${loginMember}" />
 
 <script>
-/* $('#ulArea').html(notification);
-
-//Add the following code after updating the ulArea content
-var ulArea = document.getElementById('ulArea');
-ulArea.style.overflowY = 'scroll';
- */
-//리뷰 댓글 클릭시 댓글 리스트 생성 이벤트 발생
-/* function alarmScroll(){
-	console.log("commentScroll 타나?")
-	
-	
-	if(("#scrollable-list").css("display") == "none"){
-		 console.log("등록하고 타는지 확인해보자")
-		 $this.slideDown(); 
-		 $('.ul_reply3').not($this).css("display", "none");
-		 count++;
-	}else{ // 보이는 상태
-		 $this.slideUp(); 
-		 count--;
-	}
-} */
 
 
 
@@ -417,9 +399,9 @@ ulArea.style.overflowY = 'scroll';
 </script>
 
 		<!-- 카카오 채널-->
-			<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+			<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
 			  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
-			<script>
+            <script>
 			  Kakao.init('1338885af6c93500e3dd5c130cf1ead7'); // 사용하려는 앱의 JavaScript 키 입력
 			</script>
 			
@@ -430,12 +412,8 @@ ulArea.style.overflowY = 'scroll';
 			    container: '#add-channel-button',
 			    channelPublicId: '_XxacNb',
 			    size: "large"
-			  });
-			  
-			  
+			  });-->
 
-			  
-			</script>
 		<!-- 카카오 채널 실패~~~~ -->
     
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결 : 소영       -->
@@ -469,7 +447,7 @@ ulArea.style.overflowY = 'scroll';
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결  끝       -->
     	<c:if test="${ not empty alertMsg }">
 	<script>
-		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>
+		alert("${ alertMsg }"); 
 		
 
 	</script>
@@ -479,7 +457,7 @@ ulArea.style.overflowY = 'scroll';
     <!-- Js Plugins -->
     <script src="resources/js/jquery-3.3.1.min.js"></script>
     <script src="resources/js/bootstrap.min.js"></script>
-    <script src="resources/js/jquery.nice-select.min.js"></script>
+    <!-- <script src="resources/js/jquery.nice-select.min.js"></script> -->
     <script src="resources/js/jquery-ui.min.js"></script>
     <script src="resources/js/jquery.nicescroll.min.js"></script>
     <script src="resources/js/jquery.barfiller.js"></script>

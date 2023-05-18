@@ -14,6 +14,8 @@ import lombok.ToString;
 public class Filter {
 	private String sequence;
 	private String title;
+	private String keyword;
 	private String location;
 	private String[] facility;
+	private String[] tag;
 }

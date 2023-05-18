@@ -26,7 +26,51 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css"> -->
+
+
 <style>
+
+
+.select__option:before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 1px;
+	background: #eeeeee;
+	content: "";
+	z-index: 1;
+}
+
+.select__option .nice-select {
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	height: 54px;
+	line-height: 56px;
+}
+
+.select__option .nice-select span {
+	font-size: 15px;
+	color: #323232;
+}
+
+.select__option .nice-select .list {
+	border-radius: 0;
+	margin-top: 0;
+	width: 100%;
+}
+
+.select__option .nice-select:after {
+	border-right: 7px solid #183456;
+	border-top: 7px solid transparent;
+	height: 6px;
+	margin-top: 0;
+	right: 18px;
+	width: 10px;
+	border-bottom: none;
+	top: 40%;
+}
     .header_back {
 	 	width: 100%;
 		height: 110px;
@@ -191,7 +235,7 @@
         <input type="text" placeholder="제목을 입력하는 공간!" name="title" value="title">
         <i class="fa fa-map-marker"></i>
     </div>
-    <div class="filter__select" >
+    <div class="select__option" >
         <select name="sequence">
             <option id="default" value="default">순서</option>
             <option id="rating" value="rating">평점순</option>
@@ -200,7 +244,7 @@
         </select>
     </div>
     
-    <div class="filter__select" >
+    <div class="hero__search__form" >
         <select name="location">
             <option id="all" value="all">지역</option>
             <option id="서울" value="서울">서울</option>
@@ -608,7 +652,7 @@ detail = function(cinfoNo){
 </script>
 
 <script src="resources/js/main.js"></script>
-
+<!-- <script src="resources/js/jquery.nice-select.min.js"></script> -->
 </body>
 
 </html>
