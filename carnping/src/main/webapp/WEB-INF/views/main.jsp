@@ -281,9 +281,16 @@
                                                 '</div>' +
                                                 '</div>');
                                 
+                                carItem.css("cursor", "pointer");
+
                                 // 데이터 템플릿을 컨테이너에 추가
                                 carListContainer.append(carItem);
-                                }
+                                carItem.on('click', function() {
+                                var cinfoNo = car.cinfoNo; // 차박 게시글의 cinfoNo 값 가져오기
+                                var url = 'detail.ca?cinfoNo=' + cinfoNo; // 상세 페이지 URL 생성
+                                window.location.href = url; // 페이지 이동
+                                });
+                            }
                             },
                             error: function(xhr, status, error) {
                                 console.error(error);
