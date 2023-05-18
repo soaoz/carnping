@@ -66,6 +66,7 @@ public class CarController {
 			 tag = String.join(",",filter.getTag());			
 		}
 
+		model.addAttribute("location", filter.getLocation());
 		model.addAttribute("facility", facility);
 		model.addAttribute("tag", tag);
 		model.addAttribute("filter", filter);
