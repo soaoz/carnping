@@ -25,52 +25,13 @@
 <link rel="stylesheet" href="css/barfiller.css" type="text/css">
 <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
 <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css"> -->
-
+<link rel="stylesheet" href="resources/css/style.css" type="text/css"> 
 
 <style>
-.select__option:before {
-	position: absolute;
-	left: 0;
-	top: 0;
-	height: 100%;
-	width: 1px;
-	background: #eeeeee;
-	content: "";
-	z-index: 1;
-}
 
-.select__option .nice-select {
-	width: 100%;
-	border: none;
-	border-radius: 0;
-	height: 54px;
-	line-height: 56px;
-}
-
-.select__option .nice-select span {
-	font-size: 15px;
-	color: #323232;
-}
-
-.select__option .nice-select .list {
-	border-radius: 0;
-	margin-top: 0;
-	width: 100%;
-}
-
-.select__option .nice-select:after {
-	border-right: 7px solid #183456;
-	border-top: 7px solid transparent;
-	height: 6px;
-	margin-top: 0;
-	right: 18px;
-	width: 10px;
-	border-bottom: none;
-	top: 40%;
-}
 
 .header_back {
 	width: 100%;
@@ -213,8 +174,27 @@
 .fa-solid.fa-heart {
 	color: red;
 }
-/* 좌여css 끝 */
+
+ .custom-select {
+    position: relative;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+  }
+
+  .custom-select select {
+    padding: 8px 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .custom-select select:hover {
+    background-color: #e9e9e9;
+  }
 </style>
+
 </head>
 
 <body class="ov-hid">
@@ -241,8 +221,8 @@
 				<input type="text" placeholder="제목을 입력하는 공간!" name="title"
 					value="title"> <i class="fa fa-map-marker"></i>
 			</div>
-			<div class="select__option">
-				<select name="sequence">
+			<div class="filter__select">
+				<select name="sequence" class="custom-select">
 					<option id="default" value="default">순서</option>
 					<option id="rating" value="rating">평점순</option>
 					<option id="view" value="view">조회수순</option>
@@ -250,8 +230,8 @@
 				</select>
 			</div>
 
-			<div class="hero__search__form">
-				<select name="location">
+			<div class="filter__select">
+				<select class="custom-select" name="location">
 					<option id="all" value="all">지역</option>
 					<option id="서울" value="서울">서울</option>
 					<option id="인천" value="인천">인천</option>
@@ -283,6 +263,7 @@
 					name="facility" value="병원"> <span class="checkmark"></span>
 				</label>
 			</div>
+			
 			<div class="filter__btns">
 				<button type="submit">필터 적용</button>
 				<button type="reset" class="filter__reset">초기화</button>
@@ -308,7 +289,7 @@
 						<div class="listing__item">
 							<input type="hidden" value="${ list.cinfoNo }">
 							<div class="listing__item__pic set-bg"
-								data-setbg="${ list.cinfoImg1 }" style="cursor: pointer">
+								data-setbg="${ list.cinfoImg1 }" style="cursor: pointer"onclick="detail('${ list.cinfoNo }');">
 
 								<!--  
         <div class="listing__item__pic__tag">Popular</div>
@@ -323,7 +304,7 @@
 									onClick="event.stopPropagation();">
 									<script>
         // 잠시 묶어 두겠습니다
-    /*     $(document).ready(function() {
+    /*    $(document).ready(function() {
             selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
             function selectLike(cinfoNo, id){
                 var cinfoNo = cinfoNo;
@@ -353,7 +334,7 @@
                     
                 });
             }
-        }); */
+        });  */
         
         $(document).on('click', '.like-button', function(e) {
             e.preventDefault();
@@ -372,7 +353,7 @@
 								<!--  소영 : 좋아요 코드 끝 -->
 							</div>
 							<div class="listing__item__text" style="cursor: pointer"
-								onclick="(detail('${ list.cinfoNo }');)">
+								onclick="detail('${ list.cinfoNo }');">
 								<div class="listing__item__text__inside">
 									<h5>${ list.cinfoName }</h5>
 
@@ -415,16 +396,15 @@
 														</c:forEach>
 													</c:if>
 												</c:if>
-												<%-- <c:forEach var="rating" begin="1" end="${ list.cinfoRating }" 
-                                            step="1">
-                                            <span class="icon_star"></span>
-                                        </c:forEach>
-                                        <c:if test="${ ((list.cinfoRating)*10) % 10 >= 5  }">
-                                            <span class="icon_star-half_alt"></span>
-                                        </c:if> --%>
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="listing__item__text__rating">
+									<div class="listing__item__text__info__left">
+										<span>조회수</span>
+									</div>
+									<div class="listing__item__text__info__right">${ list.cinfoViews }</div>
 								</div>
 							</div>
 						</div>
@@ -578,12 +558,32 @@ function like(cinfoNo , id){
                 latlng: new kakao.maps.LatLng(rs[0].cinfoLttd, rs[0].cinfoHrdns)
             }])
         })
+        
+        
+        let add =[];
+        let location = "<c:out value='${location}'/>";
+        
+        if(location === '강원'){
+        	add = [37.881591,127.730561];
+        }else if(location === '인천'){
+        	add = [37.456255,126.705206];
+        }else if(location === '경기'){
+        	add = [37.263573,127.028601];
+        }else{
+        	add = [37.541, 126.986];
+        }
+         
+        console.log(add);
         map = new kakao.maps.Map(document.getElementById('map'), { 
                // 지도의 중심좌표
-               center : new kakao.maps.LatLng(36.2683, 127.6358), 
+               
+               center : new kakao.maps.LatLng(add[0], add[1]), 
+            	
                // 지도의 확대 레벨
-               level : 10 
+               level : 11
 		});
+		
+		
 		
 		/* $list.forEach(function(li,i){
 			console.log(li);
@@ -618,9 +618,17 @@ function like(cinfoNo , id){
 			$("input[name=title]").val("${filter.title}");
 			$("select[name=sequence]").val("${filter.sequence}").attr("selected",true);
 			$("select[name=sequence]").val("${filter.sequence}").prop("selected","selected");
-		console.log("${filter.sequence}");
-			//$("#${filter.location}").attr("selected");
-		console.log($("select[name=sequence]").val("${filter.sequence}"))
+			$("select[name=location]").val("${filter.location}").attr("selected",true);
+			$("select[name=location]").val("${filter.location}").prop("selected","selected");
+			let facility = '<c:out value="${facility}"/>'.split(",");
+					console.log("이거 타?");
+			 $("input[name=facility]").map(function(i, result) {
+				for(let f of facility){
+					if(f == result.value){
+						$("input[value="+ result.value +"]").attr("checked", true);
+					}
+				} 
+			})
 	</c:if>
     // 마커 클러스터러를 생성합니다
     var clusterer = new kakao.maps.MarkerClusterer({
@@ -669,7 +677,6 @@ detail = function(cinfoNo){
 </script>
 
 	<script src="resources/js/main.js"></script>
-	<!-- <script src="resources/js/jquery.nice-select.min.js"></script> -->
-</body>
+	</body>
 
 </html>

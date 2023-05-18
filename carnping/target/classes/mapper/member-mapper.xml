@@ -673,7 +673,7 @@
 	select count(*) from alarm where ref_no = #{refNo} AND STATUS ='N' and user_no=#{userNo}
 	</select>
 	
-
+	<!-- 민수 :  -->
 	
 	
 	

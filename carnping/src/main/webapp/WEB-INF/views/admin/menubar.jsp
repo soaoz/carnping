@@ -70,105 +70,6 @@
     <ul class="nav nav-tabs user-menu">
         
 
-        <li class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                <i data-feather="bell"></i> <span class="badge rounded-pill">5</span>
-            </a>
-            <div class="dropdown-menu notifications">
-                <div class="topnav-dropdown-header">
-                    <span class="notification-title">Notifications</span>
-                    <a href="javascript:void(0)" class="clear-noti"> Clear All</a>
-                </div>
-                <div class="noti-content">
-                    <ul class="notification-list">
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media d-flex">
-                                    <span class="avatar avatar-sm">
-                                        <img class="avatar-img rounded-circle" alt=""
-                                            src="resources/admin/assets/img/profiles/usermain.jpg">
-                                    </span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Brian Johnson</span>
-                                            paid the invoice <span class="noti-title">#DF65485</span></p>
-                                        <p class="noti-time"><span class="notification-time">4 mins ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media d-flex">
-                                    <span class="avatar avatar-sm">
-                                        <img class="avatar-img rounded-circle" alt=""
-                                            src="resources/admin/assets/img/profiles/avatar-03.jpg">
-                                    </span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Marie Canales</span>
-                                            has accepted your estimate <span
-                                                class="noti-title">#GTR458789</span></p>
-                                        <p class="noti-time"><span class="notification-time">6 mins ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media d-flex">
-                                    <div class="avatar avatar-sm">
-                                        <span class="avatar-title rounded-circle bg-primary-light"><i
-                                                class="far fa-user"></i></span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">New user
-                                                registered</span></p>
-                                        <p class="noti-time"><span class="notification-time">8 mins ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media d-flex">
-                                    <span class="avatar avatar-sm">
-                                        <img class="avatar-img rounded-circle" alt=""
-                                            src="/resourassets/img/profiles/avatar-04.jpg">
-                                    </span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Barbara Moore</span>
-                                            declined the invoice <span class="noti-title">#RDW026896</span></p>
-                                        <p class="noti-time"><span class="notification-time">12 mins ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media d-flex">
-                                    <div class="avatar avatar-sm">
-                                        <span class="avatar-title rounded-circle bg-info-light"><i
-                                                class="far fa-comment"></i></span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">You have received a new
-                                                message</span></p>
-                                        <p class="noti-time"><span class="notification-time">2 days ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="topnav-dropdown-footer">
-                    <a href="activities.html">View all Notifications</a>
-                </div>
-            </div>
-        </li>
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
@@ -192,11 +93,8 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li class="menu-title"><span>메뉴</span></li>
-                <li class="active">
-                    <a href="index.html"><i data-feather="home"></i> <span>대시보드</span></a>
-                </li>
                 <li class="submenu">
-                    <a href="member.ad"><i data-feather="users"></i> <span>회원관리</span> <span
+                    <a href="#"><i data-feather="users"></i> <span>회원관리</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="member.ad">회원관리</a></li>
@@ -206,16 +104,13 @@
                 <li class="submenu">
                     <a href="#"><i data-feather="clipboard"></i> <span>게시글관리</span> <span
                             class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="carList.ad">차박게시글</a></li>
-                        <li><a href="verify.ad">차박게시글 검수</a></li>
-                    </ul>
+                    <a href="verify.ad">차박게시글 검수</a>
                 </li>
                 <li>
                     <a href="notice.ad"><i data-feather="star"></i> <span>공지사항관리</span></a>
                 </li>
                 <li>
-                    <a href="inquiryList.ad"><i data-feather="credit-card"></i> <span>Q&A관리</span></a>
+                    <a href="inquiryList.ad"><i data-feather="credit-card"></i><span>Q&A관리</span></a>
                 </li>
             </ul>
         </div>
