@@ -1113,7 +1113,8 @@ $(document).ready(function() {
 $(document).ready(function() {
 	  
     
- 
+	if (loginMember) {
+		console.log("dh")
   
 		 //var cinfoNo = $('input[name="post-id"]').val();  //글번호
 		 //var cinfoNo = document.getElementById('postId').val();
@@ -1144,12 +1145,12 @@ $(document).ready(function() {
 			 },
 		     error: function(xhr, status, error) {
 			        // 삭제 실패시 처리할 로직
-		        alert("삭제 실패: " + error);
+		        //alert("삭제 실패: " + error);
 		        console.error(error); 
 		      }
 		 });
 	 
-	
+	}
 
 });
 
