@@ -301,6 +301,7 @@
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			 , comm_content
 			 , mem_id
+			 , nickName
 			 , mem_img_origin
 			 , mem_img_change
 		  from board_reply r

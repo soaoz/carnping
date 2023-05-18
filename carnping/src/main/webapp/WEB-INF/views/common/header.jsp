@@ -9,6 +9,11 @@
     <meta name="keywords" content="Directing, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -29,9 +34,7 @@
 
     <!-- icon(fontawesome.com) 등록 -->
     <script src="https://kit.fontawesome.com/78c41960c5.js" crossorigin="anonymous"></script>
-    
-    <!--jquery-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
       <!--드롭다운-->
     <!-- Our CSS stylesheet file -->
