@@ -261,14 +261,13 @@
 		        ,CINFO_FACILITIES
 		        ,CINFO_DAYS
 		        ,CINFO_TAG
-		        ,CINFO_RATING
 		        ,CINFO_VIEWS
 		        ,CINFO_MODIFIED
 		        ,CINFO_RGSTR_DATE
-		        ,(SELECT PHONE FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) PHONE
-		        ,CINFO_IMG1
-		 FROM CINFO
-		 JOIN CINFO_IMG USING(CINFO_NO)
+		        ,(SELECT PHONE FROM MEMBER WHERE C.MEM_NO = MEMBER.MEM_NO) PHONE
+		        ,(SELECT CINFO_IMG1 FROM CINFO_IMG WHERE C.CINFO_NO = CINFO_IMG.CINFO_NO) AS "CINFO_IMG1"
+		        ,NVL((SELECT TRUNC((SUM(REVIEW_VIEW +REVIEW_CONV +REVIEW_ACCESS + REVIEW_TYPE)/COUNT(*))/4,1) FROM REVIEW WHERE REVIEW.CINFO_NO = C.CINFO_NO),0)  AS "CINFO_RATING"
+		 FROM CINFO C
 		 WHERE CINFO_STATUS ='Y'
 	</select> 
 	
@@ -278,7 +277,6 @@
 	<select id="filterList" resultMap="cinfoResultMap">
 		SELECT  CINFO_NO
 		        ,CINFO_NAME
-		        ,CINFO_CONTENT
 		        ,CINFO_LTTD
 		        ,CINFO_HRDNS
 		        ,CINFO_STATUS
@@ -286,16 +284,14 @@
 		        ,CINFO_FACILITIES
 		        ,CINFO_DAYS
 		        ,CINFO_TAG
-		        ,CINFO_RATING
 		        ,CINFO_VIEWS
 		        ,CINFO_MODIFIED
 		        ,CINFO_RGSTR_DATE
-		        ,(SELECT PHONE FROM MEMBER WHERE CINFO.MEM_NO = MEMBER.MEM_NO) PHONE
-		        ,CINFO_IMG1
-		 FROM CINFO
-		 JOIN CINFO_IMG USING(CINFO_NO)
-		 WHERE CINFO_STATUS ='Y'
-			
+		        ,(SELECT PHONE FROM MEMBER WHERE C.MEM_NO = MEMBER.MEM_NO) PHONE
+		        ,(SELECT CINFO_IMG1 FROM CINFO_IMG WHERE C.CINFO_NO = CINFO_IMG.CINFO_NO) AS "CINFO_IMG1"
+		        ,NVL((SELECT TRUNC((SUM(REVIEW_VIEW +REVIEW_CONV +REVIEW_ACCESS + REVIEW_TYPE)/COUNT(*))/4,1) FROM REVIEW WHERE REVIEW.CINFO_NO = C.CINFO_NO),0)  AS "CINFO_RATING"
+		 FROM CINFO C
+		 WHERE CINFO_STATUS ='Y'	
 		<if test="title != 'title'">
 			AND CINFO_NAME LIKE '%'||#{title}||'%'
 		</if>
@@ -309,15 +305,15 @@
 		</if>
 		
 		<if test="facility != null">
- 		<foreach item='fac' collection="facility" separator=" ">
-	 		AND CINFO_TAG LIKE '%'||#{fac}||'%'
-	 	</foreach>
+	 		<foreach item='fac' collection="facility" separator=" ">
+		 		AND CINFO_FACILITIES LIKE '%'||#{fac}||'%'
+		 	</foreach> 
 		</if>
 		
 		<if test="tag != null">
- 		<foreach item='t' collection="tag" separator=",">
-	 		AND CINFO_FACILITIES LIKE '%'||#{t}||'%'
-	 	</foreach>
+	 		<foreach item='t' collection="tag" separator=" ">
+		 		AND CINFO_TAG LIKE '%'||#{t}||'%'
+		 	</foreach>
 		</if>
 		
 		<choose>

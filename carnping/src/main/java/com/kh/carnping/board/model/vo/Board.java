@@ -36,6 +36,7 @@ public class Board {
 	private String boardLttd;
 	private String boardHrdns;
 	private String boardAddress;
+	private String breNo;
 	
 	
 }

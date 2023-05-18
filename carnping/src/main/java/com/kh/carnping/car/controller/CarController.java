@@ -56,6 +56,7 @@ public class CarController {
 	@RequestMapping("filter.ca")
 	public String filterList(Filter filter, Model model) {
 		ArrayList<Cinfo> list = cService.filterList(filter);
+		System.out.println(filter);
 		if (!list.isEmpty()) {
 			model.addAttribute("filter", filter);
 			model.addAttribute("list", list);
@@ -116,7 +117,7 @@ public class CarController {
 			}
 		}
 		int result = cService.insertReview(review);
-		return "redirect:detail.ca?cinfoNo=" + review.getReviewNo();
+		return "redirect:detail.ca?cinfoNo=" + review.getCinfoNo();
 	}
 
 	// 리뷰 삭제
@@ -184,6 +185,7 @@ public class CarController {
 		verify.setVerifyContent(checkString(verify.getVerifyContent()));
 		verify.setVerifyNotice(checkString(verify.getVerifyNotice()));
 		verify.setVerifyReason(checkString(verify.getVerifyReason()));
+		verify.setVerifyName(verify.getVerifyName().trim());
 		
 		// 태그 변수
 		if (verify.getVerifyFacilitie() != null) {

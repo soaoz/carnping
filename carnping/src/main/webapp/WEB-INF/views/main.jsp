@@ -91,14 +91,14 @@
 
 
                         <ul class="hero__categories__tags" id="themeTags">
-                            <li><label for="강"><input type="checkbox" name="tags" value="강" id="강"><i class="fa-solid fa-water" style="color: #4784ff;"></i> 강</label></li>
-                            <li><label for="공원"><input type="checkbox" name="tags" value="공원" id="공원" ><i class="fa-solid fa-tree-city" style="color: #0af564;"></i> 공원</label></li>
-                            <li><label for="노지"><input type="checkbox" name="tags" value="노지" id="노지"><i class="fa-solid fa-map-pin" style="color: #fe6c6c;"></i> 노지</label></li>
-                            <li><label for="바다"><input type="checkbox" name="tags" value="바다" id="바다"><i class="fa-solid fa-umbrella-beach" style="color: #ff773d;"></i> 바다</label></li>
-                            <li><label for="산"><input type="checkbox" name="tags" value="산" id="산"><i class="fa-solid fa-mountain" style="color: #0ca678;"></i> 산</label></li>
-                            <li><label for="섬"><input type="checkbox" name="tags" value="섬" id="섬"><i class="fa-solid fa-anchor" style="color: #fbfe3e;"></i> 섬</label></li>
-                            <li><label for="숲"><input type="checkbox" name="tags" value="숲" id="숲"><i class="fa-solid fa-tree" style="color: #90fe97;"></i> 숲</label></li>
-                            <li><label for="캠핑장"><input type="checkbox" name="tags" value="캠핑장" id="캠핑장"><i class="fa-sharp fa-solid fa-campground" style="color: #ff7755;"></i> 캠핑장</label></li>
+                            <li><label for="강"><input type="checkbox" name="tag" value="강" id="강"><i class="fa-solid fa-water" style="color: #4784ff;"></i> 강</label></li>
+                            <li><label for="공원"><input type="checkbox" name="tag" value="공원" id="공원" ><i class="fa-solid fa-tree-city" style="color: #0af564;"></i> 공원</label></li>
+                            <li><label for="노지"><input type="checkbox" name="tag" value="노지" id="노지"><i class="fa-solid fa-map-pin" style="color: #fe6c6c;"></i> 노지</label></li>
+                            <li><label for="바다"><input type="checkbox" name="tag" value="바다" id="바다"><i class="fa-solid fa-umbrella-beach" style="color: #ff773d;"></i> 바다</label></li>
+                            <li><label for="산"><input type="checkbox" name="tag" value="산" id="산"><i class="fa-solid fa-mountain" style="color: #0ca678;"></i> 산</label></li>
+                            <li><label for="섬"><input type="checkbox" name="tag" value="섬" id="섬"><i class="fa-solid fa-anchor" style="color: #fbfe3e;"></i> 섬</label></li>
+                            <li><label for="숲"><input type="checkbox" name="tag" value="숲" id="숲"><i class="fa-solid fa-tree" style="color: #90fe97;"></i> 숲</label></li>
+                            <li><label for="캠핑장"><input type="checkbox" name="tag" value="캠핑장" id="캠핑장"><i class="fa-sharp fa-solid fa-campground" style="color: #ff7755;"></i> 캠핑장</label></li>
                         </ul>
 
                         
@@ -131,7 +131,7 @@
         var selectedTags = [];
 
         // 체크박스 요소들을 가져옵니다.
-        var checkboxes = document.getElementsByName('tags');
+        var checkboxes = document.getElementsByName('tag');
 
         // 체크박스를 순회하면서 선택된 값들을 배열에 추가합니다.
         for (var i = 0; i < checkboxes.length; i++) {
@@ -143,7 +143,7 @@
         // 선택된 태그 값을 폼 데이터에 추가합니다.
         var tagsInput = document.createElement('input');
         tagsInput.setAttribute('type', 'hidden');
-        tagsInput.setAttribute('name', 'tags');
+        tagsInput.setAttribute('name', 'tag');
         tagsInput.setAttribute('value', selectedTags.join(',')); // 선택된 태그들을 쉼표로 구분하여 문자열로 변환합니다.
         form.appendChild(tagsInput);
 
