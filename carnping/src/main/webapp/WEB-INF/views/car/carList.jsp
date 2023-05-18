@@ -302,10 +302,13 @@
 								<!--  소영 : 좋아요 코드 시작 -->
 								<div class="listing__item__pic__btns"
 									onClick="event.stopPropagation();">
-									<c:set var="loginMember" value="${loginMember}" />
+									
 									<script>
-        // 잠시 묶어 두겠습니다
-/*
+									
+									/* let loginMember = "<c:out value='${ loginMember.memNo}'/>"; */
+									console.log(loginMember+"ffffffffffffffffffffffffffffff");
+									
+									
           if (loginMember !== "") {
         	  console.log("감자");
 		       $(document).ready(function() {
@@ -339,12 +342,14 @@
 		                });
 		            }
 		        }); 
+          }else{
+        	  console.log("로그인안됨");
           }
-        */
+        
         $(document).on('click', '.like-button', function(e) {
             e.preventDefault();
             $(this).find('i.fa-solid').toggleClass('fa-regular');
-        }); */
+        }); 
         </script>
 
 									<a href="#"> <span class="like-button" class=""
@@ -423,14 +428,14 @@
 	</section>
 	<!-- Listing Section End -->
 
-
+	
 	<!-- Map Begin -->
 	<div class="listing__map">
 		<div id="map" style="width: 100%; height: 100%;"></div>
 		<!-- <iframe 
 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> -->
 	</div>
-
+	
 	<!-- Map End -->
 	<!-- Js Plugins -->
 	<script type="text/javascript"
@@ -439,10 +444,22 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
 /* 소영 좋아요코드 시작 */
 
 $(document).ready(function() {
+	
+
+	
 	  $('.like-button').click(function(e) {
-	    e.preventDefault();
-	    $(this).find('i.fa-regular').toggleClass('fa-solid');
+		  
+		  
+			if (loginMember !== "") {
+		  
+			    e.preventDefault();
+			    $(this).find('i.fa-regular').toggleClass('fa-solid');
+			}else{
+				alert("로그인 후 이용해주세요");
+			}
+			
 	  });
+	
 }); 
     	
 function like(cinfoNo , id){

@@ -396,9 +396,9 @@
 								html += "<tr><td colspan='6' align='center'>작성한 글이 없습니다.</td></tr>";
 							} else {
 								for(let i in result.list){
-									html += "<tr>";
+									html += "<tr class='tr'>";
 									html += "<td><input type='checkbox' class='ckbox'></td>";
-									html += "<td>"+result.list[i].boardNo+"</td>";
+									html += "<td class='bno'>"+result.list[i].boardNo+"</td>";
 									if (result.list[i].boardNo.startsWith('BRD')) {
 										html += "<td>[무료나눔]</td>";
 									} else if (result.list[i].boardNo.startsWith('PRT')) {
@@ -417,6 +417,20 @@
 							
 							
 							
+
+									 
+									 /* $(function(){
+										$('.tr').on('click', function(){
+											console.log($(this).find('.bno').val());
+											let no = $(this).find('.bno').val();
+											if(no.startsWith('BRD')){
+											location.href='freeBoardDetail.bo?bno=' +no;
+											}
+										})
+
+									}); */
+									
+									
 							
 							var a = '';
 								var page = result.page;
