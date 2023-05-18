@@ -425,33 +425,50 @@ to {
                	 -->
                				<fmt:parseNumber var="reviewAllView" value="${reCount.reviewAllView}" integerOnly="true" />
 
-               				
-							<div class="listing__details__rating__overall">
-								<h2>${ reCount.reviewAllView }</h2>
-								<div class="listing__details__rating__star">
-									<c:forEach var="rating" begin="1"
-										end="${reviewAllView }" step="1">
-										<span class="icon_star"></span>
-									</c:forEach>
-									<c:if test="${ reviewAllView != 5 }">
-										<c:choose>
-											<c:when test="${ ((reCount.reviewAllView)*10) % 10 >= 5  }">
-												<span class="icon_star-half_alt"></span>
-											</c:when>
-											<c:otherwise>
-													<span class='icon_star_alt'></span>
-											</c:otherwise>
-										</c:choose>
-										<c:if test="${ reCount.reviewAllView <= 4 }">
+               				<c:choose>
+               					<c:when test="${ reCount.count != null }">
+									<div class="listing__details__rating__overall">
+										<h2>${ reCount.reviewAllView }</h2>
+										<div class="listing__details__rating__star">
 											<c:forEach var="rating" begin="1"
-												end="${ 4 - reviewAllView}" step="1">
-												<span class="icon_star_alt"></span>
+												end="${reviewAllView }" step="1">
+												<span class="icon_star"></span>
 											</c:forEach>
-										</c:if>
-									</c:if>
-								</div>
-								<span>(${ reCount.count }개 리뷰)</span>
-							</div>
+											<c:if test="${ reviewAllView != 5 }">
+												<c:choose>
+													<c:when test="${ ((reCount.reviewAllView)*10) % 10 >= 5  }">
+														<span class="icon_star-half_alt"></span>
+													</c:when>
+													<c:otherwise>
+															<span class='icon_star_alt'></span>
+													</c:otherwise>
+												</c:choose>
+												<c:if test="${ reCount.reviewAllView <= 4 }">
+													<c:forEach var="rating" begin="1"
+														end="${ 4 - reviewAllView}" step="1">
+														<span class="icon_star_alt"></span>
+													</c:forEach>
+												</c:if>
+											</c:if>
+										</div>
+										<span>(${ reCount.count }개 리뷰)</span>
+									</div>
+               					</c:when>
+								<c:otherwise>
+									<div class="listing__details__rating__overall">
+										<h2>0</h2>
+									<div class="listing__details__rating__star">
+											<span class="icon_star_alt"></span>
+											<span class="icon_star_alt"></span>
+											<span class="icon_star_alt"></span>
+											<span class="icon_star_alt"></span>
+											<span class="icon_star_alt"></span>
+											</div>
+										<span>(0개 리뷰)</span>
+									</div>
+								</c:otherwise>
+							</c:choose>
+							
 							<div class="listing__details__rating__bar">
 								<div class="listing__details__rating__bar__item">
 									<span>${ reCount.reviewAllView }</span>
@@ -659,8 +676,6 @@ to {
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
  -->
-
-	<jsp:include page="../common/footer.jsp" />
 
 	<!-- Js Plugins -->
 	<script src="https://kit.fontawesome.com/0376f7be50.js"
