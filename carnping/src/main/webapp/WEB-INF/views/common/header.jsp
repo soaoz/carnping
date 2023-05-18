@@ -182,7 +182,7 @@
     </div>
 
     <!-- Header Section Begin -->
-    <header class="header" >
+    <header class="header">
         <div class="headerBar">
             <div class="container-fluid">
                 <div class="row">
@@ -199,6 +199,7 @@
                                     <li><a href="carList.ca">차박지도</a></li>
                                     <li><a href="partyBoard.bo">함께가요</a></li>
                                     <li><a href="freeBoard.bo">무료나눔</a></li>
+                                    <li><a href="noticeBoard.bo">공지사항</a></li>
                                 </ul>
                             </nav>
                             <div class="header__menu__right" style="display:inline-flex">

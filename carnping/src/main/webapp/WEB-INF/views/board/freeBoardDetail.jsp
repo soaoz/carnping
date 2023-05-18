@@ -10,13 +10,16 @@
 <style>
     .header_back {
         width: 100%;
-        height: 105px;
-        background-color: white;
+        height: 110px;
+        background-color: #b3d9b1;
     }
     
     .ul_line {
    		list-style-type: none;
 	}
+	
+	.header{
+    	background-color: #b3d9b1;
 
     #report:hover{
         text-decoration: underline;

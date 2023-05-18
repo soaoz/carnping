@@ -9,8 +9,12 @@
 <style>
     .header_back {
         width: 100%;
-        height: 105px;
-        background-color: white;
+        height: 110px;
+        background-color: #b3d9b1;
+    }
+    
+    .header{
+    	background-color: #b3d9b1;
     }
 </style>
 </head>
@@ -71,15 +75,31 @@
 								<div class="listing__details__gallery">
 									<div class="col-lg-12">
 										<div class="contact__map" style="margin-top: 50px;">
-											<iframe
-												src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd"
-												height="500" width="500" style="border: 0;"
-												allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+											<div id="map" style="width:1000px; height:500px;"></div>
 										</div>
 									</div>
 								</div>
 
-
+								
+								<div class="col-sm-12">
+									<div class="form-group">
+										<div id="addressDiv2">
+											<label>주소</label> <input type="text" class="form-control"
+												id="address2" placeholder="주소찾기를 통해 주소를 입력받으세요!"
+												name="boardAddress" readonly><br> <input
+												type="button" class="btn primary-btn btn-md" onclick="juso();"
+												value="주소찾기"><br> <br> 
+												<input type="hidden" name="boardLttd"> 
+												<input type="hidden" name="boardHrdns">
+		
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								
+								
 								<div class="col-lg-12 col-md-12">
 									<div class="form-group">
 										<br> <label style="float: left;">내용<span class="text-danger">*</span></label> 
@@ -104,6 +124,117 @@
 	
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<!-- 주소 api -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+	<!-- 지도 api -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services"></script>
+	
+	
+	<script>
+		let addressDetail ="";
+		function juso() {
+			new daum.Postcode({
+			    oncomplete: function (data) {
+			        var addr = ''; // 주소 변수
+		
+			        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+			        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+			            addr = data.roadAddress;
+			        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+			            addr = data.jibunAddress;
+			        }
+			        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+			        addressDetail = document.getElementById("address2").value = addr;
+			      
+			           var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			           mapOption = {
+			                   center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			                   level: 7 // 지도의 확대 레벨
+			               };  
+		
+			           // 지도를 생성합니다    
+			           var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+			           // 주소-좌표 변환 객체를 생성합니다
+			           var geocoder = new kakao.maps.services.Geocoder();
+		
+			           // 주소로 좌표를 검색합니다
+			           geocoder.addressSearch($("#address2").val(), function(result, status) {
+		
+			               // 정상적으로 검색이 완료됐으면 
+			                if (status === kakao.maps.services.Status.OK) {
+		
+			                   var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+			                   // 결과값으로 받은 위치를 마커로 표시합니다
+			                   var marker = new kakao.maps.Marker({
+			                       map: map,
+			                       position: coords
+			                   });
+			                   $("input[name=boardLttd]").val(result[0].y);
+			                   $("input[name=boardHrdns]").val(result[0].x);
+			                   // 인포윈도우로 장소에 대한 설명을 표시합니다
+			                   var infowindow = new kakao.maps.InfoWindow({
+			                       content: '<button type="button" class="btn" id="google-search-button" onclick="googleSearch()">'+addressDetail+'</button>'
+			                   });
+			                   infowindow.open(map, marker);
+		
+			                   // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			                   map.setCenter(coords);
+			               } 
+			           });    
+			        // 커서를 상세주소 필드로 이동한다.
+			    }
+			}).open()
+		}
+		
+		
+		
+		
+		
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };
+
+		// 지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(addressDetail, function(result, status) {
+
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new kakao.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">오우예</div>'
+		        });
+		        infowindow.open(map, marker);
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});
+	</script>
+	
+	
+	
+	
+	
 	
 	<script>
 		

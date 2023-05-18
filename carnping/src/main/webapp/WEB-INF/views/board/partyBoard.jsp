@@ -10,12 +10,18 @@
 <style>
     .header_back {
         width: 100%;
-        height: 105px;
-        background-color: white;
+        height: 110px;
+        background-color: #b3d9b1;
+    }
+    
+    .header{
+    	background-color: #b3d9b1;
     }
 </style>
 
 </head>
+
+
 <body class="ov-hid">
 
     <header class="header header--normal">
@@ -47,9 +53,8 @@
         <div class="listing__list" style="align-content: center;">
         	<c:forEach var="b" items="${ list }">
             <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="지도자리"> <!-- 지도 넣어보자 -->
-                    
-                </div>
+            
+            
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
                         <h5 onclick="location.href='partyBoardDetail.bo'" style="cursor: pointer">
