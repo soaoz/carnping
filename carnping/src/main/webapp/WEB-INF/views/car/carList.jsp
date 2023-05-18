@@ -623,7 +623,7 @@ function like(cinfoNo , id){
 					}
 				} 
 			})
-		console.log(id);
+		
 	</c:if>
     // 마커 클러스터러를 생성합니다
     var clusterer = new kakao.maps.MarkerClusterer({
