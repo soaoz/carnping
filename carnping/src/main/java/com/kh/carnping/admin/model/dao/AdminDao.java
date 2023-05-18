@@ -77,7 +77,19 @@ public class AdminDao {
 	}
 
 	public ArrayList<Question> inquiryList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("carMapper.inquiryList");
+		return (ArrayList)sqlSession.selectList("memberMapper.inquiryList");
+	}
+
+	public Question questionDetail(SqlSessionTemplate sqlSession, String queNo) {
+		return sqlSession.selectOne("memberMapper.questionDetail",queNo);
+	}
+
+	public int answerQuestion(SqlSessionTemplate sqlSession, Question que) {
+		return sqlSession.update("memberMapper.answerQuestion", que);
+	}
+
+	public int questionDelete(SqlSessionTemplate sqlSession, String queNo) {
+		return sqlSession.update("memberMapper.questionDelete", queNo);
 	}
 
 }	

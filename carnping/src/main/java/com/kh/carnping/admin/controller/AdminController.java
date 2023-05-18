@@ -117,8 +117,9 @@ public class AdminController {
 	 * Qna 관리로 이동
 	 */
 	@RequestMapping("inquiryList.ad")
-	public String inquiryList() {
+	public String inquiryList(Model model) {
 		ArrayList<Question> list = aService.inquiryList();
+		model.addAttribute("list", list);
 		return "admin/inquiryList";
 	}
 
@@ -180,11 +181,36 @@ public class AdminController {
 	}
 
 	/**
-	 * QnA 답변하기
+	 * QnA 상세
 	 */
-	@RequestMapping("inquiryInsert.ad")
-	public String inquiryInsert() {
+	@RequestMapping("questionDetail.ad")
+	public String questionDetail(String queNo, Model model) {
+		Question que = aService.questionDetail(queNo);
+		model.addAttribute("que", que);
 		return "admin/inquiryInsert";
+	}
+
+	// Qna insert
+	@RequestMapping("answerQuestion.ad")
+	public String answerQuestion(Question que, Model model ,HttpSession session) {
+		int result = aService.answerQuestion(que);
+		if(result >0) {
+			session.setAttribute("alertMsg", "답변 제출이 완료되었습니다.");
+		}
+		return "redirect:/inquiryList.ad";
+	}
+	
+	
+	// QnA DELETE
+	@RequestMapping("questionDelete.ad")
+	public String questionDelete(String queNo, Model model,HttpSession session) {
+		int result = aService.questionDelete(queNo);
+		System.out.println(queNo);
+		System.out.println(result);
+		if(result >0) {
+			session.setAttribute("alertMsg", "글삭제가 완료되었습니다.");
+		}
+		return "redirect:/inquiryList.ad";
 	}
 	
 	// ------------------------------

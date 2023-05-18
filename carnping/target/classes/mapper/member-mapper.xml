@@ -675,6 +675,50 @@
 	
 	<!-- 민수 :  -->
 	
+	<select id="inquiryList" resultMap="questionResultSet">
+		SELECT
+				  QUE_NO
+				, QUE_CATEGORY
+				, QUE_TITLE
+				, QUE_CONTENT
+				, QUE_DATE
+				, QUE_STATUS
+				, QUE_ANSWER
+				, MEM_NO
+                , (SELECT MEM_ID FROM MEMBER WHERE MEMBER.MEM_NO = QUESTION.MEM_NO) MEM_ID
+		  FROM  QUESTION
+		 WHERE  QUE_STATUS != 'N'
+		 ORDER
+		    BY  QUE_STATUS
+	</select>
+	 
+	 <select id="questionDetail" resultMap="questionResultSet">
+		SELECT
+				  QUE_NO
+				, QUE_CATEGORY
+				, QUE_TITLE
+				, QUE_CONTENT
+				, QUE_DATE
+				, QUE_STATUS
+				, QUE_ANSWER
+				, MEM_NO
+                , (SELECT MEM_ID FROM MEMBER WHERE MEMBER.MEM_NO = QUESTION.MEM_NO) MEM_ID
+		  FROM  QUESTION
+		 WHERE  QUE_STATUS != 'N'
+		   AND  QUE_NO = #{queNo}
+	</select>
+	<update id="answerQuestion">
+		UPDATE  QUESTION
+		   SET  QUE_ANSWER = #{queAnswer},
+		   		QUE_STATUS = 'Y'
+		 WHERE  QUE_NO = #{queNo}
+	</update>
+	
+	<update id="questionDelete">
+		UPDATE  QUESTION
+		   SET  QUE_STATUS = 'N'
+		 WHERE  QUE_NO = #{queNo}
+	</update>
 	
 	
 </mapper>

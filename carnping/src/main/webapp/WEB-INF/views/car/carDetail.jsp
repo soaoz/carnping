@@ -98,6 +98,21 @@
 
   transform: translateX(-50%) translateY(-50%);
 }
+  .oval-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 4px 10px;
+    margin-right: 8px;
+    background-color: #f1f1f1;
+    margin: 5px;
+  }
+
+  .oval-shape i {
+    margin-right: 6px;
+  }
+
 
 /* 모달창 애니메이션 추가 */
 @
@@ -109,6 +124,7 @@ to {
 	transform: scale(1)
 }
 
+ 
 }
 /* 닫기 버튼 꾸미기 */
 .close {
@@ -633,22 +649,61 @@ to {
 								</c:forEach>
 							</ul>
 						</div>
+						<br>
+
 						<div class="listing__sidebar__working__hours">
-							<h4>#태그</h4>
-							<ul>
-								<%-- <c:forEach var="i" begin="0" end="7">
-									<c:if test="${ cinfo.cinfoTag }">
-									</c:if>
-								  	<li><label for="강"><input type="checkbox" name="tag" value="강" id="강"><i class="fa-solid fa-water" style="color: #4784ff;"></i> 강</label></li>
-		                            <li><label for="공원"><input type="checkbox" name="tag" value="공원" id="공원" ><i class="fa-solid fa-tree-city" style="color: #0af564;"></i> 공원</label></li>
-		                            <li><label for="노지"><input type="checkbox" name="tag" value="노지" id="노지"><i class="fa-solid fa-map-pin" style="color: #fe6c6c;"></i> 노지</label></li>
-		                            <li><label for="바다"><input type="checkbox" name="tag" value="바다" id="바다"><i class="fa-solid fa-umbrella-beach" style="color: #ff773d;"></i> 바다</label></li>
-		                            <li><label for="산"><input type="checkbox" name="tag" value="산" id="산"><i class="fa-solid fa-mountain" style="color: #0ca678;"></i> 산</label></li>
-		                            <li><label for="섬"><input type="checkbox" name="tag" value="섬" id="섬"><i class="fa-solid fa-anchor" style="color: #fbfe3e;"></i> 섬</label></li>
-		                            <li><label for="숲"><input type="checkbox" name="tag" value="숲" id="숲"><i class="fa-solid fa-tree" style="color: #90fe97;"></i> 숲</label></li>
-		                            <li><label for="캠핑장"><input type="checkbox" name="tag" value="캠핑장" id="캠핑장"><i class="fa-sharp fa-solid fa-campground" style="color: #ff7755;"></i> 캠핑장</label></li>
-								</c:forEach> --%>
-							</ul>
+						  <h4>#태그</h4>
+						  <ul>
+						    <c:choose>
+						      <c:when test="${cinfo.cinfoTag != null}">
+						        <c:forEach var="tags" items="${cinfo.cinfoTag}">
+						          <c:if test="${tags.equals('공원')}">
+						            <span class="oval-shape">
+						              <i class="fa-solid fa-tree-city" style="color: #0af564;"></i> 공원
+						            </span>
+						          </c:if>
+						          <c:if test="${tags.equals('노지')}">
+						            <span class="oval-shape">
+						              <i class="fa-solid fa-map-pin" style="color: #fe6c6c;"></i> 노지
+						            </span>
+						          </c:if>
+						          <c:if test="${tags.equals('바다')}">
+						            <span class="oval-shape">
+						              <i class="fa-solid fa-umbrella-beach" style="color: #ff773d;"></i> 바다
+						            </span>
+						          </c:if>
+						          <c:if test="${tags.equals('산')}">
+						            <span class="oval-shape">
+						              <i class="fa-solid fa-mountain" style="color: #0ca678;"></i> 산
+						            </span>
+						          </c:if>
+						          <c:if test="${tags.equals('섬')}">
+						            <span class="oval-shape">
+						              <i class="fa-solid fa-anchor" style="color: #fbfe3e;"></i> 섬
+						            </span>
+						          </c:if>
+						          <c:if test="${tags.equals('숲')}">
+						            <span class="oval-shape">
+						              <i class="fa-solid fa-tree" style="color: #90fe97;"></i> 숲
+						            </span>
+						          </c:if>
+						          <c:if test="${tags.equals('캠핑장')}">
+						            <span class="oval-shape">
+						              <i class="fa-sharp fa-solid fa-campground" style="color: #ff7755;"></i> 캠핑장
+						            </span>
+						          </c:if>
+						          <c:if test="${tags.equals('강')}">
+						            <span class="oval-shape">
+						              <i class="fa-solid fa-water" style="color: #4784ff;"></i> 강
+						            </span>
+						          </c:if>
+						        </c:forEach>
+						      </c:when>
+						      <c:otherwise>
+						        <li>태그가 없습니다.</li>
+						      </c:otherwise>
+						    </c:choose>
+						  </ul>
 						</div>
 						<br>
 						<c:if test="${ loginMember != null }">
