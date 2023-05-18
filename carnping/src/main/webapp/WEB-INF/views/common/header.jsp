@@ -182,7 +182,7 @@
     </div>
 
     <!-- Header Section Begin -->
-    <header class="header" >
+    <header class="header">
         <div class="headerBar">
             <div class="container-fluid">
                 <div class="row">

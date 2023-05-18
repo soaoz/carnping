@@ -10,13 +10,17 @@
 <style>
     .header_back {
         width: 100%;
-        height: 105px;
-        background-color: white;
+        height: 110px;
+        background-color: #b3d9b1;
     }
     
     .ul_line {
    		list-style-type: none;
 	}
+	
+	.header{
+    	background-color: #b3d9b1;
+    }
 </style>
 </head>
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
@@ -41,15 +45,14 @@
                 <div class="col-lg-8">
                     <div class="listing__details__text">
                         
+                        <br><br><br>
                         <div class="listing__details__gallery">
                             <div class="col-lg-12">
-                                <div class="contact__map" style="margin-top: 50px;">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd"
-                                        height="550" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                                </div>
+                                <div id="map" style="width:800px; height:500px;"></div>
                             </div>
                         </div>
+                        
+                        
                         <div class="content">
                             <br><br>
                             <div class="innerOuter">
@@ -70,6 +73,10 @@
                                         <td>${ b.createDate }</td>
                                     </tr>
                                     
+                                    <tr>
+                                        <th width="100">주소</th>
+                                        <td colspan="3">${ b.boardAddress }</td>
+                                    </tr>
                                 
                                     <tr>
                                         <th>내용</th>
@@ -122,8 +129,51 @@
             </div>
         </div>
     </section>
-    <!-- Listing Details Section End -->
+    
+    
+    
+    
+    <!-- 주소 api -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+	<!-- 지도 api -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
+	
+	
+	<script>
+		
+		
+		$(function(){
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = { 
+		        center: new kakao.maps.LatLng(${ b.boardLttd }, ${ b.boardHrdns }), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };
+
+			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+			// 마커가 표시될 위치입니다 
+			var markerPosition  = new kakao.maps.LatLng(${ b.boardLttd }, ${ b.boardHrdns }); 
+	
+			// 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+			    position: markerPosition
+			});
+	
+			// 마커가 지도 위에 표시되도록 설정합니다
+			marker.setMap(map);
+	
+			
+			
+			// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+			// marker.setMap(null);  
+			})
+		
+		
+		
+		
+	</script>
+	
    	<script>
 	function postFormSubmit(num){
 			

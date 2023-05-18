@@ -32,6 +32,9 @@ public class Board {
 	private String boardChangeImg5;	// 게시글 서브이미지
 	private String memId;
 	private String phone;
+	private String boardLttd;
+	private String boardHrdns;
+	private String boardAddress;
 	
 	
 }

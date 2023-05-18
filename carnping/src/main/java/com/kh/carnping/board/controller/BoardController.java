@@ -336,6 +336,9 @@ public class BoardController {
 	public String selectPartyBoardDetail(String bno, Model model) {
 		
 		Board b = bService.selectPartyBoardDetail(bno);
+		System.out.println("이거임");
+		System.out.println(b);
+		
 		model.addAttribute("b", b);
 		
 		return "board/partyBoardDetail";

@@ -22,7 +22,9 @@
 		<result column="BOARD_CHANGE_IMG4" property="boardChangeImg4"/>
 		<result column="BOARD_CHANGE_IMG5" property="boardChangeImg5"/>
 		<result column="MEM_ID" property="memId"/>
-		
+		<result column="BOARD_LTTD" property="boardLttd"/>
+		<result column="BOARD_HRDNS" property="boardHrdns"/>
+		<result column="BOARD_ADDRESS" property="boardAddress"/>
 	</resultMap>
 
 
@@ -236,7 +238,10 @@
 		       mem_id,
 		       mem_no,
 		       to_char(create_date, 'YYYY-MM-DD') as "create_date",
-		       board_content
+		       board_content,
+		       board_lttd,
+		       board_hrdns,
+		       board_address
 		  from fboard
 		  left join board_img using (board_no)
 		  left join member using (mem_no)
@@ -252,6 +257,9 @@
 		       board_no,
 		       board_title,
 		       mem_no,
+		       board_lttd,
+		       board_hrdns,
+		       board_address,
 		       board_content
 		     )
 		values
@@ -259,6 +267,9 @@
 		       'PRT'||seq_brd_no.nextval,
 		       #{boardTitle},
 		       #{memNo},
+		       #{boardLttd},
+		       #{boardHrdns},
+		       #{boardAddress},
 		       #{boardContent}
 		     ) 
 	</insert>
@@ -279,6 +290,9 @@
 			   fboard
 		   set board_title = #{boardTitle}
 		     , board_content = #{boardContent}
+		     , board_lttd = #{boardLttd}
+		     , board_hrdns = #{boardHrdns}
+		     , board_address = #{boardAddress}
 		 where board_no = #{boardNo} 
 	</update>
 	
