@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="utf-8">
 
@@ -29,8 +31,6 @@
 
 
 <style>
-
-
 .select__option:before {
 	position: absolute;
 	left: 0;
@@ -71,271 +71,260 @@
 	border-bottom: none;
 	top: 40%;
 }
-    .header_back {
-	 	width: 100%;
-		height: 110px;
-		background-color: #b3d9b1;
-    }
 
-    .wrap {
-        position: absolute;
-        left: 0;
-        bottom: 40px;
-        width: 288px;
-        height: 132px;
-        margin-left: -144px;
-        text-align: left;
-        overflow: hidden;
-        font-size: 12px;
-        font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-        line-height: 1.5;
-    }
+.header_back {
+	width: 100%;
+	height: 110px;
+	background-color: #b3d9b1;
+}
 
-    .wrap * {
-        padding: 0;
-        margin: 0;
-    }
+.wrap {
+	position: absolute;
+	left: 0;
+	bottom: 40px;
+	width: 288px;
+	height: 132px;
+	margin-left: -144px;
+	text-align: left;
+	overflow: hidden;
+	font-size: 12px;
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+	line-height: 1.5;
+}
 
-    .wrap .info {
-        width: 286px;
-        height: 120px;
-        border-radius: 5px;
-        border-bottom: 2px solid #ccc;
-        border-right: 1px solid #ccc;
-        overflow: hidden;
-        background: #fff;
-    }
+.wrap * {
+	padding: 0;
+	margin: 0;
+}
 
-    .wrap .info:nth-child(1) {
-        border: 0;
-        box-shadow: 0px 1px 2px #888;
-    }
+.wrap .info {
+	width: 286px;
+	height: 120px;
+	border-radius: 5px;
+	border-bottom: 2px solid #ccc;
+	border-right: 1px solid #ccc;
+	overflow: hidden;
+	background: #fff;
+}
 
-    .info .title {
-        padding: 5px 0 0 10px;
-        height: 30px;
-        background: #eee;
-        border-bottom: 1px solid #ddd;
-        font-size: 18px;
-        font-weight: bold;
-    }
+.wrap .info:nth-child(1) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+}
 
-    .info .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: #888;
-        width: 17px;
-        height: 17px;
-        background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
-    }
+.info .title {
+	padding: 5px 0 0 10px;
+	height: 30px;
+	background: #eee;
+	border-bottom: 1px solid #ddd;
+	font-size: 18px;
+	font-weight: bold;
+}
 
-    .info .close:hover {
-        cursor: pointer;
-    }
+.info .close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #888;
+	width: 17px;
+	height: 17px;
+	background:
+		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+}
 
-    .info .body {
-        position: relative;
-        overflow: hidden;
-    }
+.info .close:hover {
+	cursor: pointer;
+}
 
-    .info .desc {
-        position: relative;
-        margin: 13px 0 0 90px;
-        height: 75px;
-    }
+.info .body {
+	position: relative;
+	overflow: hidden;
+}
 
-    .desc .ellipsis {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+.info .desc {
+	position: relative;
+	margin: 13px 0 0 90px;
+	height: 75px;
+}
 
-    .desc .jibun {
-        font-size: 11px;
-        color: #888;
-        margin-top: -2px;
-    }
+.desc .ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 
-    .info .img {
-        position: absolute;
-        top: 6px;
-        left: 5px;
-        width: 73px;
-        height: 71px;
-        border: 1px solid #ddd;
-        color: #888;
-        overflow: hidden;
-    }
+.desc .jibun {
+	font-size: 11px;
+	color: #888;
+	margin-top: -2px;
+}
 
-    .info:after {
-        content: '';
-        position: absolute;
-        margin-left: -12px;
-        left: 50%;
-        bottom: 0;
-        width: 22px;
-        height: 12px;
-        background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-    }
+.info .img {
+	position: absolute;
+	top: 6px;
+	left: 5px;
+	width: 73px;
+	height: 71px;
+	border: 1px solid #ddd;
+	color: #888;
+	overflow: hidden;
+}
 
-    .info .link {
-        color: #5085BB;
-    }
-    
-    /* 좌여css 시작  */
-	.listing__item__pic__btns a {
-	    font-size: 17px !important;
-	    color: #ffffff;
-	    height: 34px;
-	    width: 34px;
-	    background: rgba(255, 255, 255, 0.2);
-	    border-radius: 50%;
-	    line-height: 34px;
-	    text-align: center;
-	    display: inline-block;
-	    margin-right: 6px;
-	    padding-right : 0px !important;
-	    
-	}
-	.like-button i {
-		padding-right: 0px !important;
-		padding-top : 8px !important;
-	}
-	
-	.fa-regular.fa-heart {
-	  color: #fff;
-	}
-	
-	.fa-solid.fa-heart {
-	  color: red;
-	}
-	/* 좌여css 끝 */
+.info:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: 0;
+	width: 22px;
+	height: 12px;
+	background:
+		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
+
+.info .link {
+	color: #5085BB;
+}
+
+/* 좌여css 시작  */
+.listing__item__pic__btns a {
+	font-size: 17px !important;
+	color: #ffffff;
+	height: 34px;
+	width: 34px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 50%;
+	line-height: 34px;
+	text-align: center;
+	display: inline-block;
+	margin-right: 6px;
+	padding-right: 0px !important;
+}
+
+.like-button i {
+	padding-right: 0px !important;
+	padding-top: 8px !important;
+}
+
+.fa-regular.fa-heart {
+	color: #fff;
+}
+
+.fa-solid.fa-heart {
+	color: red;
+}
+/* 좌여css 끝 */
 </style>
 </head>
 
 <body class="ov-hid">
 
 
-<header class="header header--normal">
-    <div class="header_back">
-        <jsp:include page="../common/header.jsp" />
-    </div>
-</header>
+	<header class="header header--normal">
+		<div class="header_back">
+			<jsp:include page="../common/header.jsp" />
+		</div>
+	</header>
 
 
-<!-- Filter Begin -->
-<div class="filter nice-scroll">
-<form id='searchForm' action='filter.ca' method="get" align="center"> 
-    <div class="filter__title">
-        <h5><i class="fa fa-filter"></i>필터</h5>
-    </div>
-    <br><br>
-    <div class="filter__location">
-        <input type="text" placeholder="제목을 입력하는 공간!" name="title" value="title">
-        <i class="fa fa-map-marker"></i>
-    </div>
-    <div class="select__option" >
-        <select name="sequence">
-            <option id="default" value="default">순서</option>
-            <option id="rating" value="rating">평점순</option>
-            <option id="view" value="view">조회수순</option>
-            <option id="name" value="name">이름순</option>
-        </select>
-    </div>
-    
-    <div class="hero__search__form" >
-        <select name="location">
-            <option id="all" value="all">지역</option>
-            <option id="서울" value="서울">서울</option>
-            <option id="인천" value="인천">인천</option>
-            <option id="경기" value="경기">경기도</option>
-            <option id="강원" value="강원">강원도</option>
-        </select>
-    </div>
+	<!-- Filter Begin -->
+	<div class="filter nice-scroll">
+		<form id='searchForm' action='filter.ca' method="get" align="center">
+			<div class="filter__title">
+				<h5>
+					<i class="fa fa-filter"></i>필터
+				</h5>
+			</div>
+			<br>
+			<br>
+			<div class="filter__location">
+				<input type="text" placeholder="제목을 입력하는 공간!" name="title"
+					value="title"> <i class="fa fa-map-marker"></i>
+			</div>
+			<div class="select__option">
+				<select name="sequence">
+					<option id="default" value="default">순서</option>
+					<option id="rating" value="rating">평점순</option>
+					<option id="view" value="view">조회수순</option>
+					<option id="name" value="name">이름순</option>
+				</select>
+			</div>
 
-    <div class="filter__tags">
-        <h6>주변에 이런게 있어요!</h6>
-        <label for="coupon">
-            화장실
-            <input type="checkbox" id="coupon" name="facility"value="restroom">
-            <span class="checkmark"></span>
-        </label>
-        <label for="sa">
-            편의점
-            <input type="checkbox" id="sa" name="facility" value="store">
-            <span class="checkmark"></span>
-        </label>
-        <label for="camping">
-            카페
-            <input type="checkbox" id="camping" name="facility" value="cafe">
-            <span class="checkmark"></span>
-        </label>
-        <label for="hot-spots">
-            마트
-            <input type="checkbox" id="hot-spots" name="facility" value="mart">
-            <span class="checkmark"></span>
-        </label>
-        <label for="internet">
-            음식점
-            <input type="checkbox" id="internet" name="facility" value="food">
-            <span class="checkmark"></span>
-        </label>
-        <label for="tr">
-            주차장
-            <input type="checkbox" id="tr" name="facility" value="parking">
-            <span class="checkmark"></span>
-        </label>
-        <label for="hd">
-            캠핑장
-            <input type="checkbox" id="hd" name="facility" value="camping">
-            <span class="checkmark" ></span>
-        </label>
-        <label for="ht">
-            병원
-            <input type="checkbox" id="ht" name="facility" value="hospital">
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="filter__btns">
-        <button type="submit">필터 적용</button>
-        <button type="reset" class="filter__reset">초기화</button>
-    </div>
-    </form>
-</div>
-<!-- Filter End -->
+			<div class="hero__search__form">
+				<select name="location">
+					<option id="all" value="all">지역</option>
+					<option id="서울" value="서울">서울</option>
+					<option id="인천" value="인천">인천</option>
+					<option id="경기" value="경기">경기도</option>
+					<option id="강원" value="강원">강원도</option>
+				</select>
+			</div>
 
-<!-- Listing Section Begin -->
+			<div class="filter__tags">
+				<h6>주변에 이런게 있어요!</h6>
+				<label for="coupon"> 화장실 <input type="checkbox" id="coupon"
+					name="facility" value="화장실"> <span class="checkmark"></span>
+				</label> <label for="sa"> 편의점 <input type="checkbox" id="sa"
+					name="facility" value="편의점"> <span class="checkmark"></span>
+				</label> <label for="camping"> 카페 <input type="checkbox"
+					id="camping" name="facility" value="카페"> <span
+					class="checkmark"></span>
+				</label> <label for="hot-spots"> 마트 <input type="checkbox"
+					id="hot-spots" name="facility" value="마트"> <span
+					class="checkmark"></span>
+				</label> <label for="internet"> 음식점 <input type="checkbox"
+					id="internet" name="facility" value="음식점"> <span
+					class="checkmark"></span>
+				</label> <label for="tr"> 주차장 <input type="checkbox" id="tr"
+					name="facility" value="주차장"> <span class="checkmark"></span>
+				</label> <label for="hd"> 캠핑장 <input type="checkbox" id="hd"
+					name="facility" value="캠핑장"> <span class="checkmark"></span>
+				</label> <label for="ht"> 병원 <input type="checkbox" id="ht"
+					name="facility" value="병원"> <span class="checkmark"></span>
+				</label>
+			</div>
+			
+			<div class="filter__btns">
+				<button type="submit">필터 적용</button>
+				<button type="reset" class="filter__reset">초기화</button>
+			</div>
+		</form>
+	</div>
+	<!-- Filter End -->
 
-<section class="listing nice-scroll">
-    <div class="listing__text__top">
-        <div class="listing__text__top__left">
-            <h5>차박정보 리스트</h5>
-            <span>Results Found</span>
-        </div>
-       
-    </div>
-    <div class="listing__list">
-        <c:choose>
-            <c:when test="${ not empty list }">
-                <c:forEach var="list" items="${ list }">
-                  <div class="listing__item" >
-	                <input type="hidden" value="${ list.cinfoNo }">
-                  <div class="listing__item__pic set-bg" data-setbg="${ list.cinfoImg1 }" style="cursor:pointer"> 
+	<!-- Listing Section Begin -->
 
-                            <!--  
+	<section class="listing nice-scroll">
+		<div class="listing__text__top">
+			<div class="listing__text__top__left">
+				<h5>차박정보 리스트</h5>
+				<span>Results Found</span>
+			</div>
+
+		</div>
+		<div class="listing__list">
+			<c:choose>
+				<c:when test="${ not empty list }">
+					<c:forEach var="list" items="${ list }">
+						<div class="listing__item">
+							<input type="hidden" value="${ list.cinfoNo }">
+							<div class="listing__item__pic set-bg"
+								data-setbg="${ list.cinfoImg1 }" style="cursor: pointer">
+
+								<!--  
         <div class="listing__item__pic__tag">Popular</div>
         <div class="listing__item__pic__btns">
             <a href="#"><span class="icon_zoom-in_alt"></span></a>
             <a href="#"><span class="icon_heart_alt"></span></a>
         </div>
         -->
-        
-        <!--  소영 : 좋아요 코드 시작 -->
-        <div class="listing__item__pic__btns" onClick="event.stopPropagation();">
-        <script>
+
+								<!--  소영 : 좋아요 코드 시작 -->
+								<div class="listing__item__pic__btns"
+									onClick="event.stopPropagation();">
+									<script>
         // 잠시 묶어 두겠습니다
-    /*     $(document).ready(function() {
+       $(document).ready(function() {
             selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
             function selectLike(cinfoNo, id){
                 var cinfoNo = cinfoNo;
@@ -365,7 +354,7 @@
                     
                 });
             }
-        }); */
+        }); 
         
         $(document).on('click', '.like-button', function(e) {
             e.preventDefault();
@@ -373,65 +362,89 @@
         });
         </script>
 
-        <a href="#">
-                <span class="like-button" class="" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');">
-        <i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span>
-        </a> 
-        </div>
+									<a href="#"> <span class="like-button" class=""
+										onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');">
+											<i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i>
+									</span>
+									</a>
+								</div>
+								<fmt:parseNumber var="cinfoRating" value="${list.cinfoRating}"
+									integerOnly="true" />
+								<!--  소영 : 좋아요 코드 끝 -->
+							</div>
+							<div class="listing__item__text" style="cursor: pointer"
+								onclick="(detail('${ list.cinfoNo }');)">
+								<div class="listing__item__text__inside">
+									<h5>${ list.cinfoName }</h5>
 
-        <!--  소영 : 좋아요 코드 끝 -->
-        
-                       </div>
-                        <div class="listing__item__text" style="cursor:pointer"  onclick="(detail('${ list.cinfoNo }');)">
-                            <div class="listing__item__text__inside">
-                                <h5>${ list.cinfoName }</h5>
-                                <div class="listing__item__text__rating">
-                                    <div class="listing__item__rating__star">
-                                        <c:forEach var="rating" begin="1" end="${ list.cinfoRating }" 
-                                            step="1">
-                                            <span class="icon_star"></span>
-                                        </c:forEach>
-                                        <c:if test="${ ((list.cinfoRating)*10) % 10 >= 5  }">
-                                            <span class="icon_star-half_alt"></span>
-                                        </c:if>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li><span class="icon_pin_alt"></span>${ list.cinfoAddress }</li>
-                                    <li><span class="icon_phone"></span>${ list.phone }</li>
-                                </ul>
-                            </div>
-                            <div class="listing__item__text__rating">
-                                <div class="listing__item__text__info__left">
-                                    <span>오픈요일</span>
-                                </div>
-                                <div class="listing__item__text__info__right">${ list.cinfoDays }</div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </c:when>
-            <c:otherwise>
-                <h4>${ emp }</h4>
-            </c:otherwise>
-        </c:choose>
-    </div>
-</section>
-<!-- Listing Section End -->
+									<ul>
+										<li><span class="icon_pin_alt"></span>${ list.cinfoAddress }</li>
+										<li><span class="icon_phone"></span>${ list.phone }</li>
+									</ul>
+								</div>
+								<div class="listing__item__text__rating">
+									<div class="listing__item__text__info__left">
+										<span>오픈요일</span>
+									</div>
+									<div class="listing__item__text__info__right">${ list.cinfoDays }</div>
+								</div>
+								<div class="listing__item__text__rating">
+									<div class="listing__item__text__info__left">
+										<span>평점</span>
+									</div>
+
+									<div class="listing__item__text__info__right">
+										<div class="listing__item__text__rating">
+											<div class="listing__item__rating__star">
+												<c:forEach var="rating" begin="1" end="${cinfoRating }"
+													step="1">
+													<span class="icon_star"></span>
+												</c:forEach>
+												<c:if test="${ cinfoRating != 5 }">
+													<c:choose>
+														<c:when test="${ ((list.cinfoRating)*10) % 10 >= 5  }">
+															<span class="icon_star-half_alt"></span>
+														</c:when>
+														<c:otherwise>
+															<span class='icon_star_alt'></span>
+														</c:otherwise>
+													</c:choose>
+													<c:if test="${ list.cinfoRating <= 4 }">
+														<c:forEach var="rating" begin="1"
+															end="${ 4 - cinfoRating}" step="1">
+															<span class="icon_star_alt"></span>
+														</c:forEach>
+													</c:if>
+												</c:if>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<h4>${ emp }</h4>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</section>
+	<!-- Listing Section End -->
 
 
-<!-- Map Begin -->
-<div class="listing__map">
-    <div id="map" style="width:100%;height:100%;"></div>
-    <!-- <iframe 
+	<!-- Map Begin -->
+	<div class="listing__map">
+		<div id="map" style="width: 100%; height: 100%;"></div>
+		<!-- <iframe 
 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> -->
-</div>
+	</div>
 
-<!-- Map End -->
-<!-- Js Plugins -->
-<script type="text/javascript"
-    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
-<script>
+	<!-- Map End -->
+	<!-- Js Plugins -->
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c51db8bdf50f603f1ca7fd3444ea0dab&libraries=services,clusterer,drawing"></script>
+	<script>
 /* 소영 좋아요코드 시작 */
 
 $(document).ready(function() {
@@ -549,8 +562,6 @@ function like(cinfoNo , id){
 					, phone :"${item.phone}"}])
 		</c:forEach>
 		
-		
-		
 		array.forEach(function (rs) {
 			
             $positions.push([{
@@ -601,9 +612,18 @@ function like(cinfoNo , id){
 			$("input[name=title]").val("${filter.title}");
 			$("select[name=sequence]").val("${filter.sequence}").attr("selected",true);
 			$("select[name=sequence]").val("${filter.sequence}").prop("selected","selected");
-		console.log("${filter.sequence}");
-			//$("#${filter.location}").attr("selected");
-		console.log($("select[name=sequence]").val("${filter.sequence}"))
+			$("select[name=location]").val("${filter.location}").attr("selected",true);
+			$("select[name=location]").val("${filter.location}").prop("selected","selected");
+			let facility = '<c:out value="${facility}"/>'.split(",");
+					console.log("이거 타?");
+			 $("input[name=facility]").map(function(i, result) {
+				for(let f of facility){
+					if(f == result.value){
+						$("input[value="+ result.value +"]").attr("checked", true);
+					}
+				} 
+			})
+		console.log(id);
 	</c:if>
     // 마커 클러스터러를 생성합니다
     var clusterer = new kakao.maps.MarkerClusterer({
@@ -651,8 +671,8 @@ detail = function(cinfoNo){
 }
 </script>
 
-<script src="resources/js/main.js"></script>
-<!-- <script src="resources/js/jquery.nice-select.min.js"></script> -->
+	<script src="resources/js/main.js"></script>
+	<!-- <script src="resources/js/jquery.nice-select.min.js"></script> -->
 </body>
 
 </html>
