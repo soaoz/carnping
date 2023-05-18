@@ -335,9 +335,9 @@
     </header>
     <!-- Header Section End -->
 		<!-- 카카오 채널-->
-			<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+			<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
 			  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
-			<script>
+            <script>
 			  Kakao.init('1338885af6c93500e3dd5c130cf1ead7'); // 사용하려는 앱의 JavaScript 키 입력
 			</script>
 			
@@ -368,11 +368,13 @@
 						}
 						
 					});
+
+                });
+
 			  })
+		  
 			  
-			  
-			  
-			</script>
+			</script> -->
 		<!-- 카카오 채널 실패~~~~ -->
     
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결 : 소영       -->
@@ -406,7 +408,7 @@
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결  끝       -->
     	<c:if test="${ not empty alertMsg }">
 	<script>
-		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>
+		alert("${ alertMsg }"); 
 		
 
 	</script>
@@ -416,7 +418,7 @@
     <!-- Js Plugins -->
     <script src="resources/js/jquery-3.3.1.min.js"></script>
     <script src="resources/js/bootstrap.min.js"></script>
-    <script src="resources/js/jquery.nice-select.min.js"></script>
+    <!-- <script src="resources/js/jquery.nice-select.min.js"></script> -->
     <script src="resources/js/jquery-ui.min.js"></script>
     <script src="resources/js/jquery.nicescroll.min.js"></script>
     <script src="resources/js/jquery.barfiller.js"></script>

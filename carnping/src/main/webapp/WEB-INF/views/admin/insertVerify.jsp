@@ -58,12 +58,15 @@
 								<h5 class="card-title">차박 게시글 등록 검수</h5>
 							</div>
 							<div class="card-body">
-								<form action="insertCar.ad" method="post" enctype="multipart/form-data">
+								<form action="insertCar.ad" method="post"
+									enctype="multipart/form-data">
 									<input type="hidden" name="memNo" value="${ verify.memNo }">
-									<input type="hidden" name="cinfoNo" value="${ verify.verifyNo }">
-									<input type="hidden" name="cinfoFacilities" value="${ verify.verifyFacilities }">
-									<input type="hidden" name="cinfoDays" value="${ verify.verifyDays }">
-									<input type="hidden" name="cinfoTag" value="${ verify.verifyTag }">
+									<input type="hidden" name="cinfoNo"
+										value="${ verify.verifyNo }"> <input type="hidden"
+										name="cinfoFacilities" value="${ verify.verifyFacilities }">
+									<input type="hidden" name="cinfoDays"
+										value="${ verify.verifyDays }"> <input type="hidden"
+										name="cinfoTag" value="${ verify.verifyTag }">
 									<div class="row form-group">
 										<label for="id" class="col-sm-3 col-form-label input-label">게시
 											사유</label>
@@ -77,8 +80,8 @@
 										<div class="col-sm-9 contentImg">
 											<div class="bigImgs">
 												<img class="bigImg" src="${ verify.verifyImg1 }"
-													style="height: 300px; width: 450px;"> 
-													<input type="hidden" value="${ verify.verifyOgImg1 }"
+													style="height: 300px; width: 450px;"> <input
+													type="hidden" value="${ verify.verifyOgImg1 }"
 													name="cinfoOgImg1"> <input type="hidden"
 													value="${ verify.verifyImg1 }" name="cinfoImg1">
 											</div>
@@ -100,10 +103,9 @@
 												<input type="hidden" value="${ verify.verifyImg4 }"
 													name="cinfoImg4"> <img class="smallImg"
 													style="height: 100px; width: 150px;"
-													src="${ verify.verifyImg5 }"> <input type="hidden"
-													value="${ verify.verifyOgImg5 }" name="cinfoOgImg5">
-												<input type="hidden" value="${ verify.verifyImg5 }"
-													name="cinfoImg5">
+													src="${ verify.verifyImg5 }"> 
+												<input type="hidden" value="${ verify.verifyOgImg5 }" name="cinfoOgImg5">
+												<input type="hidden" value="${ verify.verifyImg5 }"name="cinfoImg5">
 
 												<c:if test="${ verify.verifyImg6 != null }">
 													<img class="smallImg" style="height: 100px; width: 150px;"
@@ -337,12 +339,11 @@
 
 									<div class="row form-group">
 										<label for="id" class="col-sm-3 col-form-label input-label">
-											회원ID
-										</label>
+											회원ID </label>
 										<div class="col-sm-9">
 											<input type="text" class="form-control" id="cinfoName"
-												placeholder="회원ID" value="${ verify.memId }"
-												name="memId" readonly>
+												placeholder="회원ID" value="${ verify.memId }" name="memId"
+												readonly>
 										</div>
 									</div>
 									<div class="row form-group">

@@ -204,7 +204,7 @@
 						<div class="form-group">
 							<label>사유</label>
 							<textarea name="verifyReason" type="text" class="form-control"
-								placeholder="추천하는 지역은 이걸 주의해야해요!"></textarea>
+								placeholder="사유를 입력하세요."></textarea>
 						</div>
 						<br>
 					</div>
