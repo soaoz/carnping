@@ -860,7 +860,7 @@
 	</select>
 	<update id="insertCount">
 		UPDATE  CINFO
-		   SET  CINFO_VIEWS = +1
+		   SET  CINFO_VIEWS = CINFO_VIEWS + 1
 		 WHERE  CINFO_NO = #{cinfoNo}
 	</update>
 	
