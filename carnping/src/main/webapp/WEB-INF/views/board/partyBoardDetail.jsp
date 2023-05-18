@@ -234,24 +234,50 @@
    	function selectPartyReplyList(){ // 해당 게시글에 딸린 댓글 조회리스트 조회용 ajax
    		$.ajax({
    			url : "partyReplyList.bo",
-   			data : {bno:"${ b.boardNo }" },
+   			data : {bno:"${ b.boardNo }", brno: '${b.breNo}' },
    			success:function(list){
+   				let loginUser = "<c:out value='${loginMember.memNo}'/>";
    				let value = "<h4>댓글</h4>";
    				for(let i in list){
-   					value += "<li>"
-   								+ "<div class='listing__details__comment__item'>"
-   									+ "<div class='listing__details__comment__item__pic'>"
-   										+ "<img src=" + list[i].memImgChange + ">"
-   									+ "</div>"
-   									+ "<div class='listing__details__comment__item__text'>"
-   										+ "<span>"+ list[i].createDate + "</span>"
-   										+ "<h5>" + list[i].memId + "</h5>"
-   										+ "<div>"
-   											+ "<p>" + list[i].commContent + "</p>"
-			   							+ "</div>"
-			   						+ "</div>"
-	   							+ "</div>"
-   							+ "</li>";
+   					value += 
+   						"<li>" + 
+   						"<div class='listing__details__comment__item'>" + 
+   						"<div class='listing__details__comment__item__pic'>" + 
+   						"<img src=" + 
+   						list[i].memImgChange + 
+   						">" + 
+   						"</div>" + 
+   						"<div class='listing__details__comment__item__text'>" + 
+   						"<span>" + 
+   						list[i].createDate + 
+   						"</span>";
+   						
+   						
+   						if (list[i].memNo === loginUser) {
+   	                        value +=
+   	                            ("<a id='commentDelete' href='partyReplyDelete.bo?brno=" + list[i].breNo + "&bno=" + list[i].boardNo + "' style='float:right; cursor:pointer; color:gray; font-size:15px; margin-right:5px; margin-top:5px;'>삭제</a>");
+   	                        	    
+   	                        //준석!!
+   	                        
+   	                    } else {
+   	                        value += 
+   	    
+   	                            "<a id='commentReport' style='float: right;margin-right: 15px;font-size: 15px;color: #ff7070;line-height: 40px;cursor: pointer;' data-toggle='modal' data-target='#reportCommentModal'><i class='fa-solid fa-land-mine-on' style='color: #ff7070; font-size: 15px;''></i>신고</a>";
+   	                                    
+   	                    }
+   						
+   					value +=	
+   						"<h5>" + 
+   						(list[i].nickName ? list[i].nickName : list[i].memId) + 
+   						"</h5>" + 
+   						"<div>" + 
+   						"<p>" + 
+   						list[i].commContent + 
+   						"</p>" + 
+   						"</div>" + 
+   						"</div>" + 
+   						"</div>" + 
+   						"</li>";
    				}
    				
    				

@@ -102,6 +102,12 @@ public interface BoardService {
 	
 	
 	/**
+     *  무료나눔 게시판 댓글 삭제
+     */
+	int freeReplyDelete(String bno);
+	
+	
+	/**
      *  소모임 댓글 리스트 조회
      */
 	ArrayList<BoardReply> selectPartyReplyList(String bno);
@@ -111,6 +117,12 @@ public interface BoardService {
      *  소모임 댓글 등록
      */
 	int partyReplyInsert(BoardReply r);
+	
+	
+	/**
+     *  소모임 게시판 댓글 삭제
+     */
+	int partyReplyDelete(String bno);
 	
 	
 	

@@ -446,7 +446,6 @@ public class BoardController {
 		   
 	}
 	
-
 	
 	
 	/**
@@ -459,6 +458,26 @@ public class BoardController {
 		int result = bService.freeReplyInsert(r);
 		return result > 0 ? "success" : "fail";
 	}
+	
+	
+	/**
+     *  무료나눔 게시판 댓글 삭제
+     */
+	@RequestMapping("freeReplyDelete.bo")
+	public String freeReplyDelete(String brno, String bno, HttpSession session, Model model) {
+		
+	   int result = bService.freeReplyDelete(brno);
+	   
+	   
+	   if(result > 0) {
+		   session.setAttribute("alertMsg", "성공적으로 댓글이 삭제되었습니다.");
+		   return "redirect:freeBoardDetail.bo?bno=" + bno;
+	   }else {
+		   model.addAttribute("errorMsg", "댓글 삭제 실패!");
+		   return "common/errorPage";
+	   }
+	   
+   }
 	
 	
 	/**
@@ -487,6 +506,23 @@ public class BoardController {
 	
 	
 	
+	/**
+     *  소모임 게시판 댓글 삭제
+     */
+	@RequestMapping("partyReplyDelete.bo")
+	public String partyReplyDelete(String brno, String bno, HttpSession session, Model model) {
+		   
+	   int result = bService.partyReplyDelete(brno);
+	   
+	   if(result > 0) {
+		   session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+		   return "redirect:partyBoardDetail.bo?bno=" + bno;
+	   }else {
+		   model.addAttribute("errorMsg", "게시글 삭제 실패!");
+		   return "common/errorPage";
+	   }
+	   
+   }
 	
 	
 	
