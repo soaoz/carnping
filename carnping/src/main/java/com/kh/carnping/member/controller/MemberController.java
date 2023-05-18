@@ -44,7 +44,6 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.Gson;
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.BoardReply;
-import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.common.template.Pagination;
@@ -959,6 +958,7 @@ public class MemberController {
 	
 	
 	//헤더 내 알람 리스트 조회 
+	@ResponseBody
 	@RequestMapping(value = "headerAlarmSelectList.me", produces = "application/json; charset=utf-8")
 	public Map<String, Object> headerAlarmSelectList( Model model, HttpSession session) {
 		
@@ -998,7 +998,7 @@ public class MemberController {
 		result.put("endPage", endPage);
 		
 		
-		  model.addAttribute("result", result);
+		model.addAttribute("result", result);
 		  
 		  
 		return result;

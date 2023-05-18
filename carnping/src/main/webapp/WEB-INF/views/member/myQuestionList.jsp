@@ -125,6 +125,23 @@
 	        width: fit-content;
 	        margin: auto;
 	    }
+	    				.pagination > li > a{
+			border-radius : 100% !important;
+		}
+		.page-item.active .page-link{
+			color : #1C3053 !important;
+			background-color : white !important;
+		}
+		.page-item .active{
+			color: red;
+		}
+        .pagebtn.active{
+            color : green;
+
+        }
+       .pagination > li.active > a:hover{
+       		cursor: pointer;
+       }
 </style>
 </head>
 <body>
@@ -138,7 +155,7 @@
   
    
     <!-- Filter Begin -->
- <div class="filter nice-scroll">
+     <div class="filter nice-scroll">
 
 				<div class="filter__title">
             <h5><i class="fa-sharp fa-solid fa-house"></i>마이페이지</h5>
@@ -153,16 +170,16 @@
            <a href="myCarbakList.me" class="menu"><i class="fa-sharp fa-solid fa-location-dot"></i> 나의 차박지 </a>
         </div>
         <div class="myPage_menu">
-           <a href="myAlarmList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i> 나의 활동 </a>
-        </div>
-        <div class="myPage_menu">
-            <a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-heart"></i> 좋아요</a>
+          		<a href="myAlarmList.me" class="menu"><i class="fa-solid fa-bell"></i> 나의 활동 </a>
+        	</div>
+        	<div class="myPage_menu">
+            	<a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i>위시리스트</a>
         </div>
         <div class="myPage_menu">
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="myLogoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="myLogoutPage.me" class="menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -253,10 +270,10 @@
               
               		<c:choose>
               			<c:when test="${ pi.currentPage eq 1}">
-                       	 	<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                       	 	<li class="page-item disabled"><a class="page-link" href="">이전</a></li>
                         </c:when>
                         <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage -1 }">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage -1 }">이전</a></li>
                         </c:otherwise>
                    	</c:choose>
                     <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
@@ -264,10 +281,10 @@
         			</c:forEach>
                     <c:choose>
                     	<c:when test="${ pi.currentPage eq pi.maxPage }">
-                            <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="">다음</a></li>
                          </c:when>
                          <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage +1 }">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="myQuestionList.me?cpage=${ pi.currentPage +1 }">다음</a></li>
                           </c:otherwise>
                       </c:choose>
                 </ul>

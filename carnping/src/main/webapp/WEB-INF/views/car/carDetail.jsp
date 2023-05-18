@@ -261,7 +261,8 @@ to {
 					<div class="listing__hero__btns">
 						<a href="javascript:window.history.back();"
 							class="primary-btn share-btn"><i class="fa fa-mail-reply"></i>뒤로가기
-						</a> <a href="#" class="primary-btn"><i class="fa fa-bookmark"></i>
+						</a> <a href="#" class="primary-btn share-btn" id="wish"><i class="fa-regular fa-bookmark" id="fa" onClick="like();"></i>
+						<!-- <i class="fa fa-bookmark" onClick="like();"></i> -->
 							위시리스트</a>
 					</div>
 				</div>
@@ -545,7 +546,7 @@ to {
 											<input type="hidden" name="memNo"
 												value="${ loginMember.memNo }">
 											<input type="hidden" name="cinfoNo"
-												value="${ cinfo.cinfoNo }">
+												value="${ cinfo.cinfoNo }" id="inputCinfoNo">
 											<div class="col-md-3">
 												<input type="number" class="form-control" name="reviewView"
 													placeholder="뷰" required />
@@ -1165,6 +1166,145 @@ function updateRequest(){
 	cinfoNo = "<c:out value='${cinfo.cinfoNo}'/>"
 	location.href = "updateRequest.ca?cinfoNo="+cinfoNo;
 }
+
+
+
+$(document).ready(function() {
+	
+	  $('#wish').click(function(e) {
+		  like();
+	   
+	    $("#fa").toggleClass('fa-regular fa');
+	   
+	  });
+
+	
+});
+
+
+$(document).ready(function() {
+	  
+    
+	if (loginMember) {
+		console.log("dh")
+  
+		 //var cinfoNo = $('input[name="post-id"]').val();  //글번호
+		 //var cinfoNo = document.getElementById('postId').val();
+		 //var cinfoNo = cinfoNo;
+		 //var likeId = $(this).find('i.fa-regular.fa-heart'); //좋아요버튼 아이디 값
+		 //var id  = id;
+		 
+		 console.log("좋아요조회 함수 실행함")
+		 //console.log(cinfoNo);
+		 //console.log(id);
+		 $.ajax({
+			 url : "selectLike.me",
+			 type : "post",
+			 data: { cinfoNo: '${cinfo.cinfoNo}' },
+			 success : function(result){
+				 console.log("성공  : " + result)
+				
+			  if(result>0){
+
+			   	 console.log("성공 ");
+			   	$('#wish').removeClass('share-btn');
+			   
+			  }else{
+				 
+
+			  }
+				 
+			 },
+		     error: function(xhr, status, error) {
+			        // 삭제 실패시 처리할 로직
+		        //alert("삭제 실패: " + error);
+		        console.error(error); 
+		      }
+		 });
+	 
+	}
+
+});
+
+
+
+
+function like() {
+	  console.log("타냐 ");
+
+
+	    if ($("#fa").hasClass('fa')) {
+	      // fa-regular 클래스가 있을 때
+	      console.log("하트가 빨간색일떄 클릭함 -> delete해야함 ");
+
+	      //좋아요 삭제
+	      $.ajax({
+	        url: "deleteLike.me",
+	        type: "POST",
+	        data: { cinfoNo: '${cinfo.cinfoNo}' },
+	        success: function(result) {
+	          if (result > 0) {
+	            console.log("좋아요삭제완료");
+	            $('#wish').addClass('share-btn');
+	            /* deletedCount = result;
+	            alert(deletedCount + "개의 게시물이 삭제되었습니다.");
+	            myPostList();  */
+	          } else {
+	            console.log("좋아요삭제 실패패패패패");
+	            /* alert("삭제에 실패하였습니다."); */
+	          }
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+	          console.log("Error: " + textStatus + " " + errorThrown);
+	        }
+	      });
+	    } else if ($("#fa").hasClass('fa-regular')) {
+	      // fa-regular 클래스가 없을 때
+	      /* console.log("하트가 흰색일떄 클릭함 -> insert해야함 ")
+	      let memNo = $("#inputMemNo").val();
+	      let loginmemNo = $("#inputLoginMemNo").val();
+	      let cinfoName = $("#cinfoName").val(); */
+	      //console.log(cinfoName);
+	      //좋아요 INSERT
+	      $.ajax({
+	        url: "insertLike.me",
+	        type: "POST",
+	        data: { cinfoNo: '${cinfo.cinfoNo}' },
+	        success: function(result) {
+	          if (result > 0) {
+	            console.log("좋아요인서트완료");
+	            $('#wish').removeClass('share-btn');
+	            /* deletedCount = result;
+	            alert(deletedCount + "개의 게시물이 삭제되었습니다.");
+	            myPostList();  */
+	            /* 웹소켓 알람보내기 시작*/
+	            /* console.log(socket);
+
+	            if (socket) {
+	              let socketMsg = "like," + loginmemNo + "," + memNo + "," + cinfoNo;
+	              console.log("ssssssssmsg>>>> " + socketMsg);
+	              //socket.send("like,"+loginmemNo+","+memNo+","+cinfoNo);
+	              socket.send(socketMsg);
+
+	            }
+
+	            //console(memNo,loginmemNo, cinfoNo);
+	            LikeNotification(memNo, loginmemNo, cinfoNo); */
+	            /* 웹소켓 알람보내기 끝*/
+	          } else {
+	            console.log("좋아요인서트실패패패패패");
+	            /* alert("삭제에 실패하였습니다."); */
+	          }
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+	          console.log("Error: " + textStatus + " " + errorThrown);
+	        }
+	      });
+	    }
+
+	}
+
+
 </script>
 
 </body>

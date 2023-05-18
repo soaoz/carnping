@@ -41,9 +41,7 @@
 		    height: 2em;
 		    border: 1px solid #272727;
 		    background-color: #47D090;
-		  	background: url('/img/noneimg.png') no-repeat;
-		  	background: url('resoures/img/checkbox.png') no-repeat;
-		   /*  background: rgba(255, 255, 255, 0.2); */
+		  	background: transparent no-repeat;
 		    border-radius: 50%;
 		    margin: 0 5px -6px 0;
 		}
@@ -218,7 +216,25 @@
 		.listing {
 			overflow: hidden;
 		}
+
 		/* 좌여css 끝   */
+		.pagination > li > a{
+			border-radius : 100% !important;
+		}
+		.page-item.active .page-link{
+			color : #1C3053 !important;
+			background-color : white !important;
+		}
+		.page-item .active{
+			color: red;
+		}
+        .pagebtn.active{
+            color : green;
+
+        }
+       .pagination > li.active > a:hover{
+       		cursor: pointer;
+        }
 </style>
 </head>
 <body>
@@ -243,7 +259,7 @@
         <!-- Filter Begin -->
      <div class="filter nice-scroll">
 
-		<div class="filter__title">
+				<div class="filter__title">
             <h5><i class="fa-sharp fa-solid fa-house"></i>마이페이지</h5>
         </div>
         <div class="myPage_menu" id="fake">
@@ -256,16 +272,16 @@
            <a href="myCarbakList.me" class="menu"><i class="fa-sharp fa-solid fa-location-dot"></i> 나의 차박지 </a>
         </div>
         <div class="myPage_menu">
-           <a href="myAlarmList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i> 나의 활동 </a>
-        </div>
-        <div class="myPage_menu">
-            <a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-heart"></i> 좋아요</a>
+          		<a href="myAlarmList.me" class="menu"><i class="fa-solid fa-bell"></i> 나의 활동 </a>
+        	</div>
+        	<div class="myPage_menu">
+            	<a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i>위시리스트</a>
         </div>
         <div class="myPage_menu">
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="myLogoutPage.me" class="menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -319,9 +335,9 @@
 								               <c:forEach var="list" items="${ list }" varStatus="status">
                                         <div class="listing__item">
                                             <div class="listing__item__pic set-bg" style="cursor:pointer; background-image : url(${ list.cinfoImg1 }); background-size : cover;">
-                                                <img src="resources/img/carList/icon/ocean.png" alt="">
+                                                
 	
-                                                <div class="checkbox innercheckbox">
+                                                <div class="checkbox innercheckbox" onClick="event.stopPropagation();">
                                                 	<input type="hidden" name="post-id" value="${ list.cinfoNo }" id="cinfoNo">
                                                     <input type="checkbox" name="check2" value="${status.count}" class="check-item checkbox2" id="check-item${status.count}">
                                                     <label for="check-item${status.count}" ></label>
@@ -330,7 +346,7 @@
                                                 <!--  -->
 			                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
 			                                              
-			                                                <div class="listing__item__pic__btns">
+			                                                <div class="listing__item__pic__btns" onClick="event.stopPropagation();">
 			                                                   <!--  <a href="#"><span class="icon_zoom-in_alt"></span></a> -->
 			                                                      <script>
 			                                                      $(document).ready(function() {
@@ -441,10 +457,10 @@
               
               		<c:choose>
               			<c:when test="${ pi.currentPage eq 1}">
-                       	 	<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+                       	 	<li class="page-item disabled"><a class="page-link" href="">이전</a></li>
                         </c:when>
                         <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="myCarbakList.me?cpage=${ pi.currentPage -1 }">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="myCarbakList.me?cpage=${ pi.currentPage -1 }">이전</a></li>
                         </c:otherwise>
                    	</c:choose>
                     <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
@@ -452,10 +468,10 @@
         			</c:forEach>
                     <c:choose>
                     	<c:when test="${ pi.currentPage eq pi.maxPage }">
-                            <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="">다음</a></li>
                          </c:when>
                          <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="myCarbakList.me?cpage=${ pi.currentPage +1 }">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="myCarbakList.me?cpage=${ pi.currentPage +1 }">다음</a></li>
                           </c:otherwise>
                       </c:choose>
                 </ul>
