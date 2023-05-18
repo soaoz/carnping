@@ -30,6 +30,14 @@ public class CarController {
 	@Autowired
 	private CarServiceImpl cService;
 
+	//메인 차박 정보 게시글 리스트
+	@ResponseBody
+	@RequestMapping(value = "topCarList.bo", produces = "application/json; charset=utf-8")
+	public String topCarList(String tab) {
+		ArrayList<Cinfo> list = cService.topCarList(tab);
+		return new Gson().toJson(list);
+	}
+	
 	// 차박 정보 리스트
 	@RequestMapping("carList.ca")
 	public String carList(Model model) {

@@ -117,4 +117,18 @@ public class CarDao {
 	public int updateCarImgRequest(SqlSessionTemplate sqlSession, VerifyImg verifyImg) {
 		return sqlSession.insert("carMapper.updateCarImgRequest", verifyImg);
 	}
+
+	public ArrayList<Cinfo> topCarList(SqlSessionTemplate sqlSession, String tab) {
+		
+		if(tab.equals("tabs-1")) {
+			return (ArrayList)sqlSession.selectList("carMapper.mainCarListTab1");
+		} else if(tab.equals("tabs-2")) {
+			return (ArrayList)sqlSession.selectList("carMapper.mainCarListTab2");
+		} else if(tab.equals("tabs-3")) {
+			return (ArrayList)sqlSession.selectList("carMapper.mainCarListTab3");
+		} else {
+			return (ArrayList)sqlSession.selectList("carMapper.mainCarListTab4");
+		}
+
+	}
 }

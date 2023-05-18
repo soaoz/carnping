@@ -122,6 +122,10 @@ public class CarServiceImpl implements CarService{
 	public int updateCarImgRequest(VerifyImg verifyImg) {
 		return cDao.updateCarImgRequest(sqlSession, verifyImg);
 	}
+
+	public ArrayList<Cinfo> topCarList(String tab) {
+		return cDao.topCarList(sqlSession, tab);
+	}
 	
 	
 }
