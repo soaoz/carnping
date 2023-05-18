@@ -340,6 +340,9 @@ public class BoardController {
 	public String selectPartyBoardDetail(String bno, Model model) {
 		
 		Board b = bService.selectPartyBoardDetail(bno);
+		System.out.println("이거임");
+		System.out.println(b);
+		
 		model.addAttribute("b", b);
 		
 		return "board/partyBoardDetail";
@@ -528,6 +531,27 @@ public class BoardController {
 		if(list != null) {
 			model.addAttribute("list", list);
 			return "admin/notice";
+		}else {
+			model.addAttribute("errorMsg", "게시글 조회 실패!");
+	    	return "common/errorPage";
+		}
+		
+	}
+	
+	
+	
+	/**
+     *  공지사항 조회
+     */
+	@RequestMapping("noticeBoard.bo")
+	public String selectNoticeBoardList2(Model model) {
+		
+		ArrayList<Board> list = bService.selectNoticeBoardList();
+		
+		
+		if(list != null) {
+			model.addAttribute("list", list);
+			return "board/noticeBoard";
 		}else {
 			model.addAttribute("errorMsg", "게시글 조회 실패!");
 	    	return "common/errorPage";

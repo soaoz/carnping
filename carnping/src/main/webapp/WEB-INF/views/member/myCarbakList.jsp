@@ -295,6 +295,13 @@
                     <div class="properties-area recent-property" style="background-color: #FFF;">
                         <div class="container"> 
                             
+                            
+                        <c:if test="${empty list }">
+                                <h4> 작성한 글이 없습니다. <br><br> <a href="carList.ca" style="color : #b3d9b1;"> </a></h4>
+                         </c:if>
+                                    
+                         <c:choose>  
+                         <c:when test="${ not empty list }">
                             <div class="checkbox" id="checkbox1">
                                 <input type="checkbox" name="check2" id="check2" value="2" class="checkbox2">
                                 <label for="check2">전체 선택</label>
@@ -306,10 +313,9 @@
                                 <section class="listing nice-scroll hover">
                                     <div class="listing__list">
                                     
-
+      
                                     
-                                      <c:choose>
-								           <c:when test="${ not empty list }">
+								           
 								               <c:forEach var="list" items="${ list }" varStatus="status">
                                         <div class="listing__item">
                                             <div class="listing__item__pic set-bg" style="cursor:pointer; background-image : url(${ list.cinfoImg1 }); background-size : cover;">

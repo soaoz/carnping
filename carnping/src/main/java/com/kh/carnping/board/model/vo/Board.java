@@ -33,6 +33,9 @@ public class Board {
 	private String memId;
 	private String nickName;
 	private String phone;
+	private String boardLttd;
+	private String boardHrdns;
+	private String boardAddress;
 	
 	
 }
