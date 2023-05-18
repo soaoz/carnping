@@ -214,7 +214,7 @@ public class MemberController {
 			
 		} else if(loginMember.getStatus().equals("A")) { 
 			session.setAttribute("loginMember", loginMember);
-			return "admin/menubar";
+			return "redirect:/member.ad";
 		} else if(loginMember.getStatus().equals("N")) {
 			session.setAttribute("alertMsg", "탈퇴한 회원의 아이디입니다.");
 			return "redirect:loginForm.me";
@@ -222,8 +222,6 @@ public class MemberController {
 			session.setAttribute("alertMsg", "아이디나 비밀번호를 확인하세요");
 			return "redirect:loginForm.me";
 		}
-		
-		
 	}
 
 	@RequestMapping("logout.me")

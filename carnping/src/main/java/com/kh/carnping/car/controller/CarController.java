@@ -30,6 +30,14 @@ public class CarController {
 	@Autowired
 	private CarServiceImpl cService;
 
+	//메인 차박 정보 게시글 리스트
+	@ResponseBody
+	@RequestMapping(value = "topCarList.bo", produces = "application/json; charset=utf-8")
+	public String topCarList(String tab) {
+		ArrayList<Cinfo> list = cService.topCarList(tab);
+		return new Gson().toJson(list);
+	}
+	
 	// 차박 정보 리스트
 	@RequestMapping("carList.ca")
 	public String carList(Model model) {
@@ -48,13 +56,23 @@ public class CarController {
 	@RequestMapping("filter.ca")
 	public String filterList(Filter filter, Model model) {
 		ArrayList<Cinfo> list = cService.filterList(filter);
+		System.out.println(filter);
+		String facility = "";
+		String tag = "";
+		if(filter.getFacility() != null) {
+			facility = String.join(",", filter.getFacility());			
+		}
+		if(filter.getTag() != null) {
+			 tag = String.join(",",filter.getTag());			
+		}
+
+		model.addAttribute("facility", facility);
+		model.addAttribute("tag", tag);
+		model.addAttribute("filter", filter);
+		model.addAttribute("list", list);
 		if (!list.isEmpty()) {
-			model.addAttribute("filter", filter);
-			model.addAttribute("list", list);
 			return "car/carList";
 		} else {
-			model.addAttribute("list", list);
-			model.addAttribute("filter", filter);
 			model.addAttribute("emp", "현재 리스트가 비어있습니다.");
 			return "car/carList";
 		}
@@ -108,7 +126,7 @@ public class CarController {
 			}
 		}
 		int result = cService.insertReview(review);
-		return "redirect:detail.ca?cinfoNo=" + review.getReviewNo();
+		return "redirect:detail.ca?cinfoNo=" + review.getCinfoNo();
 	}
 
 	// 리뷰 삭제
@@ -176,6 +194,7 @@ public class CarController {
 		verify.setVerifyContent(checkString(verify.getVerifyContent()));
 		verify.setVerifyNotice(checkString(verify.getVerifyNotice()));
 		verify.setVerifyReason(checkString(verify.getVerifyReason()));
+		verify.setVerifyName(verify.getVerifyName().trim());
 		
 		// 태그 변수
 		if (verify.getVerifyFacilitie() != null) {
