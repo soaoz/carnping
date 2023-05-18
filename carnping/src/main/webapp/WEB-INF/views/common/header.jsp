@@ -259,7 +259,7 @@
                                                 <div style="padding-top: 10px; padding-left: 10px; padding-right: 20px;" >
                                                     <a href="#" class="notification" >
                                                         <span><i class="fa-solid fa-bell" style="color: #ffffff; font-size: 25px;" ></i></span>
-                                                        <span class="badge">2</span>
+                                                        <span class="badge">1</span>
                                                     </a>
                                                     
                                                     
