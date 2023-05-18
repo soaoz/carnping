@@ -298,7 +298,7 @@ function selectFreeReplyList() {
                     if (list[i].memNo === loginUser) {
                         value +=
                             "<a id='commentDelete' href='#' style='float:right; cursor:pointer; color:gray; font-size:15px; margin-right:5px; margin-top:5px;'>삭제</a>";
-
+                            //준석!!
                         
                     } else {
                         value += 

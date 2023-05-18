@@ -20,18 +20,18 @@
                             <p>1.118.940.376 The best service package is waiting for you</p>
                         </div>
                         <div class="hero__search__form">
-                            <form action="#">
+                            <form id='searchForm' action='filter.ca' method="get" >
                                 <input type="text" placeholder="키워드를 입력하세요.">
                                 <div class="select__option">
-                                    <select>
-                                        <option value="">전체 시/도</option>
+                                    <select name="location">
+                                        <option id="all" value="all">전체 시/도</option>
+                                        <option id="서울" value="서울">서울</option>
+                                        <option id="인천" value="인천">인천</option>
+                                        <option id="경기" value="경기">경기도</option>
+                                        <option id="강원" value="강원">강원도</option>
                                     </select>
                                 </div>
-                                <div class="select__option">
-                                    <select>
-                                        <option value="">시/군/구</option>
-                                    </select>
-                                </div>
+
                                 <button type="submit" style="background-color: #0ca678;">차박지 살펴보기</button>
                             </form>
                         </div>
