@@ -302,40 +302,45 @@
 								<!--  소영 : 좋아요 코드 시작 -->
 								<div class="listing__item__pic__btns"
 									onClick="event.stopPropagation();">
+									<c:set var="loginMember" value="${loginMember}" />
 									<script>
         // 잠시 묶어 두겠습니다
-    /*    $(document).ready(function() {
-            selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
-            function selectLike(cinfoNo, id){
-                var cinfoNo = cinfoNo;
-                var id  = id;
-
-                console.log("좋아요조회 함수 실행함")
-                console.log(cinfoNo);
-                console.log(id);
-                $.ajax({
-                    url : "selectLike.me",
-                    type : "post",
-                    data : {"cinfoNo": cinfoNo},
-                    success : function(result){
-                        console.log("성공  : " + result)
-
-                        if(result>0){
-                            console.log("성공 " + id);
-                            $(id).addClass('fa-solid');
-                        }else{
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        // 삭제 실패시 처리할 로직
-                        alert("삭제 실패: " + error);
-                        console.error(error); 
-                    }
-                    
-                });
-            }
-        });  */
-        
+/*
+          if (loginMember !== "") {
+        	  console.log("감자");
+		       $(document).ready(function() {
+		            selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
+		            function selectLike(cinfoNo, id){
+		                var cinfoNo = cinfoNo;
+		                var id  = id;
+		
+		                console.log("좋아요조회 함수 실행함")
+		                console.log(cinfoNo);
+		                console.log(id);
+		                $.ajax({
+		                    url : "selectLike.me",
+		                    type : "post",
+		                    data : {"cinfoNo": cinfoNo},
+		                    success : function(result){
+		                        console.log("성공  : " + result)
+		
+		                        if(result>0){
+		                            console.log("성공 " + id);
+		                            $(id).addClass('fa-solid');
+		                        }else{
+		                        }
+		                    },
+		                    error: function(xhr, status, error) {
+		                        // 삭제 실패시 처리할 로직
+		                        alert("삭제 실패: " + error);
+		                        console.error(error); 
+		                    }
+		                    
+		                });
+		            }
+		        }); 
+          }
+        */
         $(document).on('click', '.like-button', function(e) {
             e.preventDefault();
             $(this).find('i.fa-solid').toggleClass('fa-regular');
