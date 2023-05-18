@@ -104,20 +104,15 @@
 				<div id="sidebar-menu" class="sidebar-menu">
 					<ul>
 						<li class="menu-title"><span>메뉴</span></li>
-						<li class="submenu"><a href="#"><i data-feather="users"></i>
-								<span>회원관리</span> <span class="menu-arrow"></span></a>
+						<li class="submenu"><a href="#"><i data-feather="users"></i><span>회원관리</span> <span class="menu-arrow"></span></a>
 							<ul>
 								<li><a href="member.ad">회원관리</a></li>
 								<li><a href="memReport.ad">신고 및 정지관리</a></li>
-							</ul></li>
-						<li class="submenu"><a href="#"><i
-								data-feather="clipboard"></i> <span>게시글관리</span> <span
-								class="menu-arrow"></span></a></li>
-						<li><a href="verify.ad"><i data-feather="box"><span>차박게시글 검수</span></li>
-						<li><a href="notice.ad"><i data-feather="star"></i> <span>공지사항관리</span></a>
+							</ul>
 						</li>
-						<li><a href="inquiryList.ad"><i
-								data-feather="credit-card"></i><span>Q&A관리</span></a></li>
+						<li><a href="verify.ad"><i data-feather="box"></i><span>차박게시글 검수</span></a></li>
+						<li><a href="notice.ad"><i data-feather="star"></i> <span>공지사항관리</span></a></li>
+						<li><a href="inquiryList.ad"><i data-feather="credit-card"></i><span>Q&A관리</span></a></li>
 					</ul>
 				</div>
 			</div>

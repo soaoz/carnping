@@ -389,7 +389,6 @@
 	                                    src="${ verify.verifyImg10 }">
 	                                <input type="hidden" value="${ verify.verifyOgImg10 }" name="verifyOgImg10">
 									<input type="hidden" value="${ verify.verifyImg10 }"name="verifyImg10">
-	                                    //뷱[햐ㅐㅠㅂㄷ[기ㅠ다;ㅓ뮤믿그ㅓㅍ;ㅁ더ㅣㅏㅇ루피;ㅁ우ㅏㄹ;머ㅣ듈파ㅣ;ㅁ]]
 	                           	</c:if>
 
                            </div>
