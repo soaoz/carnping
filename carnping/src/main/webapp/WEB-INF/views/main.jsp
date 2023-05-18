@@ -203,9 +203,28 @@
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                           <div class="row" id="carListContainer"></div>
                         </div>
+                        <div class="tab-pane active" id="tabs-2" role="tabpanel">
+                            <div class="row" id="carListContainer"></div>
+                        </div>
+                        <div class="tab-pane active" id="tabs-3" role="tabpanel">
+                            <div class="row" id="carListContainer"></div>
+                        </div>
+                        <div class="tab-pane active" id="tabs-4" role="tabpanel">
+                            <div class="row" id="carListContainer"></div>
+                          </div>
                       </div>
                       
                       <script>
+
+                        $(function() {
+                            $(".nav-link").on("click", function() {
+                                var tabId = $(this).attr("href"); // 탭의 href 속성값을 가져옴 (예: #tabs-1)
+                                tabId = tabId.substring(1);
+                                topCarList(tabId);
+                            });
+                        });
+
+
                         $(function() {
                            topCarList("tabs-1");
                            $(".tab-pane").on("click", function() {
@@ -224,7 +243,7 @@
                                 
                                 var carList = response;
                                 var carListContainer = $("#" + tabId + " #carListContainer"); // 데이터를 뿌릴 컨테이너 요소 선택
-                                
+                                console.log(tabId);
                                 carListContainer.empty();
                                 
                                 // 데이터 루프
@@ -236,8 +255,7 @@
                                                 '<div class="listing__item">' +
                                                     '<div class="listing__item__pic set-bg" style="background-image:url(' + car.cinfoImg1 + ')">' +
                                                     '<div class="listing__item__pic__btns">' +
-                                                        '<a href="#"><span class="icon_zoom-in_alt"></span></a>' +
-                                                        '<a href="#"><span class="icon_heart_alt"></span></a>' +
+                                                    
                                                     '</div>' +
                                                     '</div>' +
                                                     '<div class="listing__item__text">' +
@@ -257,7 +275,7 @@
                                                         '<div class="listing__item__text__info__left">' +
                                                         '<span>오픈요일</span>' +
                                                         '</div>' +
-                                                        '<div class="listing__item__text__info__right closed">' + car.cinfoDay + '</div>' +
+                                                        '<div class="listing__item__text__info__right closed">' + car.cinfoDays + '</div>' +
                                                     '</div>' +
                                                     '</div>' +
                                                 '</div>' +
@@ -363,16 +381,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="randomDataContainer">
                 <div class="col-lg-6">
                     <a href="#" class="feature__location__item large-item set-bg"
                         data-setbg="resources/img/feature-location/fl-1.jpg">
                         <div class="feature__location__item__text">
-                            <h5>Washington, D.C</h5>
-                            <ul>
-                                <li>2045 Listings</li>
-                                <li>3648 Users</li>
-                            </ul>
+                            <h5>location값</h5>
                         </div>
                     </a>
                 </div>
@@ -382,7 +396,8 @@
                             <a href="#" class="feature__location__item set-bg"
                                 data-setbg="resources/img/feature-location/fl-2.jpg">
                                 <div class="feature__location__item__text">
-                                    <h5>Chicago</h5>
+                                    <h5>location값</h5>
+                                    
                                 </div>
                             </a>
                         </div>
@@ -390,137 +405,94 @@
                             <a href="#" class="feature__location__item set-bg"
                                 data-setbg="resources/img/feature-location/fl-3.jpg">
                                 <div class="feature__location__item__text">
-                                    <h5>San Antonio</h5>
+                                    <h5>location값</h5>
                                 </div>
                             </a>
                         </div>
                     </div>
                     <a href="#" class="feature__location__item set-bg" data-setbg="resources/img/feature-location/fl-4.jpg">
                         <div class="feature__location__item__text">
-                            <h5>Los Angeles</h5>
+                            <h5>location값</h5>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // 화면 로드가 완료된 후 실행되는 함수
+        $(document).ready(function() {
+    $.ajax({
+        url: "topFboardList.bo",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            // AJAX 요청 성공 시 실행되는 콜백 함수
+            var html = '';
+
+            // data를 기반으로 HTML 요소를 동적으로 생성
+            for (var i = 0; i < data.length; i++) {
+                var board = data[i];
+                var boardNo = board.boardNo;
+                var imgURL = board.boardChangeImg1;
+                var location = board.location;
+
+                if (i === 0) {
+                    // 첫 번째 요소는 큰 아이템으로 생성
+                    html += '<div class="col-lg-6">' +
+                        '<a href="freeBoardDetail.bo?bno=' + boardNo + '" class="feature__location__item large-item set-bg" style="background-image:url(' + imgURL + ')">' +
+                        '<div class="feature__location__item__text">' +
+                        '<h5>' + location + '</h5>' +
+                        '</div>' +
+                        '</a>' +
+                        '</div>';
+                } else if (i === 1) {
+                    // 두 번째 요소는 row 내의 작은 아이템으로 생성
+                    html += '<div class="col-lg-6">' +
+                        '<div class="row">' +
+                        '<div class="col-lg-6 col-md-6">' +
+                        '<a href="freeBoardDetail.bo?bno=' + boardNo + '" class="feature__location__item set-bg" style="background-image:url(' + imgURL + ')">' +
+                        '<div class="feature__location__item__text">' +
+                        '<h5>' + location + '</h5>' +
+                        '</div>' +
+                        '</a>' +
+                        '</div>';
+                } else if (i === 2) {
+                    // 세 번째 요소는 row 내의 작은 아이템으로 생성
+                    html += '<div class="col-lg-6 col-md-6">' +
+                        '<a href="freeBoardDetail.bo?bno=' + boardNo + '" class="feature__location__item set-bg" style="background-image:url(' + imgURL + ')">' +
+                        '<div class="feature__location__item__text">' +
+                        '<h5>' + location + '</h5>' +
+                        '</div>' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>';
+                } else {
+                    // 나머지 요소는 단일 아이템으로 생성
+                    html += '<a href="freeBoardDetail.bo?bno=' + boardNo + '" class="feature__location__item set-bg" style="background-image:url(' + imgURL + ')">' +
+                        '<div class="feature__location__item__text">' +
+                        '<h5>' + location + '</h5>' +
+                        '</div>' +
+                        '</a>';
+                }
+            }
+
+            // 생성된 HTML을 randomDataContainer에 추가
+            $('#randomDataContainer').html(html);
+        },
+        error: function(xhr, status, error) {
+            // AJAX 요청 실패 시 실행되는 콜백 함수
+            console.log(error);
+        }
+    });
+});
+    </script>
     <!-- Feature Location Section End -->
 
-    <!-- 공지사항 Section Begin -->
-    <section class="testimonial spad set-bg" data-setbg="resources/img/testimonial/testimonial-bg.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>공지사항</h2>
-                        <p>What people say about us</p>
-                    </div>
-                    <div class="testimonial__slider owl-carousel">
-                        <div class="testimonial__item" data-hash="review-1">
-                            <p>" We worked with Consultant. Our representative was very knowledgeable and helpful.
-                                Consultant made a number of suggestions to help improve our systems. Consultant
-                                explained how things work and why it would help."</p>
-                            <div class="testimonial__item__author">
-                                <a href="#review-3"><img src="resources/img/testimonial/author-3.png" alt=""></a>
-                                <a href="#review-1" class="active"><img src="resources/img/testimonial/author-1.png" alt=""></a>
-                                <a href="#review-2"><img src="resources/img/testimonial/author-2.png" alt=""></a>
-                            </div>
 
-                        </div>
-                        <div class="testimonial__item" data-hash="review-2">
-                            <p>" We worked with Consultant. Our representative was very knowledgeable and helpful.
-                                Consultant made a number of suggestions to help improve our systems. Consultant
-                                explained how things work and why it would help."</p>
-                            <div class="testimonial__item__author">
-                                <a href="#review-1"><img src="resources/img/testimonial/author-1.png" alt=""></a>
-                                <a href="#review-2" class="active"><img src="resources/img/testimonial/author-2.png" alt=""></a>
-                                <a href="#review-3"><img src="resources/img/testimonial/author-3.png" alt=""></a>
-                            </div>
-
-                        </div>
-                        <div class="testimonial__item" data-hash="review-3">
-                            <p>" We worked with Consultant. Our representative was very knowledgeable and helpful.
-                                Consultant made a number of suggestions to help improve our systems. Consultant
-                                explained how things work and why it would help."</p>
-                            <div class="testimonial__item__author">
-                                <a href="#review-2"><img src="resources/img/testimonial/author-2.png" alt=""></a>
-                                <a href="#review-3" class="active"><img src="resources/img/testimonial/author-3.png" alt=""></a>
-                                <a href="#review-1"><img src="resources/img/testimonial/author-1.png" alt=""></a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Testimonial Section End -->
-
-    <!-- 함께가요 Section Begin -->
-    <section class="news-post spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>함께 가요</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="resources/img/blog/blog-1.jpg">
-                            <a href="https://www.youtube.com/watch?v=8EJ3zbKTWQ8" class="play-btn video-popup"><i class="fa fa-play"></i></a>
-                        </div>
-                        <div class="blog__item__text">
-                            <ul class="blog__item__tags">
-                                <li><i class="fa fa-tags"></i> Travel</li>
-                                <li>Videos</li>
-                            </ul>
-                            <h5><a href="#">Internet Banner Advertising Most Reliable</a></h5>
-                            <ul class="blog__item__widget">
-                                <li><i class="fa fa-clock-o"></i> 19th March, 2019</li>
-                                <li><i class="fa fa-user"></i> John Smith</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="resources/img/blog/blog-2.jpg"></div>
-                        <div class="blog__item__text">
-                            <ul class="blog__item__tags">
-                                <li><i class="fa fa-tags"></i> Travel</li>
-                                <li>Restaurant</li>
-                            </ul>
-                            <h5><a href="#">Internet Banner Advertising Most Reliable</a></h5>
-                            <ul class="blog__item__widget">
-                                <li><i class="fa fa-clock-o"></i> 19th March, 2019</li>
-                                <li><i class="fa fa-user"></i> John Smith</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="resources/img/blog/blog-3.jpg"></div>
-                        <div class="blog__item__text">
-                            <ul class="blog__item__tags">
-                                <li><i class="fa fa-tags"></i> Travel</li>
-                                <li>Restaurant</li>
-                            </ul>
-                            <h5><a href="enrollForm.me">Internet Banner Advertising Most Reliable</a></h5>
-                            <ul class="blog__item__widget">
-                                <li><i class="fa fa-clock-o"></i> 19th March, 2019</li>
-                                <li><i class="fa fa-user"></i> John Smith</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Blog Section End -->
+    
 
 
 

@@ -23,6 +23,7 @@ import com.google.gson.JsonObject;
 import com.kh.carnping.board.model.service.BoardServiceImpl;
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.BoardReply;
+import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Report;
 
@@ -65,6 +66,24 @@ public class BoardController {
         return changeName;
         
   }
+	
+	//메인 무료나눔 게시글 리스트
+	@ResponseBody
+	@RequestMapping(value = "topFboardList.bo", produces = "application/json; charset=utf-8")
+	public String topFboardList() {
+		ArrayList<Board> list = bService.topFboardList();
+		System.out.println(list);
+		return new Gson().toJson(list);
+	}
+	
+	//메인 공지사항 게시글 리스트
+	@ResponseBody
+	@RequestMapping(value = "topNoticeBoardList.bo", produces = "application/json; charset=utf-8")
+	public String topNoticeBoardList() {
+		ArrayList<Board> list = bService.topNoticeBoardList();
+		return new Gson().toJson(list);
+	}
+	
 	
 	
 	/**
