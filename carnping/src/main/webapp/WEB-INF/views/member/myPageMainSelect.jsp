@@ -211,10 +211,10 @@
            <a href="myCarbakList.me" class="menu"><i class="fa-sharp fa-solid fa-location-dot"></i> 나의 차박지 </a>
         </div>
         <div class="myPage_menu">
-           <a href="myAlarmList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i> 나의 활동 </a>
-        </div>
-        <div class="myPage_menu">
-            <a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-heart"></i> 좋아요</a>
+          		<a href="myAlarmList.me" class="menu"><i class="fa-solid fa-bell"></i> 나의 활동 </a>
+        	</div>
+        	<div class="myPage_menu">
+            	<a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i>위시리스트</a>
         </div>
         <div class="myPage_menu">
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
@@ -243,7 +243,7 @@
                             <h3>
                                 <br>
                                 <b>회원정보</b> YOUR PROFILE <br><br>
-                                <small><b>박소영 님의 정보를 안전하게 보호하기 위하여
+                                <small><b>회원님의 정보를 안전하게 보호하기 위하여
                                     비밀번호를 다시 한번 확인합니다.
                                 </b></small>
                                 

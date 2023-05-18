@@ -180,7 +180,29 @@
 		    overflow-y: auto; 
 	    }
 		    
-		    
+#ulArea::-webkit-scrollbar-thumb {
+  background-color: #ffffff; /* 하얀색 */
+  background-clip: padding-box;
+  border-top: 25px solid transparent;
+  border-bottom: 10px solid transparent;
+  
+ 
+}
+#ulArea::-webkit-scrollbar {
+ 	
+ 	height: 3px !important;
+}
+
+#ulArea::-webkit-scrollbar-track {
+  background-color: transparent; /* 투명 */
+}
+
+#ulArea::-webkit-scrollbar {
+  width: 8px; /* 스크롤바 너비 조정 */
+}
+#ulArea {
+  scroll-margin-top: 5px;
+}
 
 		    </style>
 </head>
@@ -239,7 +261,7 @@
                                                     
                                                     
                                                     	
-		                                                    <ul style="left: 28%; overflow: auto;" id="ulArea"  class="scrollable-list1">
+		                                                    <ul style="left: 28% ; overflow: auto; width: 400px; " id="ulArea"  class="scrollable-list1">
 		
 		
 		                                                    </ul>
@@ -344,7 +366,7 @@ ulArea.style.overflowY = 'scroll';
     	    if (result.list.length === 0) {
     	      var emptyNotification = '<li>' +
     	        '<div style="height:70px;">' +
-    	        '<div style="display:flex;justify-content: space-around;height: 50px;">' +
+    	        '<div style="display:flex; /*justify-content: space-around;*/height: 50px;">' +
     	        '<div style="border-radius: 50px;">' +
     	        '<i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px; font-size: 35px; line-height: 1.7em;"></i>' +
     	        '</div>' +
@@ -358,7 +380,7 @@ ulArea.style.overflowY = 'scroll';
     	        '</div>' +
     	        '</li>';
 
-    	      // Add the empty notification to the ulArea
+    	      
     	      $('#ulArea').html(emptyNotification);
     	    } else {
     	      var notification = '';
@@ -369,8 +391,8 @@ ulArea.style.overflowY = 'scroll';
     	          '<div style="border-radius: 50px;">' +
     	          '<i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px; font-size: 35px; line-height: 1.7em;"></i>' +
     	          '</div>' +
-    	          '<div class="noti-text notiDiv">' +
-    	          '<div style="display:flex; ">' +
+    	          '<div class="noti-text notiDiv" style="width:300px;">' +
+    	          '<div style="display:flex; padding-left: 10px; ">' +
     	          '<a style="padding: unset; padding-top: 20px; ">' + result.list[i].alaContent + '</a>' +
     	          '</div>' +
     	          '</div>' +
@@ -381,7 +403,7 @@ ulArea.style.overflowY = 'scroll';
     	          '</div>' +
     	          '</li>';
     	      }
-    	      // Add the notification to the ulArea
+    	     
     	      $('#ulArea').html(notification);
     	    }
 

@@ -205,7 +205,8 @@
 				<div class="filter__title">
             <h5><i class="fa-sharp fa-solid fa-house"></i>마이페이지</h5>
         </div>
-        <div class="myPage_menu" id="fake"></div>
+        <div class="myPage_menu" id="fake">
+         </div>
 
         <div class="myPage_menu">
             <a href="myPageMainSelect.me" class="menu"><i class="fa fa fa-user"></i> 회원정보 </a>
@@ -214,16 +215,16 @@
            <a href="myCarbakList.me" class="menu"><i class="fa-sharp fa-solid fa-location-dot"></i> 나의 차박지 </a>
         </div>
         <div class="myPage_menu">
-           <a href="myAlarmList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i> 나의 활동 </a>
-        </div>
-        <div class="myPage_menu">
-            <a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-heart"></i> 좋아요</a>
+          		<a href="myAlarmList.me" class="menu"><i class="fa-solid fa-bell"></i> 나의 활동 </a>
+        	</div>
+        	<div class="myPage_menu">
+            	<a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i>위시리스트</a>
         </div>
         <div class="myPage_menu">
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="logoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="myLogoutPage.me" class="menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
