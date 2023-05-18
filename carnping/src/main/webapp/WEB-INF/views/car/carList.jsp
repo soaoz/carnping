@@ -289,7 +289,7 @@
 						<div class="listing__item">
 							<input type="hidden" value="${ list.cinfoNo }">
 							<div class="listing__item__pic set-bg"
-								data-setbg="${ list.cinfoImg1 }" style="cursor: pointer">
+								data-setbg="${ list.cinfoImg1 }" style="cursor: pointer"onclick="detail('${ list.cinfoNo }');">
 
 								<!--  
         <div class="listing__item__pic__tag">Popular</div>
@@ -353,7 +353,7 @@
 								<!--  소영 : 좋아요 코드 끝 -->
 							</div>
 							<div class="listing__item__text" style="cursor: pointer"
-								onclick="(detail('${ list.cinfoNo }');)">
+								onclick="detail('${ list.cinfoNo }');">
 								<div class="listing__item__text__inside">
 									<h5>${ list.cinfoName }</h5>
 
@@ -399,6 +399,12 @@
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="listing__item__text__rating">
+									<div class="listing__item__text__info__left">
+										<span>조회수</span>
+									</div>
+									<div class="listing__item__text__info__right">${ list.cinfoViews }</div>
 								</div>
 							</div>
 						</div>
@@ -671,7 +677,6 @@ detail = function(cinfoNo){
 </script>
 
 	<script src="resources/js/main.js"></script>
-	<script src="resources/js/jquery.nice-select.min.js"></script>
 	</body>
 
 </html>

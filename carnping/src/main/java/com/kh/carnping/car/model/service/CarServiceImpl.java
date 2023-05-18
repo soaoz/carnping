@@ -126,6 +126,10 @@ public class CarServiceImpl implements CarService{
 	public ArrayList<Cinfo> topCarList(String tab) {
 		return cDao.topCarList(sqlSession, tab);
 	}
+
+	public int insertCount(String cinfoNo) {
+		return cDao.insertCount(sqlSession, cinfoNo);
+	}
 	
 	
 }
