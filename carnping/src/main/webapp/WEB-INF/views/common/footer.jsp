@@ -125,21 +125,26 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="resources/img/logo_1.png" width="250px" alt=""></a>
+                            <a href="./index.jsp"><img src="resources/img/logo_1.png" width="250px" alt="" style="margin-bottom: 20px;
+                                margin-top: 10px;"></a>
                         </div>
-                        <p> 시들어 아름답고 그들의 그들을 부패를 이것이다. 긴지라 그들은 풀이 피고 있으랴? </p>
+                        <p style="font-size:15px"> 차박으로 전국 곳곳 카앤핑과 함께하세요! </p>
+
+
+
+
                     </div>
                 </div>
-                <div class="col-lg-4 offset-lg-1 col-md-6" style="flex: 0 0 40%; margin-left: 5%; max-width: 40%;">
+                <div class="col-lg-4 offset-lg-1 col-md-6" style="flex: 0 0 40%; margin-left: 35%; max-width: 40%;">
                     <div class="footer__address">
                         <ul>
                             <li>
                                 <span>대표번호:</span>
-                                <p>(+12) 345-678-910</p>
+                                <p>(+82) 345-678-910</p>
                             </li>
                             <li>
                                 <span>이메일:</span>
-                                <p>info.colorlib@gmail .com</p>
+                                <p>chadollbagi@gmail.com</p>
                             </li>
                             <li>
                                 <span>주소:</span>
@@ -157,24 +162,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6" style="margin-left:5%;" >
-                    <div class="footer__widget" id="footer__widget">
-                        <ul>
-                            <li><a href="myLikeList.me">Home</a></li>
-                            <li><a href="myPostList.me">Support</a></li>
-                            <li><a href="myReplyList.me">How it work</a></li>
-                            <li><a href="myQuestionList.me">Contact</a></li>
-                            <li><a href="myPageMainSelect.me">Blog</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">로그인</a></li>
-                            <li><a href="#">How it Work</a></li>
-                            <li><a href="#">Advantages</a></li>
-                            <li><a href="#">Direo App</a></li>
-                            <li><a href="#">Packages</a></li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
             <div class="row">
                 <div class="col-lg-12">

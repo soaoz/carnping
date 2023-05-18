@@ -261,6 +261,16 @@ public class BoardDao {
 	}
 
 
+	public ArrayList<Board> topFboardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.mainFreeBoardList");
+	}
+
+
+	public ArrayList<Board> topNoticeBoardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.mainNoticeBoardList");
+	}
+
+
 	
 
 	

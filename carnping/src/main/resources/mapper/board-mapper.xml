@@ -91,6 +91,47 @@
 	            by board_no desc 
 	</select>
 	
+		<!-- 메인페이지 무료나눔 게시글 -->
+	<select id="mainFreeBoardList" resultMap="boardResultMap">
+		select
+			       board_no,
+			       board_change_img1,
+			       board_title,
+			       mem_id,
+			       location,
+			       phone
+		   from(
+			       select
+			       board_no,
+			       board_change_img1,
+			       board_title,
+			       mem_id,
+			       location,
+			       phone
+			  from fboard f
+			  left join board_img using(board_no)
+	  		  left join member m using(mem_no)
+	         where f.status = 'Y' and board_no like 'BRD%'
+			  		    ORDER BY DBMS_RANDOM.VALUE
+				)	
+		 
+		WHERE ROWNUM &lt; 5
+	</select> 
+	
+			<!-- 메인페이지 공지사항 게시글 -->
+	<select id="mainNoticeBoardList" resultMap="boardResultMap">
+		select
+			       board_no,
+			       board_title,
+			       mem_id,
+			       to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			  from fboard f
+	  		  left join member m using(mem_no)
+	         where f.status = 'Y' and board_no like 'TRA%'
+	         order
+	            by board_no desc 
+	</select>
+	
 	
 	<!-- 무료나눔 게시판 상세조회 -->
 	<select id="selectFreeBoardDetail" resultMap="boardResultMap">
