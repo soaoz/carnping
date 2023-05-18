@@ -335,7 +335,9 @@
         <div class="listing__item__pic__btns" onClick="event.stopPropagation();">
         <script>
         // 잠시 묶어 두겠습니다
-    /*     $(document).ready(function() {
+       $(document).ready(function() {
+    	   
+    	   <c:if test="${not empty loginMember}">
             selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
             function selectLike(cinfoNo, id){
                 var cinfoNo = cinfoNo;
@@ -365,8 +367,9 @@
                     
                 });
             }
-        }); */
-        
+            </c:if>
+        }); 
+ 
         $(document).on('click', '.like-button', function(e) {
             e.preventDefault();
             $(this).find('i.fa-solid').toggleClass('fa-regular');
@@ -374,13 +377,14 @@
         </script>
 
         <a href="#">
+        	
                 <span class="like-button" class="" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');">
-        <i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span>
+       			 <i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span>
+        
         </a> 
         </div>
 
         <!--  소영 : 좋아요 코드 끝 -->
-        
                        </div>
                         <div class="listing__item__text" style="cursor:pointer"  onclick="(detail('${ list.cinfoNo }');)">
                             <div class="listing__item__text__inside">
@@ -435,15 +439,23 @@ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d
 /* 소영 좋아요코드 시작 */
 
 $(document).ready(function() {
+	
 	  $('.like-button').click(function(e) {
 	    e.preventDefault();
 	    $(this).find('i.fa-regular').toggleClass('fa-solid');
 	  });
 }); 
     	
+    
+    	
+    	
+    	
+    	
+    	
 function like(cinfoNo , id){
 	//console.log("글번호 : "+cinfoNo+ " 아이디 : " + id);
 	
+
  
 	if ($(id).hasClass('fa-solid')) {
 	    // fa-regular 클래스가 있을 때
