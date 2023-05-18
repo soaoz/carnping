@@ -330,6 +330,36 @@
         </div> <!--headerbar-->
     </header>
     <!-- Header Section End -->
+
+
+<c:set var="loginMember" value="${loginMember}" />
+
+<script>
+  var loginMember = '<c:out value="${loginMember}" />';
+  
+  console.log(loginMember);
+  
+  $(document).ready(function() {
+    // 로그인한 경우에만 Ajax 호출
+    if (loginMember !== "") {
+      console.log("실행됨zzzz");
+      
+      $.ajax({
+        url: "headerAlarmSelectList.me",
+        type: "POST",
+        data: {},
+        success: function(result) {
+          console.log(result);
+          console.log("성공");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log("Error: " + textStatus + " " + errorThrown);
+        }
+      });
+    }
+  });
+</script>
+
 		<!-- 카카오 채널-->
 			<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
 			  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
@@ -347,32 +377,14 @@
 			  });
 			  
 			  
-			  $(function(){
-				  
-				  $.ajax({
-						url: "headerAlarmSelectList.me",
-						type: "POST",
-						data:  { cpage: cpage }, 
-						success: function(result) {
-				
-							console.log(result);
-							console.log("성공");
-							
-						},
-						error: function(jqXHR, textStatus, errorThrown) {
-							console.log("Error: " + textStatus + " " + errorThrown);
-						}
-						
-					});
-			  
-			  
+
 			  
 			</script>
 		<!-- 카카오 채널 실패~~~~ -->
     
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결 : 소영       -->
 	<script type="text/javascript">
-		var socket = null;
+	/*	var socket = null;
 		$(document).ready(function(){
 			connectWS();
 			
@@ -396,7 +408,7 @@
 		    };
 		}
 		
-	
+	*/
 	</script>
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결  끝       -->
     	<c:if test="${ not empty alertMsg }">

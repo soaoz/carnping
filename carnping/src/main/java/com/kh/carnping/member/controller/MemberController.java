@@ -961,6 +961,7 @@ public class MemberController {
 	
 	
 	//헤더 내 알람 리스트 조회 
+	@ResponseBody
 	@RequestMapping(value = "headerAlarmSelectList.me", produces = "application/json; charset=utf-8")
 	public Map<String, Object> headerAlarmSelectList( Model model, HttpSession session) {
 		
@@ -1000,7 +1001,7 @@ public class MemberController {
 		result.put("endPage", endPage);
 		
 		
-		  model.addAttribute("result", result);
+		model.addAttribute("result", result);
 		  
 		  
 		return result;
