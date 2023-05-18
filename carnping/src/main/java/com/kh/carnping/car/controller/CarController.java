@@ -172,6 +172,12 @@ public class CarController {
 	@RequestMapping(value = "insertCarRequest.ca")
 	public String insertCarRequest(Verify verify, MultipartFile[] upfile, Model model, HttpSession session) {
 		VerifyImg verifyImg = new VerifyImg();
+		
+		verify.setVerifyContent(checkString(verify.getVerifyContent()));
+		verify.setVerifyNotice(checkString(verify.getVerifyNotice()));
+		verify.setVerifyReason(checkString(verify.getVerifyReason()));
+		
+		// 태그 변수
 		if (verify.getVerifyFacilitie() != null) {
 			String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
 			verify.setVerifyFacilities(verifyFacilitie);
@@ -190,6 +196,8 @@ public class CarController {
 		} else {
 			verify.setVerifyTag("");
 		}
+		
+		
 		for (int i = 0; i < upfile.length; i++) {
 			if (!upfile[i].getOriginalFilename().equals("")) {
 				String changeName = new SaveFile().carFile(upfile[i], session);
@@ -246,6 +254,12 @@ public class CarController {
 		System.out.println(result2);
 		System.out.println(verify.getMemNo());
 		return "main";
+	}
+	
+	public String checkString(String str) {
+		str = str.replace("\"", "'");
+		str = str.replace("\n", "");
+		return str;
 	}
 
 	// 차박 삭제 요청
