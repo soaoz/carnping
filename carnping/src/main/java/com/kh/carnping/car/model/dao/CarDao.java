@@ -92,12 +92,12 @@ public class CarDao {
 		return sqlSession.update("carMapper.updateReview", reNo);
 	}
 
-	public int insertCar(SqlSessionTemplate sqlSession, Verify verify) {
-		return sqlSession.insert("carMapper.insertCar", verify);
+	public int insertCarRequest(SqlSessionTemplate sqlSession, Verify verify) {
+		return sqlSession.insert("carMapper.insertCarRequest", verify);
 	}
 
-	public int insertCarImg(SqlSessionTemplate sqlSession, VerifyImg verifyImg) {
-		return sqlSession.insert("carMapper.insertCarImg", verifyImg);
+	public int insertCarImgRequest(SqlSessionTemplate sqlSession, VerifyImg verifyImg) {
+		return sqlSession.insert("carMapper.insertCarImgRequest", verifyImg);
 	}
 
 	public int checkRequest(SqlSessionTemplate sqlSession, String loginMember) {
@@ -115,12 +115,6 @@ public class CarDao {
 	}
 
 	public int updateCarImgRequest(SqlSessionTemplate sqlSession, VerifyImg verifyImg) {
-		return sqlSession.insert("carMapper.updateCarImgRequest");
+		return sqlSession.insert("carMapper.updateCarImgRequest", verifyImg);
 	}
-
-
-	
-	
-	
-	
 }

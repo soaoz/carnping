@@ -165,16 +165,16 @@
             -webkit-line-clamp: 1;
             overflow: hidden;
         }      
-        
-
+		@media (min-width:768px) {
+            #add-channel-button {
+                position:fixed;
+                z-index: 999;
+                right : 40px;
+                bottom : 40px;
+            }
+        }
     </style>
 </head>
-<c:if test="${ not empty alertMsg }">
-	<script>
-		alert("${alertMsg}");
-	</script>
-	<c:remove var="alertMsg" scope="session"/>
-</c:if>
 <!--letter-spacing: 0.1em;-->
     <!-- Page Preloder -->
     <div id="preloder">
@@ -246,6 +246,33 @@
                                                                 </div>
                                                             </div>
                                                         </li>
+                                                        
+                                                       <li>
+                                                            <div style="height:70px;">
+                                                                <div style="display:flex;justify-content: space-around;height: 50px;">
+                                                                 <div style="border-radius: 50px; ">
+                                                                        <i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px;
+                                                                        font-size: 35px;
+                                                                           line-height: 1.7em;"></i>
+                                                                    </div>
+                                                                    <div class="noti-text notiDiv">
+                                                                        <div style="display:flex;">
+                                                                            <a style="padding-left:unset; padding-right: unset;padding-top: 15px;">[</a><a href="http://tutorialzine.com/2012/10/css3-dropdown-menu/" style="padding-left:unset; padding-right: unset;padding-top: 15px;" id="myPost">차박장소 공유합니다아아아</a><a style="padding-left:unset; padding-right: unset;padding-top: 15px;">]</a>
+                                                                            <span style="padding-top: 15px;">글에</span>
+                                                                        </div>
+                                                                        <a style="padding: unset;">댓글<span id="replyCount">[3]</span>이 달렸습니다.</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="float: right;
+                                                                padding-right: 17px;
+                                                                color: gray;
+                                                                font-size: 5px;">
+                                                                    33분 전
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        
                                                         <li >
                                                             <div style="height:70px" class="notiDiv">
                                                                 <a style="padding:15px 15px 0px;" href="http://tutorialzine.com/2012/10/css3-dropdown-menu/">내가 등록한 차박정보가 승인되었습니다.</a>
@@ -256,8 +283,7 @@
                                                                     33분 전
                                                                 </div>
                                                             </div>
-                                                        </li>
-                                                        <li></li>
+
                                                     </ul>
                                                         
                                                     
@@ -304,7 +330,75 @@
         </div> <!--headerbar-->
     </header>
     <!-- Header Section End -->
-
+		<!-- 카카오 채널-->
+			<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+			  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+			<script>
+			  Kakao.init('1338885af6c93500e3dd5c130cf1ead7'); // 사용하려는 앱의 JavaScript 키 입력
+			</script>
+			
+			<div id="add-channel-button"></div>
+			
+			<script>
+			  Kakao.Channel.createAddChannelButton({
+			    container: '#add-channel-button',
+			    channelPublicId: '_XxacNb',
+			    size: "large"
+			  });
+			  
+			  
+			  $(function(){
+				  
+				  $.ajax({
+						url: "headerAlarmSelectList.me",
+						type: "POST",
+						data:  { cpage: cpage }, 
+						success: function(result) {
+				
+							console.log(result);
+							console.log("성공");
+							
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log("Error: " + textStatus + " " + errorThrown);
+						}
+						
+					});
+			  
+			  
+			  
+			</script>
+		<!-- 카카오 채널 실패~~~~ -->
+    
+	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결 : 소영       -->
+	<script type="text/javascript">
+		var socket = null;
+		$(document).ready(function(){
+			connectWS();
+			
+		});
+		function connectWS(){
+			console.log("ttttttttttt");
+		    socket = new WebSocket("ws://localhost:8282/carnping/alarm");
+		    console.log(WebSocket);
+		    socket.onopen = function() { //커넥션이 연결되었을 때 실행된다
+		        console.log("커넥션 연결됨");
+		    };
+		    socket.onmessage = function(event) { //메세지 받았을 때 실행됨
+		        console.log("Received message 돌아온 메세지 : " + event.data);
+		    
+		    };
+		    socket.onclose = function(event) {//클로즈 됐을 때 실행됨
+		        console.log("WebSocket connection closed: " + event.code + " (" + event.reason + ")");
+		    };
+		    socket.onerror = function(err){
+		    	console.log('Error:', err);
+		    };
+		}
+		
+	
+	</script>
+	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결  끝       -->
     	<c:if test="${ not empty alertMsg }">
 	<script>
 		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>

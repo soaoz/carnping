@@ -20,6 +20,9 @@
 	
 	.header{
     	background-color: #b3d9b1;
+
+    #report:hover{
+        text-decoration: underline;
     }
 </style>
 </head>
@@ -36,6 +39,7 @@
 	</header>
 	
 	
+    <input type="hidden" value="${ b.memNo}" id="memNo">
     
 
     <!-- Listing Details Section Begin -->
@@ -69,8 +73,16 @@
                             <div class="innerOuter">
                                 <h2>무료나눔</h2>
                                 <br>
-                                
                                 <a class="btn btn-secondary" style="float:right" href="freeBoard.bo">목록으로</a>
+                                <c:if test="${ not empty loginMember and (loginMember.memId ne b.memId)}">
+                                <a id="report" style="float: left;
+                                margin-right: 15px;
+                                font-size: 18px;
+                                color: #ff7070;
+                                line-height: 40px;
+                                cursor: pointer;" data-toggle="modal" data-target="#reportModal"><i class="fa-solid fa-land-mine-on" style="color: #ff7070; font-size: 20px;"></i>신고</a>
+                                </c:if>
+                                
                                 <br><br>
                                 <table id="contentArea" align="center" class="table" border="1" style="border-color: lightgray;">
                                     <tr>
@@ -79,7 +91,16 @@
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
-                                        <td>${ b.memId }</td>
+
+                                        <c:choose>
+	                                        <c:when test="${ not empty b.nickName }">
+	                                        	<td>${ b.nickName }</td>
+	                                       	</c:when>
+	                                       	<c:otherwise>
+	                                        	<td>${ b.memId }</td>
+	                                       	</c:otherwise>
+                                        </c:choose>
+
                                         <th>작성일</th>
                                         <td>${ b.createDate }</td>
                                     </tr>
@@ -106,7 +127,7 @@
                                 </div><br><br>
                                 
                                 <form id="postForm" action="" method="post">
-									<input type="hidden" name="bno" value="${ b.boardNo }"/>
+									<input type="hidden" name="bno" value="${ b.boardNo }" id="boardNo"/>
 									<input type="hidden" name="filePath" value="${ b.boardChangeImg1 }">
 				            	</form>
                                 
@@ -179,6 +200,11 @@
             			 $("#freeContent").val("");
             			 console.log("dddd");
             		 }
+            		 
+            		 
+            		 freeReplyNotification();// 댓글 등록이 성공하면 알람테이블에 담기
+            		 
+            		 
             	 },
             	 error:function(){
             		 console.log("댓글 작성용 ajax 통신 실패!");
@@ -195,48 +221,152 @@
     
     
 
+
+        
+        function selectFreeReplyList(){ // 해당 게시글에 딸린 댓글 조회리스트 조회용 ajax
+            $.ajax({
+                url : "freeReplyList.bo",
+                data : {bno:"${ b.boardNo }" },
+                success:function(list){
+                    console.log(list);
+                    let value = "<h4>댓글</h4>";
+                    for(let i in list){
+                        value += "<li>"
+                                    + "<div class='listing__details__comment__item'>"
+                                        + "<div class='listing__details__comment__item__pic'>"
+                                            + "<img src=" + list[i].memImgChange + ">"
+                                        + "</div>"
+                                        + "<div class='listing__details__comment__item__text'>"
+                                            + "<span>"+ list[i].createDate + "</span>"
+                                            + "<h5>" + list[i].memId + "</h5>"
+                                            + "<div>"
+                                                + "<p>" + list[i].commContent + "</p>"
+                                            + "</div>"
+                                        + "</div>"
+                                    + "</div>"
+                                + "</li>";
+                    }
+                    
+                    
+                    $("#freeComment").html(value);
+                    
+                    
+                    
+                }, 
+                error:function(){
+                    console.log("ajax 통신 실패!");
+                    
+                }
+            });
+            
+        }
     
-   	function selectFreeReplyList(){ // 해당 게시글에 딸린 댓글 조회리스트 조회용 ajax
-   		$.ajax({
-   			url : "freeReplyList.bo",
-   			data : {bno:"${ b.boardNo }" },
-   			success:function(list){
-   				console.log(list);
-   				let value = "<h4>댓글</h4>";
-   				for(let i in list){
-   					value += "<li>"
-   								+ "<div class='listing__details__comment__item'>"
-   									+ "<div class='listing__details__comment__item__pic'>"
-   										+ "<img src=" + list[i].memImgChange + ">"
-   									+ "</div>"
-   									+ "<div class='listing__details__comment__item__text'>"
-   										+ "<span>"+ list[i].createDate + "</span>"
-   										+ "<h5>" + list[i].memId + "</h5>"
-   										+ "<div>"
-   											+ "<p>" + list[i].commContent + "</p>"
-			   							+ "</div>"
-			   						+ "</div>"
-	   							+ "</div>"
-   							+ "</li>";
-   				}
-   				
-   				
-   				$("#freeComment").html(value);
-   				
-   				
-   				
-   			}, 
-   			error:function(){
-   				console.log("ajax 통신 실패!");
-   				
-   			}
-   		});
-   		
+
+   	
+   	/* 댓글달림 알람테이블에 insert */
+   	function freeReplyNotification(){
+   	
+   	    let memNo = $("#memNo").val(); //작성자아이디번호 
+   	  //  let boardNo = "${ b.boardNo }"  //글제목
+   	    
+   	   console.log("댓글알람 작성자 : " + memNo );
+   	    
+   		 $.ajax({
+   			
+   			 url: "insertFreeReplyAlarm.me",
+   	         type: "POST",
+   	         data: {
+   	        	
+   	        	 memNo: memNo,  // 알림 수신자 ID
+   	             userNo: '${loginMember.memNo}',   // 알림 발신자 ID
+   	             alaCategory: "fReply",        // 알림 유형 : 무료게시판 댓글
+   	             //cinfoName : cinfoName, //글제목 
+   	             refNo:"${ b.boardNo }",
+   	             //alaContent: cinfoName.substring(0, 10) +"..글에 좋아요가 눌렸습니다. "  // 알림 내용
+   	         
+   	         },
+   	         success: function(result) {
+   	             if (result>0) {
+   	             	console.log("좌여 알람 인서트성공 : " + result);
+   	             } else {
+   	             	console.log("인서트실패패패패패");
+   	                 
+   	             }
+   	         },
+   	         error: function(jqXHR, textStatus, errorThrown) {
+   	             console.log("Error: " + textStatus + " " + errorThrown);
+   	         }
+   		}); 
    	}
+   	 
+   		
+   		
+   		
+   	
    
     
     
+
     </script>
+
+    <div class="modal" id="reportModal" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title" style="font-size:20px; padding: 5px 10px;"> 게시글 신고 </h4>
+                <button type="button" id="modalClose" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <form action="report.bo" method="post" id="reportForm">
+                    <div class="modal-body">
+                        <div>
+                            <span id="modalEmail" style="padding-left: 5px;letter-spacing:unset; font-size:15px;"></span>
+                            <span style="color:gray; font-size:15px;">부적절한 게시물인가요? </span>
+                            <p style="font-size:15px; padding-left: 5px; color:gray">해당 게시글의 신고 사유를 적어주세요.</p>
+                            <hr>
+                        </div>
+                        <input type="hidden" name="memNo" value="${ b.memNo}">
+                        <input type="hidden" name="reporterMemNo" value="${ loginMember.memNo}">
+                        <input type="hidden" name="reportRefNo" value="${ b.boardNo}">
+
+                        <table style="width: 100%;">
+
+                            <tr width="100%">
+                                <td style="height:20px; padding-bottom:10px; color: #0ca678;">신고 사유 : </td>
+                            </tr>
+                            <tr width="100%">
+                                <td style="width:100%">
+                                    <textarea name="reportDetail" id="reportDetail" rows="10" style="resize: none;
+                                    width: 100%;
+                                    padding: 15px;
+                                    border-radius: 5px;
+                                    border-color: #0ca678;" placeholder="신고 사유를 입력하세요."></textarea>
+                                </td>
+                                
+                            </tr>
+                            
+                        </table>
+                    </div>
+                    
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" id="reportSubmit"style="background-color: #0ca678; border-color: #0ca678;" class="btn btn-danger" data-dismiss="modal">확인</button>
+                    </div>
+                </form>
+        
+
+                <script>
+                    $("#reportSubmit").click(() => {
+                        $("#reportForm").submit();
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>

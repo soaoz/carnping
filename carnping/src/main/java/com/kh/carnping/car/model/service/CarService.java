@@ -55,10 +55,10 @@ public interface CarService {
 	int reviewCheck(String memNo, String cinfoNo);
 	
 	// 차박 등록
-	int insertCar(Verify verify);
+	int insertCarRequest(Verify verify);
 	
 	// 차박 이미지 등록
-	int insertCarImg(VerifyImg verifyImg);
+	int insertCarImgRequest(VerifyImg verifyImg);
 	
 	// 요청 중복 체크
 	int checkRequest(String loginMember);

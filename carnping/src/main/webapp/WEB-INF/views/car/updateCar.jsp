@@ -162,7 +162,27 @@
 	<br>
 	<form action="updateCar.ca" method="post" enctype="multipart/form-data"
 		id="updateCar">
-		<input type="hidden" name="cinfoNo" value="${cinfo.cinfoNo }">
+		<input type="hidden" name="cinfoNo" value="${ cinfo.cinfoNo }">
+		<input type="hidden" value="${ cinfo.cinfoOgImg1 }" name="verifyOgImg1">
+		<input type="hidden" value="${ cinfo.cinfoImg1 }" name="verifyImg1">
+		<input type="hidden" value="${ cinfo.cinfoOgImg2 }" name="verifyOgImg2">
+		<input type="hidden" value="${ cinfo.cinfoImg2 }" name="verifyImg2">
+		<input type="hidden" value="${ cinfo.cinfoOgImg3 }" name="verifyOgImg3">
+		<input type="hidden" value="${ cinfo.cinfoImg3 }" name="verifyImg3">
+		<input type="hidden" value="${ cinfo.cinfoOgImg4 }" name="verifyOgImg4">
+		<input type="hidden" value="${ cinfo.cinfoImg4 }" name="verifyImg4">
+		<input type="hidden" value="${ cinfo.cinfoOgImg5 }" name="verifyOgImg5">
+		<input type="hidden" value="${ cinfo.cinfoImg5 }" name="verifyImg5">
+		<input type="hidden" value="${ cinfo.cinfoOgImg6 }" name="verifyOgImg6">
+		<input type="hidden" value="${ cinfo.cinfoImg6 }" name="verifyImg6">
+		<input type="hidden" value="${ cinfo.cinfoOgImg7 }" name="verifyOgImg7">
+		<input type="hidden" value="${ cinfo.cinfoImg7 }" name="verifyImg7">
+		<input type="hidden" value="${ cinfo.cinfoOgImg8 }" name="verifyOgImg8">
+		<input type="hidden" value="${ cinfo.cinfoImg8 }" name="verifyImg8">
+		<input type="hidden" value="${ cinfo.cinfoOgImg9 }" name="verifyOgImg9">
+		<input type="hidden" value="${ cinfo.cinfoImg9 }" name="verifyImg9">
+		<input type="hidden" value="${ cinfo.cinfoOgImg10 }" name="verifyOgImg10">
+		<input type="hidden" value="${ cinfo.cinfoImg10 }" name="verifyImg10">
 		<div class="box-in">
 
 			<div id="step1">
@@ -171,7 +191,7 @@
 				<div class="row">
 					<div class="col-sm-6 col-sm-offset-1">
 						<div align="center">
-							<img id="myFile1" class="avatar-img" src="${cinfo.cinfoImg1}"
+							<img id="myFile1" class="avatar-img" src="${ cinfo.cinfoImg1 }"
 								onclick="myChooseFile();" alt="이미지 로딩 중입니다..."
 								onerror="this.onerror=null; this.src='resources/img/click.png'"
 								style="border: 0.5px solid lightgray; width: 200px; height: 200px; cursor: pointer; display: flex; justify-content: center; align-items: center;">
@@ -196,12 +216,12 @@
 						<div class="form-group">
 							<label>내용</label>
 							<textarea name="verifyContent" type="text" class="form-control"
-								placeholder="추천하는 지역을 저희에게 소개해주세요!">${cinfo.cinfoContent }</textarea>
+								placeholder="추천하는 지역을 저희에게 소개해주세요!">${ cinfo.cinfoContent }</textarea>
 						</div>
 						<div class="form-group">
 							<label>주의사항</label>
 							<textarea name="verifyNotice" type="text" class="form-control"
-								placeholder="추천하는 지역은 이걸 주의해야해요!">${cinfo.cinfoNotice }</textarea>
+								placeholder="추천하는 지역은 이걸 주의해야해요!">${ cinfo.cinfoNotice }</textarea>
 						</div>
 						
 						<div class="form-group">
@@ -236,7 +256,7 @@
 										name="verifyAddress" value="${cinfo.cinfoAddress}" readonly><br>
 									<input type="button" class="btn primary-btn btn-md"
 										onclick="juso();" value="주소찾기"><br> <br> <input
-										type="hidden" name="verifyLttd" ${cinfo.cinfoLttd}> <input
+										type="hidden" name="verifyLttd" value="${cinfo.cinfoLttd}"> <input
 										type="hidden" name="verifyHrdns" value="${cinfo.cinfoHrdns}">
 
 								</div>
@@ -483,24 +503,25 @@
 						</table>
 
 						<input type="file" name="upfile" id="file2" style="display: none;"
-							onchange="loadImg(this,2);"> <input type="file"
+							onchange="loadImg(this,2);"  accept="image/*"> <input type="file"
 							name="upfile" id="file3" style="display: none;"
-							onchange="loadImg(this,3);"> <input type="file"
+							onchange="loadImg(this,3);" accept="image/*"> <input type="file"
 							name="upfile" id="file4" style="display: none;"
-							onchange="loadImg(this,4);"> <input type="file"
+							onchange="loadImg(this,4);" accept="image/*"> <input type="file"
 							name="upfile" id="file5" style="display: none;"
-							onchange="loadImg(this,5);"> <input type="file"
+							onchange="loadImg(this,5);" accept="image/*"> <input type="file"
 							name="upfile" id="file6" style="display: none;"
-							onchange="loadImg(this,6);"> <input type="file"
+							onchange="loadImg(this,6);" accept="image/*"> <input type="file"
 							name="upfile" id="file7" style="display: none;"
-							onchange="loadImg(this,7);"> <input type="file"
+							onchange="loadImg(this,7);" accept="image/*"> <input type="file"
 							name="upfile" id="file8" style="display: none;"
-							onchange="loadImg(this,8);"> <input type="file"
+							onchange="loadImg(this,8);" accept="image/*"> <input type="file"
 							name="upfile" id="file9" style="display: none;"
-							onchange="loadImg(this,9);"> <input type="file"
+							onchange="loadImg(this,9);" accept="image/*"> <input type="file"
 							name="upfile" id="file10" style="display: none;"
-							onchange="loadImg(this,10);"> <input type="hidden"
+							onchange="loadImg(this,10);" > <input type="hidden"
 							name="memNo" value="${ loginMember.memNo }">
+							
 					</div>
 				</div>
 			</div>
@@ -552,35 +573,34 @@
 $(function(){
 	console.log(${cinfo.cinfoImg6 == undefined})
 	<c:if test="${cinfo.cinfoImg1 != ''}">
-	$("#myFile1").attr("src", '${cinfo.cinfoImg1}');
+		$("#myFile1").attr("src", '${cinfo.cinfoImg1}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg2 != ''}">
-	$("#contentImg1").attr("src", '${cinfo.cinfoImg2}');
+		$("#contentImg1").attr("src", '${cinfo.cinfoImg2}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg3 != ''}">
-	$("#contentImg2").attr("src", '${cinfo.cinfoImg3}');
+		$("#contentImg2").attr("src", '${cinfo.cinfoImg3}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg4 != ''}">
-	$("#contentImg3").attr("src", '${cinfo.cinfoImg4}');
+		$("#contentImg3").attr("src", '${cinfo.cinfoImg4}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg5 != undefined}">
-	console.log("이게타?")
-	$("#contentImg4").attr("src", '${cinfo.cinfoImg5}');
+		$("#contentImg4").attr("src", '${cinfo.cinfoImg5}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg6 != undefined}">
-	$("#contentImg5").attr("src", '${cinfo.cinfoImg6}');
+		$("#contentImg5").attr("src", '${cinfo.cinfoImg6}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg7 != undefined}">
-	$("#contentImg6").attr("src", '${cinfo.cinfoImg7}');
+		$("#contentImg6").attr("src", '${cinfo.cinfoImg7}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg8 != undefined}">
-	$("#contentImg7").attr("src", '${cinfo.cinfoImg8}');
+		$("#contentImg7").attr("src", '${cinfo.cinfoImg8}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg9 != undefined}">
-	$("#contentImg8").attr("src", '${cinfo.cinfoImg9}');
+		$("#contentImg8").attr("src", '${cinfo.cinfoImg9}');
 	</c:if>
 	<c:if test="${cinfo.cinfoImg10 != undefined}">
-	$("#contentImg9").attr("src", '${cinfo.cinfoImg10}');
+		$("#contentImg9").attr("src", '${cinfo.cinfoImg10}');
 	</c:if>
 	let facilities = '${cinfo.cinfoFacilities}';
 	let day = '${cinfo.cinfoDays}';
@@ -962,7 +982,7 @@ $("#updateCar").on("submit", function() {
 	} else if ($verifyReason.val() === '') {
 	  alert('수정사항을 확인해주세요.');
 	  return false; // form submit 방지
-	} else if ($verifyAddress.val() === undefined ||$verifyAddress.val() === '' ) {
+	} else if ($verifyAddress.val() === undefined || $verifyAddress.val() === '' ) {
 	  alert('주소를 확인해주세요.');
 	  return false; // form submit 방지
 	} else if ($file1.attr('src') == undefined || $file1.attr('src') == '' || $file1.attr('src') == 'resources/img/click.png') {

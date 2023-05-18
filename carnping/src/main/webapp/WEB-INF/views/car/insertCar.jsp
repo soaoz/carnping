@@ -135,7 +135,6 @@
 	/* 폰트 크기를 0으로 설정하여 공백 제거 */
 	font-size: 0;
 }
-
 </style>
 </head>
 <body>
@@ -161,8 +160,8 @@
 		</ul>
 	</div>
 	<br>
-	<form action="insertCar.ca" method="post" 
-                    enctype="multipart/form-data" id="insertCar" >
+	<form action="insertCarRequest.ca" method="post"
+		enctype="multipart/form-data" id="insertCar">
 		<div class="box-in">
 
 			<div id="step1">
@@ -178,7 +177,7 @@
 
 							<input type="file" name="upfile" id="myFileInput"
 								style="display: none;" onchange="myLoadImg(this);"
-								accept="image/*"  />
+								accept="image/*" />
 						</div>
 						<div align="center" id="mainImg">
 
@@ -190,18 +189,22 @@
 
 						<div class="form-group">
 							<label>제목</label> <input name="verifyName" type="text"
-								class="form-control" placeholder="추천하신 지역의 재치있는 이름을 지어주세요!"
-								>
+								class="form-control" placeholder="추천하신 지역의 재치있는 이름을 지어주세요!">
 						</div>
 						<div class="form-group">
 							<label>내용</label>
 							<textarea name="verifyContent" type="text" class="form-control"
-								placeholder="추천하는 지역을 저희에게 소개해주세요!" ></textarea>
+								placeholder="추천하는 지역을 저희에게 소개해주세요!"></textarea>
 						</div>
 						<div class="form-group">
 							<label>주의사항</label>
 							<textarea name="verifyNotice" type="text" class="form-control"
-								placeholder="추천하는 지역은 이걸 주의해야해요!" ></textarea>
+								placeholder="추천하는 지역은 이걸 주의해야해요!"></textarea>
+						</div>
+						<div class="form-group">
+							<label>사유</label>
+							<textarea name="verifyReason" type="text" class="form-control"
+								placeholder="추천하는 지역은 이걸 주의해야해요!"></textarea>
 						</div>
 						<br>
 					</div>
@@ -229,10 +232,8 @@
 										id="address2" placeholder="주소찾기를 통해 주소를 입력받으세요!"
 										name="verifyAddress" readonly><br> <input
 										type="button" class="btn primary-btn btn-md" onclick="juso();"
-										value="주소찾기"><br> <br> 
-										<input
-										type="hidden" name="verifyLttd"> 
-										<input type="hidden"
+										value="주소찾기"><br> <br> <input type="hidden"
+										name="verifyLttd"> <input type="hidden"
 										name="verifyHrdns">
 
 								</div>
@@ -305,14 +306,14 @@
 						<div class="form-group">
 							<label> <input type="checkbox"
 								style="position: static; opacity: 1; width: 15px; height: 15px"
-								name="verifyFacilitie"  value="주차장"> 주차장
+								name="verifyFacilitie" value="주차장"> 주차장
 							</label>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<label> <input type="checkbox"
 							style="position: static; opacity: 1; width: 15px; height: 15px"
-							name="verifyFacilitie"  value="캠핑장"> 캠핑장
+							name="verifyFacilitie" value="캠핑장"> 캠핑장
 						</label>
 					</div>
 					<div class="col-sm-3">
@@ -334,7 +335,7 @@
 							<div class="checkbox">
 								<label> <input type="checkbox"
 									style="position: static; opacity: 1; width: 15px; height: 15px"
-									name="verifyDay" value="월요일"> 월요일
+									name="verifyDay" value="월"> 월요일
 								</label>
 							</div>
 						</div>
@@ -343,40 +344,40 @@
 						<div class="form-group">
 							<label> <input type="checkbox"
 								style="position: static; opacity: 1; width: 15px; height: 15px"
-								name="verifyDay" value="화요일"> 화요일
+								name="verifyDay" value="화"> 화요일
 							</label>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<label> <input type="checkbox"
 							style="position: static; opacity: 1; width: 15px; height: 15px"
-							name="verifyDay" value="수요일"> 수요일
+							name="verifyDay" value="수"> 수요일
 						</label>
 					</div>
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label> <input type="checkbox"
 								style="position: static; opacity: 1; width: 15px; height: 15px"
-								name="verifyDay" value="목요일"> 목요일
+								name="verifyDay" value="목"> 목요일
 							</label>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<label> <input type="checkbox"
 							style="position: static; opacity: 1; width: 15px; height: 15px"
-							name="verifyDay" value="금요일"> 금요일
+							name="verifyDay" value="금"> 금요일
 						</label>
 					</div>
 					<div class="col-sm-3">
 						<label> <input type="checkbox"
 							style="position: static; opacity: 1; width: 15px; height: 15px"
-							name="verifyDay" value="토요일"> 토요일
+							name="verifyDay" value="토"> 토요일
 						</label>
 					</div>
 					<div class="col-sm-3">
 						<label> <input type="checkbox"
 							style="position: static; opacity: 1; width: 15px; height: 15px"
-							name="verifyDay" value="일요일"> 일요일
+							name="verifyDay" value="일"> 일요일
 						</label>
 					</div>
 
@@ -479,33 +480,24 @@
 						</table>
 
 						<input type="file" name="upfile" id="file2" style="display: none;"
-							onchange="loadImg(this,2);" > 
-							<input type="file"
-							name="upfile" id="file3" style="display: none;"
-							onchange="loadImg(this,3);" > 
-							<input type="file"
-							name="upfile" id="file4" style="display: none;"
-							onchange="loadImg(this,4);" > 
-							<input type="file"
-							name="upfile" id="file5" style="display: none;"
-							onchange="loadImg(this,5);" > 
-							<input type="file"
-							name="upfile" id="file6" style="display: none;"
-							onchange="loadImg(this,6);"> 
-							<input type="file"
-							name="upfile" id="file7" style="display: none;"
-							onchange="loadImg(this,7);"> 
-							<input type="file"
-							name="upfile" id="file8" style="display: none;"
-							onchange="loadImg(this,8);"> 
-							<input type="file"
-							name="upfile" id="file9" style="display: none;"
-							onchange="loadImg(this,9);"> 
-							<input type="file"
-							name="upfile" id="file10" style="display: none;"
-							onchange="loadImg(this,10);"> 
-							<input type="hidden"
-							name="memNo" value="${ loginMember.memNo }">
+							onchange="loadImg(this,2);" accept="image/*"> <input
+							type="file" name="upfile" id="file3" style="display: none;"
+							onchange="loadImg(this,3);" accept="image/*"> <input
+							type="file" name="upfile" id="file4" style="display: none;"
+							onchange="loadImg(this,4);" accept="image/*"> <input
+							type="file" name="upfile" id="file5" style="display: none;"
+							onchange="loadImg(this,5);" accept="image/*"> <input
+							type="file" name="upfile" id="file6" style="display: none;"
+							onchange="loadImg(this,6);" accept="image/*"> <input
+							type="file" name="upfile" id="file7" style="display: none;"
+							onchange="loadImg(this,7);" accept="image/*"> <input
+							type="file" name="upfile" id="file8" style="display: none;"
+							onchange="loadImg(this,8);" accept="image/*"> <input
+							type="file" name="upfile" id="file9" style="display: none;"
+							onchange="loadImg(this,9);" accept="image/*"> <input
+							type="file" name="upfile" id="file10" style="display: none;"
+							onchange="loadImg(this,10);" accept="image/*"> <input
+							type="hidden" name="memNo" value="${ loginMember.memNo }">
 					</div>
 				</div>
 			</div>
@@ -522,7 +514,7 @@
 							<div class="checkbox">
 								<label> <input type="checkbox"
 									style="position: static; opacity: 1; width: 15px; height: 15px"
-									 id="submitCheck" /><strong> 게시글을 제출하시겠습니까?</strong>
+									id="submitCheck" /><strong> 게시글을 제출하시겠습니까?</strong>
 								</label>
 							</div>
 						</div>
@@ -538,7 +530,7 @@
 			</div>
 			<div class="btn-div" align="right">
 				<button type="button" id="progress-next" class="btn">다음</button>
-				<button type="submit" id="progress-submit" class="btn" 
+				<button type="submit" id="progress-submit" class="btn"
 					style="display: none" disabled>제출</button>
 			</div>
 		</div>
@@ -848,6 +840,7 @@ $("#insertCar").on("submit", function() {
   const $verifyContent = $("textarea[name=verifyContent]");
   const $verifyNotice = $("textarea[name=verifyNotice]");
   const $verifyAddress = $("input[name=verifyAddress]");
+  const $verifyReason = $("input[name=verifyReason]");
   const $file1 = $("#myFile1");
   const $file2 = $("#contentImg1");
   const $file3 = $("#contentImg2");
@@ -862,6 +855,9 @@ $("#insertCar").on("submit", function() {
 	  return false; // form submit 방지
 	} else if ($verifyNotice.val() === '') {
 	  alert('유의사항을 확인해주세요.');
+	  return false; // form submit 방지
+	} else if ($verifyReason.val() === '') {
+	  alert('사유를 확인해주세요.');
 	  return false; // form submit 방지
 	} else if ($verifyAddress.val() === undefined ||$verifyAddress.val() === '' ) {
 	  alert('주소를 확인해주세요.');

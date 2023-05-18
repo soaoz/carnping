@@ -49,6 +49,7 @@
 		<result column="MEM_IMG_ORIGIN" property="memImgOrigin"/>
 		<result column="MEM_IMG_CHANGE" property="memImgChange"/>
 		<result column="STATUS" property="status"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
 	</resultMap>
 	
 	
@@ -103,7 +104,9 @@
 		       board_origin_img3,
 		       board_origin_img4,
 		       board_title,
+		       mem_no,
 		       mem_id,
+		       nickname,
 		       to_char(create_date, 'YYYY-MM-DD') as "create_date",
 		       location,
 		       board_content
@@ -500,35 +503,69 @@
 	<select id="selectMyCommentListCount" resultType="_int">
   	  SELECT
   	  		 COUNT(*)
-  	  	FROM REVIEW_COMMENT
-  	   WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId})
+  	  	FROM board_reply
+  	   WHERE MEM_NO =  #{memNo}
   	     AND STATUS = 'Y'
 	</select>
 	
 	
 	<!-- 소영 : 내가쓴 댓글목록 조회 -->
-	<select id="selectMyCommentList" resultMap="commentResultMap">
-		SELECT
-			  RE_NO
-			, REF_NO
-			, R.MEM_NO
-			, to_char(R.create_date, 'YY.MM.DD HH:mm:ss') as "CREATE_DATE"
-			, COMM_CONTENT
-			, BOARD_TITLE
-	     FROM REVIEW_COMMENT R
-		 JOIN FBOARD ON (REF_NO=BOARD_NO)
-		WHERE R.MEM_NO = (SELECT M.MEM_NO FROM MEMBER M WHERE MEM_ID = #{memId})
-		  AND R.STATUS = 'Y'
-		ORDER BY RE_NO DESC
+	<select id="selectMyCommentList" resultMap="boardReplyResultMap">
+        select
+			   bre_no
+			 , r.board_no
+			 , to_char(r.create_date, 'YY.MM.DD HH:mm:ss') as "create_date"
+			 , comm_content
+			 , r.mem_no
+             , board_title
+		  from board_reply r
+		  JOIN FBOARD F ON( F.board_no =R.BOARD_NO)
+	      WHERE r.status = 'Y'
+          and r.mem_no = #{memNo}
+	     order
+	        by r.create_date desc
 	</select>
 	
 	<!-- 소영: 내가쓴 댓글 삭제 -->
 	<update id="deleteComment">
-		update REVIEW_COMMENT
+		update board_reply
 		   set status = 'N'
-		 where RE_NO = #{reNo}
+		 where bre_no = #{reNo}
 	</update>
 	
+
+	<insert id="insertReport">
+			insert
+ 		  into report
+		     (
+		       REPORT_NO,
+		       MEM_NO,
+		       REPORT_REFNO,
+		       REPORT_DATE,
+		       REPORT_DETAIL,
+		       REPORTER_MEM_NO
+		     )
+		values
+		     (
+		       'RPT'||seq_rpt_no.nextval,
+		       #{memNo},
+		       #{reportRefNo},
+		       default,
+		       #{reportDetail},
+		       #{reporterMemNo}
+		     ) 
+	</insert>
+
+	<!-- 소영: 내가 댓글단거 게시글 제목 -->
+	<select id="selectBoardTitle" resultMap="boardResultMap">
+		select
+		       board_no,			  
+		       board_title
+		  from fboard 
+         where status = 'Y' and board_no = #{boardNo}
+         
+	</select>
 	
+
 	
 </mapper>

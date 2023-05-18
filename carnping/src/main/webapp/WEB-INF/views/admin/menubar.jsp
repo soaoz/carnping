@@ -13,10 +13,27 @@
 <link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/fontawesome.min.css"type="text/css">
 <link rel="stylesheet" href="resources/admin/assets/plugins/fontawesome/css/all.min.css"type="text/css">
 <link rel="stylesheet" href="resources/admin/assets/css/style.css" type="text/css">
-
+    <script type="text/javascript">
+    	window.addEventListener( "pageshow", function ( event ) {
+    	  var historyTraversal = event.persisted || 
+    	                         ( typeof window.performance != "undefined" && 
+    	                              window.performance.navigation.type === 2 );
+    	  if ( historyTraversal ) {
+    	    // Handle page restore.
+    	    window.location.reload();
+    	  }
+    	});
+    </script>
 </head>
 
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
+<c:if test="${ loginMember == null }">
+<script type="text/javascript">
+	alert("로그인 세션이 만료되었습니다. 로그인 페이지로 이동합니다.");
+	location.href = "loginForm.me";
+</script>
+</c:if>
+
 <c:if test="${ not empty alertMsg }">
 	<script>
 		alert("${ alertMsg }"); <%-- session 영역은 계속 저장되어있기 때문에 사용 후 꼭 제거해줘야 한다.--%>
@@ -152,8 +169,6 @@
                 </div>
             </div>
         </li>
-
-
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
@@ -164,7 +179,6 @@
                     <c:when test="${ not empty loginMember.nickName }"><span>${ loginMember.nickName }</span></c:when>
                     <c:otherwise><span>${ loginMember.memId }</span></c:otherwise>
                 </c:choose>
-
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="login.html"><i data-feather="log-out" class="me-1"></i>
@@ -194,7 +208,7 @@
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="carList.ad">차박게시글</a></li>
-                        <li><a href="verity.ad">차박게시글 검수</a></li>
+                        <li><a href="verify.ad">차박게시글 검수</a></li>
                         <li><a href="#">채팅관리</a></li>
                     </ul>
                 </li>
@@ -204,8 +218,6 @@
                 <li>
                     <a href="inquiryList.ad"><i data-feather="credit-card"></i> <span>Q&A관리</span></a>
                 </li>
-                
-                
             </ul>
         </div>
     </div>

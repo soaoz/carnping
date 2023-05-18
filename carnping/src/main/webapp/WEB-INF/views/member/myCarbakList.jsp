@@ -188,6 +188,37 @@
 		.space{
 			height : 200px;
 		}
+				/* 좌여css 시작  */
+		.listing__item__pic__btns a {
+		    font-size: 17px !important;
+		    color: #ffffff;
+		    height: 34px;
+		    width: 34px;
+		    background: rgba(255, 255, 255, 0.2);
+		    border-radius: 50%;
+		    line-height: 34px;
+		    text-align: center;
+		    display: inline-block;
+		    margin-right: 6px;
+		    padding-right : 0px !important;
+		    
+		}
+		.like-button i {
+			padding-right: 0px !important;
+			padding-top : 8px !important;
+		}
+		
+		.fa-regular.fa-heart {
+		  color: #fff;
+		}
+		
+		.fa-solid.fa-heart {
+		  color: red;
+		}
+		.listing {
+			overflow: hidden;
+		}
+		/* 좌여css 끝   */
 </style>
 </head>
 <body>
@@ -195,7 +226,15 @@
 <jsp:include page="../common/header.jsp"/>
 <jsp:include page="../common/menubar.jsp"/>
 
+    <script>
 
+    $(document).ready(function() {
+    	  $('.like-button').click(function(e) {
+    	    e.preventDefault();
+    	    $(this).find('i.fa-regular').toggleClass('fa-solid');
+    	  });
+    	}); 
+    </script>
 <div class="myPage-header-area">
 <!--     헤더 빈공간  -->
 </div>
@@ -256,35 +295,97 @@
                     <div class="properties-area recent-property" style="background-color: #FFF;">
                         <div class="container"> 
                             
+                            
+                        <c:if test="${empty list }">
+                                <h4> 작성한 글이 없습니다. <br><br> <a href="carList.ca" style="color : #b3d9b1;"> </a></h4>
+                         </c:if>
+                                    
+                         <c:choose>  
+                         <c:when test="${ not empty list }">
                             <div class="checkbox" id="checkbox1">
                                 <input type="checkbox" name="check2" id="check2" value="2" class="checkbox2">
                                 <label for="check2">전체 선택</label>
                                 <a href="" class="btn-sm btn-primary me-2 float-right" id="delbtn" onClick = "deleteMyCar();"> 삭제하기 </a>
                             </div>
+
                             <div class="row">
                                     <!-- Listing Section Begin -->  
                                 <section class="listing nice-scroll hover">
                                     <div class="listing__list">
                                     
+      
                                     
-                                    
-                                      <c:choose>
-								            <c:when test="${ not empty list }">
-								                <c:forEach var="list" items="${ list }" varStatus="status">
+								           
+								               <c:forEach var="list" items="${ list }" varStatus="status">
                                         <div class="listing__item">
                                             <div class="listing__item__pic set-bg" style="cursor:pointer; background-image : url(${ list.cinfoImg1 }); background-size : cover;">
                                                 <img src="resources/img/carList/icon/ocean.png" alt="">
 	
                                                 <div class="checkbox innercheckbox">
-                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }">
+                                                	<input type="hidden" name="post-id" value="${ list.cinfoNo }" id="cinfoNo">
                                                     <input type="checkbox" name="check2" value="${status.count}" class="check-item checkbox2" id="check-item${status.count}">
                                                     <label for="check-item${status.count}" ></label>
                                                 </div>
-                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
-                                                <div class="listing__item__pic__btns">
-                                                    <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                                                    <a href="#"><span class="icon_heart_alt"></span></a>
-                                                </div>
+                                                
+                                                <!--  -->
+			                                                <!-- <div class="listing__item__pic__tag">Popular</div> -->
+			                                              
+			                                                <div class="listing__item__pic__btns">
+			                                                   <!--  <a href="#"><span class="icon_zoom-in_alt"></span></a> -->
+			                                                      <script>
+			                                                      $(document).ready(function() {
+			                                                    	  
+			                                                      
+																	    selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
+																	    function selectLike(cinfoNo, id){
+																			 //var cinfoNo = $('input[name="post-id"]').val();  //글번호
+																			 //var cinfoNo = document.getElementById('postId').val();
+																			 var cinfoNo = cinfoNo;
+																			 //var likeId = $(this).find('i.fa-regular.fa-heart'); //좋아요버튼 아이디 값
+																			 var id  = id;
+																			 
+																			 console.log("좋아요조회 함수 실행함")
+																			 console.log(cinfoNo);
+																			 console.log(id);
+																			 $.ajax({
+																				 url : "selectLike.me",
+																				 type : "post",
+																				 data : {"cinfoNo": cinfoNo},
+																				 success : function(result){
+																					 console.log("성공  : " + result)
+																					
+																				  if(result>0){
+	
+																				   	 console.log("성공 " + id);
+																				   	 $(id).addClass('fa-solid');
+																				   
+																				  }else{
+																					 
+	
+																				  }
+																					 
+																				 },
+																			     error: function(xhr, status, error) {
+																				        // 삭제 실패시 처리할 로직
+																			        alert("삭제 실패: " + error);
+																			        console.error(error); 
+																			      }
+																			 });
+																		 
+																		}
+																	
+			                                                      });
+																    </script>
+																    <script type="text/javascript">
+																	$(document).on('click', '.like-button', function(e) {
+																	    e.preventDefault();
+																	    $(this).find('i.fa-solid').toggleClass('fa-regular');
+																	});
+																	</script>
+			                                                   <%-- <a href="#" class="like-button" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></a> --%>
+			                                                   <a href="#"><span class="like-button" class="" onClick="like('${ list.cinfoNo }' , '#like${ list.cinfoNo }');"><i class="fa-regular fa-heart" id="like${ list.cinfoNo }"></i></span></a> 
+			                                                </div>
+                                                <!--  -->
                                             </div>
                                             <div class="listing__item__text">
                                                 <div class="listing__item__text__inside">
@@ -365,6 +466,16 @@
     </div><!-- content-area user-profiel -->
 <div class="space"></div>
 <script>
+
+
+
+
+
+
+
+
+
+
 //'전체 선택' 체크박스를 클릭하면 다른 체크박스들도 선택되게 하는 함수
 const selectAllCheckbox = document.getElementById('check2');
 const otherCheckboxes = document.querySelectorAll('.check-item');
@@ -402,7 +513,7 @@ function deleteMyCar(){
 	  }
 
 	  if (confirm("선택된 글을 삭제하시겠습니까?")) {
-		  //console.log("탄다ㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
+		  console.log(cinfoNoArr);
 		  
 	    $.ajax({
 	      type: "POST",
@@ -421,6 +532,89 @@ function deleteMyCar(){
 	    });
 	  }
 }
+
+
+
+
+/*  좋아요 스크립트 시작  */
+ 
+ 
+ 
+
+
+function like(cinfoNo , id){
+	//클래스가 뭐면 insert 
+	console.log("글번호 : "+cinfoNo+ " 아이디 : " + id);
+	
+	if ($(id).hasClass('fa-solid')) {
+	    // fa-regular 클래스가 있을 때
+	    console.log("하트가 빨간색일떄 클릭함 -> delete해야함 ")
+	    
+	    //좋아요 삭제
+        $.ajax({
+            url: "deleteLike.me",
+            type: "POST",
+            data: { "cinfoNo": cinfoNo },
+            success: function(result) {
+                if (result>0) {
+                	console.log("좋아요삭제완료");
+                	/* deletedCount = result;
+                    alert(deletedCount + "개의 게시물이 삭제되었습니다.");
+                    myPostList();  */
+                } else {
+                	console.log("좋아요삭제 실패패패패패");
+                    /* alert("삭제에 실패하였습니다."); */
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + textStatus + " " + errorThrown);
+            }
+
+        });
+	    
+	    
+	    
+	} else {
+	    // fa-regular 클래스가 없을 때
+	    console.log("하트가 흰색일떄 클릭함 -> insert해야함 ")
+	    
+	    //좋아요 INSERT
+        $.ajax({
+            url: "insertLike.me",
+            type: "POST",
+            data: { "cinfoNo": cinfoNo },
+            success: function(result) {
+                if (result>0) {
+                	console.log("좋아요인서트완료");
+                	/* deletedCount = result;
+                    alert(deletedCount + "개의 게시물이 삭제되었습니다.");
+                    myPostList();  */
+                } else {
+                	console.log("좋아요인서트실패패패패패");
+                    /* alert("삭제에 실패하였습니다."); */
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + textStatus + " " + errorThrown);
+            }
+
+        });
+		
+	}
+
+}
+ 
+ 
+ /* 좌여 스크립트 끝  */
+ 
+ 
+ $(function(){
+	$('.listing__item').on('click', function(){
+		console.log($(this).find('#cinfoNo').val());
+		location.href='detail.ca?cinfoNo=' +$(this).find('#cinfoNo').val();
+	})
+
+});
 </script>
  <%-- <jsp:include page="../common/footer.jsp"/> --%>
 <%--      <jsp:include page="../common/footer.jsp"/>	 --%>

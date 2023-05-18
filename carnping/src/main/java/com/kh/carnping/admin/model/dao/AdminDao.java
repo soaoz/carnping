@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
 import com.kh.carnping.member.model.vo.Report;
@@ -61,6 +62,17 @@ public class AdminDao {
 
 	public Verify selectVerify(SqlSessionTemplate sqlSession, String verifyNo) {
 		return sqlSession.selectOne("carMapper.selectVerify", verifyNo);
+	}
+
+	public int insertCar(SqlSessionTemplate sqlSession, Cinfo cinfo) {
+		System.out.println(cinfo);
+		int result1 = sqlSession.insert("carMapper.insertCar", cinfo);
+		int result2 = sqlSession.insert("carMapper.insertCarImg", cinfo);
+		return result1 * result2;
+	}
+
+	public int insertCarResponse(SqlSessionTemplate sqlSession,String verifyNo) {
+		return sqlSession.update("carMapper.insertCarResponse", verifyNo);
 	}
 
 }	

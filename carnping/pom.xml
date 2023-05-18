@@ -335,6 +335,31 @@
 			    <version>v1-rev537-1.25.0</version>
 			</dependency>
 		
+		
+		<!-- 소영 : 알림통신을 위한 웹소켓라이브러리 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- 소영 : https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- 소영 : sms인증  -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.13</version>
+		</dependency>
+
+		
+		
 	</dependencies>
     <build>
         <plugins>

@@ -95,12 +95,12 @@ public class AdminController {
 	/**
 	 * 차박게시글 검수 관리로 이동
 	 */
-	@RequestMapping("verity.ad")
+	@RequestMapping("verify.ad")
 	public String verifyList(Model model) {
 		ArrayList<Verify> list = aService.verifyList();
-		System.out.println(list);
+		System.out.println("이게리스트"+list);
 		model.addAttribute("list", list);
-		return "admin/verity";
+		return "admin/verify";
 	}
 	
 	/**
@@ -132,9 +132,22 @@ public class AdminController {
 	public String carDetail() {
 		return "admin/carDetail";
 	}
-	
-	
 
+	// 차박게시글 등록
+	@RequestMapping("insertCar.ad")
+	public String insertCar(Cinfo cinfo, String verifyNo,  Model model, HttpSession session) {
+
+		int result1 = aService.insertCar(cinfo);
+		int result2 = aService.insertCarResponse(verifyNo);
+
+		if(result1 * result2 > 0) {
+			session.setAttribute("alertMsg", "차박 게시글 등록이 성공적으로 완료되었습니다.");
+		}
+		return "redirect:/verify.ad";
+	}
+	
+	
+	
 	
 	
 	/**
@@ -152,10 +165,11 @@ public class AdminController {
 	 */
 	@RequestMapping("updateVerify.ad")
 	public String updateVerity(String verifyNo, Model model) {
+		
 		Verify verify = aService.selectVerify(verifyNo);
 		Cinfo cinfo = cService.selectDetail(verify.getCinfoNo());
-		
-		System.out.println("탐?");
+		System.out.println(cinfo);
+		System.out.println(verify);
 		model.addAttribute("cinfo", cinfo);
 		model.addAttribute("verify", verify);
 		
