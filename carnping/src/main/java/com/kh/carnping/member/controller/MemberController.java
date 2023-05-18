@@ -960,6 +960,53 @@ public class MemberController {
 	}
 	
 	
+	//헤더 내 알람 리스트 조회 
+	@RequestMapping(value = "headerAlarmSelectList.me", produces = "application/json; charset=utf-8")
+	public Map<String, Object> headerAlarmSelectList( Model model, HttpSession session) {
+		
+		System.out.println("헤더 알람리스트ㅗ회 컨트롤러 탄다 ");
+		//이미 동일한게 몇개있는지 
+		int currentPage = 1;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		String memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		int listCount = mService.selectMyAlarmListCount(memNo);  // 내 알람 총갯수
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		//ArrayList<Board> list = mService.selectMyBoardList(pi, memId);
+		ArrayList<Alarm> list = mService.selectMyAlarmList(pi, memNo);
+		
+		int listcount = pi.getListCount();		//현재 총 게시글 개수 저장
+		int page = pi.getCurrentPage(); 	// 현재페이지
+		int pageLimit = pi.getPageLimit();		// 페이징바의 페이지 최대개수  (1~10)(11~20) ->  10개 
+		int boardLimit = pi.getBoardLimit(); //보여질 보드게시글갯수
+		int maxPage = pi.getMaxPage(); // 가장 마지막페이지 (총페이지) 전체게시글의 가장 끝
+		int startPage = pi.getStartPage(); //페이징바의 시작수  4번선택시 1, 12번시 11
+		int endPage = pi.getEndPage(); // 페이징바의 끝수 4번선택시10, 12선택시 20
+		
+		//System.out.println("대댇ㄱ그글"+listcount +" , "+ page +" , "+ pageLimit +" , "+ boardLimit +" , "+  maxPage+" , "+ startPage+" , "+ endPage);
+		System.out.println("알람 컨트롤러에서 조회하고 난 후 리스트값: " + list);
+		//sSystem.out.println(list);
+		System.out.println("알람 컨트롤러에서 조회하고 난 후 리스트값: " + list);
+		//sSystem.out.println(list);
+		result.put("list", list);
+		result.put("listcount", listcount);
+		result.put("page", page);
+		result.put("pageLimit", pageLimit);
+		result.put("boardLimit", boardLimit);
+		result.put("maxPage", maxPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		
+		
+		  model.addAttribute("result", result);
+		  
+		  
+		return result;
+	}
+	
+	
 	//마이페이지 내알람 리스트 조회
 	@ResponseBody
 	@RequestMapping(value = "myAlarmSelectList.me", produces = "application/json; charset=utf-8")

@@ -409,7 +409,7 @@
 									html += "<td><input type='checkbox' class='ckbox'></td>";
 									html += "<td>"+result.list[i].boardNo+"</td>";
 									if (result.list[i].boardNo.startsWith('BRD')) {
-										html += "<td>[자유게시판]</td>";
+										html += "<td>[무료나눔]</td>";
 									} else if (result.list[i].boardNo.startsWith('PRT')) {
 										html += "<td>[소모임]</td>";
 									}  else {
