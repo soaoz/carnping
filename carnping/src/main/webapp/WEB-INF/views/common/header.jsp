@@ -173,7 +173,16 @@
                 bottom : 40px;
             }
         }
-    </style>
+
+
+       .scrollable-list1 {
+		    max-height: auto; 
+		    overflow-y: auto; 
+	    }
+		    
+		    
+
+		    </style>
 </head>
 <!--letter-spacing: 0.1em;-->
     <!-- Page Preloder -->
@@ -215,81 +224,30 @@
                                     
                                     
                                     <nav id="colorNav">
+                                    
+                                  
+
+                                    
+                                    
                                         <ul>
-                                            <li>
-                                                <div style="padding-top: 10px; padding-left: 10px; padding-right: 20px;">
-                                                    <a href="#" class="notification">
-                                                        <span><i class="fa-solid fa-bell" style="color: #ffffff; font-size: 25px;"></i></span>
+                                            <li onClick="alarmScroll();">
+                                                <div style="padding-top: 10px; padding-left: 10px; padding-right: 20px;" >
+                                                    <a href="#" class="notification" >
+                                                        <span><i class="fa-solid fa-bell" style="color: #ffffff; font-size: 25px;" ></i></span>
                                                         <span class="badge">2</span>
                                                     </a>
-                                                    <ul style="left: 28%;">
-                                                        <li>
-                                                            <div style="height:70px;">
-                                                                <div style="display:flex;justify-content: space-around;height: 50px;">
-                                                                 <div style="border-radius: 50px; ">
-                                                                        <i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px;
-                                                                        font-size: 35px;
-                                                                           line-height: 1.7em;"></i>
-                                                                    </div>
-                                                                    <div class="noti-text notiDiv">
-                                                                        <div style="display:flex;">
-                                                                            <a style="padding-left:unset; padding-right: unset;padding-top: 15px;">[</a><a href="http://tutorialzine.com/2012/10/css3-dropdown-menu/" style="padding-left:unset; padding-right: unset;padding-top: 15px;" id="myPost">차박장소 공유합니다아아아</a><a style="padding-left:unset; padding-right: unset;padding-top: 15px;">]</a>
-                                                                            <span style="padding-top: 15px;">글에</span>
-                                                                        </div>
-                                                                        <a style="padding: unset;">댓글<span id="replyCount">[3]</span>이 달렸습니다.</a>
-                                                                    </div>
-                                                                </div>
-                                                                <div style="float: right;
-                                                                padding-right: 17px;
-                                                                color: gray;
-                                                                font-size: 5px;">
-                                                                    33분 전
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                       <li>
-                                                            <div style="height:70px;">
-                                                                <div style="display:flex;justify-content: space-around;height: 50px;">
-                                                                 <div style="border-radius: 50px; ">
-                                                                        <i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px;
-                                                                        font-size: 35px;
-                                                                           line-height: 1.7em;"></i>
-                                                                    </div>
-                                                                    <div class="noti-text notiDiv">
-                                                                        <div style="display:flex;">
-                                                                            <a style="padding-left:unset; padding-right: unset;padding-top: 15px;">[</a><a href="http://tutorialzine.com/2012/10/css3-dropdown-menu/" style="padding-left:unset; padding-right: unset;padding-top: 15px;" id="myPost">차박장소 공유합니다아아아</a><a style="padding-left:unset; padding-right: unset;padding-top: 15px;">]</a>
-                                                                            <span style="padding-top: 15px;">글에</span>
-                                                                        </div>
-                                                                        <a style="padding: unset;">댓글<span id="replyCount">[3]</span>이 달렸습니다.</a>
-                                                                    </div>
-                                                                </div>
-                                                                <div style="float: right;
-                                                                padding-right: 17px;
-                                                                color: gray;
-                                                                font-size: 5px;">
-                                                                    33분 전
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                        
-                                                        <li >
-                                                            <div style="height:70px" class="notiDiv">
-                                                                <a style="padding:15px 15px 0px;" href="http://tutorialzine.com/2012/10/css3-dropdown-menu/">내가 등록한 차박정보가 승인되었습니다.</a>
-                                                                <div style="float: right;
-                                                                padding-right: 17px;
-                                                                color: gray;
-                                                                font-size: 5px;">
-                                                                    33분 전
-                                                                </div>
-                                                            </div>
-
-                                                    </ul>
-                                                        
+                                                    
+                                                    
+                                                    	
+		                                                    <ul style="left: 28%; overflow: auto;" id="ulArea"  class="scrollable-list1">
+		
+		
+		                                                    </ul>
+	                                                  
                                                     
                                                 </div>
                                             </li>
+                                            
                                             <li style="margin-left: 15px;">
                                                 <a href="#" class="nickname" style="padding: 3px 0px; display:flex;" >
                                                     <c:choose>
@@ -318,6 +276,10 @@
 
                                             
                                         </ul>
+                                        
+                                        
+                                        
+                                        
                                     </nav>
                                 </div>
                                 </c:otherwise>
@@ -336,6 +298,30 @@
 <c:set var="loginMember" value="${loginMember}" />
 
 <script>
+/* $('#ulArea').html(notification);
+
+//Add the following code after updating the ulArea content
+var ulArea = document.getElementById('ulArea');
+ulArea.style.overflowY = 'scroll';
+ */
+//리뷰 댓글 클릭시 댓글 리스트 생성 이벤트 발생
+/* function alarmScroll(){
+	console.log("commentScroll 타나?")
+	
+	
+	if(("#scrollable-list").css("display") == "none"){
+		 console.log("등록하고 타는지 확인해보자")
+		 $this.slideDown(); 
+		 $('.ul_reply3').not($this).css("display", "none");
+		 count++;
+	}else{ // 보이는 상태
+		 $this.slideUp(); 
+		 count--;
+	}
+} */
+
+
+
   var loginMember = '<c:out value="${loginMember}" />';
   
   console.log(loginMember);
@@ -346,17 +332,64 @@
       console.log("실행됨zzzz");
       
       $.ajax({
-        url: "headerAlarmSelectList.me",
-        type: "POST",
-        data: {},
-        success: function(result) {
-          console.log(result);
-          console.log("성공");
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.log("Error: " + textStatus + " " + errorThrown);
-        }
-      });
+    	  url: "headerAlarmSelectList.me",
+    	  type: "POST",
+    	  data: {},
+    	  success: function(result) {
+    	    console.log(result);
+    	    console.log("성공");
+    	    console.log(result.list);
+    	    console.log(result.list.length);
+
+    	    if (result.list.length === 0) {
+    	      var emptyNotification = '<li>' +
+    	        '<div style="height:70px;">' +
+    	        '<div style="display:flex;justify-content: space-around;height: 50px;">' +
+    	        '<div style="border-radius: 50px;">' +
+    	        '<i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px; font-size: 35px; line-height: 1.7em;"></i>' +
+    	        '</div>' +
+    	        '<div class="noti-text notiDiv">' +
+    	        '<div style="display:flex;">' +
+    	        '<br>' +
+    	        '<a style="padding: unset; padding-top: 20px;">알림이 없습니다.</a>' +
+    	        '</div>' +
+    	        '</div>' +
+    	        '</div>' +
+    	        '</div>' +
+    	        '</li>';
+
+    	      // Add the empty notification to the ulArea
+    	      $('#ulArea').html(emptyNotification);
+    	    } else {
+    	      var notification = '';
+    	      for (let i in result.list) {
+    	        notification += '<li>' +
+    	          '<div style="height:70px;">' +
+    	          '<div style="display:flex;justify-content: space-around;height: 50px;">' +
+    	          '<div style="border-radius: 50px;">' +
+    	          '<i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px; font-size: 35px; line-height: 1.7em;"></i>' +
+    	          '</div>' +
+    	          '<div class="noti-text notiDiv">' +
+    	          '<div style="display:flex; ">' +
+    	          '<a style="padding: unset; padding-top: 20px; ">' + result.list[i].alaContent + '</a>' +
+    	          '</div>' +
+    	          '</div>' +
+    	          '</div>' +
+    	          '<div style="float: right; padding-right: 17px; color: gray; font-size: 5px;">' +
+    	          '33분 전' +
+    	          '</div>' +
+    	          '</div>' +
+    	          '</li>';
+    	      }
+    	      // Add the notification to the ulArea
+    	      $('#ulArea').html(notification);
+    	    }
+
+    	  },
+    	  error: function(jqXHR, textStatus, errorThrown) {
+    	    console.log("Error: " + textStatus + " " + errorThrown);
+    	  }
+    	});
     }
   });
 </script>

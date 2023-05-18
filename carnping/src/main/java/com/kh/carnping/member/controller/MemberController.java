@@ -44,7 +44,6 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.Gson;
 import com.kh.carnping.board.model.vo.Board;
 import com.kh.carnping.board.model.vo.BoardReply;
-import com.kh.carnping.board.model.vo.Comment;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.common.model.vo.PageInfo;
 import com.kh.carnping.common.template.Pagination;
