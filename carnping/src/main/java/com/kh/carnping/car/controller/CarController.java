@@ -88,6 +88,10 @@ public class CarController {
 		String[] week = { "월", "화", "수", "목", "금", "토", "일" };
 		String[] facilities = { "화장실", "편의점", "카페", "마트", "음식점", "주차장", "캠핑장", "병원" };
 		String[] tags = { "강", "공원", "노지", "바다", "산", "섬", "숲", "캠핑장" };
+		if(!cinfo.getCinfoTag().equals("")) {
+			model.addAttribute("cinfoTag", cinfo.getCinfoTag().split(","));
+		}
+		
 		model.addAttribute("facilities", facilities);
 		model.addAttribute("week", week);
 		model.addAttribute("cinfo", cinfo);
