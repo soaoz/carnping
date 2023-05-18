@@ -164,6 +164,7 @@
 	<select id="filterList" resultMap="cinfoResultMap">
 		SELECT  CINFO_NO
 		        ,CINFO_NAME
+		        ,CINFO_CONTENT
 		        ,CINFO_LTTD
 		        ,CINFO_HRDNS
 		        ,CINFO_STATUS
@@ -185,13 +186,23 @@
 			AND CINFO_NAME LIKE '%'||#{title}||'%'
 		</if>
 		
+		<if test="keyword != null">
+			AND CINFO_CONTENT LIKE '%'||#{keyword}||'%'
+		</if>
+		
 		<if test="location != 'all'">
 			AND CINFO_ADDRESS LIKE ''||#{location}||'%'
 		</if>
 		
 		<if test="facility != null">
  		<foreach item='fac' collection="facility" separator=" ">
-	 		AND CINFO_FACILITIES LIKE '%'||#{fac}||'%'
+	 		AND CINFO_TAG LIKE '%'||#{fac}||'%'
+	 	</foreach>
+		</if>
+		
+		<if test="tag != null">
+ 		<foreach item='t' collection="tag" separator=",">
+	 		AND CINFO_FACILITIES LIKE '%'||#{t}||'%'
 	 	</foreach>
 		</if>
 		

@@ -176,7 +176,7 @@
     </div>
 
 
-
+    <script src="resources/js/jquery.nice-select.min.js"></script>
 </body>
 
 </html>
