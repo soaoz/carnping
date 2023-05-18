@@ -277,6 +277,16 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.insertReport(sqlSession, r);
 	}
 
+
+	public ArrayList<Board> topFboardList() {
+		return bDao.topFboardList(sqlSession);
+	}
+
+
+	public ArrayList<Board> topNoticeBoardList() {
+		return bDao.topNoticeBoardList(sqlSession);
+	}
+
 	
 	
 

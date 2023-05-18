@@ -176,7 +176,38 @@
                 bottom : 40px;
             }
         }
-    </style>
+
+
+       .scrollable-list1 {
+		    max-height: auto; 
+		    overflow-y: auto; 
+	    }
+		    
+#ulArea::-webkit-scrollbar-thumb {
+  background-color: #ffffff; /* 하얀색 */
+  background-clip: padding-box;
+  border-top: 25px solid transparent;
+  border-bottom: 10px solid transparent;
+  
+ 
+}
+#ulArea::-webkit-scrollbar {
+ 	
+ 	height: 3px !important;
+}
+
+#ulArea::-webkit-scrollbar-track {
+  background-color: transparent; /* 투명 */
+}
+
+#ulArea::-webkit-scrollbar {
+  width: 8px; /* 스크롤바 너비 조정 */
+}
+#ulArea {
+  scroll-margin-top: 5px;
+}
+
+		    </style>
 </head>
 <!--letter-spacing: 0.1em;-->
     <!-- Page Preloder -->
@@ -218,81 +249,30 @@
                                     
                                     
                                     <nav id="colorNav">
-                                        <ul>
-                                            <li>
-                                                <div style="padding-top: 10px; padding-left: 10px; padding-right: 20px;">
-                                                    <a href="#" class="notification">
-                                                        <span><i class="fa-solid fa-bell" style="color: #ffffff; font-size: 25px;"></i></span>
-                                                        <span class="badge">2</span>
-                                                    </a>
-                                                    <ul style="left: 28%;">
-                                                        <li>
-                                                            <div style="height:70px;">
-                                                                <div style="display:flex;justify-content: space-around;height: 50px;">
-                                                                 <div style="border-radius: 50px; ">
-                                                                        <i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px;
-                                                                        font-size: 35px;
-                                                                           line-height: 1.7em;"></i>
-                                                                    </div>
-                                                                    <div class="noti-text notiDiv">
-                                                                        <div style="display:flex;">
-                                                                            <a style="padding-left:unset; padding-right: unset;padding-top: 15px;">[</a><a href="http://tutorialzine.com/2012/10/css3-dropdown-menu/" style="padding-left:unset; padding-right: unset;padding-top: 15px;" id="myPost">차박장소 공유합니다아아아</a><a style="padding-left:unset; padding-right: unset;padding-top: 15px;">]</a>
-                                                                            <span style="padding-top: 15px;">글에</span>
-                                                                        </div>
-                                                                        <a style="padding: unset;">댓글<span id="replyCount">[3]</span>이 달렸습니다.</a>
-                                                                    </div>
-                                                                </div>
-                                                                <div style="float: right;
-                                                                padding-right: 17px;
-                                                                color: gray;
-                                                                font-size: 5px;">
-                                                                    33분 전
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                       <li>
-                                                            <div style="height:70px;">
-                                                                <div style="display:flex;justify-content: space-around;height: 50px;">
-                                                                 <div style="border-radius: 50px; ">
-                                                                        <i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px;
-                                                                        font-size: 35px;
-                                                                           line-height: 1.7em;"></i>
-                                                                    </div>
-                                                                    <div class="noti-text notiDiv">
-                                                                        <div style="display:flex;">
-                                                                            <a style="padding-left:unset; padding-right: unset;padding-top: 15px;">[</a><a href="http://tutorialzine.com/2012/10/css3-dropdown-menu/" style="padding-left:unset; padding-right: unset;padding-top: 15px;" id="myPost">차박장소 공유합니다아아아</a><a style="padding-left:unset; padding-right: unset;padding-top: 15px;">]</a>
-                                                                            <span style="padding-top: 15px;">글에</span>
-                                                                        </div>
-                                                                        <a style="padding: unset;">댓글<span id="replyCount">[3]</span>이 달렸습니다.</a>
-                                                                    </div>
-                                                                </div>
-                                                                <div style="float: right;
-                                                                padding-right: 17px;
-                                                                color: gray;
-                                                                font-size: 5px;">
-                                                                    33분 전
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                        
-                                                        <li >
-                                                            <div style="height:70px" class="notiDiv">
-                                                                <a style="padding:15px 15px 0px;" href="http://tutorialzine.com/2012/10/css3-dropdown-menu/">내가 등록한 차박정보가 승인되었습니다.</a>
-                                                                <div style="float: right;
-                                                                padding-right: 17px;
-                                                                color: gray;
-                                                                font-size: 5px;">
-                                                                    33분 전
-                                                                </div>
-                                                            </div>
+                                    
+                                  
 
-                                                    </ul>
-                                                        
+                                    
+                                    
+                                        <ul>
+                                            <li onClick="alarmScroll();">
+                                                <div style="padding-top: 10px; padding-left: 10px; padding-right: 20px;" >
+                                                    <a href="#" class="notification" >
+                                                        <span><i class="fa-solid fa-bell" style="color: #ffffff; font-size: 25px;" ></i></span>
+                                                        <span class="badge">1</span>
+                                                    </a>
+                                                    
+                                                    
+                                                    	
+		                                                    <ul style="left: 28% ; overflow: auto; width: 400px; " id="ulArea"  class="scrollable-list1">
+		
+		
+		                                                    </ul>
+	                                                  
                                                     
                                                 </div>
                                             </li>
+                                            
                                             <li style="margin-left: 15px;">
                                                 <a href="#" class="nickname" style="padding: 3px 0px; display:flex;" >
                                                     <c:choose>
@@ -321,6 +301,10 @@
 
                                             
                                         </ul>
+                                        
+                                        
+                                        
+                                        
                                     </nav>
                                 </div>
                                 </c:otherwise>
@@ -334,6 +318,86 @@
         </div> <!--headerbar-->
     </header>
     <!-- Header Section End -->
+
+
+<c:set var="loginMember" value="${loginMember}" />
+
+<script>
+
+
+
+  var loginMember = '<c:out value="${loginMember}" />';
+  
+  console.log(loginMember);
+  
+  $(document).ready(function() {
+    // 로그인한 경우에만 Ajax 호출
+    if (loginMember !== "") {
+      console.log("실행됨zzzz");
+      
+      $.ajax({
+    	  url: "headerAlarmSelectList.me",
+    	  type: "POST",
+    	  data: {},
+    	  success: function(result) {
+    	    console.log(result);
+    	    console.log("성공");
+    	    console.log(result.list);
+    	    console.log(result.list.length);
+
+    	    if (result.list.length === 0) {
+    	      var emptyNotification = '<li>' +
+    	        '<div style="height:70px;">' +
+    	        '<div style="display:flex; /*justify-content: space-around;*/height: 50px;">' +
+    	        '<div style="border-radius: 50px;">' +
+    	        '<i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px; font-size: 35px; line-height: 1.7em;"></i>' +
+    	        '</div>' +
+    	        '<div class="noti-text notiDiv">' +
+    	        '<div style="display:flex;">' +
+    	        '<br>' +
+    	        '<a style="padding: unset; padding-top: 20px;">알림이 없습니다.</a>' +
+    	        '</div>' +
+    	        '</div>' +
+    	        '</div>' +
+    	        '</div>' +
+    	        '</li>';
+
+    	      
+    	      $('#ulArea').html(emptyNotification);
+    	    } else {
+    	      var notification = '';
+    	      for (let i in result.list) {
+    	        notification += '<li>' +
+    	          '<div style="height:70px;">' +
+    	          '<div style="display:flex;justify-content: space-around;height: 50px;">' +
+    	          '<div style="border-radius: 50px;">' +
+    	          '<i class="fa-solid fa-circle-user" class="nickname" style="padding: 0px 0px 0px 5px; font-size: 35px; line-height: 1.7em;"></i>' +
+    	          '</div>' +
+    	          '<div class="noti-text notiDiv" style="width:300px;">' +
+    	          '<div style="display:flex; padding-left: 10px; ">' +
+    	          '<a style="padding: unset; padding-top: 20px; ">' + result.list[i].alaContent + '</a>' +
+    	          '</div>' +
+    	          '</div>' +
+    	          '</div>' +
+    	          '<div style="float: right; padding-right: 17px; color: gray; font-size: 5px;">' +
+    	          '33분 전' +
+    	          '</div>' +
+    	          '</div>' +
+    	          '</li>';
+    	      }
+    	     
+    	      $('#ulArea').html(notification);
+    	    }
+
+    	  },
+    	  error: function(jqXHR, textStatus, errorThrown) {
+    	    console.log("Error: " + textStatus + " " + errorThrown);
+    	  }
+    	});
+    }
+  });
+</script>
+
 		<!-- 카카오 채널-->
 			<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
 			  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
@@ -348,38 +412,13 @@
 			    container: '#add-channel-button',
 			    channelPublicId: '_XxacNb',
 			    size: "large"
-			  });
-			  
-			  
-			  $(function(){
-				  
-				  $.ajax({
-						url: "headerAlarmSelectList.me",
-						type: "POST",
-						data:  { cpage: cpage }, 
-						success: function(result) {
-				
-							console.log(result);
-							console.log("성공");
-							
-						},
-						error: function(jqXHR, textStatus, errorThrown) {
-							console.log("Error: " + textStatus + " " + errorThrown);
-						}
-						
-					});
+			  });-->
 
-                });
-
-			  })
-		  
-			  
-			</script> -->
 		<!-- 카카오 채널 실패~~~~ -->
     
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결 : 소영       -->
 	<script type="text/javascript">
-		var socket = null;
+	/*	var socket = null;
 		$(document).ready(function(){
 			connectWS();
 			
@@ -403,7 +442,7 @@
 		    };
 		}
 		
-	
+	*/
 	</script>
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결  끝       -->
     	<c:if test="${ not empty alertMsg }">

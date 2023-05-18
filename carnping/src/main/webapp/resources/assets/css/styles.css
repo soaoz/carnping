@@ -97,7 +97,7 @@ nav{
 	height:1px;
 	border:5px solid transparent;
 	border-bottom-color:#313131;
-	left:50%;
+	left:26%;
 	top:-10px;
 	margin-left:-5px;
 }
@@ -111,7 +111,7 @@ nav{
 /* transition animation on hover */
 
 #colorNav li:hover ul{
-	max-height:200px; /* Increase when adding more dropdown items */
+	max-height:300px; /* Increase when adding more dropdown items */
 }
 
 

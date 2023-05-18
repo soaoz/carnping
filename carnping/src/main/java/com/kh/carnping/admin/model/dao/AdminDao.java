@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.carnping.car.model.vo.Cinfo;
 import com.kh.carnping.car.model.vo.Verify;
 import com.kh.carnping.member.model.vo.Member;
+import com.kh.carnping.member.model.vo.Question;
 import com.kh.carnping.member.model.vo.Report;
 
 @Repository
@@ -73,6 +74,22 @@ public class AdminDao {
 
 	public int insertCarResponse(SqlSessionTemplate sqlSession,String verifyNo) {
 		return sqlSession.update("carMapper.insertCarResponse", verifyNo);
+	}
+
+	public ArrayList<Question> inquiryList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.inquiryList");
+	}
+
+	public Question questionDetail(SqlSessionTemplate sqlSession, String queNo) {
+		return sqlSession.selectOne("memberMapper.questionDetail",queNo);
+	}
+
+	public int answerQuestion(SqlSessionTemplate sqlSession, Question que) {
+		return sqlSession.update("memberMapper.answerQuestion", que);
+	}
+
+	public int questionDelete(SqlSessionTemplate sqlSession, String queNo) {
+		return sqlSession.update("memberMapper.questionDelete", queNo);
 	}
 
 }	

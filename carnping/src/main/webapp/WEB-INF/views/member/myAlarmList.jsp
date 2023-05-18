@@ -140,16 +140,7 @@
 		  color: #0CA678;
 		  font-size : 14px;
 		}
-
-
-
-
-
-
-       
-
-
-		
+	
 </style>
 </head>
 <body>
@@ -166,7 +157,7 @@
 <div class="master-area">
 
     <!-- Filter Begin -->
-    <div class="filter nice-scroll">
+     <div class="filter nice-scroll">
 
 				<div class="filter__title">
             <h5><i class="fa-sharp fa-solid fa-house"></i>마이페이지</h5>
@@ -181,16 +172,16 @@
            <a href="myCarbakList.me" class="menu"><i class="fa-sharp fa-solid fa-location-dot"></i> 나의 차박지 </a>
         </div>
         <div class="myPage_menu">
-           <a href="myAlarmList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i> 나의 활동 </a>
-        </div>
-        <div class="myPage_menu">
-            <a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-heart"></i> 좋아요</a>
+          		<a href="myAlarmList.me" class="menu"><i class="fa-solid fa-bell"></i> 나의 활동 </a>
+        	</div>
+        	<div class="myPage_menu">
+            	<a href="myLikeList.me" class="menu"><i class="fa-sharp fa-solid fa-bookmark"></i>위시리스트</a>
         </div>
         <div class="myPage_menu">
             <a href="myQuestionList.me" class="menu"><i class="fa-solid fa-circle-question"></i> 문의하기</a>
         </div>
         <div class="myPage_menu">
-            <a href="myLogoutPage.me" class="	menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
+            <a href="myLogoutPage.me" class="menu"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a>
         </div>
         <div class="myPage_menu">
             <a href="unregister.me" class="menu"><i class="fa-solid fa-circle-xmark"></i> 회원탈퇴</a>
@@ -333,7 +324,7 @@
 										var maxpage = result.maxPage;
 										
 										console.log(page+" , "+startpage+" , "+endpage+" , "+list);
-										
+										a += '<br>';
 										a += '<ul class="pagination" align="center">';
 										if(page== 1) {
 											// 실행할 코드
@@ -350,7 +341,7 @@
 											}
 										
 										if(page== maxpage){
-											a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
+											a += '<li class="page-item disable d"><a class="page-link" href="">다음</a></li>';
 										}else{
 											a += '<li class="page-item"><a class="page-link"  onclick="myAlarmList(' + (page + 1) +'); return false;">다음</a></li>';
 										}
@@ -396,7 +387,7 @@
 							value+= "<th width='50'>번호</th>";
 							value+= "<th width='150'>카테고리</th>";
 							value+= "<th width='500' style='text-align: center;'>제목</th>";
-							value+= "<th width='70'>조회수</th>";
+							
 							value+= "<th width='150'>작성일</th>";
 							value+= "</tr>";
 							$("#result thead").html(value);
@@ -416,7 +407,7 @@
 										html += "<td>[무료나눔]</td>";
 														}
 									html += "<td>"+result.list[i].boardTitle+"</td>";
-									html += "<td>"+result.list[i].count+"</td>";
+								
 									html += "<td>"+result.list[i].createDate+"</td>";
 									html += "</tr>";
 
@@ -435,7 +426,7 @@
 								var maxpage = result.maxPage;
 								
 								console.log(page+" , "+startpage+" , "+endpage+" , "+list);
-								
+								a += '<br>';
 								a += '<ul class="pagination" align="center">';
 								if(page== 1) {
 									// 실행할 코드
@@ -452,7 +443,7 @@
 									}
 								
 								if(page== maxpage){
-									a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
+									a += '<li class="page-item disable d"><a class="page-link" href="">다음</a></li>';
 								}else{
 									a += '<li class="page-item"><a class="page-link"  onclick="myPostList(' + (page + 1) +'); return false;">다음</a></li>';
 								}
@@ -529,7 +520,7 @@
 					              var maxpage = result.maxPage;
 					              
 					              console.log(page+" , "+startpage+" , "+endpage+" , "+list);
-					             
+					              a += '<br>';
 				            	  a += '<ul class="pagination" align="center">';
 				            	  if(page== 1) {
 				            		    // 실행할 코드
@@ -546,7 +537,7 @@
 		                    		 }
 					            	
 					              if(page== maxpage){
-					            	  a += '<li class="page-item disable d"><a class="page-link" href="">Next</a></li>';
+					            	  a += '<li class="page-item disable d"><a class="page-link" href="">다음</a></li>';
 					              }else{
 					            	  a += '<li class="page-item"><a class="page-link"  onclick="myReplyList(' + (page + 1) +'); return false;">다음</a></li>';
 					              }

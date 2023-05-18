@@ -49,7 +49,7 @@
                                 <table class="table table-center table-hover datatable">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>회원번호(회원번호)</th>
+                                            <th>회원ID(회원번호)</th>
                                             <th>카테고리</th>
                                             <th>문의제목</th>
                                             <th>등록일</th>
@@ -58,28 +58,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <c:forEach var="list" items="${ list }">
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="inquiryInsert.ad" class="avatar avatar-md me-2"><img
-                                                            class="avatar-img rounded-circle"
-                                                            src="../car/img/yangyang_3.png"
-                                                            alt="User Image"></a>
-                                                    <a href="memEdit.html">최민수<span>MEM1
+                                                    <a href="#">${ list.memId }<span>${ list.memNo }
                                                         </span></a>
                                                 </h2>
                                             </td>
                                             <td>
-                                                로그인관련
+                                                ${ list.queCategory }
                                             </td>
-                                            <td>로그인 후 마이페이지가 잘 안돼요</td>
-                                            <td>2020-12-13</td>
-                                            <td><span class="badge badge-pill bg-success-light">답변완료</span></td>
-                                            
+                                            <td>${ list.queTitle }</td>
+                                            <td>${ list.queDate }</td>
+                                            <td>
+                                            	<c:choose>
+                                            		<c:when test="${ list.queStatus.equals('Y') }">
+			                                            <span class="badge badge-pill bg-success-light">답변완료</span>
+                                            		</c:when>
+                                            		<c:otherwise>
+                                            			<span class="badge badge-pill bg-danger-light">답변미완료</span>
+                                            		</c:otherwise>
+                                            	</c:choose>
+                                            </td>
                                             <td class="text-end">
-                                                <a href="inquiryInsert.ad"
+                                            
+                                                <button type="button" onclick="questionDetail('${list.queNo}');"
                                                     class="btn btn-sm btn-white text-success me-2"><i
-                                                        class="far fa-edit me-1"></i> 상세(수정)</a>
+                                                        class="far fa-edit me-1"></i> 상세(수정)</button>
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-sm btn-white text-danger me-2"
                                                     data-bs-toggle="modal" data-bs-target="#top-modal"><i
@@ -105,38 +111,24 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-light"
                                                                     data-bs-dismiss="modal">닫기</button>
-                                                                <button type="button" class="btn btn-primary">삭제</button>
+                                                                <button type="button" class="btn btn-primary" onclick="questionDelete('${list.queNo}');">삭제</button>
                                                             </div>
+                                                            <script>
+questionDelete = function(queNo){
+	console.log("1?")
+	location.href = "questionDelete.ad?queNo="+queNo;
+}
+ questionDetail = function(queNo){
+	location.href = "questionDetail.ad?queNo="+queNo;
+}
+</script>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="inquiryInsert.ad" class="avatar avatar-md me-2"><img
-                                                            class="avatar-img rounded-circle"
-                                                            src="../car/img/test2.png"
-                                                            alt="User Image"></a>
-                                                    <a href="memEdit.html">양꼬치<span>MEM2</span></a>
-                                                </h2>
-                                            </td>
-                                           
-                                            <td>회원관련</td>
-                                            <td>이거 탈퇴 어떻게해요</td>
-                                            <td>2020-02-11</td>
-                                            <td><span class="badge badge-pill bg-danger-light">답변미완료</span></td>
-                                            <td class="text-end">
-                                                <a href="inquiryInsert.ad"
-                                                    class="btn btn-sm btn-white text-success me-2"><i
-                                                        class="far fa-edit me-1"></i> 상세(답변)</a>
-                                                <a href="javascript:void(0);"
-                                                    class="btn btn-sm btn-white text-danger me-2"><i
-                                                        class="far fa-trash-alt me-1"></i>삭제</a>
-                                            </td>
-                                        </tr>
-
+                                        
+										</c:forEach>
 
                                     </tbody>
                                 </table>
@@ -149,6 +141,7 @@
     </div>
 
 </div>
+
 
 </body>
 
