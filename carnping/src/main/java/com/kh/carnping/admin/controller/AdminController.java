@@ -98,7 +98,6 @@ public class AdminController {
 	@RequestMapping("verify.ad")
 	public String verifyList(Model model) {
 		ArrayList<Verify> list = aService.verifyList();
-		System.out.println("이게리스트"+list);
 		model.addAttribute("list", list);
 		return "admin/verify";
 	}
@@ -135,11 +134,13 @@ public class AdminController {
 
 	// 차박게시글 등록
 	@RequestMapping("insertCar.ad")
-	public String insertCar(Cinfo cinfo, String verifyNo,  Model model, HttpSession session) {
-
+	public String insertCar(Cinfo cinfo,  Model model, HttpSession session) {
 		int result1 = aService.insertCar(cinfo);
-		int result2 = aService.insertCarResponse(verifyNo);
-
+		// cinfoNo == verifyNo임 여기서만
+		int result2 = aService.insertCarResponse(cinfo.getCinfoNo());
+		System.out.println("insertCarAd"+cinfo);
+		System.out.println(result1);
+		System.out.println(result2);
 		if(result1 * result2 > 0) {
 			session.setAttribute("alertMsg", "차박 게시글 등록이 성공적으로 완료되었습니다.");
 		}
