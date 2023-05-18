@@ -104,10 +104,7 @@
                 <li class="submenu">
                     <a href="#"><i data-feather="clipboard"></i> <span>게시글관리</span> <span
                             class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="carList.ad">차박게시글</a></li>
-                        <li><a href="verify.ad">차박게시글 검수</a></li>
-                    </ul>
+                    <a href="verify.ad">차박게시글 검수</a>
                 </li>
                 <li>
                     <a href="notice.ad"><i data-feather="star"></i> <span>공지사항관리</span></a>

@@ -66,6 +66,7 @@ public class CarController {
 			 tag = String.join(",",filter.getTag());			
 		}
 
+		model.addAttribute("location", filter.getLocation());
 		model.addAttribute("facility", facility);
 		model.addAttribute("tag", tag);
 		model.addAttribute("filter", filter);
@@ -81,6 +82,7 @@ public class CarController {
 	// 차박 상세정보로 이동
 	@RequestMapping("detail.ca")
 	public String selectDetail(String cinfoNo, Model model) {
+		int result =  cService.insertCount(cinfoNo);
 		Cinfo cinfo = cService.selectDetail(cinfoNo);
 		Review reCount = cService.selectReviewCount(cinfoNo);
 		String[] week = { "월", "화", "수", "목", "금", "토", "일" };

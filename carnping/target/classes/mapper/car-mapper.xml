@@ -858,7 +858,11 @@
 		  FROM  VERIFY
 		  JOIN  VERIFY_IMG USING(VERIFY_NO)
 	</select>
-	
+	<update id="insertCount">
+		UPDATE  CINFO
+		   SET  CINFO_VIEWS = +1
+		 WHERE  CINFO_NO = #{cinfoNo}
+	</update>
 	
 	<!-- 검수 상세 리스트 -->
 		<select id="selectVerify" resultMap="verifyResultMap">

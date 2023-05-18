@@ -131,4 +131,8 @@ public class CarDao {
 		}
 
 	}
+
+	public int insertCount(SqlSessionTemplate sqlSession, String cinfoNo) {
+		return sqlSession.update("carMapper.insertCount", cinfoNo);
+	}
 }
