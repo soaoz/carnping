@@ -267,7 +267,6 @@
 					//내 알람 목록
 					function myAlarmList(cpage){
 						
-						
 							$.ajax({
 								url: "myAlarmSelectList.me",
 								type: "POST",
@@ -303,21 +302,16 @@
 											
 											if (result.list[i].alaCategory=='like') {
 												html += "<td>[좋아요]</td>";
-											} else if (result.list[i].alaCategory=='fReply') {
+											} else if (result.list[i].alaCategory=='fReply' || result.list[i].alaCategory=='pReply') {
 												html += "<td>[댓글]</td>";
 											}  else {
 												html += "<td>[승인]</td>";
 											}
 											//html += "<td>"+result.list[i].alaContent+"</td>";
 												if (result.list[i].alaCategory=='like') {
-											/* 		html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> ";
-												    html += "글에 좋아요";
-												    if (likeCounts[alaNo] > 1) {
-												      html += "(" + likeCounts[alaNo] + ")";
-												    }
-												    html += "가 눌렸습니다.</td>"; */
+
 													html += "<td>" + result.list[i].alaContent+"</td>";
-												}else if (result.list[i].alaCategory=='fReply') {
+												}else if (result.list[i].alaCategory=='fReply'||result.list[i].alaCategory=='pReply') {
 													//~글에 댓글이 달렸습니다. html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> 글에 좋아요가 눌렸습니다.</td>";
 													html += "<td>" + result.list[i].alaContent+"</td>";
 												}
@@ -415,7 +409,7 @@
 									html += "<td><input type='checkbox' class='ckbox'></td>";
 									html += "<td>"+result.list[i].boardNo+"</td>";
 									if (result.list[i].boardNo.startsWith('BRD')) {
-										html += "<td>[자유게시판]</td>";
+										html += "<td>[무료나눔]</td>";
 									} else if (result.list[i].boardNo.startsWith('PRT')) {
 										html += "<td>[소모임]</td>";
 									}  else {

@@ -182,7 +182,7 @@
     </div>
 
     <!-- Header Section Begin -->
-    <header class="header" >
+    <header class="header">
         <div class="headerBar">
             <div class="container-fluid">
                 <div class="row">
@@ -346,60 +346,24 @@
 			    size: "large"
 			  });
 			  
-			  /*
+			  
 			  $(function(){
 				  
-					$.ajax({
+				  $.ajax({
 						url: "headerAlarmSelectList.me",
 						type: "POST",
 						data:  { cpage: cpage }, 
 						success: function(result) {
-			
+				
 							console.log(result);
+							console.log("성공");
 							
-							
-							var html = "";
-							var value = "";
-			
-							value+= "<tr id='tr1'>";
-							value+= "<th width='50'>선택</th>";
-							value+= "<th width='50'>번호</th>";
-							value+= "<th width='150'>카테고리</th>";
-							value+= "<th width='500' style='text-align: center;'>제목</th>";
-							value+= "<th width='150'>작성일</th>";
-							value+= "</tr>";
-							$("#result thead").html(value);
-			
-							if (result.list.length == 0) {
-								html += "<tr><td colspan='5' align='center'>존재하는 알림이 없습니다.</td></tr>";
-							} else {
-								for(let i in result.list){
-									html += "<tr>";
-									html += "<td><input type='checkbox' class='ckbox'></td>";
-									html += "<td>"+result.list[i].alaNo+"</td>";
-									// html += "<td>"+result.list[i].alaCategory+"</td>";
-									
-									if (result.list[i].alaCategory=='like') {
-										html += "<td>[좋아요]</td>";
-									} else if (result.list[i].alaCategory=='comm') {
-										html += "<td>[댓글]</td>";
-									}  else {
-										html += "<td></td>";
-									}
-									//html += "<td>"+result.list[i].alaContent+"</td>";
-										if (result.list[i].alaCategory=='like') {
-									html += "<td><span class='highlight'>" + result.list[i].alaContent.substring(0, 10) + "...</span> 글에 좋아요가 눌렸습니다.</td>";
-										}
-									html += "<td>"+result.list[i].alaDate+"</td>";
-									html += "</tr>";
-	
-								}
-							}
-									$("#result tbody").html(html);
-							
-				  
-			  });
-					*/
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log("Error: " + textStatus + " " + errorThrown);
+						}
+						
+					});
 			  
 			  
 			  

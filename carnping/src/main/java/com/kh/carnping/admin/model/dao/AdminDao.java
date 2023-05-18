@@ -65,7 +65,14 @@ public class AdminDao {
 	}
 
 	public int insertCar(SqlSessionTemplate sqlSession, Cinfo cinfo) {
-		return sqlSession.insert("carMapper.insertCar", cinfo);
+		System.out.println(cinfo);
+		int result1 = sqlSession.insert("carMapper.insertCar", cinfo);
+		int result2 = sqlSession.insert("carMapper.insertCarImg", cinfo);
+		return result1 * result2;
+	}
+
+	public int insertCarResponse(SqlSessionTemplate sqlSession,String verifyNo) {
+		return sqlSession.update("carMapper.insertCarResponse", verifyNo);
 	}
 
 }	

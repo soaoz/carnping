@@ -75,7 +75,7 @@ public class CarController {
 		model.addAttribute("reCount", reCount);
 		return "car/carDetail";
 	}
-	
+
 // 리뷰 체크
 	@ResponseBody
 	@RequestMapping(value = "reviewCheck.ca", produces = "application/json;charset=utf-8")
@@ -84,7 +84,7 @@ public class CarController {
 		System.out.println(result);
 		return new Gson().toJson(result);
 	}
-		
+
 	// 리뷰 리스트
 	@ResponseBody
 	@RequestMapping(value = "selectReview.ca", produces = "application/json; charset=utf-8")
@@ -98,21 +98,20 @@ public class CarController {
 	public String insertReview(Review review, MultipartFile upfile, HttpSession session, Model model) {
 		System.out.println(upfile);
 		String ext = ".png .PNG .jpg .JPG";
-		if( upfile != null && !upfile.getOriginalFilename().equals("")) {
-			if(ext.contains(upfile.getOriginalFilename().
-					substring(upfile.getOriginalFilename().lastIndexOf(".")))) {
+		if (upfile != null && !upfile.getOriginalFilename().equals("")) {
+			if (ext.contains(upfile.getOriginalFilename().substring(upfile.getOriginalFilename().lastIndexOf(".")))) {
 				String changeName = new SaveFile().saveFile(upfile, session);
-				review.setReviewImg("resources/img/reviewImg/" + changeName);	
-			}else {
+				review.setReviewImg("resources/img/reviewImg/" + changeName);
+			} else {
 				model.addAttribute("msg", "파일형식이 잘못되었습니다.");
 				return new Gson().toJson("파일형식이 잘못되었습니다.");
 			}
 		}
 		int result = cService.insertReview(review);
-		return "redirect:detail.ca?cinfoNo="+review.getReviewNo();
+		return "redirect:detail.ca?cinfoNo=" + review.getReviewNo();
 	}
-	
-	//리뷰 삭제
+
+	// 리뷰 삭제
 	@ResponseBody
 	@RequestMapping(value = "deleteReview.ca", produces = "application/json;charset=utf-8")
 	public String deleteReview(String reNo) {
@@ -127,8 +126,8 @@ public class CarController {
 		ArrayList<Comment> comment = cService.selectReviewComment(reNo);
 		return new Gson().toJson(comment);
 	}
-	
-	//리뷰 좋아요 체크
+
+	// 리뷰 좋아요 체크
 	@ResponseBody
 	@RequestMapping(value = "reviewLike.ca", produces = "application/json;charset=utf-8")
 	public String reviewLikeCheck(String reNo, String memNo) {
@@ -137,7 +136,7 @@ public class CarController {
 		System.out.println(memNo);
 		return new Gson().toJson(result);
 	}
-	
+
 	// 리뷰 좋아요
 	@ResponseBody
 	@RequestMapping(value = "like.ca", produces = "application/json;charset=utf-8")
@@ -145,216 +144,266 @@ public class CarController {
 		int result = 0;
 		System.out.println(reNo);
 		System.out.println("rs" + rs);
-		System.out.println("memNo "+ memNo);
+		System.out.println("memNo " + memNo);
 		if (rs > 0) {
 			// 좋아요가 있을 때
-			result = cService.deleteReviewLike(reNo,memNo);
+			result = cService.deleteReviewLike(reNo, memNo);
 		} else {
-			result = cService.insertReviewLike(reNo,memNo);
+			result = cService.insertReviewLike(reNo, memNo);
 		}
 		return new Gson().toJson(result);
 	}
-	
+
 	// 리뷰 댓글 등록
 	@ResponseBody
 	@RequestMapping(value = "reviewComment.ca", produces = "application/json;charset=utf-8")
 	public String insertComment(String reNo, String memNo, String text) {
-		int result = cService.insertComment(reNo,memNo, text);
+		int result = cService.insertComment(reNo, memNo, text);
 		return new Gson().toJson(result);
 	}
-	
+
 	// 차박지 등록으로 이동
 	@RequestMapping("insertCarEnroll.ca")
-	public String insertCarEnroll(){
+	public String insertCarEnroll() {
 		return "car/insertCar";
 	}
-	
-	// 차박 등록 
+
+	// 차박 등록
 	@RequestMapping(value = "insertCarRequest.ca")
-	public String insertCarRequest(Verify verify, MultipartFile[] upfile, Model model,HttpSession session){
+	public String insertCarRequest(Verify verify, MultipartFile[] upfile, Model model, HttpSession session) {
 		VerifyImg verifyImg = new VerifyImg();
-		if(verify.getVerifyFacilitie() != null) {
-			String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());			
+		if (verify.getVerifyFacilitie() != null) {
+			String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
 			verify.setVerifyFacilities(verifyFacilitie);
 		} else {
 			verify.setVerifyFacilities("");
 		}
-		if(verify.getVerifyDay() != null) {
+		if (verify.getVerifyDay() != null) {
 			String verifyDay = String.join(",", verify.getVerifyDay());
 			verify.setVerifyDays(verifyDay);
-		}else {
+		} else {
 			verify.setVerifyDays("");
 		}
-		if(verify.getVerifyTags() != null) {
+		if (verify.getVerifyTags() != null) {
 			String verifyTags = String.join(",", verify.getVerifyTags());
 			verify.setVerifyTag(verifyTags);
-		}else {
+		} else {
 			verify.setVerifyTag("");
 		}
-		for(int i = 0; i < upfile.length; i++) {
-			if(!upfile[i].getOriginalFilename().equals("")) {
+		for (int i = 0; i < upfile.length; i++) {
+			if (!upfile[i].getOriginalFilename().equals("")) {
 				String changeName = new SaveFile().carFile(upfile[i], session);
 				switch (i) {
-			      case 0:
-			    	verifyImg.setVerifyOgImg1(upfile[i].getOriginalFilename());
-			        verifyImg.setVerifyImg1("resources/img/carImg/" + changeName);
-			        break;
-			      case 1:
-			    	  verifyImg.setVerifyOgImg2(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg2("resources/img/carImg/" + changeName);
-			        break;
-			      case 2:
-			    	  verifyImg.setVerifyOgImg3(upfile[i].getOriginalFilename());
-			        verifyImg.setVerifyImg3("resources/img/carImg/" + changeName);
-			        break;
-			      case 3:
-			    	  verifyImg.setVerifyOgImg4(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg4("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 4:
-			    	  verifyImg.setVerifyOgImg5(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg5("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 5:
-			    	  verifyImg.setVerifyOgImg6(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg6("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 6:
-			    	  verifyImg.setVerifyOgImg7(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg7("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 7:
-			    	  verifyImg.setVerifyOgImg8(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg8("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 8:
-			    	  verifyImg.setVerifyOgImg9(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg9("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 9:
-			    	  verifyImg.setVerifyOgImg10(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg10("resources/img/carImg/" + changeName);
-			    	  break;
-			      default:
-			        break;
-			    }
+				case 0:
+					verifyImg.setVerifyOgImg1(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg1("resources/img/carImg/" + changeName);
+					break;
+				case 1:
+					verifyImg.setVerifyOgImg2(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg2("resources/img/carImg/" + changeName);
+					break;
+				case 2:
+					verifyImg.setVerifyOgImg3(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg3("resources/img/carImg/" + changeName);
+					break;
+				case 3:
+					verifyImg.setVerifyOgImg4(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg4("resources/img/carImg/" + changeName);
+					break;
+				case 4:
+					verifyImg.setVerifyOgImg5(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg5("resources/img/carImg/" + changeName);
+					break;
+				case 5:
+					verifyImg.setVerifyOgImg6(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg6("resources/img/carImg/" + changeName);
+					break;
+				case 6:
+					verifyImg.setVerifyOgImg7(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg7("resources/img/carImg/" + changeName);
+					break;
+				case 7:
+					verifyImg.setVerifyOgImg8(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg8("resources/img/carImg/" + changeName);
+					break;
+				case 8:
+					verifyImg.setVerifyOgImg9(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg9("resources/img/carImg/" + changeName);
+					break;
+				case 9:
+					verifyImg.setVerifyOgImg10(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg10("resources/img/carImg/" + changeName);
+					break;
+				default:
+					break;
+				}
 			}
 		}
-		
+
 		int result1 = cService.insertCarRequest(verify);
 		int result2 = cService.insertCarImgRequest(verifyImg);
 		System.out.println(result1);
 		System.out.println(result2);
-		
+		System.out.println(verify.getMemNo());
 		return "main";
 	}
-	
+
 	// 차박 삭제 요청
 	@ResponseBody
 	@RequestMapping(value = "deleteRequest.ca", produces = "application/json;charset=utf-8")
-	public String deleteRequest(Cinfo cinfo, String result, String loginMember, Model model){
+	public String deleteRequest(Cinfo cinfo, String result, String loginMember, Model model) {
 		int count = cService.checkRequest(loginMember);
 		int rs = 0;
 		System.out.println(cinfo);
-		if(count > 0) {
+		if (count > 0) {
 			return new Gson().toJson("이미 삭제, 수정, 등록이 요청되어있는 아이디입니다.");
-		}else {
+		} else {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("cinfo", cinfo);
 			map.put("result", result);
 			map.put("loginMember", loginMember);
-			
+
 			rs = cService.deleteRequest(map);
-			if(rs > 0) {
-				return  new Gson().toJson("삭제요청이 완료되어있습니다.");
-			}else {
-				return  new Gson().toJson("삭제요청도중 오류발생");
+			if (rs > 0) {
+				return new Gson().toJson("삭제요청이 완료되어있습니다.");
+			} else {
+				return new Gson().toJson("삭제요청도중 오류발생");
 			}
 		}
 	}
-	
+
 	@RequestMapping("updateRequest.ca")
 	public String updateRequest(String cinfoNo, Model model) {
 		System.out.println("x탄다");
 		Cinfo cinfo = cService.selectDetail(cinfoNo);
-		model.addAttribute("cinfo",cinfo);
+		model.addAttribute("cinfo", cinfo);
 		return "car/updateCar";
 	}
-	
-	//차박 수정 요청
+
+	// 차박 수정 요청
 	@RequestMapping("updateCar.ca")
-	public String updateCar(Verify verify, MultipartFile[] upfile, Model model,HttpSession session) {
+	public String updateCar(Verify verify, MultipartFile[] upfile, Model model, HttpSession session) {
 		VerifyImg verifyImg = new VerifyImg();
 		
-		String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
-		String verifyDay = String.join(",", verify.getVerifyDay());
-		String verifyTags = String.join(",", verify.getVerifyTags());
-
-		verify.setVerifyDays(verifyDay);
-		verify.setVerifyFacilities(verifyFacilitie);
-		verify.setVerifyTag(verifyTags);
-		System.out.println(upfile);
-		for(int i = 0; i < upfile.length; i++) {
-			if(!upfile[i].getOriginalFilename().equals("")) {
+		verifyImg.setVerifyImg1(verify.getVerifyImg1());
+		verifyImg.setVerifyImg2(verify.getVerifyImg2());
+		verifyImg.setVerifyImg3(verify.getVerifyImg3());
+		verifyImg.setVerifyImg4(verify.getVerifyImg4());
+		verifyImg.setVerifyImg5(verify.getVerifyImg5());
+		verifyImg.setVerifyImg6(verify.getVerifyImg6());
+		verifyImg.setVerifyImg7(verify.getVerifyImg7());
+		verifyImg.setVerifyImg8(verify.getVerifyImg8());
+		verifyImg.setVerifyImg9(verify.getVerifyImg9());
+		verifyImg.setVerifyImg10(verify.getVerifyImg10());
+		
+		verifyImg.setVerifyOgImg1(verify.getVerifyOgImg1());
+		verifyImg.setVerifyOgImg2(verify.getVerifyOgImg2());
+		verifyImg.setVerifyOgImg3(verify.getVerifyOgImg3());
+		verifyImg.setVerifyOgImg4(verify.getVerifyOgImg4());
+		verifyImg.setVerifyOgImg5(verify.getVerifyOgImg5());
+		verifyImg.setVerifyOgImg6(verify.getVerifyOgImg6());
+		verifyImg.setVerifyOgImg7(verify.getVerifyOgImg7());
+		verifyImg.setVerifyOgImg8(verify.getVerifyOgImg8());
+		verifyImg.setVerifyOgImg9(verify.getVerifyOgImg9());
+		verifyImg.setVerifyOgImg10(verify.getVerifyOgImg10());
+		
+		if (verify.getVerifyFacilitie() != null) {
+			String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
+			verify.setVerifyFacilities(verifyFacilitie);
+		} else {
+			verify.setVerifyFacilities("");
+		}
+		if (verify.getVerifyDay() != null) {
+			String verifyDay = String.join(",", verify.getVerifyDay());
+			verify.setVerifyDays(verifyDay);
+		} else {
+			verify.setVerifyDays("");
+		}
+		if (verify.getVerifyTags() != null) {
+			String verifyTags = String.join(",", verify.getVerifyTags());
+			verify.setVerifyTag(verifyTags);
+		} else {
+			verify.setVerifyTag("");
+		}
+		for (int i = 0; i < upfile.length; i++) {
+			if (!upfile[i].getOriginalFilename().equals("")) {
 				String changeName = new SaveFile().carFile(upfile[i], session);
 				switch (i) {
-			      case 0:
-				    	if(verifyImg.getVerifyOgImg1() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg1())).delete();}
-				    	verifyImg.setVerifyOgImg1(upfile[i].getOriginalFilename());
-				        verifyImg.setVerifyImg1("resources/img/carImg/" + changeName);
-			        break;
-			      case 1:
-			    	  if(verifyImg.getVerifyOgImg2() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg2())).delete();}
-			    	  verifyImg.setVerifyOgImg2(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg2("resources/img/carImg/" + changeName);
-			        break;
-			      case 2:
-			    	  if(verifyImg.getVerifyOgImg3() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg3())).delete();}
-			    	  verifyImg.setVerifyOgImg3(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg3("resources/img/carImg/" + changeName);
-			        break;
-			      case 3:
-			    	  if(verifyImg.getVerifyOgImg4() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg4())).delete();}
-			    	  verifyImg.setVerifyOgImg4(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg4("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 4:
-			    	  if(verifyImg.getVerifyOgImg5() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg5())).delete();}
-			    	  verifyImg.setVerifyOgImg5(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg5("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 5:
-			    	  if(verifyImg.getVerifyOgImg6() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg6())).delete();}
-			    	  verifyImg.setVerifyOgImg6(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg6("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 6:
-			    	  if(verifyImg.getVerifyOgImg7() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg7())).delete();}
-			    	  verifyImg.setVerifyOgImg7(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg7("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 7:
-			    	  if(verifyImg.getVerifyOgImg8() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg8())).delete();}
-			    	  verifyImg.setVerifyOgImg8(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg8("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 8:
-			    	  if(verifyImg.getVerifyOgImg9() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg9())).delete();}
-			    	  verifyImg.setVerifyOgImg9(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg9("resources/img/carImg/" + changeName);
-			    	  break;
-			      case 9:
-			    	  if(verifyImg.getVerifyOgImg10() != null) {new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg10())).delete();}
-			    	  verifyImg.setVerifyOgImg10(upfile[i].getOriginalFilename());
-			    	  verifyImg.setVerifyImg10("resources/img/carImg/" + changeName);
-			    	  break;
-			      default:
-			        break;
-			    }
+				case 0:
+					if (verifyImg.getVerifyOgImg1() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg1())).delete();
+					}
+					verifyImg.setVerifyOgImg1(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg1("resources/img/carImg/" + changeName);
+					break;
+				case 1:
+					if (verifyImg.getVerifyOgImg2() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg2())).delete();
+					}
+					verifyImg.setVerifyOgImg2(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg2("resources/img/carImg/" + changeName);
+					break;
+				case 2:
+					if (verifyImg.getVerifyOgImg3() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg3())).delete();
+					}
+					verifyImg.setVerifyOgImg3(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg3("resources/img/carImg/" + changeName);
+					break;
+				case 3:
+					if (verifyImg.getVerifyOgImg4() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg4())).delete();
+					}
+					verifyImg.setVerifyOgImg4(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg4("resources/img/carImg/" + changeName);
+					break;
+				case 4:
+					if (verifyImg.getVerifyOgImg5() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg5())).delete();
+					}
+					verifyImg.setVerifyOgImg5(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg5("resources/img/carImg/" + changeName);
+					break;
+				case 5:
+					if (verifyImg.getVerifyOgImg6() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg6())).delete();
+					}
+					verifyImg.setVerifyOgImg6(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg6("resources/img/carImg/" + changeName);
+					break;
+				case 6:
+					if (verifyImg.getVerifyOgImg7() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg7())).delete();
+					}
+					verifyImg.setVerifyOgImg7(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg7("resources/img/carImg/" + changeName);
+					break;
+				case 7:
+					if (verifyImg.getVerifyOgImg8() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg8())).delete();
+					}
+					verifyImg.setVerifyOgImg8(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg8("resources/img/carImg/" + changeName);
+					break;
+				case 8:
+					if (verifyImg.getVerifyOgImg9() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg9())).delete();
+					}
+					verifyImg.setVerifyOgImg9(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg9("resources/img/carImg/" + changeName);
+					break;
+				case 9:
+					if (verifyImg.getVerifyOgImg10() != null) {
+						new File(session.getServletContext().getRealPath(verifyImg.getVerifyImg10())).delete();
+					}
+					verifyImg.setVerifyOgImg10(upfile[i].getOriginalFilename());
+					verifyImg.setVerifyImg10("resources/img/carImg/" + changeName);
+					break;
+				default:
+					break;
+				}
 			}
 		}
-		System.out.println(verify);
-		System.out.println(verifyImg);
 		int result1 = cService.updateCarRequest(verify);
 		int result2 = cService.updateCarImgRequest(verifyImg);
 		return "main";

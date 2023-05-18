@@ -169,8 +169,6 @@
                 </div>
             </div>
         </li>
-
-
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
@@ -181,7 +179,6 @@
                     <c:when test="${ not empty loginMember.nickName }"><span>${ loginMember.nickName }</span></c:when>
                     <c:otherwise><span>${ loginMember.memId }</span></c:otherwise>
                 </c:choose>
-
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="login.html"><i data-feather="log-out" class="me-1"></i>
@@ -211,7 +208,7 @@
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="carList.ad">차박게시글</a></li>
-                        <li><a href="verity.ad">차박게시글 검수</a></li>
+                        <li><a href="verify.ad">차박게시글 검수</a></li>
                         <li><a href="#">채팅관리</a></li>
                     </ul>
                 </li>
@@ -221,8 +218,6 @@
                 <li>
                     <a href="inquiryList.ad"><i data-feather="credit-card"></i> <span>Q&A관리</span></a>
                 </li>
-                
-                
             </ul>
         </div>
     </div>

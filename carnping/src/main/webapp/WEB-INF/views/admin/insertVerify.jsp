@@ -59,6 +59,11 @@
 							</div>
 							<div class="card-body">
 								<form action="insertCar.ad" method="post" enctype="multipart/form-data">
+									<input type="hidden" name="memNo" value="${ verify.memNo }">
+									<input type="hidden" name="cinfoNo" value="${ verify.verifyNo }">
+									<input type="hidden" name="cinfoFacilities" value="${ verify.verifyFacilities }">
+									<input type="hidden" name="cinfoDays" value="${ verify.verifyDays }">
+									<input type="hidden" name="cinfoTag" value="${ verify.verifyTag }">
 									<div class="row form-group">
 										<label for="id" class="col-sm-3 col-form-label input-label">게시
 											사유</label>
@@ -72,73 +77,73 @@
 										<div class="col-sm-9 contentImg">
 											<div class="bigImgs">
 												<img class="bigImg" src="${ verify.verifyImg1 }"
-													style="height: 300px; width: 450px;"> <input
-													type="hidden" value="${ verify.verifyOgImg1 }"
-													value="cinfoOgImg1"> <input type="hidden"
-													value="${ verify.verifyImg1 }" value="cinfoImg1">
+													style="height: 300px; width: 450px;"> 
+													<input type="hidden" value="${ verify.verifyOgImg1 }"
+													name="cinfoOgImg1"> <input type="hidden"
+													value="${ verify.verifyImg1 }" name="cinfoImg1">
 											</div>
 											<div class="smallImgs">
 
 												<img class="smallImg" style="height: 100px; width: 150px;"
 													src="${ verify.verifyImg2 }"> <input type="hidden"
-													value="${ verify.verifyOgImg2 }" value="cinfoOgImg2">
+													value="${ verify.verifyOgImg2 }" name="cinfoOgImg2">
 												<input type="hidden" value="${ verify.verifyImg2 }"
-													value="cinfoImg2"> <img class="smallImg"
+													name="cinfoImg2"> <img class="smallImg"
 													style="height: 100px; width: 150px;"
 													src="${ verify.verifyImg3 }"> <input type="hidden"
-													value="${ verify.verifyOgImg3 }" value="cinfoOgImg3">
+													value="${ verify.verifyOgImg3 }" name="cinfoOgImg3">
 												<input type="hidden" value="${ verify.verifyImg3 }"
-													value="cinfoImg3"> <img class="smallImg"
+													name="cinfoImg3"> <img class="smallImg"
 													style="height: 100px; width: 150px;"
 													src="${ verify.verifyImg4 }"> <input type="hidden"
-													value="${ verify.verifyOgImg4 }" value="cinfoOgImg4">
+													value="${ verify.verifyOgImg4 }" name="cinfoOgImg4">
 												<input type="hidden" value="${ verify.verifyImg4 }"
-													value="cinfoImg4"> <img class="smallImg"
+													name="cinfoImg4"> <img class="smallImg"
 													style="height: 100px; width: 150px;"
 													src="${ verify.verifyImg5 }"> <input type="hidden"
-													value="${ verify.verifyOgImg5 }" value="cinfoOgImg5">
+													value="${ verify.verifyOgImg5 }" name="cinfoOgImg5">
 												<input type="hidden" value="${ verify.verifyImg5 }"
-													value="cinfoImg5">
+													name="cinfoImg5">
 
 												<c:if test="${ verify.verifyImg6 != null }">
 													<img class="smallImg" style="height: 100px; width: 150px;"
 														src="${ verify.verifyImg6 }">
 													<input type="hidden" value="${ verify.verifyOgImg6 }"
-														value="cinfoOgImg6">
+														name="cinfoOgImg6">
 													<input type="hidden" value="${ verify.verifyImg6 }"
-														value="cinfoImg6">
+														name="cinfoImg6">
 												</c:if>
 												<c:if test="${ verify.verifyImg7 != null }">
 													<img class="smallImg" style="height: 100px; width: 150px;"
 														src="${ verify.verifyImg7 }">
 													<input type="hidden" value="${ verify.verifyOgImg7 }"
-														value="cinfoOgImg7">
+														name="cinfoOgImg7">
 													<input type="hidden" value="${ verify.verifyImg7 }"
-														value="cinfoImg7">
+														name="cinfoImg7">
 												</c:if>
 												<c:if test="${ verify.verifyImg8 != null }">
 													<img class="smallImg" style="height: 100px; width: 150px;"
 														src="${ verify.verifyImg8 }">
 													<input type="hidden" value="${ verify.verifyOgImg8 }"
-														value="cinfoOgImg8">
+														name="cinfoOgImg8">
 													<input type="hidden" value="${ verify.verifyImg8 }"
-														value="cinfoImg8">
+														name="cinfoImg8">
 												</c:if>
 												<c:if test="${ verify.verifyImg9 != null }">
 													<img class="smallImg" style="height: 100px; width: 150px;"
 														src="${ verify.verifyImg9 }">
 													<input type="hidden" value="${ verify.verifyOgImg9 }"
-														value="cinfoOgImg9">
+														name="cinfoOgImg9">
 													<input type="hidden" value="${ verify.verifyImg9 }"
-														value="cinfoImg9">
+														name="cinfoImg9">
 												</c:if>
 												<c:if test="${ verify.verifyImg10 != null }">
 													<img class="smallImg" style="height: 100px; width: 150px;"
 														src="${ verify.verifyImg10 }">
 													<input type="hidden" value="${ verify.verifyOgImg10 }"
-														value="cinfoOgImg10">
+														name="cinfoOgImg10">
 													<input type="hidden" value="${ verify.verifyImg10 }"
-														value="cinfoImg10">
+														name="cinfoImg10">
 												</c:if>
 
 											</div>
@@ -330,6 +335,16 @@
 										</div>
 									</div>
 
+									<div class="row form-group">
+										<label for="id" class="col-sm-3 col-form-label input-label">
+											회원ID
+										</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="cinfoName"
+												placeholder="회원ID" value="${ verify.memId }"
+												name="memId" readonly>
+										</div>
+									</div>
 									<div class="row form-group">
 										<label for="poster"
 											class="col-sm-3 col-form-label input-label">요청일 <span

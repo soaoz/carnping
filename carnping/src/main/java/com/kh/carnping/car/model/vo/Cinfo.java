@@ -29,6 +29,7 @@ public class Cinfo {
 	private String cinfoRgstrDate; // 등록알
 	private String memNo; // 회원번호
 	private String memName;// 회원이름
+	private String memId;// 회원이름
 	private String cinfoImg1; // 차박정보 메인이미지
 	private String cinfoImg2; // 차박정보 서브이미지
 	private String cinfoImg3; // 차박정보 서브이미지

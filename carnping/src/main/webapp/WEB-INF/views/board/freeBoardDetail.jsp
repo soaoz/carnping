@@ -10,13 +10,16 @@
 <style>
     .header_back {
         width: 100%;
-        height: 105px;
-        background-color: white;
+        height: 110px;
+        background-color: #b3d9b1;
     }
     
     .ul_line {
    		list-style-type: none;
 	}
+	
+	.header{
+    	background-color: #b3d9b1;
 
     #report:hover{
         text-decoration: underline;
@@ -36,6 +39,7 @@
 	</header>
 	
 	
+    <input type="hidden" value="${ b.memNo}" id="memNo">
     
 
     <!-- Listing Details Section Begin -->
@@ -262,7 +266,7 @@
    	/* 댓글달림 알람테이블에 insert */
    	function freeReplyNotification(){
    	
-   	    let memNo = $("#memNo").text(); //작성자아이디번호 
+   	    let memNo = $("#memNo").val(); //작성자아이디번호 
    	  //  let boardNo = "${ b.boardNo }"  //글제목
    	    
    	   console.log("댓글알람 작성자 : " + memNo );
