@@ -323,7 +323,7 @@
 			<when test="sequence == 'view'">
 				ORDER BY CINFO_VIEWS DESC
 			</when>
-			<when test="sequence == 'rating'">
+			<when test="sequence == 'name'">
 				ORDER BY CINFO_NAME
 			</when>
 		</choose>

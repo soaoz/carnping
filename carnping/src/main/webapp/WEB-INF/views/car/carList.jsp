@@ -283,6 +283,7 @@
 					name="facility" value="병원"> <span class="checkmark"></span>
 				</label>
 			</div>
+			
 			<div class="filter__btns">
 				<button type="submit">필터 적용</button>
 				<button type="reset" class="filter__reset">초기화</button>
@@ -323,7 +324,7 @@
 									onClick="event.stopPropagation();">
 									<script>
         // 잠시 묶어 두겠습니다
-    /*     $(document).ready(function() {
+       $(document).ready(function() {
             selectLike("${ list.cinfoNo }" , "#like${ list.cinfoNo }");
             function selectLike(cinfoNo, id){
                 var cinfoNo = cinfoNo;
@@ -353,7 +354,7 @@
                     
                 });
             }
-        }); */
+        }); 
         
         $(document).on('click', '.like-button', function(e) {
             e.preventDefault();
@@ -415,13 +416,6 @@
 														</c:forEach>
 													</c:if>
 												</c:if>
-												<%-- <c:forEach var="rating" begin="1" end="${ list.cinfoRating }" 
-                                            step="1">
-                                            <span class="icon_star"></span>
-                                        </c:forEach>
-                                        <c:if test="${ ((list.cinfoRating)*10) % 10 >= 5  }">
-                                            <span class="icon_star-half_alt"></span>
-                                        </c:if> --%>
 											</div>
 										</div>
 									</div>
@@ -618,9 +612,18 @@ function like(cinfoNo , id){
 			$("input[name=title]").val("${filter.title}");
 			$("select[name=sequence]").val("${filter.sequence}").attr("selected",true);
 			$("select[name=sequence]").val("${filter.sequence}").prop("selected","selected");
-		console.log("${filter.sequence}");
-			//$("#${filter.location}").attr("selected");
-		console.log($("select[name=sequence]").val("${filter.sequence}"))
+			$("select[name=location]").val("${filter.location}").attr("selected",true);
+			$("select[name=location]").val("${filter.location}").prop("selected","selected");
+			let facility = '<c:out value="${facility}"/>'.split(",");
+					console.log("이거 타?");
+			 $("input[name=facility]").map(function(i, result) {
+				for(let f of facility){
+					if(f == result.value){
+						$("input[value="+ result.value +"]").attr("checked", true);
+					}
+				} 
+			})
+		console.log(id);
 	</c:if>
     // 마커 클러스터러를 생성합니다
     var clusterer = new kakao.maps.MarkerClusterer({

@@ -57,13 +57,22 @@ public class CarController {
 	public String filterList(Filter filter, Model model) {
 		ArrayList<Cinfo> list = cService.filterList(filter);
 		System.out.println(filter);
+		String facility = "";
+		String tag = "";
+		if(filter.getFacility() != null) {
+			facility = String.join(",", filter.getFacility());			
+		}
+		if(filter.getTag() != null) {
+			 tag = String.join(",",filter.getTag());			
+		}
+
+		model.addAttribute("facility", facility);
+		model.addAttribute("tag", tag);
+		model.addAttribute("filter", filter);
+		model.addAttribute("list", list);
 		if (!list.isEmpty()) {
-			model.addAttribute("filter", filter);
-			model.addAttribute("list", list);
 			return "car/carList";
 		} else {
-			model.addAttribute("list", list);
-			model.addAttribute("filter", filter);
 			model.addAttribute("emp", "현재 리스트가 비어있습니다.");
 			return "car/carList";
 		}
