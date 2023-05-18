@@ -26,6 +26,8 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css"> -->
+
+
 <style>
     .header_back {
 	 	width: 100%;
@@ -608,7 +610,7 @@ detail = function(cinfoNo){
 </script>
 
 <script src="resources/js/main.js"></script>
-
+<script src="resources/js/jquery.nice-select.min.js"></script>
 </body>
 
 </html>
