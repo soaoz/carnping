@@ -167,6 +167,15 @@ public class BoardDao {
 
 		return sqlSession.insert("boardMapper.freeReplyInsert", r);
 	}
+	
+	
+	/**
+     *  무료나눔 게시판 댓글 삭제
+     */
+	public int freeReplyDelete(SqlSessionTemplate sqlSession, String brno) {
+
+		return sqlSession.update("boardMapper.freeReplyDelete", brno);
+	}
 
 	
 	/**
@@ -185,8 +194,19 @@ public class BoardDao {
 
 		return sqlSession.insert("boardMapper.partyReplyInsert", r);
 	}
+	
+	
+	/**
+     *  소모임 게시판 댓글 삭제
+     */
+	public int partyReplyDelete(SqlSessionTemplate sqlSession, String brno) {
+
+		return sqlSession.update("boardMapper.partyReplyDelete", brno);
+	}
 
 
+	
+	
 	
 	
 	/**
@@ -239,6 +259,12 @@ public class BoardDao {
 	public int insertReport(SqlSessionTemplate sqlSession, Report r) {
 		return sqlSession.update("boardMapper.insertReport", r);
 	}
+
+
+	
+
+	
+	
 
 
 	

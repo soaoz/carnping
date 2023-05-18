@@ -276,7 +276,7 @@
 function selectFreeReplyList() {
     $.ajax({
         url: "freeReplyList.bo",
-        data: { bno: "${b.boardNo}" },
+        data: { bno: "${b.boardNo}", brno: '${b.breNo}' },
         success: function (list) {
             let loginUser = "<c:out value='${loginMember.memNo}'/>";
             let value = "<h4>댓글</h4>";
@@ -297,8 +297,9 @@ function selectFreeReplyList() {
                     
                     if (list[i].memNo === loginUser) {
                         value +=
-                            "<a id='commentDelete' href='#' style='float:right; cursor:pointer; color:gray; font-size:15px; margin-right:5px; margin-top:5px;'>삭제</a>";
-                            //준석!!
+                            ("<a id='commentDelete' href='freeReplyDelete.bo?brno=" + list[i].breNo + "&bno=" + list[i].boardNo + "' style='float:right; cursor:pointer; color:gray; font-size:15px; margin-right:5px; margin-top:5px;'>삭제</a>");
+                        	    
+                        //준석!!
                         
                     } else {
                         value += 
@@ -327,7 +328,7 @@ function selectFreeReplyList() {
                 console.log("ajax 통신 실패!");
                 },
             });
-            }
+    }
 
 
         

@@ -25,6 +25,7 @@
 		<result column="BOARD_LTTD" property="boardLttd"/>
 		<result column="BOARD_HRDNS" property="boardHrdns"/>
 		<result column="BOARD_ADDRESS" property="boardAddress"/>
+		<result column="BRE_NO" property="breNo"/>
 	</resultMap>
 
 
@@ -346,6 +347,14 @@
 		  )
 	</insert>
 	
+	<!-- 무료나눔 게시판 댓글 삭제 -->
+	<update id="freeReplyDelete">
+		update
+			   board_reply
+		   set status = 'N'
+		 where bre_no = #{brno}
+	</update>
+	
 	
 	<!-- 소모임 댓글 리스트 조회 -->
 	<select id="selectPartyReplyList" resultMap="boardReplyResultMap">
@@ -385,6 +394,14 @@
 		  , #{commContent}
 		  )
 	</insert>
+	
+	<!-- 무료나눔 게시판 댓글 삭제 -->
+	<update id="partyReplyDelete">
+		update
+			   board_reply
+		   set status = 'N'
+		 where bre_no = #{brno}
+	</update>
 	
 	
 	
