@@ -90,16 +90,17 @@
 
                             <c:forEach var="b" items="${ list }">
 
-                                <tr id="notice" style="line-height: 14px;" onclick="location.href='noticeBoardDetail.bo'">
-                                	<input type="hidden" class="bno" value="${ b.boardNo }">
-                                    <td class="boardNo">${ b.boardNo }</td>
+                                <tr class="notice" style="line-height: 14px;">
+                                    <td class="bno" >${ b.boardNo }</td>
                                     <td>${ b.boardTitle }</td>
                                     <td style="font-size: 13px; padding:10px;">${ b.createDate }</td>
-                                    
                                 </tr>
                    			 </c:forEach>				
                         </tbody>
                     </table>
+        </div>
+        </div>
+        </div>
         </div>
         
         <jsp:include page="../common/footer.jsp"/>
@@ -110,8 +111,8 @@
     
     <script>
   	 	$(function(){
-  	 		$("#notice").click(function(){
-  	 			location.href='noticeBoardDetail.bo?bno=' + $(this).children(".bno").val();
+  	 		$(".notice").click(function(){
+  	 			location.href='noticeBoardDetail.bo?bno=' + $(this).children(".bno").text();
   	 		})
   	 	})
   	 	
