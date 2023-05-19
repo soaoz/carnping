@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Carnping | 로그인</title>
-<!--===============================================================================================-->	
+<!--===============================================================================================-->   
 <link rel="icon" type="image/png" href="resources/resources/login/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="resources/login/vendor/bootstrap/css/bootstrap.min.css">
@@ -16,13 +16,13 @@
 <link rel="stylesheet" type="text/css" href="resources/login/fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="resources/login/vendor/animate/animate.css">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->   
 <link rel="stylesheet" type="text/css" href="resources/login/vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="resources/login/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="resources/login/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->   
 <link rel="stylesheet" type="text/css" href="resources/login/vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="resources/login/css/util.css">
@@ -55,57 +55,57 @@
             letter-spacing: 0.08em;
         }
 
-		.input100:focus+.focus-input100+.symbol-input100 {
-		    color: #d33f8d;
-		    padding-left: 18px
-		}
-		
-		.input-checkbox100 {
-		    display: none
-		}
-		
-		.label-checkbox100 {
-		    font-size: 14px;
-		    color: #999;
-		    line-height: 1.2;
-		    display: block;
-		    position: relative;
-		    padding-left: 26px;
-		    cursor: pointer
-		}
-		
-		.label-checkbox100::before {
-		    content: "\f00c";
-		    padding-left: 3px;
-		    font-family: FontAwesome;
-		    font-size: 13px;
-		    color: transparent;
-		    display: -webkit-box;
-		    display: -webkit-flex;
-		    display: -moz-box;
-		    display: -ms-flexbox;
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    position: absolute;
-		    width: 18px;
-		    height: 18px;
-		    border-radius: 2px;
-		    background: #fff;
-		    border: 2px solid #d33f8d;
-		    left: 0;
-		    top: 48%;
-		    -webkit-transform: translateY(-50%);
-		    -moz-transform: translateY(-50%);
-		    -ms-transform: translateY(-50%);
-		    -o-transform: translateY(-50%);
-		    transform: translateY(-50%)
-		}
-		
+      .input100:focus+.focus-input100+.symbol-input100 {
+          color: #d33f8d;
+          padding-left: 18px
+      }
+      
+      .input-checkbox100 {
+          display: none
+      }
+      
+      .label-checkbox100 {
+          font-size: 14px;
+          color: #999;
+          line-height: 1.2;
+          display: block;
+          position: relative;
+          padding-left: 26px;
+          cursor: pointer
+      }
+      
+      .label-checkbox100::before {
+          content: "\f00c";
+          padding-left: 3px;
+          font-family: FontAwesome;
+          font-size: 13px;
+          color: transparent;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          width: 18px;
+          height: 18px;
+          border-radius: 2px;
+          background: #fff;
+          border: 2px solid #d33f8d;
+          left: 0;
+          top: 48%;
+          -webkit-transform: translateY(-50%);
+          -moz-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+          transform: translateY(-50%)
+      }
+      
 
-		.input-checkbox100:checked+.label-checkbox100::before {
-		    color: #d33f8d
-		}
+      .input-checkbox100:checked+.label-checkbox100::before {
+          color: #d33f8d
+      }
 
         i{
             padding-right:10px;
@@ -270,31 +270,31 @@
             border-right-color: #0ca678;
         }
 
-		#kakao :hover, #naver :hover{
-		
- 		transition: 0.6s;
-		filter: brightness(0.5); invert(1);}
-		
-		#findIdClick:hover, #findPwdClick:hover, #joinMember:hover{
-		color:#0ca678
-		}
+      #kakao :hover, #naver :hover{
+      
+       transition: 0.6s;
+      filter: brightness(0.5); invert(1);}
+      
+      #findIdClick:hover, #findPwdClick:hover, #joinMember:hover{
+      color:#0ca678
+      }
 </style>
 </head>
 <body>
 
 
-	<!-- Header -->
-	<jsp:include page="../common/header.jsp"/>
-	
-	<div id="wraaper" style="padding-bottom:122.5px; position:relative; height: 100%;" >
-	<div class="logo-bg" style="position:absolute">
+   <!-- Header -->
+   <jsp:include page="../common/header.jsp"/>
+   
+   <div id="wraaper" style="padding-bottom:122.5px; position:relative; height: 100%;" >
+   <div class="logo-bg" style="position:absolute">
         <div align="center" style="position: relative; top:30%;">
             <img src="resources/img/logo_login_1.png" width="400px" alt="" style="position:relative; " >
         </div>
     </div>
     <div class="login-bg"style="position:absolute; right:0px;">
         <div align="center" style="position: relative; top:10%;">
-        	
+           
             <div class="limiter">
                 <div class="container-login100" style="background-image: url('images/bg-01.jpg'); min-height:90vh;">
                     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="position: absolute; top: 25px; cursor:pointer">
@@ -378,7 +378,7 @@
     </div>
 
     </div>
-	
+   
     <!--===============================================================================================-->
        <script src="resources/login/vendor/jquery/jquery-3.2.1.min.js"></script>
    <!--===============================================================================================-->
@@ -395,8 +395,8 @@
        <script src="resources/login/vendor/countdowntime/countdowntime.js"></script>
    <!--===============================================================================================-->
        <script src="resources/login/js/main.js"></script>
-	<!-- Footer -->
-	<jsp:include page="../common/footer.jsp"/>
+   <!-- Footer -->
+   <jsp:include page="../common/footer.jsp"/>
 
     <div class="modal" id="findIdModal" data-backdrop="static">
         <div class="modal-dialog">
@@ -433,7 +433,7 @@
                         <tr>
                             <td>이메일</td>
                             <td width="60%">
-                                <input style="width: 95%"class="modalInput"type="email" id="emailInput" placeholder="이메일 입력" name="email"  required
+                                <input style="width: 95%"class="modalInput"type="email" id="emailInput" placeholder="이메일 입력" name="email" readonly required
                                 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"> 
                             </td>
                             <td>
@@ -697,7 +697,7 @@
             </div>
         </div>
     </div>
-	<script>
+   <script>
         
         // 아이디 저장
             // 쿠키 저장하기 
