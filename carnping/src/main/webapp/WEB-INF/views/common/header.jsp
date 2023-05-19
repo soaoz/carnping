@@ -399,7 +399,7 @@
 </script>
 
 		<!-- 카카오 채널-->
-			<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+		 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
 			  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
             <script>
 			  Kakao.init('1338885af6c93500e3dd5c130cf1ead7'); // 사용하려는 앱의 JavaScript 키 입력
@@ -412,13 +412,13 @@
 			    container: '#add-channel-button',
 			    channelPublicId: '_XxacNb',
 			    size: "large"
-			  });-->
+			  });
 
-		<!-- 카카오 채널 실패~~~~ -->
     
 	<!--   JSP 페이지에서 WebSocket 생성 및 서버와 연결 : 소영       -->
-	<script type="text/javascript">
-	/*	var socket = null;
+	
+	/*	
+	<script type="text/javascript"> var socket = null;
 		$(document).ready(function(){
 			connectWS();
 			
