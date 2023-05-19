@@ -416,4 +416,6 @@ public class CarController {
 		int result2 = cService.updateCarImgRequest(verifyImg);
 		return "main";
 	}
+
+	
 }

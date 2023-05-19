@@ -130,6 +130,10 @@ public class CarServiceImpl implements CarService{
 	public int insertCount(String cinfoNo) {
 		return cDao.insertCount(sqlSession, cinfoNo);
 	}
+
+	public int updateVerifyResponse(Verify verify) {
+		return cDao.updateVerifyResponse(sqlSession, verify);
+	}
 	
 	
 }

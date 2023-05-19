@@ -135,4 +135,11 @@ public class CarDao {
 	public int insertCount(SqlSessionTemplate sqlSession, String cinfoNo) {
 		return sqlSession.update("carMapper.insertCount", cinfoNo);
 	}
+
+	public int updateVerifyResponse(SqlSessionTemplate sqlSession, Verify verify) {
+		int result1 = sqlSession.update("carMapper.updateVerifyResponse",verify);
+		int result2 = sqlSession.update("carMapper.updateVerifyImgResponse",verify);
+		int result3 = sqlSession.update("carMapper.verifyResponse",verify);
+		return result1 * result2 * result3;
+	}
 }

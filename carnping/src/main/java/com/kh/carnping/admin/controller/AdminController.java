@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -346,6 +347,34 @@ public class AdminController {
 		}
 	}
 	
-
+	
+	@RequestMapping("updateVerifyResponse.ad")
+	public String updateVerifyResponse(Verify verify, Model model, HttpSession session) {
+		if (verify.getVerifyFacilitie() != null) {
+			String verifyFacilitie = String.join(",", verify.getVerifyFacilitie());
+			verify.setVerifyFacilities(verifyFacilitie);
+		} else {
+			verify.setVerifyFacilities("");
+		}
+		if (verify.getVerifyDay() != null) {
+			String verifyDay = String.join(",", verify.getVerifyDay());
+			verify.setVerifyDays(verifyDay);
+		} else {
+			verify.setVerifyDays("");
+		}
+		if (verify.getVerifyTags() != null) {
+			String verifyTags = String.join(",", verify.getVerifyTags());
+			verify.setVerifyTag(verifyTags);
+		} else {
+			verify.setVerifyTag("");
+		}
+		int result = cService.updateVerifyResponse(verify);
+		if(result > 0 ) {
+			session.setAttribute("alertMsg", "수정성공");
+		}
+		
+		return "redirect:/verify.ad";
+	}
+	
 	
 }
