@@ -595,7 +595,7 @@
 		
 		    // 인증번호 발송 및 타이머 함수 실행
 		        // 남은 시간(초)
-		        var leftSec = 60,
+		        var leftSec = 180,
 		        display = document.querySelector('#timer');
 		        // 이미 타이머가 작동중이면 중지
 		        if (isRunning){

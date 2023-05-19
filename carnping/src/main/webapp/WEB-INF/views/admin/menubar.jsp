@@ -54,7 +54,7 @@
 
 		<div class="header header-one">
 			<div class="header-left header-left-one">
-				<a href="index.html" class="logo"> <img
+				<a href="./index.jsp" class="logo"> <img
 					src="resources/admin/assets/img/Logo.png" alt="Logo">
 				</a> <a href="index.html" class="white-logo"> <img
 					src="resources/admin/assets/img/Logo.png" alt="Logo">

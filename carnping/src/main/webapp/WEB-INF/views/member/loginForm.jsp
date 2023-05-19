@@ -433,7 +433,7 @@
                         <tr>
                             <td>이메일</td>
                             <td width="60%">
-                                <input style="width: 95%"class="modalInput"type="email" id="emailInput" placeholder="이메일 입력" name="email" readonly required
+                                <input style="width: 95%"class="modalInput"type="email" id="emailInput" placeholder="이메일 입력" name="email"  required
                                 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"> 
                             </td>
                             <td>

@@ -694,7 +694,7 @@ public class BoardController {
 	   
 	   if(result > 0) {
 		   session.setAttribute("alertMsg", "신고 접수 되었습니다. 접수된 신고는 관리자가 검토하여 처리할 예정입니다.");
-		   return "redirect:freeBoardDetail.bo";
+		   return "redirect:freeBoardDetail.bo?bno="+r.getReportRefNo();
 	   }else {
 		   model.addAttribute("errorMsg", "게시글 신고 실패!");
 		   return "common/errorPage";
