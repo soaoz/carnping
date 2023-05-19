@@ -332,7 +332,7 @@
            </div>
            <div class="card-body">
                <form method="post" enctype="multipart/form-data">
-				
+					
 				 <div class="row form-group">
                        <label for="id" class="col-sm-3 col-form-label input-label">수정인</label>
                        <div class="col-sm-9">
@@ -341,6 +341,8 @@
                        </div>
                    </div>
                    
+	                                <input type="hidden" value="${ verify.cinfoNo }" name="cinfoNo">
+									<input type="hidden" value="${ verify.verifyNo }"name="verifyNo">
                    <div class="row form-group">
                    
                        <label for="id" class="col-sm-3 col-form-label input-label">이미지</label>
@@ -348,41 +350,57 @@
                            <div class="bigImgs">
                                <img class="vbigImg" src="${ verify.verifyImg1 }"
                                    style="height: 300px;width: 100%;">
+	                                <input type="hidden" value="${ verify.verifyOgImg1 }" name="verifyOgImg1">
+									<input type="hidden" value="${ verify.verifyImg1 }"name="verifyImg1">
                            </div>
                            <div class="smallImgs">
                                	<c:if test="${ verify.verifyImg2 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg2 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg2 }" name="verifyOgImg2">
+									<input type="hidden" value="${ verify.verifyImg2 }"name="verifyImg2">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg3 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg3 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg3 }" name="verifyOgImg3">
+									<input type="hidden" value="${ verify.verifyImg3 }"name="verifyImg3">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg4 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg4 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg4 }" name="verifyOgImg4">
+									<input type="hidden" value="${ verify.verifyImg4 }"name="verifyImg4">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg5 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg5 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg5 }" name="verifyOgImg5">
+									<input type="hidden" value="${ verify.verifyImg5 }"name="verifyImg5">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg6 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg6 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg6 }" name="verifyOgImg6">
+									<input type="hidden" value="${ verify.verifyImg6 }"name="verifyImg6">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg7 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg7 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg7 }" name="verifyOgImg7">
+									<input type="hidden" value="${ verify.verifyImg7 }"name="verifyImg7">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg8 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg8 }">
+	                                <input type="hidden" value="${ verify.verifyOgImg8 }" name="verifyOgImg8">
+									<input type="hidden" value="${ verify.verifyImg8 }"name="verifyImg8">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg9 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
 	                                    src="${ verify.verifyImg9 }">
-	                                <input type="hidden" value="${ verify.verifyOgImg10 }" name="verifyOgImg10">
-									<input type="hidden" value="${ verify.verifyImg10 }"name="verifyImg10">
+	                                <input type="hidden" value="${ verify.verifyOgImg9 }" name="verifyOgImg9">
+									<input type="hidden" value="${ verify.verifyImg9 }"name="verifyImg9">
 	                           	</c:if>
 	                           	<c:if test="${ verify.verifyImg10 != null}">
 	                                <img class="vsmallImg" style="height: 100px;width: 150px;"
@@ -416,7 +434,7 @@
                        <label for="pwd" class="col-sm-3 col-form-label input-label">게시글 유의사항</label>
                        <div class="col-sm-9">
                            <textarea class="form-control col-sm-9" rows="3" id="textarea-copy"
-                               style="height: 189px;" name="verifyContent" placeholder="게시글 유의사항 입력"
+                               style="height: 189px;" name="verifyNotice" placeholder="게시글 유의사항 입력"
                                readonly>${ verify.verifyNotice }</textarea>
                        </div>
                    </div>
@@ -425,14 +443,14 @@
                        <label for="id" class="col-sm-3 col-form-label input-label">위도</label>
                        <div class="col-sm-9">
                            <input type="text" class="form-control" id="cinfoName"
-                               placeholder="위도가 자동으로 입력됩니다." value="${ verify.verifyLttd }" name="" readonly>
+                               placeholder="위도가 자동으로 입력됩니다." value="${ verify.verifyLttd }" name="verifyLttd" readonly>
                        </div>
                    </div>
                    <div class="row form-group">
                        <label for="id" class="col-sm-3 col-form-label input-label">경도</label>
                        <div class="col-sm-9">
                            <input type="text" class="form-control" id="cinfoName"
-                               placeholder="경도가 자동으로 입력됩니다." value="${ verify.verifyHrdns }" name="" readonly>
+                               placeholder="경도가 자동으로 입력됩니다." value="${ verify.verifyHrdns }" name="verifyHrdns" readonly>
                        </div>
                    </div>
 
@@ -441,7 +459,7 @@
                        </label>
                        <div class="col-sm-9">
                            <input type="text" class="form-control" placeholder="우편번호 이용"
-                               value="${ verify.verifyAddress }" name="address" readonly>
+                               value="${ verify.verifyAddress }" name="verifyAddress" readonly>
                        </div>
                    </div>
 
@@ -596,7 +614,7 @@
                        <button type="button" onclick="history.back()"
                            class="btn btn-primary">뒤로가기</button>
                                         <button type="submit" class="btn btn-primary" formaction="">요청철회</button>
-                                        <button type="submit" class="btn btn-primary" formaction="">수정확인</button>
+                                        <button type="submit" class="btn btn-primary" formaction="updateVerifyResponse.ad">수정확인</button>
                                     </div>
                                 </form>
 

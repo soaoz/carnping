@@ -915,8 +915,49 @@
 		 WHERE VERIFY_NO = #{verifyNo}
 	</update>
 	
-	
-	
+	<update id="updateVerifyResponse">
+		UPDATE CINFO
+		   SET
+				  CINFO_NAME =#{verifyName}
+				, CINFO_CONTENT = #{verifyContent}
+				, CINFO_NOTICE = #{ verifyNotice }
+				, CINFO_LTTD = #{ verifyLttd }
+				, CINFO_HRDNS = #{ verifyHrdns }
+				, CINFO_ADDRESS = #{ verifyAddress }
+				, CINFO_FACILITIES = #{ verifyFacilities }
+				, CINFO_DAYS = #{ verifyDays }
+				, CINFO_TAG = #{ verifyTag }
+		 WHERE  CINFO_NO =#{cinfoNo}
+	</update>
+	<update id="updateVerifyImgResponse">
+		UPDATE CINFO_IMG
+		   SET	 CINFO_IMG1 = #{ verifyImg1 }
+				,CINFO_IMG2 = #{ verifyImg2 }
+				,CINFO_IMG3 = #{ verifyImg3 }
+				,CINFO_IMG4 = #{ verifyImg4 }
+				,CINFO_IMG5 = #{ verifyImg5 }
+				,CINFO_IMG6 = #{ verifyImg6 }
+				,CINFO_IMG7 = #{ verifyImg7 }
+				,CINFO_IMG8 = #{ verifyImg8 }
+				,CINFO_IMG9 = #{ verifyImg9 }
+				,CINFO_IMG10 = #{ verifyImg10 }
+				,CINFO_OG_IMG1 = #{ verifyOgImg1 }
+				,CINFO_OG_IMG2 = #{ verifyOgImg2 }
+				,CINFO_OG_IMG3 = #{ verifyOgImg3 }
+				,CINFO_OG_IMG4 = #{ verifyOgImg4 }
+				,CINFO_OG_IMG5 = #{ verifyOgImg5 }
+				,CINFO_OG_IMG6 = #{ verifyOgImg6 }
+				,CINFO_OG_IMG7 = #{ verifyOgImg7 }
+				,CINFO_OG_IMG8 = #{ verifyOgImg8 }
+				,CINFO_OG_IMG9 = #{ verifyOgImg9 }
+				,CINFO_OG_IMG10 = #{ verifyOgImg10 } 	
+		 WHERE  CINFO_NO = #{cinfoNo}
+	</update>
+	<update id="verifyResponse">
+		UPDATE VERIFY
+		   SET VERIFY_STATUS = 'Y'
+		 WHERE CINFO_NO = #{cinfoNo}
+	</update>
 	<!-- 소영 : 내가쓴 차박지목록 페이징을 위한 갯수조회-->
 	<select id="selectMyCarListCount" resultType="_int">
 		SELECT
